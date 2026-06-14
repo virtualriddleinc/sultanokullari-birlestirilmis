@@ -1,0 +1,93 @@
+/* -------------------------------------------------------------------------
+   Hero slider veri modülü
+   ─────────────────────────────────────────────────────────────────────────
+   navigation.ts ile aynı desende statik typed veri.
+   KRİTİK: Tüm metinler docs/content/site-metin-icerigi.pdf'ten birebir
+   alınmıştır; hiçbir kelime değiştirilemez (projekurallari.md §1).
+   Başlık satırları, PDF cümlelerinin satır kırılımıyla bölünmüş hâlidir;
+   açıklamalar cümlenin devamı veya PDF'teki komşu cümledir.
+   ------------------------------------------------------------------------- */
+
+export interface HeroSlide {
+  id: string;
+  /** Kart üstündeki pill etiketi (PDF bölüm başlığı) */
+  tagline: string;
+  /** Üç satıra bölünmüş başlık — kelimeler PDF'ten birebir */
+  titleLines: [string, string, string];
+  /** Başlığın devamı veya PDF'teki komşu cümle */
+  description: string;
+  /** Site haritasındaki sayfa adı (projekurallari.md §2) */
+  buttonText: string;
+  buttonLink: string;
+  mediaUrl: string;
+  mediaType: "image" | "video";
+  /** Video için poster karesi */
+  posterUrl?: string;
+  /** Medya odak noktası (yüzde); varsayılan merkez */
+  focalPoint?: { x: number; y: number };
+  /** Slayt görüntülenme süresi (saniye) */
+  displayDuration?: number;
+}
+
+export const HERO_SLIDES: HeroSlide[] = [
+  {
+    id: "kurumsal",
+    tagline: "KURUMSAL KİMLİĞİMİZ",
+    titleLines: ["İlimde âlim,", "ibadette âbid,", "gayrette mücahit"],
+    description: "bir neslin yetiştiği çift kanatlı eğitim modeli",
+    buttonText: "Kurumsal Kimliğimiz",
+    buttonLink: "/kurumsal/kurumsal-kimligimiz",
+    mediaUrl: "/images/menu-gorselleri/kurumsal-kimlik.jpg",
+    mediaType: "image",
+    displayDuration: 6,
+  },
+  {
+    id: "egitim",
+    tagline: "SULTAN MEKTEP MODELİ",
+    titleLines: [
+      "Bilginin hikmete,",
+      "bilincin ise erdeme",
+      "dönüştüğü özgün bir eğitim modeli",
+    ],
+    description:
+      "Her öğrenciyi ruhu, kalbi, bedeni ve şahsiyetiyle bir bütün olarak ele alır; kökü mazide, ufku âtîde bir nesil yetiştirmeyi amaçlar.",
+    buttonText: "Sultan Mektep Modeli & Kademeler",
+    buttonLink: "/egitim/kademeler",
+    mediaUrl: "/videos/kademeler.mp4",
+    mediaType: "video",
+    posterUrl: "/videos/kademeler-poster.jpg",
+    displayDuration: 6,
+  },
+  {
+    id: "akademik",
+    tagline: "AKADEMİK GELİŞİM VE BİREYSEL TAKİP",
+    titleLines: [
+      "Her evladımızın",
+      "kabiliyetini emanet",
+      "bilinciyle takip ediyor,",
+    ],
+    description: "ilmini ve gayretini adım adım büyütüyoruz.",
+    buttonText: "Akademik Gelişim ve Takip",
+    buttonLink: "/akademik/gelisim",
+    mediaUrl: "/videos/akademik-gelisim.mp4",
+    mediaType: "video",
+    posterUrl: "/videos/akademik-gelisim-poster.jpg",
+    displayDuration: 6,
+  },
+  {
+    id: "rehberlik",
+    tagline: "REHBERLİK VE EĞİTİM KOÇLUĞU",
+    titleLines: [
+      "Başarıdan ziyade",
+      "şahsiyete odaklanan",
+      "bir model uyguluyoruz",
+    ],
+    description:
+      "Çocuklarımızın ruhsal ve bedensel gelişiminde doğru rehberliğin hayati önem taşıdığının bilincindeyiz.",
+    buttonText: "Rehberlik ve Eğitim Koçluğu",
+    buttonLink: "/rehberlik/egitim-koclugu",
+    mediaUrl: "/images/menu-gorselleri/rehberlik-egitim-koclugu.jpg",
+    mediaType: "image",
+    displayDuration: 6,
+  },
+];
