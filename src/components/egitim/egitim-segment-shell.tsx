@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { PageMedia } from "@/lib/menu-images";
 import { OrnamentalQuote } from "@/components/egitim/ornamental-quote";
 import { PageShell } from "@/components/page-shell";
 import { cn } from "@/lib/cn";
@@ -23,6 +24,7 @@ export function EgitimSegmentShell({
   children,
   headingLayout,
   quoteFullWidth,
+  media,
 }: {
   slug: keyof typeof accentBySlug | string;
   title: string;
@@ -34,11 +36,17 @@ export function EgitimSegmentShell({
   headingLayout?: "default" | "centerHero";
   /** Alıntı bloğunu yatayda tam genişlikte göster. */
   quoteFullWidth?: boolean;
+  media?: PageMedia;
 }) {
   const accent = accentBySlug[slug] ?? "border-l-[var(--color-primary)]";
   return (
     <div className={cn("border-l-4 pl-4 sm:pl-6", accent)}>
-      <PageShell title={title} intro={intro} headingLayout={headingLayout}>
+      <PageShell
+        title={title}
+        intro={intro}
+        headingLayout={headingLayout}
+        media={media}
+      >
         {quote ? (
           <OrnamentalQuote
             quote={quote}

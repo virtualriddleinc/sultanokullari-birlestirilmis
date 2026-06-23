@@ -109,7 +109,7 @@ export function InfoRequestModal() {
       {open ? (
         <motion.div
           key="info-modal"
-          className="fixed inset-0 z-[100] flex items-center justify-center px-3 py-6 sm:px-6 sm:py-10"
+          className="fixed inset-0 z-[100]"
           initial={reduce ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={reduce ? { opacity: 0 } : { opacity: 0 }}
@@ -118,6 +118,7 @@ export function InfoRequestModal() {
           role="dialog"
           aria-labelledby="info-request-title"
         >
+          {/* Backdrop: Tüm ekranı kaplar */}
           <button
             type="button"
             aria-label="Pop-up'ı kapat"
@@ -125,160 +126,165 @@ export function InfoRequestModal() {
             className="absolute inset-0 cursor-default bg-zinc-950/55 backdrop-blur-sm"
           />
 
-          <motion.div
-            ref={dialogRef}
-            className="relative z-[1] w-full max-w-xl overflow-hidden rounded-3xl border border-emerald-900/15 bg-white shadow-[0_40px_140px_rgba(7,32,17,0.35)]"
-            initial={
-              reduce ? { opacity: 1 } : { opacity: 0, y: 20, scale: 0.96 }
-            }
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.97 }}
-            transition={{ type: "spring", stiffness: 240, damping: 26 }}
-          >
-            <div className="relative bg-[#fff085] px-6 pt-7 pb-6 sm:px-8 sm:pt-8">
-              <button
-                type="button"
-                onClick={close}
-                aria-label="Kapat"
-                className="absolute top-4 right-4 grid size-9 place-items-center rounded-full border border-emerald-900/15 bg-white/80 text-emerald-950 transition hover:bg-white"
-              >
-                <X className="size-4" />
-              </button>
-              <p className="text-xs font-semibold tracking-[0.32em] text-emerald-900/70 uppercase">
-                Sultan Okulları
-              </p>
-              <h2
-                id="info-request-title"
-                className="mt-2 text-3xl leading-tight font-bold tracking-tight text-emerald-950 sm:text-4xl"
-              >
-                Sizi Arayalım!
-              </h2>
-              <p className="mt-2.5 max-w-sm text-sm leading-relaxed text-emerald-950/75">
-                Numaranızı bırakın, eğitim danışmanımız en kısa sürede sizi
-                arayıp tüm sorularınızı yanıtlasın.
-              </p>
-            </div>
-
-            <div className="px-6 pt-6 pb-7 sm:px-8 sm:pb-8">
-              {state.message ? (
-                <p
-                  className={`mb-5 rounded-2xl px-4 py-3 text-sm ${state.ok ? "bg-emerald-50 text-emerald-900" : "bg-red-50 text-red-900"}`}
-                  role="status"
-                >
-                  {state.message}
-                </p>
-              ) : null}
-
-              {state.ok ? (
+          {/* Modal content alanı: logonun alt yayından ekranın altına kadar, ortada */}
+          <div className="absolute inset-x-0 top-[calc(var(--header-height)+var(--hero-top-spacer,107px))] bottom-0 flex items-center justify-center px-3 py-6 sm:px-6 sm:py-10">
+            <motion.div
+              ref={dialogRef}
+              className="relative z-[1] max-h-full w-full max-w-xl overflow-y-auto rounded-3xl border border-emerald-900/15 bg-white shadow-[0_40px_140px_rgba(7,32,17,0.35)]"
+              initial={
+                reduce ? { opacity: 1 } : { opacity: 0, y: 20, scale: 0.96 }
+              }
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={
+                reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.97 }
+              }
+              transition={{ type: "spring", stiffness: 240, damping: 26 }}
+            >
+              <div className="relative bg-[#fff085] px-6 pt-7 pb-6 sm:px-8 sm:pt-8">
                 <button
                   type="button"
                   onClick={close}
-                  className="inline-flex w-full items-center justify-center rounded-full bg-[var(--color-primary)] px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_50px_rgba(13,107,42,0.25)] transition hover:bg-[var(--color-primary-dark)]"
+                  aria-label="Kapat"
+                  className="absolute top-4 right-4 grid size-9 place-items-center rounded-full border border-emerald-900/15 bg-white/80 text-emerald-950 transition hover:bg-white"
                 >
-                  Kapat
+                  <X className="size-4" />
                 </button>
-              ) : (
-                <form ref={formRef} action={onSubmit} className="space-y-4">
-                  <input
-                    type="text"
-                    name="website"
-                    tabIndex={-1}
-                    autoComplete="off"
-                    className="hidden"
-                    aria-hidden
-                  />
-                  <input
-                    type="hidden"
-                    name="subject"
-                    value="Sizi Arayalım (Pop-up)"
-                  />
-                  <input
-                    type="hidden"
-                    name="email"
-                    value="belirtilmedi@sultan.edu.tr"
-                  />
-                  <input
-                    type="hidden"
-                    name="message"
-                    value="Pop-up arama talebi."
-                  />
+                <p className="text-xs font-semibold tracking-[0.32em] text-emerald-900/70 uppercase">
+                  Sultan Okulları
+                </p>
+                <h2
+                  id="info-request-title"
+                  className="mt-2 text-3xl leading-tight font-bold tracking-tight text-emerald-950 sm:text-4xl"
+                >
+                  Sizi Arayalım!
+                </h2>
+                <p className="mt-2.5 max-w-sm text-sm leading-relaxed text-emerald-950/75">
+                  Numaranızı bırakın, eğitim danışmanımız en kısa sürede sizi
+                  arayıp tüm sorularınızı yanıtlasın.
+                </p>
+              </div>
 
-                  <label className="block text-sm font-medium text-zinc-800">
-                    Ad Soyad
-                    <input
-                      name="name"
-                      required
-                      autoComplete="name"
-                      placeholder="Adınız Soyadınız"
-                      className={inputClass}
-                      maxLength={100}
-                      pattern="[A-Za-zCÇGĞIİOÖSŞUÜa-zcçgğiıoösşuü\s'-]+"
-                      title="Lütfen yalnızca metin girin."
-                      onInput={handleNameInput}
-                    />
-                    <FieldError errors={state.fieldErrors?.name} />
-                  </label>
+              <div className="px-6 pt-6 pb-7 sm:px-8 sm:pb-8">
+                {state.message ? (
+                  <p
+                    className={`mb-5 rounded-2xl px-4 py-3 text-sm ${state.ok ? "bg-emerald-50 text-emerald-900" : "bg-red-50 text-red-900"}`}
+                    role="status"
+                  >
+                    {state.message}
+                  </p>
+                ) : null}
 
-                  <label className="block text-sm font-medium text-zinc-800">
-                    Telefon Numarası
+                {state.ok ? (
+                  <button
+                    type="button"
+                    onClick={close}
+                    className="inline-flex w-full items-center justify-center rounded-full bg-[var(--color-primary)] px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_50px_rgba(13,107,42,0.25)] transition hover:bg-[var(--color-primary-dark)]"
+                  >
+                    Kapat
+                  </button>
+                ) : (
+                  <form ref={formRef} action={onSubmit} className="space-y-4">
                     <input
-                      name="phone"
-                      inputMode="tel"
-                      required
-                      autoComplete="tel"
-                      placeholder="05XXXXXXXXX"
-                      className={inputClass}
-                      maxLength={11}
-                      pattern="05[0-9]{9}"
-                      title="Telefon numarasını 05XXXXXXXXX formatında girin."
-                      onInput={handlePhoneInput}
+                      type="text"
+                      name="website"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      className="hidden"
+                      aria-hidden
                     />
-                    <FieldError errors={state.fieldErrors?.phone} />
-                  </label>
+                    <input
+                      type="hidden"
+                      name="subject"
+                      value="Sizi Arayalım (Pop-up)"
+                    />
+                    <input
+                      type="hidden"
+                      name="email"
+                      value="belirtilmedi@sultan.edu.tr"
+                    />
+                    <input
+                      type="hidden"
+                      name="message"
+                      value="Pop-up arama talebi."
+                    />
 
-                  <label className="flex items-start gap-2.5 rounded-2xl border border-zinc-200 bg-zinc-50 p-3 text-xs leading-5 text-zinc-600">
-                    <input
-                      name="kvkk"
-                      type="checkbox"
-                      value="on"
-                      required
-                      className="mt-0.5 h-4 w-4 shrink-0 rounded border-zinc-300 text-[var(--color-primary)]"
-                    />
-                    <span>
-                      <a
-                        href="/kvkk"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-semibold text-[var(--color-primary)] hover:underline"
+                    <label className="block text-sm font-medium text-zinc-800">
+                      Ad Soyad
+                      <input
+                        name="name"
+                        required
+                        autoComplete="name"
+                        placeholder="Adınız Soyadınız"
+                        className={inputClass}
+                        maxLength={100}
+                        pattern="[A-Za-zCÇGĞIİOÖSŞUÜa-zcçgğiıoösşuü\s'-]+"
+                        title="Lütfen yalnızca metin girin."
+                        onInput={handleNameInput}
+                      />
+                      <FieldError errors={state.fieldErrors?.name} />
+                    </label>
+
+                    <label className="block text-sm font-medium text-zinc-800">
+                      Telefon Numarası
+                      <input
+                        name="phone"
+                        inputMode="tel"
+                        required
+                        autoComplete="tel"
+                        placeholder="05XXXXXXXXX"
+                        className={inputClass}
+                        maxLength={11}
+                        pattern="05[0-9]{9}"
+                        title="Telefon numarasını 05XXXXXXXXX formatında girin."
+                        onInput={handlePhoneInput}
+                      />
+                      <FieldError errors={state.fieldErrors?.phone} />
+                    </label>
+
+                    <label className="flex items-start gap-2.5 rounded-2xl border border-zinc-200 bg-zinc-50 p-3 text-xs leading-5 text-zinc-600">
+                      <input
+                        name="kvkk"
+                        type="checkbox"
+                        value="on"
+                        required
+                        className="mt-0.5 h-4 w-4 shrink-0 rounded border-zinc-300 text-[var(--color-primary)]"
+                      />
+                      <span>
+                        <a
+                          href="/kvkk"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-semibold text-[var(--color-primary)] hover:underline"
+                        >
+                          KVKK aydınlatma metnini
+                        </a>{" "}
+                        okudum, kişisel verilerimin işlenmesini, tarafıma arama
+                        yapılmasını ve SMS gönderilmesini kabul ediyorum.
+                      </span>
+                    </label>
+                    <FieldError errors={state.fieldErrors?.kvkk} />
+
+                    <div className="flex flex-col gap-2 pt-1 sm:flex-row sm:items-center sm:justify-end sm:gap-3">
+                      <button
+                        type="button"
+                        onClick={close}
+                        className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-5 py-2.5 text-sm font-medium text-zinc-600 transition hover:bg-zinc-50"
                       >
-                        KVKK aydınlatma metnini
-                      </a>{" "}
-                      okudum, kişisel verilerimin işlenmesini, tarafıma arama
-                      yapılmasını ve SMS gönderilmesini kabul ediyorum.
-                    </span>
-                  </label>
-                  <FieldError errors={state.fieldErrors?.kvkk} />
-
-                  <div className="flex flex-col gap-2 pt-1 sm:flex-row sm:items-center sm:justify-end sm:gap-3">
-                    <button
-                      type="button"
-                      onClick={close}
-                      className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-5 py-2.5 text-sm font-medium text-zinc-600 transition hover:bg-zinc-50"
-                    >
-                      Şimdi değil
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={pending}
-                      className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_18px_50px_rgba(13,107,42,0.25)] transition hover:bg-[var(--color-primary-dark)] disabled:opacity-60"
-                    >
-                      {pending ? "Gönderiliyor…" : "Beni Arayın"}
-                    </button>
-                  </div>
-                </form>
-              )}
-            </div>
-          </motion.div>
+                        Şimdi değil
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={pending}
+                        className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_18px_50px_rgba(13,107,42,0.25)] transition hover:bg-[var(--color-primary-dark)] disabled:opacity-60"
+                      >
+                        {pending ? "Gönderiliyor…" : "Beni Arayın"}
+                      </button>
+                    </div>
+                  </form>
+                )}
+              </div>
+            </motion.div>
+          </div>
         </motion.div>
       ) : null}
     </AnimatePresence>

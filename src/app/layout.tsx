@@ -75,7 +75,7 @@ export default function RootLayout({
 
         <MotionProviders>
           <SiteHeader />
-          <main className="relative z-[1] flex flex-1 flex-col">
+          <main className="relative z-[1] flex w-full min-w-0 flex-1 flex-col overflow-x-clip">
             {children}
           </main>
           <SiteFooter />

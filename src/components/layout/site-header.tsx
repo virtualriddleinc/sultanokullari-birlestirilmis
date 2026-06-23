@@ -502,7 +502,7 @@ export function SiteHeader() {
       </AnimatePresence>
 
       {/* Header + mega panel hover bölgesi (backdrop dışında — dışına çıkınca kapanır) */}
-      <div className="relative z-[1000]">
+      <div className="relative z-[1000] w-full min-w-0 overflow-x-clip">
         {/* Mega menü açıkken anasayfa / hero — buzlu cam */}
         <AnimatePresence>
           {activeSection && (

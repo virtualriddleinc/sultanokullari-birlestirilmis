@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageShell } from "@/components/page-shell";
 import { ContentCard } from "@/components/layout/content-card";
+import { PAGE_MEDIA } from "@/lib/menu-images";
 
 export const metadata: Metadata = {
   title: "Sultan Mektep Modeli & Kademeler",
@@ -18,6 +19,7 @@ export default function Page() {
     <PageShell
       title="Sultan Mektep Modeli & Kademeler"
       intro="Bilginin hikmete, bilincin ise erdeme dönüştüğü özgün bir eğitim modeli"
+      media={PAGE_MEDIA.kademeler}
     >
       <ContentCard>
         <p className="section-body">

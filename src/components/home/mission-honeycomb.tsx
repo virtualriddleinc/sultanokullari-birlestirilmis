@@ -22,7 +22,8 @@ export type HoneycombCell = {
 };
 
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
-const CONTAINER_ASPECT = `${2.5} / ${3.5 * 0.8660254037844386}`;
+/** Flat-top petek konteyner en-boy oranı — 2.5 sütun × 3.5 satır (sqrt(3)/2 ofset) */
+export const MISSION_HONEYCOMB_ASPECT = 2.5 / (3.5 * 0.8660254037844386);
 const ROW_STEP = 100 / 3.5;
 const cellLift = {
   scale: 1.045,
@@ -44,8 +45,7 @@ export function MissionHoneycomb({ cells }: { cells: HoneycombCell[] }) {
 
   return (
     <motion.div
-      className="relative mx-auto hidden w-[27.5rem] max-w-full sm:block sm:w-[32.5rem] lg:w-[36rem]"
-      style={{ aspectRatio: CONTAINER_ASPECT }}
+      className="mission-honeycomb relative h-full w-auto hidden md:block"
       initial="hidden"
       whileInView="visible"
       viewport={viewportInView}
@@ -95,7 +95,7 @@ export function MissionHoneycomb({ cells }: { cells: HoneycombCell[] }) {
                     src={cell.media.src}
                     alt=""
                     fill
-                    sizes="(min-width: 1024px) 14rem, (min-width: 640px) 13rem, 0px"
+                    sizes="(min-width: 768px) 12vw, (min-width: 640px) 20vw, 0px"
                     className="absolute inset-0 object-cover"
                   />
                 ) : (

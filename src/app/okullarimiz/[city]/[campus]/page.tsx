@@ -1,17 +1,18 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Clock } from "lucide-react";
 import { BranchGallery } from "@/components/branch-gallery";
 import { BranchContactBlock } from "@/components/iletisim/branch-contact-block";
 import { ContentCard } from "@/components/layout/content-card";
+import { PageHeroMedia } from "@/components/layout/page-hero-media";
 import { SectionGrid } from "@/components/layout/section-grid";
 import { getBranchBySlug } from "@/content/branches";
 import {
   CAMPUS_ROUTE_MAP,
   getBranchSlugFromCampusRoute,
 } from "@/lib/campus-routes";
+import { BRANCH_MENU_IMAGES } from "@/lib/menu-images";
 
 export function generateStaticParams() {
   return Object.entries(CAMPUS_ROUTE_MAP).flatMap(([city, campuses]) =>
@@ -54,6 +55,14 @@ export default async function CampusPage({
   if (!branch) notFound();
 
   const mapsQuery = encodeURIComponent(branch.address);
+  const campusImage = BRANCH_MENU_IMAGES[branch.slug];
+  const campusMedia = campusImage
+    ? {
+        src: campusImage,
+        type: "image" as const,
+        alt: `${branch.district}, ${branch.city} kampüsü`,
+      }
+    : undefined;
 
   if (branch.upcoming) {
     return (
@@ -62,7 +71,7 @@ export default async function CampusPage({
           <p className="section-eyebrow">Okullarımız</p>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
             <h1 className="section-title">{branch.name}</h1>
-            <span className="rounded-full border border-charcoal/15 bg-white/80 px-3 py-1 text-xs font-semibold tracking-[0.22em] uppercase text-charcoal">
+            <span className="border-charcoal/15 text-charcoal rounded-full border bg-white/80 px-3 py-1 text-xs font-semibold tracking-[0.22em] uppercase">
               Yakında
             </span>
           </div>
@@ -71,15 +80,15 @@ export default async function CampusPage({
           </p>
 
           <ContentCard className="mt-10 p-8 sm:p-12">
-            <div className="mx-auto flex size-16 items-center justify-center rounded-full bg-brand-green/20 text-charcoal">
+            <div className="bg-brand-green/20 text-charcoal mx-auto flex size-16 items-center justify-center rounded-full">
               <Clock className="size-8" aria-hidden />
             </div>
-            <h2 className="font-cinzel mt-8 text-2xl font-bold tracking-tight text-charcoal sm:text-3xl">
+            <h2 className="font-cinzel text-charcoal mt-8 text-2xl font-bold tracking-tight sm:text-3xl">
               Konya&apos;da Sultan Rüzgarı Esecek
             </h2>
             <p className="section-body mx-auto mt-4 max-w-lg">
-              Konya — Mevlânâ şubemiz çok yakında açılacak. Ön bilgi almak ve kayıt
-              listesine girmek için bizimle iletişime geçebilirsiniz.
+              Konya — Mevlânâ şubemiz çok yakında açılacak. Ön bilgi almak ve
+              kayıt listesine girmek için bizimle iletişime geçebilirsiniz.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link href="/iletisim" className="cta-pill">
@@ -88,23 +97,17 @@ export default async function CampusPage({
             </div>
           </ContentCard>
 
-          <div className="relative mt-10 overflow-hidden rounded-[2rem] border border-charcoal/10">
-            <Image
-              src="/images/menu-gorselleri/konya.jpg"
-              alt="Konya Mevlânâ kampüsü — yakında"
-              width={1200}
-              height={675}
-              className="h-auto w-full object-cover"
-              priority
-            />
-          </div>
+          {campusMedia ? (
+            <PageHeroMedia media={campusMedia} priority className="mt-10" />
+          ) : null}
 
           <section className="mt-12 text-left">
-            <h2 className="text-lg font-semibold text-charcoal">
+            <h2 className="text-charcoal text-lg font-semibold">
               Kayıt listesi ve ön bilgi
             </h2>
             <p className="section-body mt-2">
-              Aşağıdaki formda kampüs alanı Konya — Mevlânâ için ön doldurulmuştur.
+              Aşağıdaki formda kampüs alanı Konya — Mevlânâ için ön
+              doldurulmuştur.
             </p>
             <div className="mt-6">
               <BranchContactBlock branchSlug={branch.slug} />
@@ -118,6 +121,7 @@ export default async function CampusPage({
   return (
     <SectionGrid variant="white" className="py-fluid-8">
       <article className="max-w-4xl">
+        {campusMedia ? <PageHeroMedia media={campusMedia} priority /> : null}
         <p className="section-eyebrow">Okullarımız</p>
         <h1 className="section-title mt-3">{branch.name}</h1>
         <p className="section-body mt-2 text-lg">
@@ -137,13 +141,14 @@ export default async function CampusPage({
           </div>
         ) : null}
 
-        <section className="mt-10 space-y-4 text-charcoal/85">
-          <h2 className="text-lg font-semibold text-charcoal">İletişim</h2>
+        <section className="text-charcoal/85 mt-10 space-y-4">
+          <h2 className="text-charcoal text-lg font-semibold">İletişim</h2>
           <p>
-            <span className="font-medium text-charcoal">Adres:</span> {branch.address}
+            <span className="text-charcoal font-medium">Adres:</span>{" "}
+            {branch.address}
           </p>
           <p>
-            <span className="font-medium text-charcoal">Telefon:</span>{" "}
+            <span className="text-charcoal font-medium">Telefon:</span>{" "}
             <a
               className="text-charcoal hover:underline"
               href={`tel:${branch.phone.replace(/\s/g, "")}`}
@@ -156,7 +161,7 @@ export default async function CampusPage({
               İletişim / ön kayıt
             </Link>
             <a
-              className="inline-flex rounded-full border border-charcoal/15 px-4 py-2 text-sm font-semibold text-charcoal transition hover:border-brand-green/40"
+              className="border-charcoal/15 text-charcoal hover:border-brand-green/40 inline-flex rounded-full border px-4 py-2 text-sm font-semibold transition"
               href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
               target="_blank"
               rel="noopener noreferrer"
@@ -169,12 +174,12 @@ export default async function CampusPage({
         <BranchGallery branch={branch} />
 
         <section className="border-charcoal/10 mt-12 border-t pt-10">
-          <h2 className="text-lg font-semibold text-charcoal">
+          <h2 className="text-charcoal text-lg font-semibold">
             Kampüs ile iletişim formu
           </h2>
           <p className="section-body mt-2">
-            Aşağıdaki form genel iletişim sunucu eylemini kullanır; kampüs alanı bu
-            sayfa için ön doldurulmuştur.
+            Aşağıdaki form genel iletişim sunucu eylemini kullanır; kampüs alanı
+            bu sayfa için ön doldurulmuştur.
           </p>
           <div className="mt-6">
             <BranchContactBlock branchSlug={branch.slug} />

@@ -1,22 +1,26 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { ContentCard } from "@/components/layout/content-card";
-import { SectionGrid } from "@/components/layout/section-grid";
+import beyazDesen from "@/images/beyaz-desen.svg";
 import {
   MissionHoneycomb,
   type HoneycombCell,
 } from "@/components/home/mission-honeycomb";
-import { hexGalleryMedia } from "@/content/site-media";
 import {
-  sectionCardVariants,
-  staggerSectionVariants,
-  t,
-  viewportInView,
-} from "@/lib/animations";
+  HeroInfoCard,
+  HeroInfoCardShell,
+} from "@/features/hero/hero-info-card";
+import { hexGalleryMedia } from "@/content/site-media";
+import { t, viewportInView } from "@/lib/animations";
 
 const levels = ["Anaokulu", "İlkokul", "Ortaokul"] as const;
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
+
+/** Hero grid — yer değişimi: petek col-2 (sol), kart col-3 (sağ); hero hizaları korunur */
+const MISSION_MEDIA_CELL =
+  "hero-slide-media-col col-span-full h-full min-h-0 w-full min-w-0 max-md:order-2 md:col-start-2 md:col-end-3 md:row-start-1 md:order-none";
+const MISSION_CARD_CELL =
+  "col-span-full min-h-0 min-w-0 max-md:order-1 md:col-start-3 md:col-end-4 md:row-start-1 md:order-none";
 
 function LevelContent({ label }: { label: string }) {
   return (
@@ -81,48 +85,27 @@ export function MissionCounters() {
   ];
 
   return (
-    <SectionGrid
+    <section
       id="gayemiz"
-      variant="accent"
-      className="border-brand-green/30 border-y"
-      innerClassName="grid gap-12 lg:grid-cols-[1.05fr_1fr] lg:items-center"
+      aria-label="Gâyemiz ve ufkumuz"
+      className="mission-section-grid border-charcoal/10 relative z-[1] -mt-px w-full overflow-hidden border-b bg-brand-honey py-fluid-8 sm:py-fluid-16"
     >
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewportInView}
-        variants={staggerSectionVariants}
-      >
-        <motion.div variants={sectionCardVariants}>
-          <ContentCard>
-            <p className="section-eyebrow">Gâyemiz · Ufkumuz</p>
-            <h2 className="section-title mt-5">
-              Değer merkezli eğitim, güçlü bir gelecek vizyonu ile birleşiyor.
-            </h2>
-            <p className="section-body mt-6 max-w-xl">
-              Peygamber Efendimizin (s.a.v.) izinde, üsve-i hasene olmayı
-              hedefleyen; ilim, hikmet ve ahlakla bütünleşmiş nesiller
-              yetiştirmek için çalışıyoruz.
-            </p>
-            <p className="section-body text-charcoal/65 mt-3 max-w-xl">
-              Anaokulu, ilkokul ve ortaokul kademeleriyle bütüncül bir eğitim
-              yolculuğu; okul öncesinden üniversiteye, cami ve hafızlık
-              binasıyla bütünleşik eğitim külliyesi ufkumuz.
-            </p>
-          </ContentCard>
-        </motion.div>
-      </motion.div>
+      {/* Beyaz desen — hero yeşil bölümüyle aynı katman; bal köpüğü zemin üzerinde süreklilik */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={beyazDesen.src}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/2 left-1/2 z-0 w-[220vw] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.1] select-none"
+      />
 
-      <motion.div
-        className="relative mx-auto w-full max-w-xl"
-        initial="hidden"
-        whileInView="visible"
-        viewport={viewportInView}
-        variants={sectionCardVariants}
-      >
-        <MissionHoneycomb cells={honeycombCells} />
+      {/* ── Sol hücre: petek — hero bilgi kartı band hizası (col-2) ── */}
+      <div className={`${MISSION_MEDIA_CELL} relative z-[1]`}>
+        <div className="hero-slide-media-band">
+          <MissionHoneycomb cells={honeycombCells} />
+        </div>
 
-        <div className="relative mx-auto mt-8 grid w-full max-w-md grid-cols-2 gap-x-2 gap-y-6 sm:hidden">
+        <div className="relative mx-auto mt-8 grid w-full max-w-md grid-cols-2 gap-x-2 gap-y-6 md:hidden">
           {levels.map((label, i) => (
             <motion.div
               key={label}
@@ -150,7 +133,22 @@ export function MissionCounters() {
             </motion.div>
           ))}
         </div>
-      </motion.div>
-    </SectionGrid>
+      </div>
+
+      {/* ── Sağ hücre: bilgi kartı — hero altıgen/medya band hizası (col-3) ── */}
+      <HeroInfoCardShell className={`${MISSION_CARD_CELL} relative z-[1]`}>
+        <HeroInfoCard
+          className="bg-brand-green"
+          tagline="Gâyemiz · Ufkumuz"
+          titleLines={[
+            "Değer merkezli eğitim,",
+            "güçlü bir gelecek vizyonu ile birleşiyor.",
+          ]}
+          description="Peygamber Efendimizin (s.a.v.) izinde, üsve-i hasene olmayı hedefleyen; ilim, hikmet ve ahlakla bütünleşmiş nesiller yetiştirmek için çalışıyoruz."
+          secondaryDescription="Anaokulu, ilkokul ve ortaokul kademeleriyle bütüncül bir eğitim yolculuğu; okul öncesinden üniversiteye, cami ve hafızlık binasıyla bütünleşik eğitim külliyesi ufkumuz."
+          preserveFooterSpace
+        />
+      </HeroInfoCardShell>
+    </section>
   );
 }

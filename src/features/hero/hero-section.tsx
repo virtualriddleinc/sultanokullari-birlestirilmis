@@ -1,6 +1,7 @@
 "use client";
 
 import beyazDesen from "@/images/beyaz-desen.svg";
+import { SectionWaveDivider } from "@/components/ui/section-wave-divider";
 import { HeroSlider } from "./hero-slider";
 import { HERO_SLIDES } from "./slides";
 
@@ -44,6 +45,9 @@ export function HeroSection() {
 
       {/* ── Satır 2: Slider — sol bilgi kartı (col 2) + sağ altıgen medya (col 3) ── */}
       <HeroSlider slides={HERO_SLIDES} />
+
+      {/* ── Dalgalı geçiş — petek (bal köpüğü) bölümüne; tam viewport genişliği ── */}
+      <SectionWaveDivider className="relative z-[2] col-span-full max-md:order-3 md:row-start-3" />
     </section>
   );
 }

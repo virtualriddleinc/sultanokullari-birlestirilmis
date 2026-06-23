@@ -4,6 +4,7 @@ import { EgitimSegmentShell } from "@/components/egitim/egitim-segment-shell";
 import { PedagojiSection } from "@/components/egitim/pedagoji-section";
 import { MediaGallery } from "@/components/media/media-gallery";
 import { educationGalleryMedia } from "@/content/site-media";
+import { PAGE_MEDIA } from "@/lib/menu-images";
 
 export const metadata: Metadata = {
   title: "Değerler Eğitimi",
@@ -18,6 +19,7 @@ export default function Page() {
       title="Değerler Eğitimi"
       intro="Müfredatın her alanına nakış nakış işlenmiş değerler eğitimi; komisyon planı, sınıf rehberliği ve etkinliklerle yaşatılır."
       quote={degerler.quote}
+      media={PAGE_MEDIA.degerlerEgitimi}
     >
       <div className="mt-6 space-y-4">
         {degerler.intro.map((p, i) => (

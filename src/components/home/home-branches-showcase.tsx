@@ -74,23 +74,21 @@ export function HomeBranchesShowcase() {
                         <span className="text-charcoal/45"> · {b.city}</span>
                       </p>
                       <p className="text-charcoal/55 mt-1 text-xs font-medium tracking-[0.22em] uppercase">
-                        {b.upcoming
-                          ? "Yakında açılacak"
-                          : b.levels.join(" · ")}
+                        {b.upcoming ? "Yakında açılacak" : b.levels.join(" · ")}
                       </p>
                     </div>
                   </div>
-                    <span
-                      className={cn(
-                        "inline-flex h-10 items-center gap-1 rounded-full px-3 text-xs font-semibold transition",
-                        isActive
-                          ? "bg-brand-green text-charcoal"
-                          : "border-charcoal/15 text-charcoal/75 group-hover:border-brand-green/40 border",
-                      )}
-                    >
-                      {b.upcoming ? "Yakında" : "Okula git"}{" "}
-                      <ArrowUpRight className="size-4" aria-hidden />
-                    </span>
+                  <span
+                    className={cn(
+                      "inline-flex h-10 items-center gap-1 rounded-full px-3 text-xs font-semibold transition",
+                      isActive
+                        ? "bg-brand-green text-charcoal"
+                        : "border-charcoal/15 text-charcoal/75 group-hover:border-brand-green/40 border",
+                    )}
+                  >
+                    {b.upcoming ? "Yakında" : "Okula git"}{" "}
+                    <ArrowUpRight className="size-4" aria-hidden />
+                  </span>
                 </Link>
               </li>
             );

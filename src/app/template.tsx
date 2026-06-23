@@ -20,7 +20,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
         animate="animate"
         exit="exit"
         variants={pageTransitionVariants}
-        className="min-h-0 w-full flex-1"
+        className="min-h-0 w-full min-w-0 flex-1 overflow-x-clip"
       >
         {children}
       </motion.div>

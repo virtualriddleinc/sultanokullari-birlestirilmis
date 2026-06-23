@@ -1,3 +1,5 @@
+import { BRANCH_MENU_IMAGES } from "@/lib/menu-images";
+
 const MEDIA_BASE = "/site-media";
 
 export type SiteMedia = {
@@ -160,20 +162,29 @@ export const insanKaynaklariMedia = [
 ] as const satisfies readonly SiteMedia[];
 
 export const branchPreviewMedia: Record<string, SiteMedia> = {
-  sancaktepe: image(
-    "IMG-20260429-WA0081.jpg",
-    "Sancaktepe Sultan Anne Anaokulu",
-  ),
-  basiskele: video(
-    "VID-20260429-WA0094.mp4",
-    "Başiskele Sultan Anne İlkokulu ve Ortaokulu",
-    "IMG-20260428-WA0019.jpg",
-  ),
-  serdivan: image("IMG-20260429-WA0107.jpg", "Serdivan Sultan Anne Anaokulu"),
-  sincan: image("IMG-20260429-WA0116.jpg", "Sincan Sultan Anne Anaokulu"),
+  sancaktepe: {
+    kind: "image",
+    src: BRANCH_MENU_IMAGES.sancaktepe,
+    alt: "İstanbul Sancaktepe kampüsü",
+  },
+  basiskele: {
+    kind: "image",
+    src: BRANCH_MENU_IMAGES.basiskele,
+    alt: "Kocaeli Başiskele kampüsü",
+  },
+  serdivan: {
+    kind: "image",
+    src: BRANCH_MENU_IMAGES.serdivan,
+    alt: "Sakarya Serdivan kampüsü",
+  },
+  sincan: {
+    kind: "image",
+    src: BRANCH_MENU_IMAGES.sincan,
+    alt: "Ankara Sincan kampüsü",
+  },
   mevlana: {
     kind: "image",
-    src: "/images/menu-gorselleri/konya.jpg",
+    src: BRANCH_MENU_IMAGES.mevlana,
     alt: "Konya Mevlânâ kampüsü — yakında",
   },
 };
@@ -218,11 +229,14 @@ export const branchGalleryMedia: Record<string, SiteMedia[]> = {
   mevlana: [
     {
       kind: "image",
-      src: "/images/menu-gorselleri/konya.jpg",
+      src: BRANCH_MENU_IMAGES.mevlana,
       alt: "Konya Mevlânâ kampüsü — yakında",
     },
     image("IMG-20260429-WA0089.jpg", "Sultan Okulları okul atmosferi"),
-    image("IMG-20260429-WA0086.jpg", "Keşf-i Bilim ve okul yaşamından bir kare"),
+    image(
+      "IMG-20260429-WA0086.jpg",
+      "Keşf-i Bilim ve okul yaşamından bir kare",
+    ),
   ],
 };
 

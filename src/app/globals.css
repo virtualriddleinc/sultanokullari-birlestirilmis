@@ -112,6 +112,11 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    overflow-x: clip;
+  }
+
+  html {
+    overflow-x: clip;
   }
 
   /* -----------------------------------------------------------------------
@@ -219,8 +224,8 @@
     content: "";
     position: absolute;
     /* Mobil & masaüstü ortak token değerini CSS değişkenlerinden okur */
-    width: clamp(140px, 35vw, 160px);
-    height: clamp(140px, 35vw, 160px);
+    width: var(--logo-yellow-ring-size, 220px);
+    height: var(--logo-yellow-ring-size, 220px);
     background-color: #fff085;
     border-radius: 9999px;
     top: var(--logo-yellow-ring-offset-top, -23px);
@@ -229,8 +234,8 @@
 
   /* Beyaz logo dairesi */
   .logo-drop-area {
-    width: clamp(105px, 25vw, 120px);
-    height: clamp(105px, 25vw, 120px);
+    width: var(--logo-drop-size, 165px);
+    height: var(--logo-drop-size, 165px);
     background: white;
     border-radius: 9999px;
     display: flex;
@@ -594,6 +599,24 @@
     min-width: 0;
   }
 
+  .section-page-grid > .section-page-grid__full {
+    grid-column: 1 / -1;
+    min-width: 0;
+    width: 100%;
+  }
+
+  /* Gâyemiz — mobil: dikey yığın (kart → petek) */
+  @media (width < 768px) {
+    .mission-section-grid {
+      display: flex;
+      flex-direction: column;
+      padding-inline: var(--layout-margin);
+      width: 100%;
+      max-width: 100%;
+      overflow-x: clip;
+    }
+  }
+
   @media (width >= 768px) {
     .section-page-grid {
       --section-grid-buffer: clamp(1rem, 2.5vw, 2.5rem);
@@ -606,6 +629,54 @@
 
     .section-page-grid > .section-page-grid__content {
       grid-column: 2 / -2;
+    }
+
+    /*
+     * Gâyemiz — hero-section-grid ile özdeş 4 kolon şablonu
+     * [buffer] [petek col-2] [bilgi kartı col-3] [buffer]
+     */
+    .mission-section-grid {
+      display: grid;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: clip;
+      padding-inline: var(--layout-margin);
+      column-gap: var(--grid-gutter);
+      grid-template-columns:
+        var(--hero-grid-buffer)
+        minmax(0, 1fr)
+        minmax(0, 1fr)
+        var(--hero-grid-buffer);
+      grid-template-rows: minmax(0, auto);
+    }
+
+    /* Hero satır-2 yüksekliği yok; kart ve band kendi sync-height ile hizalanır */
+    .mission-section-grid > .hero-slide-fill,
+    .mission-section-grid > .hero-slide-media-col {
+      order: unset;
+    }
+
+    /*
+     * Petek — örüntü bbox (~%85.7 yükseklik) banda tam oturur; alt altıgen kırpılmaz
+     * layout kutusu küçültülür, scale ile görsel band yüksekliğine eşitlenir
+     */
+    .mission-section-grid .hero-slide-media-band {
+      overflow: visible;
+    }
+
+    .mission-section-grid .hero-slide-media-col {
+      overflow: visible;
+    }
+
+    .mission-section-grid .mission-honeycomb {
+      --mission-honeycomb-pattern-fill: 1.167;
+      position: relative;
+      flex-shrink: 0;
+      height: calc(100% / var(--mission-honeycomb-pattern-fill));
+      width: auto;
+      aspect-ratio: 2.5 / 3.031089;
+      transform: scale(var(--mission-honeycomb-pattern-fill));
+      transform-origin: top left;
     }
   }
 
@@ -673,11 +744,15 @@
      Flex dikey yığın: altıgen (order 1) → bilgi kartı (order 2)
      §7.4: width 100%, negatif margin yok, 100vw yok
      ----------------------------------------------------------------------- */
+  @media (width < 768px) {
   .hero-section-grid {
     display: flex;
     flex-direction: column;
     padding-inline: var(--layout-margin);
     min-height: 100svh;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
   }
 
   .hero-slide-fill {
@@ -777,13 +852,15 @@
   }
 
   .hero-slide-media {
-    aspect-ratio: 43 / 24;
+    aspect-ratio: 1563 / 1331;
     width: 100%;
     height: auto;
     flex-shrink: 0;
     margin-left: 0;
     margin-top: 0;
   }
+
+  } /* @media (width < 768px) hero mobil sonu */
 
   /* -----------------------------------------------------------------------
      Hero Section — Desktop (md+, >= 768px)
@@ -813,9 +890,11 @@
       --hero-slide-max-height: calc(
         100svh - var(--header-height) - var(--hero-top-spacer)
       );
-      /* geometry.ts FRAME_OUTER_* / 100 — mermer çerçeve dış sınırı / konteyner */
-      --hero-frame-width-ratio: 0.5726744186046512;
-      --hero-frame-height-ratio: 0.8639322916666666;
+      /* geometry.ts FRAME_OUTER_* / 100 — cini-cerceve dış sınırı / konteyner */
+      --hero-frame-aspect-w: 1563;
+      --hero-frame-aspect-h: 1331;
+      --hero-frame-width-ratio: 0.9987204094689699;
+      --hero-frame-height-ratio: 0.9969947407963937;
       /* Nav col-2 genişliği — nav-header-grid 8 eşit fr sütun */
       --nav-col-width: calc(
         (
@@ -850,19 +929,28 @@
         var(--nav-col-width) + var(--grid-gutter) +
           (var(--nav-kurumsal-text-width) + var(--nav-egitim-text-width)) / 2
       );
-      /* Bilgi kartı sağ sınırı: logo sarı halkasının sol kavis başlangıcı */
-      --logo-yellow-radius: 110px;
-      --hero-slide-card-width: calc(
-        4 * var(--nav-col-width) + 3.5 * var(--grid-gutter) -
-          var(--logo-yellow-radius)
+      /* Mor hedef alan — çerçeve/gölge taşmasına karşı güvenlik payı */
+      --hero-bounds-safety: 3px;
+      /* Nav col-2 (KURUMSAL) sol kenarı — sol mor kutu sol sınırı */
+      --hero-col-2-left-x: calc(
+        var(--layout-margin) + var(--hero-grid-buffer) + var(--grid-gutter)
       );
+      --logo-yellow-radius: 110px;
       /* Nav logo merkezi X — col 5–6 ortası */
       --nav-logo-center-x: calc(
         var(--layout-margin) + clamp(1rem, 2.5vw, 2.5rem) + var(--grid-gutter) +
           4 * var(--nav-col-width) + 3.5 * var(--grid-gutter)
       );
+      --logo-yellow-left-x: calc(
+        var(--nav-logo-center-x) - var(--logo-yellow-radius)
+      );
       --logo-yellow-right-x: calc(
         var(--nav-logo-center-x) + var(--logo-yellow-radius)
+      );
+      /* Bilgi kartı: KURUMSAL sol → logo sarı halka sol; her iki yanda güvenlik payı */
+      --hero-slide-card-width: calc(
+        var(--logo-yellow-left-x) - var(--hero-col-2-left-x) -
+          2 * var(--hero-bounds-safety)
       );
       /* Cinzel "OKULLARIMIZ" metin genişliği (≈ 8.37em) */
       --nav-okullarimiz-text-width: calc(8.37 * (var(--text-sm) - 0.5pt));
@@ -870,6 +958,11 @@
         var(--layout-margin) + clamp(1rem, 2.5vw, 2.5rem) + var(--grid-gutter) +
           7 * (var(--nav-col-width) + var(--grid-gutter)) +
           (var(--nav-col-width) + var(--nav-okullarimiz-text-width)) / 2
+      );
+      /* Nav col-9 (OKULLARIMIZ) sağ sınırı — menü sütun bitiş çizgisi */
+      --nav-okullarimiz-col-right-x: calc(
+        var(--layout-margin) + clamp(1rem, 2.5vw, 2.5rem) + var(--grid-gutter) +
+          8 * var(--nav-col-width) + 7 * var(--grid-gutter)
       );
       /* Hero grid col-3 sol kenarı (viewport X) */
       --hero-col-3-left-x: calc(
@@ -881,13 +974,14 @@
           ) /
           2
       );
-      /* Altıgen medya bandı: logo sarı halka sağ → OKULLARIMIZ metin sağ */
+      /* Altıgen medya bandı: logo sarı halka sağ → OKULLARIMIZ sütun sağ */
       --hero-slide-media-offset-left: max(
         0px,
         calc(var(--logo-yellow-right-x) - var(--hero-col-3-left-x))
       );
       --hero-slide-media-band-width: calc(
-        var(--nav-okullarimiz-text-right-x) - var(--logo-yellow-right-x)
+        var(--nav-okullarimiz-col-right-x) - var(--logo-yellow-right-x) -
+          var(--hero-bounds-safety)
       );
       /* Görünür çerçeve dış sınırı band genişliğine oturacak konteyner ölçüsü */
       --hero-slide-media-outer-width: calc(
@@ -900,14 +994,19 @@
           ) /
           2
       );
-      /* Görünür çerçeve yüksekliği — bilgi kartı Y ekseni hizası */
-      --hero-slide-sync-height: calc(
-        var(--hero-slide-media-outer-width) * 24 / 43 *
-          var(--hero-frame-height-ratio)
+      /* Görünür çerçeve yüksekliği — satır tavanı içinde kalır */
+      --hero-slide-sync-height-raw: calc(
+        var(--hero-slide-media-outer-width) * var(--hero-frame-aspect-h) /
+          var(--hero-frame-aspect-w) * var(--hero-frame-height-ratio)
+      );
+      --hero-slide-sync-height: min(
+        var(--hero-slide-sync-height-raw),
+        calc(var(--hero-slide-max-height) - var(--hero-bounds-safety))
       );
       /* 43:24 konteyner yüksekliği — en-boy oranı korunur */
       --hero-slide-media-outer-height: calc(
-        var(--hero-slide-media-outer-width) * 24 / 43
+        var(--hero-slide-media-outer-width) * var(--hero-frame-aspect-h) /
+          var(--hero-frame-aspect-w)
       );
       /* Görünür çerçeve kartla hizalansın diye konteyner yukarı kaydırılır */
       --hero-slide-media-offset-top: calc(
@@ -918,12 +1017,15 @@
 
     .hero-section-grid {
       display: grid;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: clip;
       padding-inline: var(--layout-margin);
       column-gap: var(--grid-gutter);
       grid-template-columns:
         var(--hero-grid-buffer)
-        1fr
-        1fr
+        minmax(0, 1fr)
+        minmax(0, 1fr)
         var(--hero-grid-buffer);
       grid-template-rows:
         var(--hero-top-spacer)
@@ -931,20 +1033,28 @@
     }
 
     .hero-slide-fill {
-      width: 100%;
-      height: 100%;
+      width: var(--hero-slide-card-width);
+      height: var(--hero-slide-sync-height);
+      max-height: calc(
+        var(--hero-slide-max-height) - var(--hero-bounds-safety)
+      );
       margin-top: 0;
-      max-height: var(--hero-slide-max-height);
+      margin-left: var(--hero-bounds-safety);
+      margin-right: 0;
       display: flex;
       align-items: flex-start;
       order: unset;
       padding-bottom: 0;
+      min-width: 0;
+      overflow: hidden;
+      border-radius: 2rem;
+      flex-shrink: 0;
     }
 
     .hero-slide-card {
-      width: var(--hero-slide-card-width);
+      width: 100%;
       max-width: 100%;
-      height: var(--hero-slide-sync-height);
+      height: 100%;
       max-height: 100%;
       flex-shrink: 0;
       padding-bottom: 0;
@@ -974,51 +1084,88 @@
       display: flex;
       align-items: flex-start;
       justify-content: flex-start;
-      overflow: visible;
+      overflow: hidden;
       width: 100%;
       height: 100%;
       margin-top: 0;
       padding-bottom: 0;
       order: unset;
+      min-width: 0;
     }
 
     .hero-slide-media-band {
       container-type: size;
       container-name: hero-media;
       margin-left: var(--hero-slide-media-offset-left);
+      margin-right: 0;
       width: var(--hero-slide-media-band-width);
-      max-width: calc(100% - var(--hero-slide-media-offset-left));
       height: var(--hero-slide-sync-height);
+      max-height: calc(
+        var(--hero-slide-max-height) - var(--hero-bounds-safety)
+      );
       min-width: 0;
-      overflow: visible;
+      overflow: hidden;
       display: flex;
       align-items: flex-start;
       justify-content: flex-start;
       padding-inline: unset;
+      flex-shrink: 0;
     }
 
     .hero-slide-media {
-      aspect-ratio: 43 / 24;
+      aspect-ratio: 1563 / 1331;
       width: var(--hero-slide-media-outer-width);
       margin-left: var(--hero-slide-media-outer-offset);
       margin-top: var(--hero-slide-media-offset-top);
       height: auto;
       flex-shrink: 0;
     }
+
+    /*
+     * Gâyemiz — kart/petek yer değişimi; yatay bantlar hero’daki karşılıklarıyla hizalanır
+     * petek (col-2): hero bilgi kartı bandı (KURUMSAL → logo sarı sol)
+     * kart (col-3): hero altıgen medya bandı (logo sarı sağ → OKULLARIMIZ)
+     */
+    .mission-section-grid > .hero-slide-media-col .hero-slide-media-band {
+      margin-left: var(--hero-bounds-safety);
+      margin-right: 0;
+      width: var(--hero-slide-card-width);
+      height: var(--hero-slide-sync-height);
+      max-height: calc(
+        var(--hero-slide-max-height) - var(--hero-bounds-safety)
+      );
+      overflow: visible;
+    }
+
+    .mission-section-grid > .hero-slide-fill {
+      margin-left: var(--hero-slide-media-offset-left);
+      margin-right: 0;
+      width: var(--hero-slide-media-band-width);
+      height: var(--hero-slide-sync-height);
+      max-height: calc(
+        var(--hero-slide-max-height) - var(--hero-bounds-safety)
+      );
+    }
+
+    /* Yolculuk (Nebevî eğitim) — hero ile özdeş altıgen medya bandı */
+    [data-journey-stage] .journey-stage-grid.hero-section-grid {
+      grid-template-rows: 1fr;
+      height: 100%;
+      min-height: 0;
+      align-items: center;
+    }
   } /* @media (width >= 768px) sonu */
 
-  /* Desktop logo boyutları — laptop referans ölçüleri (lg+) */
-  @media (width >= 1024px) {
-    .central-identity::before {
-      width: var(--logo-yellow-ring-size, 220px);
-      height: var(--logo-yellow-ring-size, 220px);
-    }
-
-    .logo-drop-area {
-      width: var(--logo-drop-size, 165px);
-      height: var(--logo-drop-size, 165px);
-    }
+  /* Yolculuk mobil kart — küçük hero çerçeveli altıgen */
+  .journey-hex-compact .hero-slide-media {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0;
+    height: auto;
+    aspect-ratio: 1563 / 1331;
   }
+
+  /* Desktop logo boyutları — laptop referans ölçüleri (lg+) (Kaldırıldı, artık her yerde aynı) */
 }
 
 /* Erişilebilirlik: hareket azaltma tercihine saygı (webgelistirme.md §6) */

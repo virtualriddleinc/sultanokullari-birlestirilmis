@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { kurulusParagraflari, kurumsalTimeline } from "@/content/kurumsal";
 import { PageShell } from "@/components/page-shell";
 import { ContentCard } from "@/components/layout/content-card";
+import { PAGE_MEDIA } from "@/lib/menu-images";
 
 export const metadata: Metadata = {
   title: "Kurumsal Kimliğimiz",
@@ -13,6 +14,7 @@ export default function Page() {
     <PageShell
       title="Kurumsal Kimliğimiz"
       intro="İlimde âlim, ibadette âbid, gayrette mücahit bir neslin yetiştiği çift kanatlı eğitim modeli"
+      media={PAGE_MEDIA.kurumsalKimlik}
     >
       <ContentCard>
         <div className="space-y-4">

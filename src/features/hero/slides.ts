@@ -8,6 +8,8 @@
    açıklamalar cümlenin devamı veya PDF'teki komşu cümledir.
    ------------------------------------------------------------------------- */
 
+import { MENU_IMAGES } from "@/lib/menu-images";
+
 export interface HeroSlide {
   id: string;
   /** Kart üstündeki pill etiketi (PDF bölüm başlığı) */
@@ -37,7 +39,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     description: "bir neslin yetiştiği çift kanatlı eğitim modeli",
     buttonText: "Kurumsal Kimliğimiz",
     buttonLink: "/kurumsal/kurumsal-kimligimiz",
-    mediaUrl: "/images/menu-gorselleri/kurumsal-kimlik.jpg",
+    mediaUrl: MENU_IMAGES.kurumsalKimlik,
     mediaType: "image",
     displayDuration: 6,
   },
@@ -55,7 +57,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     buttonLink: "/egitim/kademeler",
     mediaUrl: "/videos/kademeler.mp4",
     mediaType: "video",
-    posterUrl: "/videos/kademeler-poster.jpg",
+    posterUrl: MENU_IMAGES.egitim,
     displayDuration: 6,
   },
   {
@@ -69,9 +71,8 @@ export const HERO_SLIDES: HeroSlide[] = [
     description: "ilmini ve gayretini adım adım büyütüyoruz.",
     buttonText: "Akademik Gelişim ve Takip",
     buttonLink: "/akademik/gelisim",
-    mediaUrl: "/videos/akademik-gelisim.mp4",
-    mediaType: "video",
-    posterUrl: "/videos/akademik-gelisim-poster.jpg",
+    mediaUrl: MENU_IMAGES.akademik,
+    mediaType: "image",
     displayDuration: 6,
   },
   {
@@ -86,7 +87,22 @@ export const HERO_SLIDES: HeroSlide[] = [
       "Çocuklarımızın ruhsal ve bedensel gelişiminde doğru rehberliğin hayati önem taşıdığının bilincindeyiz.",
     buttonText: "Rehberlik ve Eğitim Koçluğu",
     buttonLink: "/rehberlik/egitim-koclugu",
-    mediaUrl: "/images/menu-gorselleri/rehberlik-egitim-koclugu.jpg",
+    mediaUrl: MENU_IMAGES.rehberlik,
+    mediaType: "image",
+    displayDuration: 6,
+  },
+  {
+    id: "yasam",
+    tagline: "SULTANDA YAŞAM",
+    titleLines: [
+      "Özel Sultan Okulları'nda eğitim;",
+      "öğrencilerimizin akademik gelişimlerinin",
+      "yanında kişisel, sosyal ve ahlaki becerilerini",
+    ],
+    description: "de desteklemeyi amaçlar.",
+    buttonText: "Sultanda Yaşam",
+    buttonLink: "/yasam/sultanda-yasam",
+    mediaUrl: MENU_IMAGES.yasam,
     mediaType: "image",
     displayDuration: 6,
   },

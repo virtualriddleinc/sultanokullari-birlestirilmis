@@ -1,14 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import localFont from "next/font/local";
 import Link from "next/link";
-import { useRef, type ReactNode } from "react";
+import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import type { Variants } from "framer-motion";
-import { motion, useReducedMotion } from "framer-motion";
 import {
   BookOpenText,
   Compass,
@@ -17,69 +14,36 @@ import {
   Sparkles,
 } from "lucide-react";
 import { HexBadge } from "@/components/ui/hex-badge";
-import { heroMedia, type SiteMedia } from "@/content/site-media";
-import { t, viewportInViewTight } from "@/lib/animations";
+import { heroMedia } from "@/content/site-media";
+import { HeroFramedHexMedia } from "@/features/hero/hero-framed-hex-media";
+import { HeroFramedHexStack } from "@/features/hero/hero-framed-hex-stack";
+import levhaDesktop from "@/images/levha.png";
+import levhaMobil from "@/images/levha-mobil.png";
 import { cn } from "@/lib/cn";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const JOURNEY_HEADLINE =
   "Peygamber Efendimiz (sas)'in İzinde Geleceğe Örnek Nesiller...";
-const updock = localFont({
-  src: "../../font/Updock/Updock-Regular.ttf",
-  display: "swap",
-});
 
-function JourneyHeadline({ className }: { className?: string }) {
-  const reduce = useReducedMotion();
-  const words = JOURNEY_HEADLINE.split(/ +/).filter(Boolean);
-
-  if (reduce) {
-    return (
-      <h2 className={cn(className, updock.className)}>{JOURNEY_HEADLINE}</h2>
-    );
-  }
-
-  const delayForWord = (i: number) => (i < 2 ? 0 : 0.1 + (i - 2) * 0.16);
-
-  const wordVariants: Variants = {
-    hidden: { opacity: 0, scale: 0.82 },
-    visible: (i: number) => ({
-      opacity: 1,
-      scale: 1,
-      transition: { ...t(0.52), delay: delayForWord(i) },
-    }),
-  };
-
+function JourneyLevha({ className }: { className?: string }) {
   return (
-    <motion.h2
-      className={className}
-      initial="hidden"
-      whileInView="visible"
-      viewport={viewportInViewTight}
-      variants={{
-        hidden: { opacity: 0.35 },
-        visible: {
-          opacity: 1,
-          transition: { ...t(0.7), staggerChildren: 0, delayChildren: 0 },
-        },
-      }}
-    >
-      {words.map((word, i) => (
-        <motion.span
-          key={`${word}-${i}`}
-          custom={i}
-          variants={wordVariants}
-          className={cn(
-            "inline-block origin-center will-change-[opacity,transform]",
-            updock.className,
-          )}
-          style={{ marginRight: i < words.length - 1 ? "0.3em" : undefined }}
-        >
-          {word}
-        </motion.span>
-      ))}
-    </motion.h2>
+    <div className={cn("relative w-full", className)}>
+      <Image
+        src={levhaMobil}
+        alt={JOURNEY_HEADLINE}
+        className="h-auto w-full lg:hidden"
+        priority
+        sizes="100vw"
+      />
+      <Image
+        src={levhaDesktop}
+        alt={JOURNEY_HEADLINE}
+        className="hidden h-auto w-full lg:block"
+        priority
+        sizes="100vw"
+      />
+    </div>
   );
 }
 
@@ -137,79 +101,6 @@ const chapters = [
 ] as const;
 
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
-
-function JourneyMedia({
-  media,
-  priority = false,
-}: {
-  media: SiteMedia;
-  priority?: boolean;
-}) {
-  return (
-    <>
-      {media.kind === "video" ? (
-        <video
-          className="absolute inset-0 h-full w-full object-cover"
-          src={media.src}
-          poster={media.poster}
-          autoPlay
-          loop
-          muted
-          playsInline
-          aria-label={media.alt}
-        />
-      ) : (
-        <Image
-          src={media.src}
-          alt={media.alt}
-          fill
-          priority={priority}
-          sizes="(max-width: 1024px) 8rem, 31rem"
-          className="object-cover"
-        />
-      )}
-      <span
-        aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-amber-950/48 via-amber-950/8 to-white/10"
-      />
-    </>
-  );
-}
-
-function JourneyFramedHex({
-  media,
-  priority = false,
-  className,
-  children,
-}: {
-  media: SiteMedia;
-  priority?: boolean;
-  className?: string;
-  children?: ReactNode;
-}) {
-  return (
-    <div
-      className={cn(
-        "relative grid place-items-center overflow-visible",
-        className,
-      )}
-      style={{ aspectRatio: "2 / 1.7320508075688772" }}
-    >
-      <span
-        aria-hidden
-        className="pointer-events-none absolute top-1/2 left-1/2 h-[128%] w-[128%] -translate-x-1/2 -translate-y-1/2 border border-white/25 bg-[linear-gradient(135deg,rgba(255,255,255,0.16),rgba(255,255,255,0.05)),url('/desen.svg')] bg-cover bg-center bg-no-repeat opacity-85 shadow-[0_0_0_1px_rgba(255,255,255,0.12),0_30px_110px_rgba(120,53,15,0.22)]"
-        style={{ clipPath: HEX_CLIP }}
-      />
-      <div
-        className="absolute top-1/2 left-1/2 h-[120%] w-[120%] -translate-x-1/2 -translate-y-1/2 overflow-hidden border border-white/25 bg-amber-100/45 shadow-[0_30px_120px_rgba(180,83,9,0.20)] backdrop-blur-md"
-        style={{ clipPath: HEX_CLIP }}
-      >
-        <JourneyMedia media={media} priority={priority} />
-      </div>
-      {children}
-    </div>
-  );
-}
 
 export function HomeJourney() {
   const rootRef = useRef<HTMLDivElement>(null);
@@ -327,8 +218,8 @@ export function HomeJourney() {
       className="relative bg-white text-amber-950"
     >
       <div className="section-page-grid pt-fluid-8 sm:pt-fluid-16">
-        <div className="section-page-grid__content">
-          <JourneyHeadline className="sj-headline text-charcoal mt-3 max-w-5xl text-6xl leading-[0.95] font-semibold tracking-tight [text-shadow:0_10px_0_rgba(255,240,133,0.95),0_0_28px_rgba(255,240,133,0.9)] sm:text-7xl lg:text-[5.5rem]" />
+        <div className="section-page-grid__full">
+          <JourneyLevha className="mt-3" />
         </div>
       </div>
 
@@ -347,8 +238,8 @@ export function HomeJourney() {
               style={{ zIndex: chapters.length - i }}
               aria-hidden={i !== 0 ? "true" : undefined}
             >
-              <div className="relative mx-auto grid h-full max-w-6xl grid-cols-2 items-center gap-12 px-6">
-                <div className="flex flex-col gap-6">
+              <div className="hero-section-grid journey-stage-grid h-full w-full items-center">
+                <div className="col-span-full flex h-full flex-col justify-center gap-6 md:col-start-2 md:col-end-3 md:row-start-1">
                   <p className="text-xs font-semibold tracking-[0.32em] text-amber-700 uppercase">
                     {chapter.eyebrow}
                   </p>
@@ -366,15 +257,17 @@ export function HomeJourney() {
                     <span aria-hidden>→</span>
                   </Link>
                 </div>
-                <div className="relative flex h-full items-center justify-center">
-                  <JourneyFramedHex
-                    media={chapter.media}
-                    priority={i === 0}
-                    className="w-[min(480px,35vw)] text-amber-800"
-                  />
+                <div className="col-span-full relative md:col-start-3 md:col-end-4 md:row-start-1">
+                  <HeroFramedHexStack>
+                    <HeroFramedHexMedia
+                      media={chapter.media}
+                      priority={i === 0}
+                      sizes="(max-width: 1024px) 60vw, 35vw"
+                    />
+                  </HeroFramedHexStack>
                   <span
                     aria-hidden
-                    className="absolute top-16 right-2 inline-block w-24 bg-yellow-300/45 xl:w-28"
+                    className="pointer-events-none absolute top-16 right-2 inline-block w-24 bg-yellow-300/45 xl:w-28"
                     style={{
                       aspectRatio: "2 / 1.7320508075688772",
                       clipPath: HEX_CLIP,
@@ -382,7 +275,7 @@ export function HomeJourney() {
                   />
                   <span
                     aria-hidden
-                    className="absolute bottom-20 left-0 inline-block w-32 bg-orange-400/18 xl:w-36"
+                    className="pointer-events-none absolute bottom-20 left-0 inline-block w-32 bg-orange-400/18 xl:w-36"
                     style={{
                       aspectRatio: "2 / 1.7320508075688772",
                       clipPath: HEX_CLIP,
@@ -418,10 +311,12 @@ export function HomeJourney() {
                 chapter.accent,
               )}
             >
-              <JourneyFramedHex
-                media={chapter.media}
-                className="absolute top-4 right-4 w-20 sm:w-28"
-              />
+              <div className="journey-hex-compact absolute top-4 right-4 w-20 sm:w-28">
+                <HeroFramedHexMedia
+                  media={chapter.media}
+                  sizes="(max-width: 640px) 5rem, 7rem"
+                />
+              </div>
               <span
                 className={cn(
                   "pointer-events-none absolute inset-0 opacity-70",

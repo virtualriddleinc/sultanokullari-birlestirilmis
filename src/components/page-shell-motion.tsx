@@ -2,8 +2,10 @@
 
 import type { ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { cn } from "@/lib/cn";
+import { PageHeroMedia } from "@/components/layout/page-hero-media";
 import { SectionGrid } from "@/components/layout/section-grid";
+import type { PageMedia } from "@/lib/menu-images";
+import { cn } from "@/lib/cn";
 import {
   fadeUpDelayedBodyVariants,
   fadeUpVariants,
@@ -15,11 +17,13 @@ export function PageShellMotion({
   intro,
   children,
   headingLayout = "default",
+  media,
 }: {
   title: string;
   intro?: string;
   children?: ReactNode;
   headingLayout?: "default" | "centerHero";
+  media?: PageMedia;
 }) {
   const reduce = useReducedMotion();
   const hero = headingLayout === "centerHero";
@@ -38,6 +42,7 @@ export function PageShellMotion({
     return (
       <SectionGrid variant="white" className="py-fluid-8">
         <article>
+          {media ? <PageHeroMedia media={media} priority /> : null}
           <h1 className={headingClass}>{title}</h1>
           {intro ? <p className={introClass}>{intro}</p> : null}
           <div className="text-charcoal/85 mt-10 space-y-6">{children}</div>
@@ -49,6 +54,15 @@ export function PageShellMotion({
   return (
     <SectionGrid variant="white" className="py-fluid-8">
       <article>
+        {media ? (
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={fadeUpVariants}
+          >
+            <PageHeroMedia media={media} priority />
+          </motion.div>
+        ) : null}
         <motion.h1
           className={headingClass}
           initial="hidden"

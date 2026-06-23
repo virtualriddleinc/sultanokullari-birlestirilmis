@@ -1,21 +1,67 @@
 /* -------------------------------------------------------------------------
    Hero slider geometri sabitleri
    ─────────────────────────────────────────────────────────────────────────
-   cerceve_1.png altıgen çerçevesinin iç deliği, 43:24 oranındaki konteyner
-   içinde aşağıdaki yüzdelerle konumlanır. Medya yerleştirme (focal point,
-   scale) hesapları bu sabitlere dayanır.
+   cini-cerceve.png altıgen çerçevesinin iç deliği, görselin doğal oranındaki
+   konteyner içinde aşağıdaki yüzdelerle konumlanır. Medya yerleştirme (focal
+   point, scale) hesapları bu sabitlere dayanır.
    ------------------------------------------------------------------------- */
 
+/* cini-cerceve.png kaynak piksel boyutu */
+export const FRAME_IMAGE_WIDTH = 1563;
+export const FRAME_IMAGE_HEIGHT = 1331;
+
 /* Çerçeve deliğinin konteyner içindeki kapladığı alan (yüzde) */
-export const HEXAGON_CLIP_WIDTH_PCT = 45.64; // 100 - 27.18 - 27.18
-export const HEXAGON_CLIP_HEIGHT_PCT = 68.69; // 100 - 15.49 - 15.82
+export const HEXAGON_CLIP_WIDTH_PCT = 79.9104286628279;
+export const HEXAGON_CLIP_HEIGHT_PCT = 79.11344853493614;
 
-/* cerceve_1.png — görünür mermer çerçevenin dış sınırı (opak piksel sınırları) */
-export const FRAME_OUTER_WIDTH_PCT = 57.26744186046512;
-export const FRAME_OUTER_HEIGHT_PCT = 86.39322916666666;
+/* cini-cerceve.png — görünür çini çerçevenin dış sınırı (opak piksel sınırları) */
+export const FRAME_OUTER_WIDTH_PCT = 99.87204094689699;
+export const FRAME_OUTER_HEIGHT_PCT = 99.69947407963937;
 
-/* Kart ve medya bloklarının ortak en-boy oranı */
-export const CONTAINER_ASPECT_RATIO = 43 / 24;
+/* Altıgen deliğin konteyner kenarlarından içe çekilmesi (yüzde) — bbox referansı */
+export const HEX_MASK_INSET = {
+  left: 10.044785668586051,
+  right: 10.044785668586051,
+  top: 10.368144252441773,
+  bottom: 10.518407212622089,
+} as const;
+
+/*
+ * cini-cerceve.png iç deliği — opak sınır analizi (piksel → konteyner %)
+ * Saat yönü: sol-üst omuz → sağ-üst → sağ → sağ-alt → sol-alt → sol
+ */
+const HEX_CLIP_VERTICES = [
+  [29.3666, 10.6687],
+  [70.5694, 10.5935],
+  [89.8912, 50.0376],
+  [70.3135, 89.3313],
+  [29.5585, 89.2562],
+  [10.0448, 50.1127],
+] as const;
+
+const HEX_CLIP_CENTER = [50, 50] as const;
+
+/** Delik clip'ini merkezden dışa genişlet — anti-alias / subpiksel boşluk telafisi */
+const HEX_CLIP_BLEED = 0.015;
+
+function expandHexClipVertex([x, y]: readonly [number, number]) {
+  const [cx, cy] = HEX_CLIP_CENTER;
+  return [
+    cx + (x - cx) * (1 + HEX_CLIP_BLEED),
+    cy + (y - cy) * (1 + HEX_CLIP_BLEED),
+  ] as const;
+}
+
+export const HEX_CLIP_PATH = `polygon(${HEX_CLIP_VERTICES.map((vertex) => {
+  const [x, y] = expandHexClipVertex(vertex);
+  return `${x.toFixed(4)}% ${y.toFixed(4)}%`;
+}).join(", ")})`;
+
+/** Medya — çerçeve iç kenarında yeşil çizgi kalmaması için merkezden büyütme */
+export const HEX_MEDIA_COVER_SCALE = 1.035;
+
+/* Kart ve medya bloklarının ortak en-boy oranı — çerçeve PNG ile birebir */
+export const CONTAINER_ASPECT_RATIO = FRAME_IMAGE_WIDTH / FRAME_IMAGE_HEIGHT;
 
 /* Altıgen deliğin kendi en-boy oranı */
 export const HEXAGON_ASPECT_RATIO =

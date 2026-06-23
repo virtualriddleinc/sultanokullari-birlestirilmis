@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { PageMedia } from "@/lib/menu-images";
 import { PageShellMotion } from "@/components/page-shell-motion";
 
 interface PageShellProps {
@@ -6,6 +7,7 @@ interface PageShellProps {
   intro?: string;
   children?: ReactNode;
   headingLayout?: "default" | "centerHero";
+  media?: PageMedia;
 }
 
 export function PageShell({
@@ -13,9 +15,15 @@ export function PageShell({
   intro,
   children,
   headingLayout,
+  media,
 }: PageShellProps) {
   return (
-    <PageShellMotion title={title} intro={intro} headingLayout={headingLayout}>
+    <PageShellMotion
+      title={title}
+      intro={intro}
+      headingLayout={headingLayout}
+      media={media}
+    >
       {children}
     </PageShellMotion>
   );

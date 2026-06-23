@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageShell } from "@/components/page-shell";
 import { ContentCard } from "@/components/layout/content-card";
+import { PAGE_MEDIA } from "@/lib/menu-images";
 
 export const metadata: Metadata = {
   title: "Sultanda Yaşam",
@@ -11,6 +12,7 @@ export default function Page() {
     <PageShell
       title="Sultanda Yaşam"
       intro="Özel Sultan Okulları'nda eğitim; öğrencilerimizin akademik gelişimlerinin yanında kişisel, sosyal ve ahlaki becerilerini de desteklemeyi amaçlar."
+      media={PAGE_MEDIA.sultandaYasamVideo}
     >
       <ContentCard>
         <p className="section-body">

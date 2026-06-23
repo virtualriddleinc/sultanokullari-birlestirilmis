@@ -7,21 +7,10 @@
  * Tüm görseller /public/images/ altından string path ile servis edilir.
  */
 
+import { MENU_IMAGES } from "@/lib/menu-images";
+
 /* Bölüm görselleri */
-const IMG = {
-  kurumsalKimlik: "/images/menu-gorselleri/kurumsal-kimlik.jpg",
-  kurumsalDegerler: "/images/menu-gorselleri/kurumsal-degerlerimiz.jpg",
-  niyetimiz: "/images/menu-gorselleri/niyetimiz.jpg",
-  egitim: "/images/menu-gorselleri/degerler-egitimi.jpg",
-  akademik: "/images/menu-gorselleri/akademik.jpg",
-  rehberlik: "/images/menu-gorselleri/rehberlik-egitim-koclugu.jpg",
-  yasam: "/images/menu-gorselleri/yasam.jpg",
-  istanbul: "/images/menu-gorselleri/istanbul.jpg",
-  kocaeli: "/images/menu-gorselleri/kocaeli.jpg",
-  sakarya: "/images/menu-gorselleri/sakarya.jpg",
-  ankara: "/images/menu-gorselleri/ankara.jpg",
-  konya: "/images/menu-gorselleri/konya.jpg",
-} as const;
+const IMG = MENU_IMAGES;
 
 export interface NavItem {
   label: string;
