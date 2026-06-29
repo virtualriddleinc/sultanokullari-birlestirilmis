@@ -1,9 +1,10 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/navigation/site-link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, MapPin, Mail, Phone } from "lucide-react";
-import { branches } from "@/content/branches";
+import type { Branch } from "@/content/branches";
+import { branches as staticBranches } from "@/content/branches";
 import { InstagramGlyph } from "@/components/icons/instagram-glyph";
 import { ContentCard } from "@/components/layout/content-card";
 import { SectionGrid } from "@/components/layout/section-grid";
@@ -36,12 +37,12 @@ const footerNavGroups = [
   NAV_SECTIONS.find((s) => s.key === "okullar"),
 ].filter(Boolean);
 
-export function SiteFooter() {
+export function SiteFooter({ branches = staticBranches }: { branches?: Branch[] }) {
   const reduce = useReducedMotion();
 
   return (
     <footer className="border-charcoal/10 bg-brand-honey/25 relative mt-auto border-t">
-      <SectionGrid variant="honey" className="pt-fluid-8 pb-0" as="div">
+      <SectionGrid variant="honey" className="pt-fluid-8 pb-fluid-6" as="div">
         <ContentCard className="mb-fluid-8">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
             <div className="max-w-2xl">
@@ -65,7 +66,7 @@ export function SiteFooter() {
         </ContentCard>
 
         {reduce ? (
-          <FooterGrid />
+          <FooterGrid branches={branches} />
         ) : (
           <motion.div
             initial="hidden"
@@ -73,19 +74,23 @@ export function SiteFooter() {
             viewport={viewportInView}
             variants={staggerContainerVariants}
           >
-            <FooterGrid motion />
+            <FooterGrid motion branches={branches} />
           </motion.div>
         )}
-      </SectionGrid>
 
-      <div className="border-charcoal/10 border-t bg-white/80">
-        <SectionGrid variant="white" className="py-6" as="div">
-          <div className="text-charcoal/70 flex flex-col gap-3 text-sm sm:flex-row sm:items-center sm:justify-between">
-            <p>
+        <div className="border-charcoal/10 mt-fluid-8 border-t pt-fluid-6">
+          <div className="text-charcoal/70 flex flex-col gap-4 text-sm sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-center sm:text-left">
               © {new Date().getFullYear()} Sultan Okulları. Tüm hakları
               saklıdır.
             </p>
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <nav
+              aria-label="Yasal bağlantılar"
+              className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 sm:justify-end"
+            >
+              <Link href="/sss" className="hover:text-charcoal transition">
+                SSS
+              </Link>
               <Link href="/kvkk" className="hover:text-charcoal transition">
                 KVKK
               </Link>
@@ -95,15 +100,21 @@ export function SiteFooter() {
               >
                 Gizlilik politikası
               </Link>
-            </div>
+            </nav>
           </div>
-        </SectionGrid>
-      </div>
+        </div>
+      </SectionGrid>
     </footer>
   );
 }
 
-function FooterGrid({ motion: useMotion }: { motion?: boolean }) {
+function FooterGrid({
+  motion: useMotion,
+  branches = staticBranches,
+}: {
+  motion?: boolean;
+  branches?: Branch[];
+}) {
   const Wrapper = useMotion ? motion.div : "div";
   const ItemWrapper = useMotion ? motion.div : "div";
   const itemProps = useMotion

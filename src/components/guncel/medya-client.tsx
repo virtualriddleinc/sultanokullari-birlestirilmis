@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { AmbientSiteVideo } from "@/components/media/ambient-site-video";
 import { medyaFiltreleri, staticEvents } from "@/content/guncel";
 import { mediaPageItems } from "@/content/site-media";
 import {
@@ -110,15 +111,11 @@ function MediaBackdrop({ media }: { media: (typeof mediaPageItems)[number] }) {
   return (
     <>
       {media.kind === "video" ? (
-        <video
+        <AmbientSiteVideo
           className="absolute inset-0 h-full w-full object-cover"
           src={media.src}
           poster={media.poster}
-          autoPlay
-          loop
-          muted
-          playsInline
-          aria-label={media.alt}
+          title={media.alt}
         />
       ) : (
         <Image

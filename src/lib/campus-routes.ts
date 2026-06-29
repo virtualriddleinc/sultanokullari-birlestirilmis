@@ -1,4 +1,5 @@
 import type { Branch } from "@/content/branches";
+import type { CmsBranch } from "@/lib/branches-data";
 
 /** §2.3 okullarimiz rotaları → mevcut şube slug eşlemesi */
 export const CAMPUS_ROUTE_MAP: Record<string, Record<string, string>> = {
@@ -16,7 +17,12 @@ export function getBranchSlugFromCampusRoute(
   return CAMPUS_ROUTE_MAP[city]?.[campus];
 }
 
-export function getCampusRouteFromBranch(branch: Branch): string {
+export function getCampusRouteFromBranch(branch: Branch | CmsBranch): string {
+  const cms = branch as CmsBranch;
+  if (cms.citySlug && cms.campusSlug) {
+    return `/okullarimiz/${cms.citySlug}/${cms.campusSlug}`;
+  }
+
   const cityKey = branch.city
     .toLowerCase()
     .replace(/ı/g, "i")

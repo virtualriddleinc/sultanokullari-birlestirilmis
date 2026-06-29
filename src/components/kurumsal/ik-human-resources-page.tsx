@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/navigation/site-link";
 import { useRef } from "react";
 import { useReducedMotion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
@@ -20,6 +20,8 @@ import {
   UsersRound,
   type LucideIcon,
 } from "lucide-react";
+import { AmbientSiteVideo } from "@/components/media/ambient-site-video";
+import type { Branch } from "@/content/branches";
 import { IkWizard } from "@/components/kurumsal/ik-wizard";
 import {
   headerMedia,
@@ -109,15 +111,12 @@ function MediaFrame({
       className={cn("relative overflow-hidden bg-emerald-950/10", className)}
     >
       {media.kind === "video" ? (
-        <video
+        <AmbientSiteVideo
           className="absolute inset-0 h-full w-full object-cover"
           src={media.src}
           poster={media.poster}
+          title={media.alt}
           autoPlay={!reduce}
-          loop
-          muted
-          playsInline
-          aria-label={media.alt}
         />
       ) : (
         <Image
@@ -142,7 +141,13 @@ function MediaFrame({
   );
 }
 
-export function IkHumanResourcesPage({ intro }: { intro: string }) {
+export function IkHumanResourcesPage({
+  intro,
+  branches,
+}: {
+  intro: string;
+  branches?: Branch[];
+}) {
   const rootRef = useRef<HTMLElement>(null);
 
   useGSAP(
@@ -511,7 +516,7 @@ export function IkHumanResourcesPage({ intro }: { intro: string }) {
           </div>
 
           <div data-ik-reveal>
-            <IkWizard />
+            <IkWizard branches={branches} />
           </div>
         </div>
       </section>

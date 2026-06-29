@@ -3,11 +3,12 @@
 import { useActionState, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { transitionShort } from "@/lib/animations";
-import { branches } from "@/content/branches";
+import type { Branch } from "@/content/branches";
+import { branches as staticBranches } from "@/content/branches";
 import {
   submitIkApplication,
   type IkState,
-} from "@/app/kurumsal/insan-kaynaklari/actions";
+} from "@/app/(site)/kurumsal/insan-kaynaklari/actions";
 
 const initial: IkState = { ok: false, message: "" };
 
@@ -21,7 +22,7 @@ const labelClassName = "block text-sm font-semibold text-zinc-800";
 const fieldClassName =
   "mt-2 w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20";
 
-export function IkWizard() {
+export function IkWizard({ branches = staticBranches }: { branches?: Branch[] }) {
   const reduce = useReducedMotion();
   const [step, setStep] = useState(0);
   const [state, formAction, pending] = useActionState(

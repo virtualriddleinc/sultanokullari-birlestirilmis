@@ -3,7 +3,7 @@
 import beyazDesen from "@/images/beyaz-desen.svg";
 import { SectionWaveDivider } from "@/components/ui/section-wave-divider";
 import { HeroSlider } from "./hero-slider";
-import { HERO_SLIDES } from "./slides";
+import { HERO_SLIDES, type HeroSlide } from "./slides";
 
 /* -------------------------------------------------------------------------
    HeroSection — 4 kolon × 2 satır CSS Grid layout
@@ -13,7 +13,7 @@ import { HERO_SLIDES } from "./slides";
      1 → Logo sarkma boşluğu  (header logosu bu alana biner)
      2 → Slider alanı          (viewport sonuna kadar uzanır)
    ------------------------------------------------------------------------- */
-export function HeroSection() {
+export function HeroSection({ slides = HERO_SLIDES }: { slides?: HeroSlide[] }) {
   return (
     <section
       aria-label="Ana sayfa hero bölümü"
@@ -39,15 +39,15 @@ export function HeroSection() {
         Slider satır 2 bu hizadan başlar; logo bu alanın üzerinde görünür kalır.
       */}
       <div
-        className="order-0 col-span-full md:order-none md:row-start-1"
+        className="hero-logo-spacer order-0 col-span-full lg:order-none lg:row-start-1"
         aria-hidden="true"
       />
 
       {/* ── Satır 2: Slider — sol bilgi kartı (col 2) + sağ altıgen medya (col 3) ── */}
-      <HeroSlider slides={HERO_SLIDES} />
+      <HeroSlider slides={slides} />
 
       {/* ── Dalgalı geçiş — petek (bal köpüğü) bölümüne; tam viewport genişliği ── */}
-      <SectionWaveDivider className="relative z-[2] col-span-full max-md:order-3 md:row-start-3" />
+      <SectionWaveDivider className="relative z-[2] col-span-full max-lg:order-4 lg:row-start-3" />
     </section>
   );
 }

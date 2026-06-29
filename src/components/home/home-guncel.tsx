@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/navigation/site-link";
 import { CalendarDays, Newspaper } from "lucide-react";
-import { staticEvents, staticNews } from "@/content/guncel";
+import { AmbientSiteVideo } from "@/components/media/ambient-site-video";
+import type { SiteEvent, SiteNews } from "@/content/guncel";
+import type { SiteMedia } from "@/content/site-media";
 import { mediaPageItems } from "@/content/site-media";
 import { Marquee } from "@/components/ui/marquee";
 import { StaggerItem, StaggerList } from "@/components/motion/stagger-list";
@@ -37,11 +39,41 @@ function dayParts(iso: string) {
   };
 }
 
-export function HomeGuncel() {
-  const featured = staticEvents[0];
-  const featuredMedia = mediaPageItems[1];
-  const otherEvents = staticEvents.slice(1);
-  const hasNews = staticNews.length > 0;
+export type HomeGuncelProps = {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  featuredEventLabel?: string;
+  upcomingEventsLabel?: string;
+  newsLabel?: string;
+  featuredEventMedia?: SiteMedia;
+  events?: (SiteEvent & { slug?: string })[];
+  news?: (SiteNews & { slug?: string })[];
+};
+
+export function HomeGuncel({
+  eyebrow = "Duyurular",
+  title = "Etkinlikler ve haberler",
+  description = "Okul takvimi, duyurular ve kurum içinden kısa gelişmeler tek alanda.",
+  ctaLabel = "Tüm içerikler",
+  ctaHref = "/guncel/haberler",
+  featuredEventLabel = "Öne çıkan etkinlik",
+  upcomingEventsLabel = "Yaklaşan etkinlikler",
+  newsLabel = "Haberler",
+  featuredEventMedia = mediaPageItems[1] as SiteMedia,
+  events = [],
+  news = [],
+}: HomeGuncelProps) {
+  const featured = events[0];
+  const featuredMedia = featuredEventMedia;
+  const otherEvents = events.slice(1);
+  const hasNews = news.length > 0;
+  const marqueeItems = [...events, ...news, ...events];
+  const featuredHref = featured?.slug
+    ? `/guncel/etkinlikler/${featured.slug}`
+    : "/guncel/etkinlikler";
 
   return (
     <SectionGrid
@@ -56,7 +88,7 @@ export function HomeGuncel() {
           speed={55}
           className="text-charcoal/80 py-3 text-xs font-semibold tracking-[0.28em] uppercase"
         >
-          {[...staticEvents, ...staticNews, ...staticEvents].map((item, i) => (
+          {marqueeItems.map((item, i) => (
             <span key={`${item.id}-${i}`} className="flex items-center gap-3">
               <span
                 aria-hidden
@@ -78,12 +110,12 @@ export function HomeGuncel() {
 
       <SectionHeading
         className="mt-10"
-        eyebrow="Duyurular"
-        title="Etkinlikler ve haberler"
-        description="Okul takvimi, duyurular ve kurum içinden kısa gelişmeler tek alanda."
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
         action={
-          <Link href="/guncel/haberler" className="cta-pill">
-            Tüm içerikler <span aria-hidden>→</span>
+          <Link href={ctaHref} className="cta-pill">
+            {ctaLabel} <span aria-hidden>→</span>
           </Link>
         }
       />
@@ -91,19 +123,15 @@ export function HomeGuncel() {
       <div className="mt-12 grid gap-6 lg:grid-cols-12">
         {featured ? (
           <Link
-            href="/guncel/etkinlikler"
+            href={featuredHref}
             className="group border-charcoal/15 relative col-span-1 overflow-hidden rounded-[2rem] border bg-[linear-gradient(135deg,#1a1c18,#2a2e28_55%,var(--color-brand-green))] p-8 text-white shadow-[0_30px_120px_rgba(26,28,24,0.20)] lg:col-span-7 lg:p-10"
           >
             {featuredMedia.kind === "video" ? (
-              <video
+              <AmbientSiteVideo
                 className="absolute inset-0 h-full w-full object-cover"
                 src={featuredMedia.src}
                 poster={featuredMedia.poster}
-                autoPlay
-                loop
-                muted
-                playsInline
-                aria-label={featuredMedia.alt}
+                title={featuredMedia.alt}
               />
             ) : (
               <Image
@@ -142,7 +170,7 @@ export function HomeGuncel() {
                   </div>
                 </div>
                 <span className="rounded-full border border-white/30 bg-white/10 px-3 py-1 text-[0.65rem] font-semibold tracking-[0.28em] uppercase backdrop-blur">
-                  Öne çıkan etkinlik
+                  {featuredEventLabel}
                 </span>
               </div>
               <h3 className="text-3xl leading-[1.1] font-semibold tracking-tight text-balance sm:text-4xl">
@@ -165,7 +193,7 @@ export function HomeGuncel() {
                 <CalendarDays className="size-5" aria-hidden />
               </HexBadge>
               <h3 className="text-charcoal/60 text-xs font-semibold tracking-[0.28em] uppercase">
-                Yaklaşan etkinlikler
+                {upcomingEventsLabel}
               </h3>
             </div>
             {otherEvents.length > 0 ? (
@@ -212,12 +240,12 @@ export function HomeGuncel() {
                 <Newspaper className="size-5" aria-hidden />
               </HexBadge>
               <h3 className="text-charcoal/60 text-xs font-semibold tracking-[0.28em] uppercase">
-                Haberler
+                {newsLabel}
               </h3>
             </div>
             {hasNews ? (
               <StaggerList className="mt-5 space-y-3">
-                {staticNews.map((n) => (
+                {news.map((n) => (
                   <StaggerItem key={n.id}>
                     <div className="border-charcoal/10 rounded-2xl border bg-white/80 p-4">
                       <p className="text-charcoal/60 text-xs">

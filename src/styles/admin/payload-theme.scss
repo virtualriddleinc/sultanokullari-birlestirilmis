@@ -1,0 +1,91 @@
+@use "../sultan-brand.scss";
+
+@layer payload-default {
+  :root,
+  html[data-theme="light"] {
+    --theme-bg: var(--sultan-surface-muted);
+    --theme-input-bg: var(--sultan-surface);
+    --theme-text: var(--sultan-charcoal);
+    --theme-border-color: var(--sultan-border);
+
+    --theme-elevation-0: #ffffff;
+    --theme-elevation-50: #f8fafc;
+    --theme-elevation-100: #f1f3ef;
+    --theme-elevation-150: #e8ebe4;
+    --theme-elevation-200: #dde1d8;
+    --theme-elevation-250: #cfd4c9;
+    --theme-elevation-300: #b8bfb0;
+    --theme-elevation-350: #9aa093;
+    --theme-elevation-400: #7d8478;
+    --theme-elevation-450: #636963;
+    --theme-elevation-500: #4f544c;
+    --theme-elevation-550: #3f443d;
+    --theme-elevation-600: #343832;
+    --theme-elevation-650: #2a2e29;
+    --theme-elevation-700: #232621;
+    --theme-elevation-750: #1e211d;
+    --theme-elevation-800: var(--sultan-charcoal);
+    --theme-elevation-850: #141613;
+    --theme-elevation-900: #0f100e;
+    --theme-elevation-950: #080907;
+    --theme-elevation-1000: #000000;
+
+    --theme-success-50: color-mix(in srgb, var(--sultan-green) 8%, white);
+    --theme-success-100: color-mix(in srgb, var(--sultan-green) 14%, white);
+    --theme-success-150: color-mix(in srgb, var(--sultan-green) 20%, white);
+    --theme-success-200: color-mix(in srgb, var(--sultan-green) 28%, white);
+    --theme-success-250: color-mix(in srgb, var(--sultan-green) 36%, white);
+    --theme-success-300: color-mix(in srgb, var(--sultan-green) 44%, white);
+    --theme-success-350: color-mix(in srgb, var(--sultan-green) 52%, white);
+    --theme-success-400: color-mix(in srgb, var(--sultan-green) 62%, white);
+    --theme-success-450: color-mix(in srgb, var(--sultan-green) 72%, white);
+    --theme-success-500: #3dd900;
+    --theme-success-550: #35c400;
+    --theme-success-600: #2da800;
+    --theme-success-650: #248c00;
+    --theme-success-700: #1c7000;
+    --theme-success-750: #155800;
+    --theme-success-800: #0f4200;
+    --theme-success-850: #0a2e00;
+    --theme-success-900: #061c00;
+    --theme-success-950: #030f00;
+
+    --theme-warning-50: color-mix(in srgb, var(--sultan-honey) 25%, white);
+    --theme-warning-100: color-mix(in srgb, var(--sultan-honey) 40%, white);
+    --theme-warning-150: color-mix(in srgb, var(--sultan-honey) 55%, white);
+    --theme-warning-200: color-mix(in srgb, var(--sultan-honey) 65%, white);
+    --theme-warning-250: color-mix(in srgb, var(--sultan-honey) 75%, white);
+    --theme-warning-300: color-mix(in srgb, var(--sultan-honey) 85%, white);
+    --theme-warning-350: var(--sultan-honey);
+    --theme-warning-400: #f5e66a;
+    --theme-warning-450: #e8d84a;
+    --theme-warning-500: #d4c42e;
+    --theme-warning-550: #b8a824;
+    --theme-warning-600: #9a8c1e;
+    --theme-warning-650: #7d7218;
+    --theme-warning-700: #635a14;
+    --theme-warning-750: #4a4410;
+    --theme-warning-800: #35300c;
+    --theme-warning-850: #242108;
+    --theme-warning-900: #161405;
+    --theme-warning-950: #0c0b03;
+  }
+
+  html[data-theme="dark"] {
+    --theme-bg: #141613;
+    --theme-input-bg: #1e211d;
+    --theme-text: #f4f6f0;
+    --theme-border-color: rgb(255 255 255 / 0.1);
+
+    --theme-elevation-0: #1a1c18;
+    --theme-elevation-50: #1e211d;
+    --theme-elevation-100: #232621;
+    --theme-elevation-150: #2a2e29;
+    --theme-elevation-200: #343832;
+    --theme-elevation-800: #e8ebe4;
+    --theme-elevation-900: #f4f6f0;
+
+    --theme-success-500: var(--sultan-green);
+    --theme-warning-350: var(--sultan-honey);
+  }
+}

@@ -1,12 +1,18 @@
 "use client";
 
-import Link from "next/link";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import Link from "@/components/navigation/site-link";
+import { motion, useReducedMotion } from "framer-motion";
 import type { Variants } from "framer-motion";
-import { useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useState, type CSSProperties } from "react";
+import type { NedenItem } from "@/content/neden-sultan";
 import { nedenSultanItems } from "@/content/neden-sultan";
 import { Marquee } from "@/components/ui/marquee";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { HexLandingModal } from "@/components/ui/hex-landing-modal";
+import {
+  mapNedenItemToModal,
+  type HexLandingModalContent,
+} from "@/lib/hex-landing-modal";
 import { springSnappy } from "@/lib/animations";
 import { cn } from "@/lib/cn";
 
@@ -74,7 +80,30 @@ const SHAPES = {
   xl: buildShape(5, 11),
 } as const;
 
-const values = [
+type ShapeKey = keyof typeof SHAPES;
+
+function pickShape(width: number): ShapeKey {
+  if (width < 640) return "xs";
+  if (width < 768) return "sm";
+  if (width < 1024) return "md";
+  if (width < 1280) return "lg";
+  return "xl";
+}
+
+function useHoneycombShape(): ShapeKey {
+  const [shape, setShape] = useState<ShapeKey>("md");
+
+  useEffect(() => {
+    const update = () => setShape(pickShape(window.innerWidth));
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
+  return shape;
+}
+
+const DEFAULT_VALUES = [
   "İlim",
   "Hikmet",
   "Edeb",
@@ -87,25 +116,56 @@ const values = [
   "Köklere bağlı",
 ];
 
-export function HomeNedenPreview() {
+export type HomeNedenPreviewProps = {
+  eyebrow?: string;
+  title?: string;
+  titleHighlight?: string;
+  description?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  marqueeValues?: string[];
+  items?: NedenItem[];
+};
+
+export function HomeNedenPreview({
+  eyebrow = "Ayırt edici yaklaşım",
+  title = "Neden",
+  titleHighlight = "Sultan Okulları?",
+  description = "Temiz ve huzurlu ortamdan nebevî eğitime, doğa ile iç içe yaşamdan hafızlık ufkuna uzanan güçlü bir kurum dili.",
+  ctaLabel = `${nedenSultanItems.length} maddenin tamamı`,
+  ctaHref = "/kurumsal/neden-sultan",
+  marqueeValues = DEFAULT_VALUES,
+  items: allItems = nedenSultanItems,
+}: HomeNedenPreviewProps = {}) {
   const reduce = useReducedMotion();
-  const items = nedenSultanItems.slice(0, 11);
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const shouldRenderHoneycomb = useInView(sectionRef, {
-    once: true,
-    margin: "160px 0px",
-  });
+  const items = allItems.slice(0, 11);
+  const shapeKey = useHoneycombShape();
+  const shape = SHAPES[shapeKey];
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] =
+    useState<HexLandingModalContent | null>(null);
+
+  const closeModal = useCallback(() => setModalOpen(false), []);
+
+  const openNedenModal = useCallback(
+    (item: NedenItem, index: number) => {
+      setModalContent(
+        mapNedenItemToModal(item, index, ctaHref, ctaLabel, closeModal),
+      );
+      setModalOpen(true);
+    },
+    [ctaHref, ctaLabel, closeModal],
+  );
 
   return (
     <section
-      ref={sectionRef}
       id="neden"
       data-section="neden"
       className="border-charcoal/10 bg-brand-honey/35 relative overflow-hidden border-y"
     >
       <div className="border-charcoal/10 border-y bg-white/40">
         <Marquee speed={48} className="py-4">
-          {values.map((v) => (
+          {marqueeValues.map((v) => (
             <span
               key={v}
               className="text-charcoal/70 flex items-center gap-3 text-xs font-semibold tracking-[0.32em] uppercase"
@@ -128,68 +188,39 @@ export function HomeNedenPreview() {
       <div className="section-page-grid py-fluid-8 sm:py-fluid-16">
         <div className="section-page-grid__content">
           <SectionHeading
-            eyebrow="Ayırt edici yaklaşım"
+            eyebrow={eyebrow}
             title={
               <>
-                Neden <span className="text-brand-green">Sultan Okulları?</span>
+                {title}{" "}
+                <span className="text-brand-green">{titleHighlight}</span>
               </>
             }
-            description="Temiz ve huzurlu ortamdan nebevî eğitime, doğa ile iç içe yaşamdan hafızlık ufkuna uzanan güçlü bir kurum dili."
+            description={description}
             action={
-              <Link href="/kurumsal/neden-sultan" className="cta-pill">
-                {nedenSultanItems.length} maddenin tamamı{" "}
-                <span aria-hidden>→</span>
+              <Link href={ctaHref} className="cta-pill">
+                {ctaLabel} <span aria-hidden>→</span>
               </Link>
             }
           />
 
           <div className="relative mt-10 sm:mt-12 lg:mt-16">
-            {shouldRenderHoneycomb ? (
-              <motion.div
-                initial={reduce ? false : "hidden"}
-                animate="visible"
-                variants={honeycombStaggerVariants}
-              >
-                <Honeycomb
-                  shape={SHAPES.xs}
-                  items={items}
-                  className="block sm:hidden"
-                  reduce={reduce}
-                />
-                <Honeycomb
-                  shape={SHAPES.sm}
-                  items={items}
-                  className="hidden sm:block md:hidden"
-                  reduce={reduce}
-                />
-                <Honeycomb
-                  shape={SHAPES.md}
-                  items={items}
-                  className="hidden md:block lg:hidden"
-                  reduce={reduce}
-                />
-                <Honeycomb
-                  shape={SHAPES.lg}
-                  items={items}
-                  className="hidden lg:block xl:hidden"
-                  reduce={reduce}
-                />
-                <Honeycomb
-                  shape={SHAPES.xl}
-                  items={items}
-                  className="hidden xl:block"
-                  reduce={reduce}
-                />
-              </motion.div>
-            ) : (
-              <div
-                aria-hidden
-                className="border-charcoal/10 h-[26rem] rounded-[2rem] border bg-white/35 sm:h-[30rem] lg:h-[34rem]"
+            <motion.div initial={false} animate="visible" variants={honeycombStaggerVariants}>
+              <Honeycomb
+                shape={shape}
+                items={items}
+                reduce={reduce}
+                onOpenModal={openNedenModal}
               />
-            )}
+            </motion.div>
           </div>
         </div>
       </div>
+
+      <HexLandingModal
+        open={modalOpen}
+        onClose={closeModal}
+        content={modalContent}
+      />
     </section>
   );
 }
@@ -199,14 +230,14 @@ type HoneycombItem = (typeof nedenSultanItems)[number];
 type HoneycombProps = {
   shape: HoneycombShape;
   items: HoneycombItem[];
-  className?: string;
   reduce: boolean | null;
+  onOpenModal: (item: HoneycombItem, index: number) => void;
 };
 
-function Honeycomb({ shape, items, className, reduce }: HoneycombProps) {
+function Honeycomb({ shape, items, reduce, onOpenModal }: HoneycombProps) {
   return (
     <div
-      className={cn("relative w-full", className)}
+      className="relative w-full"
       style={{ aspectRatio: shape.aspectRatio }}
     >
       {/* Petek etrafı — yeşil glow halka */}
@@ -224,6 +255,7 @@ function Honeycomb({ shape, items, className, reduce }: HoneycombProps) {
             index={i}
             position={pos}
             reduce={reduce}
+            onOpenModal={onOpenModal}
           />
         );
       })}
@@ -236,10 +268,13 @@ type HexCellProps = {
   index: number;
   position: CellPosition;
   reduce: boolean | null;
+  onOpenModal: (item: HoneycombItem, index: number) => void;
 };
 
-function HexCell({ item, index, position, reduce }: HexCellProps) {
+function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
   const [tapped, setTapped] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const isFlipped = tapped;
   const isPrimary = index % 4 === 0 || index === 10;
   const baseShadow = isPrimary
     ? "drop-shadow(0 0 18px rgba(13, 107, 42, 0.26))"
@@ -252,6 +287,7 @@ function HexCell({ item, index, position, reduce }: HexCellProps) {
     top: `${position.top}%`,
     width: `${position.width}%`,
     aspectRatio: HEX_RATIO,
+    clipPath: HEX_CLIP,
     filter: baseShadow,
     transition: reduce ? undefined : "filter 0.4s ease",
   };
@@ -265,7 +301,25 @@ function HexCell({ item, index, position, reduce }: HexCellProps) {
     transition: reduce
       ? undefined
       : "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)",
-    transform: tapped ? "rotateY(180deg)" : undefined,
+    transform: isFlipped ? "rotateY(180deg)" : undefined,
+  };
+
+  const openModalFromCell = () => {
+    onOpenModal(item, index);
+    setTapped(false);
+  };
+
+  const handleCellClick = () => {
+    if (isFlipped) {
+      openModalFromCell();
+      return;
+    }
+    // Masaüstü hover önizlemesinde arka yüz görünürken tek tıkla aç
+    if (hovered && !reduce) {
+      openModalFromCell();
+      return;
+    }
+    setTapped(true);
   };
 
   const faceStyle: CSSProperties = {
@@ -279,17 +333,19 @@ function HexCell({ item, index, position, reduce }: HexCellProps) {
       variants={honeycombCellVariants}
       whileHover={reduce ? undefined : { y: -4, filter: hoverShadow }}
       transition={springSnappy}
-      className="group/hex absolute"
+      className="group/hex absolute cursor-pointer touch-manipulation"
       style={containerStyle}
-      onClick={() => setTapped((v) => !v)}
-      onMouseLeave={() => setTapped(false)}
+      onClick={handleCellClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       <div className="relative size-full" style={perspectiveStyle}>
         <div
           className={cn(
             "neden-flip relative size-full",
             !reduce &&
-              "group-focus-within/hex:[transform:rotateY(180deg)] group-hover/hex:[transform:rotateY(180deg)]",
+              !isFlipped &&
+              "group-hover/hex:[transform:rotateY(180deg)]",
           )}
           style={innerStyle}
         >
@@ -297,6 +353,7 @@ function HexCell({ item, index, position, reduce }: HexCellProps) {
           <div
             className={cn(
               "absolute inset-0 overflow-hidden backdrop-blur-sm",
+              isFlipped && "pointer-events-none",
               isPrimary
                 ? "bg-brand-green text-charcoal"
                 : "text-charcoal bg-white/65",
@@ -316,10 +373,11 @@ function HexCell({ item, index, position, reduce }: HexCellProps) {
             </div>
           </div>
 
-          {/* BACK */}
+          {/* BACK — flip sonrası tıklama article handler ile modal açar */}
           <div
             className={cn(
               "absolute inset-0 overflow-hidden backdrop-blur-sm",
+              !isFlipped && "pointer-events-none",
               isPrimary
                 ? "bg-charcoal text-brand-honey"
                 : "bg-brand-green text-charcoal",
@@ -327,10 +385,21 @@ function HexCell({ item, index, position, reduce }: HexCellProps) {
             style={{ ...faceStyle, transform: "rotateY(180deg)" }}
           >
             <div className="pointer-events-none absolute inset-0 bg-[url('/desen.svg')] bg-cover bg-center bg-no-repeat opacity-[0.06] mix-blend-screen" />
-            <div className="relative flex h-full flex-col items-center justify-center px-[12%] text-center">
-              <p className="line-clamp-6 text-[0.78rem] leading-snug font-medium text-balance text-white/95 sm:text-[0.7rem] md:text-[0.78rem] lg:text-[0.85rem] xl:text-[0.92rem]">
+            <div className="pointer-events-none relative flex h-full flex-col items-center justify-center gap-2 px-[12%] text-center">
+              <p className="line-clamp-5 text-[0.78rem] leading-snug font-medium text-balance text-white/95 sm:text-[0.7rem] md:text-[0.78rem] lg:text-[0.85rem] xl:text-[0.92rem]">
                 {item.body}
               </p>
+              <span
+                className={cn(
+                  "mt-1 shrink-0 rounded-full border px-3 py-1 text-[0.65rem] font-bold tracking-wide uppercase sm:text-[0.6rem] md:px-3.5 md:py-1.5 md:text-[0.65rem]",
+                  isPrimary
+                    ? "border-brand-honey/40 bg-brand-honey/15 text-brand-honey"
+                    : "border-charcoal/20 bg-white/20 text-charcoal",
+                )}
+                aria-hidden
+              >
+                İncele
+              </span>
             </div>
           </div>
         </div>

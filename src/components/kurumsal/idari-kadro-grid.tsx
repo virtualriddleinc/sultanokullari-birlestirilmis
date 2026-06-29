@@ -2,11 +2,11 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import type { StaffMember } from "@/content/idari-kadro";
 import {
   idariKadro,
   branchOptions,
   type BranchSlug,
-  type StaffMember,
 } from "@/content/idari-kadro";
 import { StaffCard } from "@/components/kurumsal/staff-card";
 import { StaggerItem, StaggerList } from "@/components/motion/stagger-list";
@@ -126,17 +126,17 @@ function BranchPicker({
   );
 }
 
-export function IdariKadroGrid() {
+export function IdariKadroGrid({ members = idariKadro }: { members?: StaffMember[] }) {
   const [branch, setBranch] = useState<BranchSlug>("sancaktepe");
 
   const yonetim = useMemo(
-    () => idariKadro.filter((m) => m.department === "yonetim"),
-    [],
+    () => members.filter((m) => m.department === "yonetim"),
+    [members],
   );
 
   const branchStaff = useMemo(
-    () => idariKadro.filter((m) => m.branchSlug === branch),
-    [branch],
+    () => members.filter((m) => m.branchSlug === branch),
+    [members, branch],
   );
 
   const branchEgitim = branchStaff.filter((m) => m.department === "egitim");

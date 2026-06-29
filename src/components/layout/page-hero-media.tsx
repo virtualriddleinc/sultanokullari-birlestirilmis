@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { AmbientSiteVideo } from "@/components/media/ambient-site-video";
 import type { PageMedia } from "@/lib/menu-images";
 import { cn } from "@/lib/cn";
 
@@ -19,15 +20,11 @@ export function PageHeroMedia({
       )}
     >
       {media.type === "video" ? (
-        <video
+        <AmbientSiteVideo
           className="absolute inset-0 h-full w-full object-cover"
           src={media.src}
           poster={media.poster}
-          autoPlay
-          loop
-          muted
-          playsInline
-          aria-label={media.alt}
+          title={media.alt}
         />
       ) : (
         <Image

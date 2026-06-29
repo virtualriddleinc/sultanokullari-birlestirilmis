@@ -1,27 +1,48 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/navigation/site-link";
 import { useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, MapPin } from "lucide-react";
-import { branches } from "@/content/branches";
+import { branches as staticBranches } from "@/content/branches";
 import { branchPreviewMedia } from "@/content/site-media";
+import { AmbientSiteVideo } from "@/components/media/ambient-site-video";
 import { ContentCard } from "@/components/layout/content-card";
 import { SectionGrid } from "@/components/layout/section-grid";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { HexBadge } from "@/components/ui/hex-badge";
 import { getCampusRouteFromBranch } from "@/lib/campus-routes";
+import type { CmsBranch } from "@/lib/branches-data";
 import { t } from "@/lib/animations";
 import { cn } from "@/lib/cn";
 
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
 
-export function HomeBranchesShowcase() {
+export type HomeBranchesShowcaseProps = {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  branches?: CmsBranch[];
+};
+
+export function HomeBranchesShowcase({
+  eyebrow = "Okullarımız",
+  title = "Size en yakın Sultan okulunu keşfedin",
+  description = "Size en yakın Sultan okulunu seçerek yol tarifi alabilir, okulumuza güvenli ve pratik bir şekilde ulaşabilirsiniz.",
+  ctaLabel = "Sizi Arayalım",
+  ctaHref = "/iletisim",
+  branches = staticBranches as CmsBranch[],
+}: HomeBranchesShowcaseProps = {}) {
   const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
-  const branch = branches[active];
-  const media = branchPreviewMedia[branch.slug];
+  const branch = branches[active] ?? branches[0];
+  const media =
+    branch?.previewMedia ?? branchPreviewMedia[branch?.slug ?? ""];
+
+  if (!branch) return null;
 
   return (
     <SectionGrid
@@ -30,12 +51,12 @@ export function HomeBranchesShowcase() {
       className="border-charcoal/10 border-y"
     >
       <SectionHeading
-        eyebrow="Okullarımız"
-        title="Size en yakın Sultan okulunu keşfedin"
-        description="Size en yakın Sultan okulunu seçerek yol tarifi alabilir, okulumuza güvenli ve pratik bir şekilde ulaşabilirsiniz."
+        eyebrow={eyebrow}
+        title={title}
+        description={description}
         action={
-          <Link href="/iletisim" className="cta-pill">
-            Sizi Arayalım
+          <Link href={ctaHref} className="cta-pill">
+            {ctaLabel}
           </Link>
         }
       />
@@ -109,15 +130,12 @@ export function HomeBranchesShowcase() {
               className="absolute inset-0"
             >
               {media?.kind === "video" ? (
-                <video
+                <AmbientSiteVideo
                   className="absolute inset-0 h-full w-full object-cover"
                   src={media.src}
                   poster={media.poster}
+                  title={media.alt}
                   autoPlay={!reduce}
-                  loop
-                  muted
-                  playsInline
-                  aria-label={media.alt}
                 />
               ) : media ? (
                 <Image

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import Script from "next/script";
+import { InteractiveSiteVideo } from "@/components/media/interactive-site-video";
 import type { InstagramPost } from "@/content/instagram";
 
 declare global {
@@ -25,28 +26,12 @@ export function InstagramEmbed({
   shouldPlay = false,
   onEnded,
 }: InstagramEmbedProps) {
-  const videoRef = useRef<HTMLVideoElement>(null);
   const isVideoPost = Boolean(post.videoSrc);
 
   useEffect(() => {
     if (isVideoPost) return;
     window.instgrm?.Embeds?.process();
   }, [isVideoPost, post.url]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!isVideoPost || !video) return;
-
-    if (!shouldPlay) {
-      video.pause();
-      return;
-    }
-
-    video.currentTime = 0;
-    void video.play().catch(() => {
-      // Tarayıcı otomatik oynatmayı engellerse kullanıcı kontrolleri devralır.
-    });
-  }, [isVideoPost, post.videoSrc, shouldPlay]);
 
   return (
     <>
@@ -66,19 +51,13 @@ export function InstagramEmbed({
         }
       >
         {isVideoPost && post.videoSrc ? (
-          <video
-            ref={videoRef}
+          <InteractiveSiteVideo
             className="block h-full w-full rounded-[1.05rem] object-cover"
-            controls
-            muted
+            src={post.videoSrc}
+            title={post.title}
+            shouldPlay={shouldPlay}
             onEnded={onEnded}
-            preload="metadata"
-            playsInline
-            aria-label={post.title}
-          >
-            <source src={post.videoSrc} type="video/mp4" />
-            Tarayıcınız video etiketini desteklemiyor.
-          </video>
+          />
         ) : (
           <blockquote
             className="instagram-media mx-auto !max-w-full !min-w-0"

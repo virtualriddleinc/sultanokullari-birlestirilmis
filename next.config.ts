@@ -1,4 +1,10 @@
+import { withPayload } from "@payloadcms/next/withPayload";
 import type { NextConfig } from "next";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(__filename);
 
 /** §2.3 geçiş: eski /subeler/* → yeni /okullarimiz/[city]/[campus] */
 const branchRedirects = [
@@ -28,6 +34,37 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [...branchRedirects];
   },
+  images: {
+    localPatterns: [
+      { pathname: "/api/media/file/**" },
+      { pathname: "/_next/static/media/**" },
+      { pathname: "/images/**" },
+      { pathname: "/site-media/**" },
+      { pathname: "/videos/**" },
+    ],
+  },
+  webpack: (webpackConfig, { isServer }) => {
+    webpackConfig.resolve.extensionAlias = {
+      ".cjs": [".cts", ".cjs"],
+      ".js": [".ts", ".tsx", ".js", ".jsx"],
+      ".mjs": [".mts", ".mjs"],
+    };
+
+    if (!isServer) {
+      webpackConfig.resolve.fallback = {
+        ...webpackConfig.resolve.fallback,
+        child_process: false,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+
+    return webpackConfig;
+  },
+  turbopack: {
+    root: path.resolve(dirname),
+  },
 };
 
-export default nextConfig;
+export default withPayload(nextConfig, { devBundleServerPackages: false });

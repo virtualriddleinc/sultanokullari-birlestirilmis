@@ -18,7 +18,7 @@ export const newsSchema = z.object({
 export type SiteEvent = z.infer<typeof eventSchema>;
 export type SiteNews = z.infer<typeof newsSchema>;
 
-/** Statik örnek etkinlikler (docx’te takvim yok; şablon veri). */
+/** @deprecated CMS Events koleksiyonu kullanın; yalnızca medya demo ve seed referansı. */
 export const staticEvents: SiteEvent[] = eventSchema.array().parse([
   {
     id: "e1",
@@ -30,6 +30,7 @@ export const staticEvents: SiteEvent[] = eventSchema.array().parse([
   },
 ]);
 
+/** @deprecated CMS News koleksiyonu kullanın. */
 export const staticNews: SiteNews[] = [];
 
 export const medyaFiltreleri = [

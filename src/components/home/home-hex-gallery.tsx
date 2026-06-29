@@ -7,6 +7,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Draggable } from "gsap/Draggable";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { AmbientSiteVideo } from "@/components/media/ambient-site-video";
 import { hexGalleryMedia, type SiteMedia } from "@/content/site-media";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, Draggable);
@@ -388,15 +389,11 @@ export function HomeHexGallery() {
               role="img"
             >
               {card.media.kind === "video" ? (
-                <video
+                <AmbientSiteVideo
                   className="absolute inset-0 h-full w-full object-cover"
                   src={card.media.src}
                   poster={card.media.poster}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  aria-label={card.media.alt}
+                  title={card.media.alt}
                 />
               ) : (
                 <Image

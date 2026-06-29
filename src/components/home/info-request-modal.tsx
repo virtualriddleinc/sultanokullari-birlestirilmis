@@ -10,7 +10,7 @@ import {
   type FormEvent,
 } from "react";
 import { X } from "lucide-react";
-import { submitContact, type ContactFormState } from "@/app/iletisim/actions";
+import { submitContact, type ContactFormState } from "@/app/(site)/iletisim/actions";
 
 const initial: ContactFormState = { ok: false, message: "" };
 
@@ -29,7 +29,25 @@ declare global {
 const inputClass =
   "mt-1.5 w-full rounded-xl border border-zinc-200 bg-white px-3.5 py-2.5 text-sm text-zinc-900 shadow-sm transition focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30";
 
-export function InfoRequestModal() {
+export type InfoRequestModalProps = {
+  enabled?: boolean;
+  brandLabel?: string;
+  title?: string;
+  subtitle?: string;
+  submitLabel?: string;
+  dismissLabel?: string;
+  kvkkText?: string;
+};
+
+export function InfoRequestModal({
+  enabled = true,
+  brandLabel = "Sultan Okulları",
+  title = "Sizi Arayalım!",
+  subtitle = "Numaranızı bırakın, eğitim danışmanımız en kısa sürede sizi arayıp tüm sorularınızı yanıtlasın.",
+  submitLabel = "Beni Arayın",
+  dismissLabel = "Şimdi değil",
+  kvkkText = "KVKK aydınlatma metnini okudum, kişisel verilerimin işlenmesini, tarafıma arama yapılmasını ve SMS gönderilmesini kabul ediyorum.",
+}: InfoRequestModalProps = {}) {
   const reduce = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [state, formAction, pending] = useActionState(submitContact, initial);
@@ -38,6 +56,7 @@ export function InfoRequestModal() {
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
   useEffect(() => {
+    if (!enabled) return;
     if (typeof window === "undefined") return;
     let shouldShow = true;
     try {
@@ -53,7 +72,7 @@ export function InfoRequestModal() {
       const id = window.setTimeout(() => setOpen(true), 600);
       return () => window.clearTimeout(id);
     }
-  }, []);
+  }, [enabled]);
 
   const close = useCallback(() => {
     setOpen(false);
@@ -150,17 +169,16 @@ export function InfoRequestModal() {
                   <X className="size-4" />
                 </button>
                 <p className="text-xs font-semibold tracking-[0.32em] text-emerald-900/70 uppercase">
-                  Sultan Okulları
+                  {brandLabel}
                 </p>
                 <h2
                   id="info-request-title"
                   className="mt-2 text-3xl leading-tight font-bold tracking-tight text-emerald-950 sm:text-4xl"
                 >
-                  Sizi Arayalım!
+                  {title}
                 </h2>
                 <p className="mt-2.5 max-w-sm text-sm leading-relaxed text-emerald-950/75">
-                  Numaranızı bırakın, eğitim danışmanımız en kısa sürede sizi
-                  arayıp tüm sorularınızı yanıtlasın.
+                  {subtitle}
                 </p>
               </div>
 
@@ -191,6 +209,11 @@ export function InfoRequestModal() {
                       autoComplete="off"
                       className="hidden"
                       aria-hidden
+                    />
+                    <input
+                      type="hidden"
+                      name="source"
+                      value="info_request"
                     />
                     <input
                       type="hidden"
@@ -258,8 +281,7 @@ export function InfoRequestModal() {
                         >
                           KVKK aydınlatma metnini
                         </a>{" "}
-                        okudum, kişisel verilerimin işlenmesini, tarafıma arama
-                        yapılmasını ve SMS gönderilmesini kabul ediyorum.
+                        {kvkkText.replace(/^KVKK aydınlatma metnini\s*/i, "")}
                       </span>
                     </label>
                     <FieldError errors={state.fieldErrors?.kvkk} />
@@ -270,14 +292,14 @@ export function InfoRequestModal() {
                         onClick={close}
                         className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-5 py-2.5 text-sm font-medium text-zinc-600 transition hover:bg-zinc-50"
                       >
-                        Şimdi değil
+                        {dismissLabel}
                       </button>
                       <button
                         type="submit"
                         disabled={pending}
                         className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-white shadow-[0_18px_50px_rgba(13,107,42,0.25)] transition hover:bg-[var(--color-primary-dark)] disabled:opacity-60"
                       >
-                        {pending ? "Gönderiliyor…" : "Beni Arayın"}
+                        {pending ? "Gönderiliyor…" : submitLabel}
                       </button>
                     </div>
                   </form>

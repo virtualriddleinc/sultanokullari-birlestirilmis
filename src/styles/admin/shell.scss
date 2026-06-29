@@ -1,0 +1,138 @@
+@use "../sultan-brand.scss";
+
+.sultan-display {
+  font-family: var(--font-cinzel), "Cinzel", Georgia, serif;
+}
+
+.template-default,
+.template-minimal {
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+}
+
+.template-default .template-default__wrap {
+  position: relative;
+  background-color: var(--theme-bg);
+}
+
+.template-minimal {
+  position: relative;
+  background-color: var(--sultan-surface-muted);
+}
+
+/* Sidebar */
+.template-default .nav {
+  background: var(--sultan-surface);
+  border-right: 1px solid var(--sultan-border);
+}
+
+.template-default .nav__link {
+  color: color-mix(in srgb, var(--sultan-charcoal) 85%, transparent);
+  border-radius: 8px;
+}
+
+.template-default .nav__link:hover {
+  background: color-mix(in srgb, var(--sultan-green) 8%, white);
+}
+
+.template-default .nav__link--active {
+  background: color-mix(in srgb, var(--sultan-green) 12%, white);
+  color: var(--sultan-charcoal);
+  font-weight: 600;
+}
+
+.template-default .nav__link-indicator {
+  background: var(--sultan-green);
+  border-radius: 2px;
+}
+
+.template-default .nav-group__label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--sultan-charcoal) 55%, var(--sultan-honey));
+}
+
+/* Header / içerik alanı */
+.template-default .app-header {
+  background: color-mix(in srgb, var(--sultan-surface) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--sultan-border);
+}
+
+/* Butonlar */
+.template-default .btn--style-primary,
+.template-minimal .btn--style-primary {
+  background-color: var(--sultan-charcoal);
+  border-color: var(--sultan-charcoal);
+  color: #fff;
+  border-radius: var(--sultan-radius);
+  font-weight: 600;
+}
+
+.template-default .btn--style-primary:hover,
+.template-minimal .btn--style-primary:hover {
+  background-color: color-mix(in srgb, var(--sultan-charcoal) 82%, var(--sultan-green));
+  border-color: color-mix(in srgb, var(--sultan-charcoal) 82%, var(--sultan-green));
+}
+
+.template-default .btn--style-secondary {
+  border-radius: var(--sultan-radius);
+  border-color: var(--sultan-border);
+}
+
+/* Formlar */
+.template-default input:focus-visible,
+.template-default textarea:focus-visible,
+.template-default select:focus-visible,
+.template-default .btn:focus-visible,
+.template-minimal input:focus-visible,
+.template-minimal button:focus-visible {
+  outline: 2px solid var(--sultan-green);
+  outline-offset: 2px;
+}
+
+/* Login */
+.template-minimal .login__brand {
+  position: relative;
+}
+
+.template-minimal .login__brand::after {
+  content: "";
+  display: block;
+  height: 3px;
+  width: 4rem;
+  margin: 0.75rem auto 0;
+  border-radius: 999px;
+  background: var(--sultan-gradient-brand);
+}
+
+.template-minimal .form-submit button {
+  width: 100%;
+}
+
+.template-minimal h1 {
+  letter-spacing: -0.02em;
+  color: var(--sultan-charcoal);
+}
+
+.sultan-login-intro {
+  margin: 0 0 1.25rem;
+  text-align: center;
+  color: color-mix(in srgb, var(--sultan-charcoal) 70%, transparent);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  max-width: 22rem;
+}
+
+.sultan-login-intro__title {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--sultan-charcoal);
+}
+
+/* Varsayılan koleksiyon kartları gizli */
+.dashboard .collections {
+  display: none;
+}

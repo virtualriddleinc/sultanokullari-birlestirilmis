@@ -1,0 +1,20 @@
+// Site ile hizalı marka token'ları — admin + ileride site paylaşımı
+:root {
+  --sultan-green: #4cff00;
+  --sultan-honey: #fff085;
+  --sultan-gold: var(--sultan-honey);
+  --sultan-charcoal: #1a1c18;
+  --sultan-surface: #ffffff;
+  --sultan-surface-muted: #f8fafc;
+  --sultan-surface-soft: rgb(255 255 255 / 0.74);
+  --sultan-border: rgb(26 28 24 / 0.1);
+  --sultan-shadow-soft: 0 24px 80px rgb(26 28 24 / 0.08);
+  --sultan-radius: 0.625rem;
+  --sultan-radius-lg: 12px;
+  --sultan-gradient-brand: linear-gradient(
+    135deg,
+    var(--sultan-charcoal) 0%,
+    color-mix(in srgb, var(--sultan-charcoal) 70%, var(--sultan-green)) 45%,
+    color-mix(in srgb, var(--sultan-honey) 85%, var(--sultan-green)) 100%
+  );
+}

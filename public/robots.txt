@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://sultanokullari.com.tr
-
-# Sitemaps
-Sitemap: https://sultanokullari.com.tr/sitemap.xml

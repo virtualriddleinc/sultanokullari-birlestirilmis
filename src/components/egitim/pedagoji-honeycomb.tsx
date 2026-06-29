@@ -2,12 +2,15 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/cn";
+import {
+  FLAT_TOP_HEX_CLIP,
+  FLAT_TOP_HEX_RATIO,
+  MISSION_HONEYCOMB_LAYOUT,
+} from "@/lib/flat-top-honeycomb";
 import { springSnappy, t, viewportInView } from "@/lib/animations";
 
 /** `MissionHoneycomb` ile aynı düz üst petek geometrisi. */
-const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
-const CONTAINER_ASPECT = `${2.5} / ${3.5 * 0.8660254037844386}`;
-const ROW_STEP = 100 / 3.5;
+const CONTAINER_ASPECT = MISSION_HONEYCOMB_LAYOUT.aspectRatio;
 
 /** Kurumsal birincil yeşil — Nebevî petek hücreleri. */
 const HONEYCOMB_CELL_SHELL =
@@ -74,14 +77,19 @@ export function PedagojiHoneycomb({
       >
         {items.map((item, index) => {
           const pos = ITEM_HEX_POSITIONS[index];
+          const { left, top, width } = MISSION_HONEYCOMB_LAYOUT.cellPosition(
+            pos.col,
+            pos.row,
+          );
           return (
             <motion.li
               key={item.title}
-              className="group absolute w-[40%] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              className="group absolute focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
               style={{
-                left: `${pos.col * 30}%`,
-                top: `${pos.row * ROW_STEP}%`,
-                aspectRatio: "2 / 1.7320508075688772",
+                left: `${left}%`,
+                top: `${top}%`,
+                width: `${width}%`,
+                aspectRatio: FLAT_TOP_HEX_RATIO,
                 zIndex: 2,
               }}
               initial={reduce ? false : { opacity: 0, scale: 0.9, y: 18 }}
@@ -104,7 +112,7 @@ export function PedagojiHoneycomb({
                   "relative grid size-full place-items-center overflow-hidden",
                   HONEYCOMB_CELL_SHELL,
                 )}
-                style={{ clipPath: HEX_CLIP }}
+                style={{ clipPath: FLAT_TOP_HEX_CLIP }}
               >
                 <span
                   aria-hidden
@@ -142,8 +150,8 @@ export function PedagojiHoneycomb({
                 HONEYCOMB_CELL_SHELL,
               )}
               style={{
-                aspectRatio: "2 / 1.7320508075688772",
-                clipPath: HEX_CLIP,
+                aspectRatio: FLAT_TOP_HEX_RATIO,
+                clipPath: FLAT_TOP_HEX_CLIP,
               }}
             >
               <span

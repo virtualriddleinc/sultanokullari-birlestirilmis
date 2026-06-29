@@ -1,9 +1,10 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/navigation/site-link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, MapPin, Phone } from "lucide-react";
-import { branches, type Branch } from "@/content/branches";
+import type { Branch } from "@/content/branches";
+import { branches as staticBranches } from "@/content/branches";
 import {
   staggerContainerVariants,
   staggerItemVariants,
@@ -20,7 +21,11 @@ const accents = [
   "from-rose-100 via-white to-rose-50 text-rose-700",
 ];
 
-export function IletisimBranchCards() {
+export function IletisimBranchCards({
+  branches = staticBranches,
+}: {
+  branches?: Branch[];
+}) {
   const reduce = useReducedMotion();
 
   return (

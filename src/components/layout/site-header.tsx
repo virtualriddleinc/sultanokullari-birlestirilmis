@@ -2,7 +2,7 @@
 
 import { useCallback, useState, useId } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/navigation/site-link";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
@@ -28,6 +28,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { AmbientSiteVideo } from "@/components/media/ambient-site-video";
 import { cn } from "@/lib/utils";
 import { NAV_SECTIONS, type NavSection, type NavItem } from "@/lib/navigation";
 import logo from "@/images/logo.svg";
@@ -149,7 +150,13 @@ function CentralLogo({ onClick }: { onClick?: () => void }) {
 /* -------------------------------------------------------------------------
    MegaPanel — dropdown içerik kartı
    ------------------------------------------------------------------------- */
-function MegaPanel({ section }: { section: NavSection }) {
+function MegaPanel({
+  section,
+  onLinkClick,
+}: {
+  section: NavSection;
+  onLinkClick?: () => void;
+}) {
   const shouldReduceMotion = useReducedMotion();
   const [hoveredItem, setHoveredItem] = useState<NavItem | null>(null);
 
@@ -216,6 +223,7 @@ function MegaPanel({ section }: { section: NavSection }) {
                 <Link
                   key={item.href}
                   href={item.href}
+                  onClick={onLinkClick}
                   onMouseEnter={() => setHoveredItem(item)}
                   onMouseLeave={() => setHoveredItem(null)}
                   onFocus={() => setHoveredItem(item)}
@@ -261,13 +269,10 @@ function MegaPanel({ section }: { section: NavSection }) {
                     useSoftCrop ? "mega-media-frame" : "absolute inset-0"
                   }
                 >
-                  <video
-                    key={activeVideo}
+                  <AmbientSiteVideo
+                    playerKey={activeVideo}
                     src={activeVideo}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
+                    title="Menü tanıtım videosu"
                     preload="none"
                     poster={activeVideo.replace(/\.mp4$/, "-poster.jpg")}
                     className="mega-media-fill"
@@ -433,12 +438,9 @@ function MobileDrawer({
                                 sizes="(max-width: 400px) 90vw, 360px"
                               />
                             ) : (
-                              <video
+                              <AmbientSiteVideo
                                 src={sectionVideo!}
-                                autoPlay
-                                muted
-                                loop
-                                playsInline
+                                title="Menü bölüm videosu"
                                 preload="none"
                                 className="absolute inset-0 h-full w-full object-cover"
                               />
@@ -485,6 +487,11 @@ export function SiteHeader() {
     setActiveMenu(null);
   }, []);
 
+  const closeAllMenus = useCallback(() => {
+    setActiveMenu(null);
+    setMobileOpen(false);
+  }, []);
+
   const leftSections = NAV_SECTIONS.slice(0, 3);
   const rightSections = NAV_SECTIONS.slice(3);
 
@@ -496,7 +503,7 @@ export function SiteHeader() {
         {mobileOpen && (
           <MobileDrawer
             open={mobileOpen}
-            onClose={() => setMobileOpen(false)}
+            onClose={closeAllMenus}
           />
         )}
       </AnimatePresence>
@@ -544,7 +551,7 @@ export function SiteHeader() {
         >
           <header className="bg-brand-honey relative z-[2] h-[90px] overflow-visible shadow-[0_10px_20px_rgba(0,0,0,0.08)]">
             {/* ---- Mobil bar (xs → lg-1) ---- */}
-            <div className="relative flex h-full w-full items-center justify-between px-4 lg:hidden">
+            <div className="relative flex h-full w-full items-center justify-between px-[var(--mobile-chrome-gutter)] lg:hidden">
               {/* Hamburger */}
               <button
                 onClick={() => setMobileOpen(true)}
@@ -557,7 +564,7 @@ export function SiteHeader() {
 
               {/* Logo — desktop grid davranışıyla aynı: h=90px, yatayda orta */}
               <div className="absolute top-0 left-1/2 flex h-[90px] -translate-x-1/2 items-center justify-center">
-                <CentralLogo />
+                <CentralLogo onClick={closeAllMenus} />
               </div>
 
               {/* Sağ — "Sizi Arayalım" butonu */}
@@ -599,7 +606,7 @@ export function SiteHeader() {
 
               {/* Merkez logo — kolon 5-6 */}
               <div className="col-span-2 flex h-full justify-center">
-                <CentralLogo />
+                <CentralLogo onClick={closeAllMenus} />
               </div>
 
               {/* Sağ başlıklar — kolon 6-8 */}
@@ -631,7 +638,7 @@ export function SiteHeader() {
           <AnimatePresence>
             {activeSection && (
               <div className="hidden lg:block">
-                <MegaPanel section={activeSection} />
+                <MegaPanel section={activeSection} onLinkClick={closeAllMenus} />
               </div>
             )}
           </AnimatePresence>

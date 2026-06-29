@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { InteractiveSiteVideo } from "@/components/media/interactive-site-video";
 import type { Branch } from "@/content/branches";
 
 interface BranchGalleryProps {
@@ -32,14 +33,11 @@ export function BranchGallery({ branch }: BranchGalleryProps) {
               className="relative aspect-[4/3] overflow-hidden rounded-lg bg-zinc-100"
             >
               {item.kind === "video" ? (
-                <video
+                <InteractiveSiteVideo
                   className="h-full w-full object-cover"
                   src={item.src}
                   poster={item.poster}
-                  controls
-                  muted
-                  playsInline
-                  aria-label={item.alt}
+                  title={item.alt}
                 />
               ) : (
                 <Image

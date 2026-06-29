@@ -1,6 +1,8 @@
 import Image from "next/image";
 import cerceveFrame from "@/images/cini-cerceve.png";
+import { AmbientSiteVideo } from "@/components/media/ambient-site-video";
 import type { SiteMedia } from "@/content/site-media";
+import { cn } from "@/lib/cn";
 import { HEX_CLIP_PATH, HEX_MEDIA_COVER_SCALE } from "./geometry";
 
 export type HeroFramedHexMediaProps = {
@@ -8,6 +10,9 @@ export type HeroFramedHexMediaProps = {
   priority?: boolean;
   sizes?: string;
   focalPoint?: { x: number; y: number };
+  interactive?: boolean;
+  onActivate?: () => void;
+  activateLabel?: string;
 };
 
 function FramedHexMediaInner({
@@ -15,13 +20,34 @@ function FramedHexMediaInner({
   priority,
   sizes = "(max-width: 1024px) 60vw, 35vw",
   focalPoint,
+  interactive = false,
+  onActivate,
+  activateLabel,
 }: HeroFramedHexMediaProps) {
   const objectPosition = focalPoint
     ? `${focalPoint.x}% ${focalPoint.y}%`
     : undefined;
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!interactive || !onActivate) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onActivate();
+    }
+  };
+
   return (
-    <div className="relative h-full w-full">
+    <div
+      className={cn(
+        "relative h-full w-full",
+        interactive && "cursor-pointer",
+      )}
+      role={interactive ? "button" : undefined}
+      tabIndex={interactive ? 0 : undefined}
+      aria-label={interactive ? activateLabel : undefined}
+      onClick={interactive ? onActivate : undefined}
+      onKeyDown={handleKeyDown}
+    >
       <div
         className="absolute inset-0 z-10 overflow-hidden"
         style={{ clipPath: HEX_CLIP_PATH }}
@@ -31,17 +57,13 @@ function FramedHexMediaInner({
           style={{ transform: `scale(${HEX_MEDIA_COVER_SCALE})` }}
         >
           {media.kind === "video" ? (
-            <video
+            <AmbientSiteVideo
               src={media.src}
               poster={media.poster}
-              autoPlay
-              muted
-              loop
-              playsInline
+              title={media.alt}
               preload="metadata"
               className="absolute inset-0 h-full w-full object-cover"
               style={objectPosition ? { objectPosition } : undefined}
-              aria-label={media.alt}
             />
           ) : (
             <Image
@@ -64,7 +86,7 @@ function FramedHexMediaInner({
           aria-hidden="true"
           fill
           sizes={sizes}
-          priority={priority}
+          unoptimized
           className="object-contain"
         />
       </div>

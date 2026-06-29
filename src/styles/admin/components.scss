@@ -1,0 +1,366 @@
+@use "../sultan-brand.scss";
+
+/* Logo */
+.sultan-admin-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+}
+
+.sultan-admin-logo__badge {
+  font-family: var(--font-cinzel), "Cinzel", Georgia, serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--sultan-charcoal) 75%, var(--sultan-honey));
+}
+
+/* Sidebar gelen kutusu */
+.sultan-nav-inbox {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.5rem 0.75rem 0.75rem;
+  margin-bottom: 0.25rem;
+  border-bottom: 1px solid var(--sultan-border);
+}
+
+.sultan-nav-inbox__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.4rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--sultan-charcoal);
+  background: color-mix(in srgb, var(--sultan-honey) 35%, white);
+  border: 1px solid color-mix(in srgb, var(--sultan-honey) 50%, var(--sultan-border));
+}
+
+.sultan-nav-inbox__link:hover {
+  background: color-mix(in srgb, var(--sultan-honey) 55%, white);
+}
+
+/* Editör ipuçları */
+.sultan-admin-hint {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--sultan-radius);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  background: color-mix(in srgb, var(--sultan-honey) 22%, white);
+  border: 1px dashed color-mix(in srgb, var(--sultan-charcoal) 18%, var(--sultan-green));
+  color: var(--sultan-charcoal);
+}
+
+.sultan-admin-hint--link a {
+  color: var(--sultan-charcoal);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.sultan-admin-hint--link a:hover {
+  color: color-mix(in srgb, var(--sultan-charcoal) 70%, var(--sultan-green));
+}
+
+/* Dashboard — açık site yüzeyi */
+.sultan-dashboard {
+  margin-bottom: 2rem;
+  padding: 1.5rem 1.75rem;
+  border-radius: var(--sultan-radius-lg);
+  background: var(--sultan-surface);
+  color: var(--sultan-charcoal);
+  border: 1px solid var(--sultan-border);
+  box-shadow: var(--sultan-shadow-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.sultan-dashboard::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--sultan-gradient-brand);
+}
+
+.sultan-dashboard__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-top: 0.25rem;
+}
+
+.sultan-dashboard__title {
+  margin: 0;
+  font-family: var(--font-cinzel), "Cinzel", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--sultan-charcoal);
+}
+
+.sultan-dashboard__subtitle {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  color: color-mix(in srgb, var(--sultan-charcoal) 65%, transparent);
+  max-width: 36rem;
+}
+
+.sultan-dashboard__preview {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--sultan-radius);
+  background: var(--sultan-green);
+  color: var(--sultan-charcoal);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--sultan-green) 35%, transparent);
+}
+
+.sultan-dashboard__preview:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--sultan-green) 45%, transparent);
+}
+
+.sultan-dashboard__health {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: var(--sultan-radius);
+  background: color-mix(in srgb, var(--sultan-honey) 30%, white);
+  border: 1px solid color-mix(in srgb, var(--sultan-honey) 60%, var(--sultan-border));
+}
+
+.sultan-dashboard__health-item {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--sultan-charcoal);
+}
+
+.sultan-dashboard__health-item--error {
+  color: #b91c1c;
+}
+
+.sultan-dashboard__health-item--warn {
+  color: #92400e;
+}
+
+.sultan-dashboard__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.sultan-stat-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: var(--sultan-radius);
+  background: var(--sultan-surface-muted);
+  border: 1px solid var(--sultan-border);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.sultan-stat-card:hover {
+  border-color: color-mix(in srgb, var(--sultan-green) 45%, var(--sultan-border));
+  box-shadow: 0 8px 24px rgb(26 28 24 / 0.06);
+}
+
+.sultan-stat-card--warn .sultan-stat-card__value {
+  color: #b45309;
+}
+
+.sultan-stat-card--accent .sultan-stat-card__value {
+  color: color-mix(in srgb, var(--sultan-charcoal) 30%, #15803d);
+}
+
+.sultan-stat-card__value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--sultan-charcoal);
+}
+
+.sultan-stat-card__label {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--sultan-charcoal) 60%, transparent);
+}
+
+.sultan-dashboard__section-title {
+  margin: 0 0 0.75rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: color-mix(in srgb, var(--sultan-charcoal) 50%, var(--sultan-honey));
+}
+
+.sultan-dashboard__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sultan-dashboard__link {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: var(--sultan-surface-muted);
+  border: 1px solid var(--sultan-border);
+  color: var(--sultan-charcoal);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.sultan-dashboard__link:hover {
+  background: color-mix(in srgb, var(--sultan-green) 10%, white);
+  border-color: color-mix(in srgb, var(--sultan-green) 35%, var(--sultan-border));
+}
+
+.sultan-dashboard__recent {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--sultan-border);
+}
+
+.sultan-dashboard__recent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sultan-dashboard__recent-list li a {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 0.75rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--sultan-border) 80%, transparent);
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+
+.sultan-dashboard__recent-list li a:hover strong {
+  color: color-mix(in srgb, var(--sultan-charcoal) 40%, #15803d);
+}
+
+.sultan-dashboard__recent-list time {
+  color: color-mix(in srgb, var(--sultan-charcoal) 50%, transparent);
+  font-size: 0.75rem;
+}
+
+.sultan-dashboard__hint {
+  margin: 1.25rem 0 0;
+  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--sultan-charcoal) 55%, transparent);
+}
+
+.sultan-dashboard__quick {
+  margin-top: 0.5rem;
+}
+
+/* Gelen kutusu */
+.sultan-inbox-bulk {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.5rem;
+}
+
+.sultan-inbox-bulk__label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--sultan-charcoal) 70%, transparent);
+}
+
+.sultan-inbox-badge {
+  display: inline-flex;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.sultan-inbox-badge--new {
+  background: color-mix(in srgb, var(--sultan-honey) 70%, white);
+  color: #92400e;
+  border: 1px solid color-mix(in srgb, var(--sultan-honey) 80%, transparent);
+}
+
+.sultan-inbox-badge--read {
+  background: color-mix(in srgb, var(--sultan-green) 18%, white);
+  color: #166534;
+}
+
+.sultan-inbox-badge--archived {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.sultan-inbox-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-right: 0.75rem;
+}
+
+.sultan-inbox-actions__btn {
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--sultan-radius);
+  border: 1px solid color-mix(in srgb, var(--sultan-green) 40%, var(--sultan-border));
+  background: color-mix(in srgb, var(--sultan-green) 12%, white);
+  color: var(--sultan-charcoal);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.sultan-inbox-actions__btn--muted {
+  background: var(--sultan-surface-muted);
+  border-color: var(--sultan-border);
+}
+
+.sultan-inbox-actions__btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.sultan-section-preview {
+  margin: 0 0 1rem;
+  font-size: 0.8125rem;
+}
+
+.sultan-section-preview a {
+  color: color-mix(in srgb, var(--sultan-charcoal) 30%, #15803d);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.sultan-section-preview a:hover {
+  text-decoration: underline;
+}

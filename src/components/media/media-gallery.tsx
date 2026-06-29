@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { InteractiveSiteVideo } from "@/components/media/interactive-site-video";
 import type { SiteMedia } from "@/content/site-media";
 import { cn } from "@/lib/cn";
 
@@ -52,14 +53,11 @@ export function MediaGallery({
             )}
           >
             {item.kind === "video" ? (
-              <video
+              <InteractiveSiteVideo
                 className="h-full w-full object-cover"
                 src={item.src}
                 poster={item.poster}
-                controls
-                muted
-                playsInline
-                aria-label={item.alt}
+                title={item.alt}
               />
             ) : (
               <Image

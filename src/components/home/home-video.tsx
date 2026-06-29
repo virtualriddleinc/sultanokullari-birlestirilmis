@@ -1,21 +1,38 @@
 "use client";
 
 import { useRef } from "react";
-import { Play } from "lucide-react";
 import {
   motion,
   useReducedMotion,
   useScroll,
   useTransform,
 } from "framer-motion";
+import { InteractiveSiteVideo } from "@/components/media/interactive-site-video";
 import { AnimatedLinkButton } from "@/components/ui/animated-link-button";
 import { SectionGrid } from "@/components/layout/section-grid";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { featuredVideo } from "@/content/site-media";
+import type { SiteMedia } from "@/content/site-media";
 
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
 
-export function HomeVideo() {
+export type HomeVideoProps = {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  video?: SiteMedia;
+};
+
+export function HomeVideo({
+  eyebrow = "Tanıtım · Sinematik bakış",
+  title = "Okul atmosferini yakından görün.",
+  description = "Sultan Okulları'nın sınıf, bahçe ve etkinlik atmosferinden seçilen kısa bir tanıtım kesiti.",
+  ctaLabel = "Görüşme planla",
+  ctaHref = "/iletisim",
+  video = featuredVideo,
+}: HomeVideoProps = {}) {
   const reduce = useReducedMotion();
   const sectionRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
@@ -44,46 +61,20 @@ export function HomeVideo() {
         <div className="absolute inset-0 bg-[url('/desen.svg')] bg-cover bg-center bg-no-repeat opacity-[0.10] mix-blend-multiply" />
       </motion.div>
 
-      <SectionHeading
-        eyebrow="Tanıtım · Sinematik bakış"
-        title="Okul atmosferini yakından görün."
-        description="Sultan Okulları'nın sınıf, bahçe ve etkinlik atmosferinden seçilen kısa bir tanıtım kesiti."
-      />
+      <SectionHeading eyebrow={eyebrow} title={title} description={description} />
 
       <div className="relative mx-auto grid w-full max-w-5xl place-items-center">
         <div className="border-charcoal/10 relative w-full overflow-hidden rounded-[2rem] border bg-[linear-gradient(135deg,rgba(255,240,133,0.66),rgba(76,255,0,0.26))] shadow-[0_40px_140px_rgba(26,28,24,0.20)]">
           <div className="relative aspect-video w-full overflow-hidden bg-[radial-gradient(circle_at_50%_45%,rgba(255,240,133,0.24),transparent_60%)]">
-            <video
+            <InteractiveSiteVideo
               className="absolute inset-0 h-full w-full object-cover"
-              src={featuredVideo.src}
-              poster={featuredVideo.poster}
+              src={video.src}
+              poster={video.poster}
+              title={video.alt}
               autoPlay={!reduce}
               loop
-              muted
-              playsInline
-              controls
-              aria-label={featuredVideo.alt}
             />
             <div className="from-charcoal/34 pointer-events-none absolute inset-0 bg-gradient-to-t via-transparent to-white/8" />
-            <div className="pointer-events-none absolute inset-0 flex h-full flex-col items-center justify-center gap-4">
-              <motion.button
-                type="button"
-                className="from-brand-honey via-brand-green/90 to-brand-green text-charcoal grid w-28 place-items-center bg-gradient-to-br shadow-[0_30px_80px_rgba(26,28,24,0.28)] backdrop-blur-sm transition"
-                style={{
-                  aspectRatio: "2 / 1.7320508075688772",
-                  clipPath: HEX_CLIP,
-                }}
-                whileHover={reduce ? undefined : { scale: 1.06 }}
-                whileTap={reduce ? undefined : { scale: 0.96 }}
-                aria-hidden
-                tabIndex={-1}
-              >
-                <Play className="ml-1 size-9 fill-current" aria-hidden />
-              </motion.button>
-              <span className="bg-charcoal/45 rounded-full px-3 py-1 text-xs font-medium tracking-[0.32em] text-white/86 uppercase backdrop-blur-sm">
-                Sultan Okulları · tanıtım
-              </span>
-            </div>
           </div>
         </div>
         <span
@@ -103,8 +94,8 @@ export function HomeVideo() {
           Veliler için ayrıntılı görüşme planlamak veya ön kayıt almak
           isterseniz, sizi bekliyoruz.
         </p>
-        <AnimatedLinkButton href="/iletisim" variant="light">
-          Görüşme planla
+        <AnimatedLinkButton href={ctaHref} variant="light">
+          {ctaLabel}
         </AnimatedLinkButton>
       </div>
     </SectionGrid>

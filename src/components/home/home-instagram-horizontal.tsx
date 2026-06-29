@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/navigation/site-link";
 import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -12,11 +12,28 @@ import {
   instagramPosts,
   instagramProfileUrl,
 } from "@/content/instagram";
+import type { InstagramPost } from "@/content/instagram";
 import { cn } from "@/lib/cn";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-export function HomeInstagramHorizontal() {
+export type HomeInstagramHorizontalProps = {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  handle?: string;
+  profileUrl?: string;
+  posts?: InstagramPost[];
+};
+
+export function HomeInstagramHorizontal({
+  eyebrow = "Sosyal medya vitrini",
+  title = "Sosyal Medyada Biz",
+  description = "Sultan Okulları'nın resmî sosyal medya hesaplarından okul atmosferi, etkinlikler ve kısa video paylaşımları — aşağı kaydırın, kareler yana doğru aksın.",
+  handle = instagramHandle,
+  profileUrl = instagramProfileUrl,
+  posts = instagramPosts,
+}: HomeInstagramHorizontalProps = {}) {
   const rootRef = useRef<HTMLElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
@@ -71,12 +88,20 @@ export function HomeInstagramHorizontal() {
             scrollTrigger: {
               trigger: section,
               pin: section,
+              pinSpacing: true,
+              pinReparent: true,
+              anticipatePin: 1,
               start: "center center",
-              end: () => `+=${pinWrapWidth}`,
+              end: () => `+=${Math.max(horizontalScrollLength, 1)}`,
               scrub: true,
               invalidateOnRefresh: true,
             },
           });
+
+          const resizeObserver = new ResizeObserver(() => {
+            ScrollTrigger.refresh();
+          });
+          resizeObserver.observe(strip);
 
           ScrollTrigger.addEventListener("refreshInit", refresh);
 
@@ -90,6 +115,7 @@ export function HomeInstagramHorizontal() {
           window.addEventListener("load", onLoad);
 
           return () => {
+            resizeObserver.disconnect();
             ScrollTrigger.removeEventListener("refreshInit", refresh);
             window.removeEventListener("load", onLoad);
             window.clearTimeout(settleTimer);
@@ -110,7 +136,7 @@ export function HomeInstagramHorizontal() {
       id="instagram"
       data-section="instagram"
       aria-label="Sultan Okulları Instagram galerisi"
-      className="border-charcoal/10 relative overflow-hidden border-y bg-[linear-gradient(180deg,rgba(255,255,255,0.84),rgba(255,240,133,0.72))]"
+      className="border-charcoal/10 relative z-[1] overflow-hidden border-y bg-[linear-gradient(180deg,rgba(255,255,255,0.84),rgba(255,240,133,0.72))]"
     >
       <div className="pointer-events-none absolute inset-0 bg-[url('/desen.svg')] bg-cover bg-center bg-no-repeat opacity-[0.045] mix-blend-multiply" />
       <div className="bg-brand-green/10 pointer-events-none absolute top-12 -left-24 size-72 rounded-full blur-3xl" />
@@ -120,23 +146,19 @@ export function HomeInstagramHorizontal() {
         <div className="section-page-grid__content">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div className="max-w-2xl">
-              <p className="section-eyebrow">Sosyal medya vitrini</p>
-              <h2 className="section-title mt-4">Sosyal Medyada Biz</h2>
-              <p className="section-body mt-4 max-w-xl">
-                Sultan Okulları’nın resmî sosyal medya hesaplarından okul
-                atmosferi, etkinlikler ve kısa video paylaşımları — aşağı
-                kaydırın, kareler yana doğru aksın.
-              </p>
+              <p className="section-eyebrow">{eyebrow}</p>
+              <h2 className="section-title mt-4">{title}</h2>
+              <p className="section-body mt-4 max-w-xl">{description}</p>
             </div>
             <Link
-              href={instagramProfileUrl}
+              href={profileUrl}
               target="_blank"
               rel="noreferrer"
-              aria-label={`Instagram'da ${instagramHandle}`}
+              aria-label={`Instagram'da ${handle}`}
               className="group border-charcoal/10 text-charcoal hover:border-brand-green/30 inline-flex items-center gap-2.5 rounded-full border bg-white px-4 py-2 text-sm font-semibold shadow-sm transition hover:shadow-md"
             >
               <InstagramGlyph className="size-5 transition-transform group-hover:scale-110" />
-              <span>{instagramHandle}</span>
+              <span>{handle}</span>
             </Link>
           </div>
         </div>
@@ -156,7 +178,7 @@ export function HomeInstagramHorizontal() {
             "lg:motion-safe:overflow-visible lg:motion-safe:px-[6vw]",
           )}
         >
-          {instagramPosts.map((post, index) => (
+          {posts.map((post, index) => (
             <article
               key={post.id}
               className="project-wrap relative box-border flex w-[min(82vw,18rem)] shrink-0 snap-start px-2 sm:w-[20rem] md:w-[22rem] lg:w-[23rem] lg:px-3"

@@ -49,10 +49,10 @@ export const HERO_SLIDES: HeroSlide[] = [
     titleLines: [
       "Bilginin hikmete,",
       "bilincin ise erdeme",
-      "dönüştüğü özgün bir eğitim modeli",
+      "dönüştüğü özgün model",
     ],
     description:
-      "Her öğrenciyi ruhu, kalbi, bedeni ve şahsiyetiyle bir bütün olarak ele alır; kökü mazide, ufku âtîde bir nesil yetiştirmeyi amaçlar.",
+      "Her öğrenciyi ruhu, kalbi, bedeni ve şahsiyetiyle bütün ele alır; mazide kök, âtîde nesil yetişir.",
     buttonText: "Sultan Mektep Modeli & Kademeler",
     buttonLink: "/egitim/kademeler",
     mediaUrl: "/videos/kademeler.mp4",
@@ -66,7 +66,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     titleLines: [
       "Her evladımızın",
       "kabiliyetini emanet",
-      "bilinciyle takip ediyor,",
+      "bilinciyle takip ediyor",
     ],
     description: "ilmini ve gayretini adım adım büyütüyoruz.",
     buttonText: "Akademik Gelişim ve Takip",
@@ -95,11 +95,12 @@ export const HERO_SLIDES: HeroSlide[] = [
     id: "yasam",
     tagline: "SULTANDA YAŞAM",
     titleLines: [
-      "Özel Sultan Okulları'nda eğitim;",
-      "öğrencilerimizin akademik gelişimlerinin",
-      "yanında kişisel, sosyal ve ahlaki becerilerini",
+      "Özel Sultan Okulları'nda",
+      "eğitim; akademik gelişimin",
+      "yanında ahlaki becerileri",
     ],
-    description: "de desteklemeyi amaçlar.",
+    description:
+      "öğrencilerimizin sosyal gelişimini desteklemeyi amaçlar.",
     buttonText: "Sultanda Yaşam",
     buttonLink: "/yasam/sultanda-yasam",
     mediaUrl: MENU_IMAGES.yasam,

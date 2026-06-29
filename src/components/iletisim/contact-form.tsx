@@ -1,8 +1,9 @@
 "use client";
 
 import { useActionState, useEffect, useRef } from "react";
-import { branches } from "@/content/branches";
-import { submitContact, type ContactFormState } from "@/app/iletisim/actions";
+import type { Branch } from "@/content/branches";
+import { branches as staticBranches } from "@/content/branches";
+import { submitContact, type ContactFormState } from "@/app/(site)/iletisim/actions";
 
 const initial: ContactFormState = { ok: false, message: "" };
 
@@ -17,8 +18,10 @@ declare global {
 
 export function ContactForm({
   defaultBranchSlug,
+  branches = staticBranches,
 }: {
   defaultBranchSlug?: string;
+  branches?: Branch[];
 }) {
   const [state, formAction, pending] = useActionState(submitContact, initial);
   const formRef = useRef<HTMLFormElement>(null);
