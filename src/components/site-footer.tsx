@@ -33,8 +33,8 @@ const footerNavGroups = [
   NAV_SECTIONS.find((s) => s.key === "egitim"),
   NAV_SECTIONS.find((s) => s.key === "akademik"),
   NAV_SECTIONS.find((s) => s.key === "rehberlik"),
-  NAV_SECTIONS.find((s) => s.key === "yasam"),
   NAV_SECTIONS.find((s) => s.key === "okullar"),
+  NAV_SECTIONS.find((s) => s.key === "yasam"),
 ].filter(Boolean);
 
 export function SiteFooter({ branches = staticBranches }: { branches?: Branch[] }) {
@@ -58,9 +58,15 @@ export function SiteFooter({ branches = staticBranches }: { branches?: Branch[] 
             </div>
             <Link
               href="/iletisim"
-              className="cta-pill shrink-0 self-start lg:self-center"
+              className={cn(
+                "cta-pill shrink-0 self-start lg:self-center",
+                "px-8 py-4 text-base font-bold",
+                "shadow-brand-green/30 shadow-lg",
+                "inline-flex items-center gap-2 transition-transform hover:scale-105",
+              )}
             >
               Sizi Arayalım
+              <ArrowUpRight className="size-5" aria-hidden />
             </Link>
           </div>
         </ContentCard>
@@ -78,27 +84,39 @@ export function SiteFooter({ branches = staticBranches }: { branches?: Branch[] 
           </motion.div>
         )}
 
-        <div className="border-charcoal/10 mt-fluid-8 border-t pt-fluid-6">
-          <div className="text-charcoal/70 flex flex-col gap-4 text-sm sm:flex-row sm:items-center sm:justify-between">
-            <p className="text-center sm:text-left">
+        <div className="border-charcoal/10 mt-fluid-8 border-t pt-fluid-8">
+          <div className="flex flex-col items-center gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-charcoal/60 order-2 text-center text-xs font-medium tracking-wide sm:order-1 sm:text-left">
               © {new Date().getFullYear()} Sultan Okulları. Tüm hakları
               saklıdır.
             </p>
             <nav
               aria-label="Yasal bağlantılar"
-              className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 sm:justify-end"
+              className="border-charcoal/10 bg-charcoal/[0.03] order-1 flex flex-wrap items-center justify-center gap-x-1 gap-y-1 rounded-full border p-1 sm:order-2"
             >
-              <Link href="/sss" className="hover:text-charcoal transition">
+              <Link
+                href="/sss"
+                className="text-charcoal/65 hover:text-charcoal hover:bg-brand-honey/60 rounded-full px-4 py-1.5 text-xs font-semibold transition-colors"
+              >
                 SSS
               </Link>
-              <Link href="/kvkk" className="hover:text-charcoal transition">
+              <Link
+                href="/kvkk"
+                className="text-charcoal/65 hover:text-charcoal hover:bg-brand-honey/60 rounded-full px-4 py-1.5 text-xs font-semibold transition-colors"
+              >
                 KVKK
               </Link>
               <Link
                 href="/gizlilik-politikasi"
-                className="hover:text-charcoal transition"
+                className="text-charcoal/65 hover:text-charcoal hover:bg-brand-honey/60 rounded-full px-4 py-1.5 text-xs font-semibold transition-colors"
               >
                 Gizlilik politikası
+              </Link>
+              <Link
+                href="/sitemap"
+                className="text-charcoal/65 hover:text-charcoal hover:bg-brand-honey/60 rounded-full px-4 py-1.5 text-xs font-semibold transition-colors"
+              >
+                Site haritası
               </Link>
             </nav>
           </div>
@@ -122,8 +140,20 @@ function FooterGrid({
     : {};
 
   return (
-    <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_repeat(3,1fr)]">
-      <ItemWrapper {...itemProps}>
+    <div
+      className={cn(
+        "grid min-w-0 gap-10",
+        /* Mobil: logo → nav (2 sütun) → iletişim — dikey istif */
+        "grid-cols-1",
+        /* lg+: [logo | nav] üst satır, iletişim kartı alt satır tam genişlik */
+        "lg:grid-cols-[minmax(0,1.2fr)_minmax(0,3fr)]",
+        "lg:grid-rows-[auto_auto]",
+      )}
+    >
+      <ItemWrapper
+        {...itemProps}
+        className="flex min-w-0 flex-col items-center text-center lg:col-start-1 lg:row-start-1 lg:items-start lg:text-left"
+      >
         <Link
           href="/"
           aria-label="Sultan Okulları ana sayfası"
@@ -136,11 +166,11 @@ function FooterGrid({
             className="h-12 w-auto object-contain"
           />
         </Link>
-        <p className="section-body mt-4 max-w-xs">
+        <p className="section-body mx-auto mt-4 max-w-xs lg:mx-0">
           Milli ve manevi değerlerle bütünleşik eğitim vizyonu — anaokulundan
           ortaokula, nebevî eğitim yolculuğu.
         </p>
-        <div className="mt-5 flex items-center gap-2">
+        <div className="mt-5 flex items-center justify-center gap-2 lg:justify-start">
           {socials.map(({ href, label, Icon }) => (
             <Link
               key={href}
@@ -156,34 +186,47 @@ function FooterGrid({
         </div>
       </ItemWrapper>
 
-      {footerNavGroups.map((section) =>
-        section ? (
-          <ItemWrapper key={section.key} {...itemProps}>
-            <p className="font-cinzel text-charcoal text-sm font-bold tracking-[0.18em] uppercase">
-              {section.label}
-            </p>
-            <ul className="mt-4 space-y-2.5">
-              {section.items.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="group text-charcoal/75 hover:text-charcoal inline-flex items-center gap-1.5 text-sm transition"
-                  >
-                    <span>{item.label}</span>
-                    <ArrowUpRight
-                      className="size-3.5 opacity-0 transition group-hover:opacity-100"
-                      aria-hidden
-                    />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </ItemWrapper>
-        ) : null,
-      )}
+      <div
+        className={cn(
+          "grid min-w-0 gap-x-6 gap-y-10",
+          /* Sol/sağ girinti — başlıklar kenara yapışmasın */
+          "px-[var(--mobile-chrome-gutter)] sm:px-6 lg:px-4",
+          /* Mobil/tablet: her satırda iki başlık sütunu */
+          "grid-cols-2",
+          /* md+: üç sütun; lg'de sağ panel içinde kalır */
+          "md:grid-cols-3",
+          "lg:col-start-2 lg:row-start-1",
+        )}
+      >
+        {footerNavGroups.map((section) =>
+          section ? (
+            <ItemWrapper key={section.key} {...itemProps} className="min-w-0">
+              <p className="font-cinzel text-charcoal text-sm font-bold tracking-[0.18em] uppercase">
+                {section.label}
+              </p>
+              <ul className="mt-4 space-y-2.5">
+                {section.items.map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="group text-charcoal/75 hover:text-charcoal flex w-full min-w-0 items-center gap-1.5 text-sm transition"
+                    >
+                      <span className="min-w-0">{item.label}</span>
+                      <ArrowUpRight
+                        className="size-3.5 shrink-0 opacity-0 transition group-hover:opacity-100"
+                        aria-hidden
+                      />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </ItemWrapper>
+          ) : null,
+        )}
+      </div>
 
       <Wrapper
-        className="sm:col-span-2 lg:col-span-4"
+        className="min-w-0 lg:col-span-2 lg:row-start-2"
         {...(useMotion
           ? { variants: staggerItemVariants, transition: transitionShort }
           : {})}
@@ -216,7 +259,7 @@ function FooterGrid({
                         href={getCampusRouteFromBranch(b)}
                         className="text-charcoal font-semibold hover:underline"
                       >
-                        {b.district}
+                        {b.district} – {b.city}
                       </Link>
                     </span>
                   ))}

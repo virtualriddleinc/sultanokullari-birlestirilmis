@@ -137,6 +137,11 @@ export const hexGalleryMedia = [
   image("IMG-20260429-WA0086.jpg", "Bilim ve keşif alanından seçili kare"),
 ] as const satisfies readonly SiteMedia[];
 
+export const yemekhaneMedia = image(
+  "IMG-20260429-WA0108.jpg",
+  "Yemekhane ve sağlıklı beslenme — taze ürünlerle hazırlanan menüler",
+);
+
 export const featuredVideo = video(
   "VID-20260429-WA0156.mp4",
   "Sultan Okulları tanıtım videosu",
@@ -297,4 +302,35 @@ export const educationGalleryMedia = {
 export const mediaPageItems = [
   featuredVideo,
   ...hexGalleryMedia.slice(0, 5),
+] as const satisfies readonly SiteMedia[];
+
+export const kurumsalKimlikGalleryMedia = [
+  video(
+    "VID-20260429-WA0134.mp4",
+    "Sultan Okulları kurumsal tanıtım videosu",
+    "IMG-20260429-WA0113.jpg",
+  ),
+  image("IMG-20260429-WA0113.jpg", "Kurucu mesajı için temsilî okul atmosferi"),
+  image("IMG-20260429-WA0123.jpg", "Kampüs yaşamından seçili kare"),
+  video(
+    "VID-20260429-WA0119.mp4",
+    "İdari kadro ve çalışma atmosferi videosu",
+    "IMG-20260429-WA0114.jpg",
+  ),
+  image("IMG-20260429-WA0114.jpg", "Hafızlık halkasından bir kare"),
+  image("IMG-20260429-WA0111.jpg", "Okul töreninden bir kare"),
+  video(
+    "VID-20260429-WA0141.mp4",
+    "Spor zamanından kısa video",
+    "IMG-20260429-WA0130.jpg",
+  ),
+  image("IMG-20260429-WA0143.jpg", "Mezuniyet ve etkinlik karesi"),
+  image("IMG-20260429-WA0132.jpg", "Kütüphane ve sakin çalışma atmosferi"),
+  video(
+    "VID-20260429-WA0127.mp4",
+    "Nebevî eğitim ve okul atmosferinden video kesiti",
+    "IMG-20260429-WA0090.jpg",
+  ),
+  image("IMG-20260429-WA0089.jpg", "Okul içinde temiz ve huzurlu yaşam alanı"),
+  image("IMG-20260429-WA0086.jpg", "Keşf-i Bilim — bilim ve keşif alanından bir kare"),
 ] as const satisfies readonly SiteMedia[];

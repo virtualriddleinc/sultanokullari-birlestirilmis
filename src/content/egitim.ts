@@ -90,6 +90,10 @@ export const nebevi = {
       title: "Bütüncül muhabbet",
       text: "Bilgi ile gönlü buluşturan Muhammedî muhabbetle öğretiyoruz.",
     },
+    {
+      title: "Üsve-i hasene",
+      text: "Efendimizin (s.a.v.) örnekliği, programımızın tam kalbinde yer alır.",
+    },
   ],
   not: "Siyer takvimi ve Peygamber ahlakı dersi kazanımları yakında paylaşılacaktır.",
 };

@@ -191,7 +191,7 @@ async function seedHomepage() {
             { href: "/egitim/kademeler", label: "Kademeler", description: "Sultan Mektep Modeli", iconKey: "book-open" },
             { href: "/egitim/nebevi-egitim", label: "Nebevî Eğitim", description: "Kur'an-ı Kerîm", iconKey: "graduation-cap" },
             { href: "/akademik/yabanci-dil", label: "Atölyeler", description: "Yabancı dil & atölye", iconKey: "palette" },
-            { href: "/destek-hizmetleri", label: "Olanaklar", description: "Destek hizmetleri", iconKey: "hand-heart" },
+            { href: "/#yemekhane", label: "Yemekhane", description: "Kantinsiz okul projesi", iconKey: "hand-heart" },
             { href: "/rehberlik/egitim-koclugu", label: "Rehberlik", description: "Eğitim koçluğu", iconKey: "heart-handshake" },
             { href: "/kurumsal/burs-olanaklari", label: "Burs", description: "Burs olanakları", iconKey: "sprout" },
             { href: "/guncel/haberler", label: "Duyurular", description: "Haber ve etkinlikler", iconKey: "radio" },

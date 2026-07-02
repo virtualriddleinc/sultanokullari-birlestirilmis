@@ -46,13 +46,13 @@ export function InstagramEmbed({
       <div
         className={
           isVideoPost
-            ? "relative mx-auto aspect-[9/16] w-[min(100%,36vh,18rem)] overflow-hidden rounded-[1.35rem] bg-white/80 p-1.5 shadow-inner ring-1 ring-emerald-900/10"
+            ? "relative mx-auto aspect-[9/16] w-full overflow-hidden rounded-[1.35rem] shadow-[0_24px_70px_rgba(26,28,24,0.16)]"
             : "relative min-h-[540px] overflow-hidden rounded-[1.75rem] bg-white/80 p-2 shadow-inner"
         }
       >
         {isVideoPost && post.videoSrc ? (
           <InteractiveSiteVideo
-            className="block h-full w-full rounded-[1.05rem] object-cover"
+            className="block h-full w-full object-cover"
             src={post.videoSrc}
             title={post.title}
             shouldPlay={shouldPlay}

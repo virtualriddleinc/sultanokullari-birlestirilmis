@@ -10,7 +10,6 @@ import {
   PlayButton,
   TimeSlider,
   useMediaRemote,
-  useMediaState,
   type MediaPlayerInstance,
 } from "@vidstack/react";
 import { cn } from "@/lib/cn";
@@ -22,6 +21,7 @@ export type InteractiveSiteVideoProps = {
   className?: string;
   autoPlay?: boolean;
   loop?: boolean;
+  muted?: boolean;
   shouldPlay?: boolean;
   onEnded?: () => void;
 };
@@ -55,28 +55,34 @@ function InteractiveVideoControls() {
 function InteractiveVideoEffects({
   playerRef,
   shouldPlay,
+  muted = true,
   onEnded,
 }: {
   playerRef: RefObject<MediaPlayerInstance | null>;
   shouldPlay?: boolean;
+  muted?: boolean;
   onEnded?: () => void;
 }) {
-  const remote = useMediaRemote(playerRef);
-  const ended = useMediaState("ended", playerRef);
+  const remote = useMediaRemote();
 
   useEffect(() => {
     if (shouldPlay === undefined) return;
-
-    const player = playerRef.current;
-    if (!player) return;
 
     if (!shouldPlay) {
       remote.pause();
       return;
     }
 
+    const player = playerRef.current;
+    if (!player) return;
+
     const startPlayback = () => {
       remote.seek(0);
+      if (muted) {
+        remote.mute();
+      } else {
+        remote.unmute();
+      }
       remote.play();
     };
 
@@ -87,12 +93,16 @@ function InteractiveVideoEffects({
 
     player.addEventListener("can-play", startPlayback, { once: true });
     return () => player.removeEventListener("can-play", startPlayback);
-  }, [playerRef, remote, shouldPlay]);
+  }, [muted, playerRef, remote, shouldPlay]);
 
   useEffect(() => {
-    if (!ended || !onEnded) return;
-    onEnded();
-  }, [ended, onEnded]);
+    const player = playerRef.current;
+    if (!player || !onEnded) return;
+
+    const handleEnded = () => onEnded();
+    player.addEventListener("ended", handleEnded);
+    return () => player.removeEventListener("ended", handleEnded);
+  }, [playerRef, onEnded]);
 
   return null;
 }
@@ -104,6 +114,7 @@ export function InteractiveSiteVideo({
   className,
   autoPlay = false,
   loop = false,
+  muted = true,
   shouldPlay,
   onEnded,
 }: InteractiveSiteVideoProps) {
@@ -118,7 +129,7 @@ export function InteractiveSiteVideo({
       poster={poster}
       autoPlay={autoPlay}
       loop={loop}
-      muted
+      muted={muted}
       playsInline
       load="visible"
     >
@@ -127,6 +138,7 @@ export function InteractiveSiteVideo({
       <InteractiveVideoEffects
         playerRef={playerRef}
         shouldPlay={shouldPlay}
+        muted={muted}
         onEnded={onEnded}
       />
     </MediaPlayer>

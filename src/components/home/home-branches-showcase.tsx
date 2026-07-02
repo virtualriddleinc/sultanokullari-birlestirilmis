@@ -55,8 +55,14 @@ export function HomeBranchesShowcase({
         title={title}
         description={description}
         action={
-          <Link href={ctaHref} className="cta-pill">
+          <Link
+            href={ctaHref}
+            className={cn(
+              "cta-pill px-8 py-4 text-base font-bold shadow-lg shadow-brand-green/30 transition-transform hover:scale-105 hover:shadow-xl hover:shadow-brand-green/40",
+            )}
+          >
             {ctaLabel}
+            <ArrowUpRight className="size-5" aria-hidden />
           </Link>
         }
       />

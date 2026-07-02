@@ -21,19 +21,14 @@ export async function getStaffMembers(): Promise<StaticStaffMember[]> {
     }
 
     return result.docs.map((doc) => {
-      const photo = doc.photo;
-      const photoUrl =
-        photo && typeof photo === "object" && "url" in photo
-          ? (photo.url as string)
-          : undefined;
-
       return {
         id: String(doc.id),
         name: doc.fullName as string,
+        academicTitle: (doc.academicTitle as string) || undefined,
         title: doc.title as string,
+        education: (doc.education as string) || undefined,
         department: doc.department as StaticStaffMember["department"],
         branchSlug: (doc.branchSlug as StaticStaffMember["branchSlug"]) || undefined,
-        photoUrl,
       };
     });
   } catch {

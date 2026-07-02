@@ -173,6 +173,7 @@ export function PedagojiSection({
   const rootRef = useRef<HTMLElement>(null);
   const textRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const palette = themePresets[theme];
+  const isHoneycombLayout = itemsLayout === "honeycomb" && items.length === 7;
 
   useGSAP(
     () => {
@@ -254,22 +255,26 @@ export function PedagojiSection({
 
   return (
     <section ref={rootRef} aria-label={title} className="relative mt-14">
-      <div className="mx-auto mb-10 max-w-3xl text-center">
-        <p
-          className={cn(
-            "text-xs font-semibold tracking-[0.32em] uppercase",
-            palette.primary,
-          )}
-        >
-          {eyebrow}
-        </p>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-balance text-zinc-950 sm:text-4xl">
-          {title}
-        </h2>
-        {description ? (
-          <p className="mt-3 text-sm leading-7 text-zinc-600">{description}</p>
-        ) : null}
-      </div>
+      {!isHoneycombLayout ? (
+        <div className="mx-auto mb-10 max-w-3xl text-center">
+          <p
+            className={cn(
+              "text-xs font-semibold tracking-[0.32em] uppercase",
+              palette.primary,
+            )}
+          >
+            {eyebrow}
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-balance text-zinc-950 sm:text-4xl">
+            {title}
+          </h2>
+          {description ? (
+            <p className="mt-3 text-sm leading-7 text-zinc-600">
+              {description}
+            </p>
+          ) : null}
+        </div>
+      ) : null}
 
       {bands.length > 0 ? (
         <div className="relative left-1/2 w-screen -translate-x-1/2 px-4 sm:px-6">
@@ -349,13 +354,14 @@ export function PedagojiSection({
         </div>
       ) : null}
 
-      {itemsLayout === "honeycomb" && items.length === 6 ? (
-        <div className={bands.length === 0 ? "mt-8 sm:mt-10" : undefined}>
-          <PedagojiHoneycomb
-            items={items}
-            sectionLabel={`${title} — program başlıkları`}
-          />
-        </div>
+      {isHoneycombLayout ? (
+        <PedagojiHoneycomb
+          items={items}
+          sectionLabel={`${title} — program başlıkları`}
+          eyebrow={eyebrow}
+          title={title}
+          description={description}
+        />
       ) : (
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((item, index) => {

@@ -15,9 +15,12 @@ import {
 } from "@/lib/hex-landing-modal";
 import { springSnappy } from "@/lib/animations";
 import { cn } from "@/lib/cn";
+import beyazDesen from "@/images/beyaz-desen.svg";
 
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
 const HEX_RATIO = "2 / 1.7320508075688772";
+/** Bal köpüğü (#fff085) koyu tonu — petek hücre çerçeveleri */
+const HONEY_FRAME = "#d9cc5c";
 
 const honeycombStaggerVariants: Variants = {
   hidden: {},
@@ -161,9 +164,18 @@ export function HomeNedenPreview({
     <section
       id="neden"
       data-section="neden"
-      className="border-charcoal/10 bg-brand-honey/35 relative overflow-hidden border-y"
+      className="border-charcoal/10 bg-brand-green relative overflow-hidden border-y"
     >
-      <div className="border-charcoal/10 border-y bg-white/40">
+      {/* Beyaz desen — hero yeşil zeminiyle aynı katman */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={beyazDesen.src}
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/2 left-1/2 z-0 w-[220vw] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.1] select-none"
+      />
+
+      <div className="border-charcoal/10 relative z-[1] border-y bg-white">
         <Marquee speed={48} className="py-4">
           {marqueeValues.map((v) => (
             <span
@@ -173,7 +185,7 @@ export function HomeNedenPreview({
               {v}
               <span
                 aria-hidden
-                className="bg-brand-green/60 inline-block w-2"
+                className="bg-brand-honey/80 inline-block w-2"
                 style={{
                   aspectRatio: "2 / 1.7320508075688772",
                   clipPath:
@@ -185,23 +197,21 @@ export function HomeNedenPreview({
         </Marquee>
       </div>
 
-      <div className="section-page-grid py-fluid-8 sm:py-fluid-16">
+      <div className="section-page-grid relative z-[1] py-fluid-8 sm:py-fluid-16">
         <div className="section-page-grid__content">
-          <SectionHeading
-            eyebrow={eyebrow}
-            title={
-              <>
-                {title}{" "}
-                <span className="text-brand-green">{titleHighlight}</span>
-              </>
-            }
-            description={description}
-            action={
-              <Link href={ctaHref} className="cta-pill">
-                {ctaLabel} <span aria-hidden>→</span>
-              </Link>
-            }
-          />
+          <div className="bg-brand-honey rounded-3xl px-6 py-8 sm:px-8 sm:py-10">
+            <SectionHeading
+              eyebrow={eyebrow}
+              className="[&_.section-title]:text-black"
+              title={`${title} ${titleHighlight}`}
+              description={description}
+              action={
+                <Link href={ctaHref} className="cta-pill">
+                  {ctaLabel} <span aria-hidden>→</span>
+                </Link>
+              }
+            />
+          </div>
 
           <div className="relative mt-10 sm:mt-12 lg:mt-16">
             <motion.div initial={false} animate="visible" variants={honeycombStaggerVariants}>
@@ -243,7 +253,7 @@ function Honeycomb({ shape, items, reduce, onOpenModal }: HoneycombProps) {
       {/* Petek etrafı — yeşil glow halka */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -inset-[6%] -z-10 rounded-[42%] bg-[radial-gradient(ellipse_at_center,rgba(13,107,42,0.28),rgba(16,185,129,0.18)_45%,transparent_72%)] blur-3xl"
+        className="pointer-events-none absolute -inset-[6%] -z-10 rounded-[42%] bg-[radial-gradient(ellipse_at_center,rgba(255,240,133,0.42),rgba(217,204,92,0.28)_45%,transparent_72%)] blur-3xl"
       />
       {items.map((item, i) => {
         const pos = shape.positions[i];
@@ -277,11 +287,11 @@ function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
   const isFlipped = tapped;
   const isPrimary = index % 4 === 0 || index === 10;
   const baseShadow = isPrimary
-    ? "drop-shadow(0 0 18px rgba(13, 107, 42, 0.26))"
-    : "drop-shadow(0 0 14px rgba(13, 107, 42, 0.18))";
+    ? "drop-shadow(0 0 18px rgba(217, 204, 92, 0.38))"
+    : "drop-shadow(0 0 14px rgba(217, 204, 92, 0.28))";
   const hoverShadow = isPrimary
-    ? "drop-shadow(0 0 26px rgba(13, 107, 42, 0.34))"
-    : "drop-shadow(0 0 22px rgba(13, 107, 42, 0.26))";
+    ? "drop-shadow(0 0 26px rgba(217, 204, 92, 0.48))"
+    : "drop-shadow(0 0 22px rgba(217, 204, 92, 0.36))";
   const containerStyle: CSSProperties = {
     left: `${position.left}%`,
     top: `${position.top}%`,
@@ -291,6 +301,10 @@ function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
     filter: baseShadow,
     transition: reduce ? undefined : "filter 0.4s ease",
   };
+
+  // İç içe hexagon çerçevesi: dış konteynerin arka planı (bal köpüğü koyu tonu),
+  // iç yüzler `inset-[3px]` ile geri çekilince ince bir hexagon halkası olarak görünür.
+  const frameStyle: CSSProperties = { backgroundColor: HONEY_FRAME };
 
   const perspectiveStyle: CSSProperties = {
     perspective: "1100px",
@@ -334,7 +348,7 @@ function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
       whileHover={reduce ? undefined : { y: -4, filter: hoverShadow }}
       transition={springSnappy}
       className="group/hex absolute cursor-pointer touch-manipulation"
-      style={containerStyle}
+      style={{ ...containerStyle, ...frameStyle }}
       onClick={handleCellClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
@@ -352,10 +366,10 @@ function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
           {/* FRONT */}
           <div
             className={cn(
-              "absolute inset-0 overflow-hidden backdrop-blur-sm",
+              "absolute inset-[3px] overflow-hidden backdrop-blur-sm",
               isFlipped && "pointer-events-none",
               isPrimary
-                ? "bg-brand-green text-charcoal"
+                ? "bg-brand-honey text-charcoal"
                 : "text-charcoal bg-white/65",
             )}
             style={faceStyle}
@@ -376,24 +390,24 @@ function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
           {/* BACK — flip sonrası tıklama article handler ile modal açar */}
           <div
             className={cn(
-              "absolute inset-0 overflow-hidden backdrop-blur-sm",
+              "absolute inset-[3px] overflow-hidden backdrop-blur-sm",
               !isFlipped && "pointer-events-none",
               isPrimary
-                ? "bg-charcoal text-brand-honey"
-                : "bg-brand-green text-charcoal",
+                ? "bg-white/90 text-charcoal"
+                : "bg-brand-honey text-charcoal",
             )}
             style={{ ...faceStyle, transform: "rotateY(180deg)" }}
           >
             <div className="pointer-events-none absolute inset-0 bg-[url('/desen.svg')] bg-cover bg-center bg-no-repeat opacity-[0.06] mix-blend-screen" />
             <div className="pointer-events-none relative flex h-full flex-col items-center justify-center gap-2 px-[12%] text-center">
-              <p className="line-clamp-5 text-[0.78rem] leading-snug font-medium text-balance text-white/95 sm:text-[0.7rem] md:text-[0.78rem] lg:text-[0.85rem] xl:text-[0.92rem]">
+              <p className="line-clamp-5 text-[0.78rem] leading-snug font-medium text-balance text-charcoal sm:text-[0.7rem] md:text-[0.78rem] lg:text-[0.85rem] xl:text-[0.92rem]">
                 {item.body}
               </p>
               <span
                 className={cn(
                   "mt-1 shrink-0 rounded-full border px-3 py-1 text-[0.65rem] font-bold tracking-wide uppercase sm:text-[0.6rem] md:px-3.5 md:py-1.5 md:text-[0.65rem]",
                   isPrimary
-                    ? "border-brand-honey/40 bg-brand-honey/15 text-brand-honey"
+                    ? "border-charcoal/20 bg-white/40 text-charcoal"
                     : "border-charcoal/20 bg-white/20 text-charcoal",
                 )}
                 aria-hidden

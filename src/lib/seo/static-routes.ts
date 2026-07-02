@@ -2,6 +2,7 @@
 export const STATIC_SITE_ROUTES = [
   "/",
   "/sss",
+  "/sitemap",
   "/iletisim",
   "/kvkk",
   "/gizlilik-politikasi",
@@ -38,5 +39,4 @@ export const STATIC_SITE_ROUTES = [
   "/guncel/etkinlikler",
   "/guncel/medya",
   "/atolyeler-ve-kulupler",
-  "/destek-hizmetleri",
 ] as const;

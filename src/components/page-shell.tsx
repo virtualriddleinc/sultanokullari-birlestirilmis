@@ -7,7 +7,10 @@ interface PageShellProps {
   intro?: string;
   children?: ReactNode;
   headingLayout?: "default" | "centerHero";
+  mediaLayout?: "default" | "underHeader" | "overlay";
   media?: PageMedia;
+  /** Etkileşimli içeriklerde whileInView gecikmesini devre dışı bırakır. */
+  bodyMotion?: "inView" | "immediate";
 }
 
 export function PageShell({
@@ -15,14 +18,18 @@ export function PageShell({
   intro,
   children,
   headingLayout,
+  mediaLayout,
   media,
+  bodyMotion,
 }: PageShellProps) {
   return (
     <PageShellMotion
       title={title}
       intro={intro}
       headingLayout={headingLayout}
+      mediaLayout={mediaLayout}
       media={media}
+      bodyMotion={bodyMotion}
     >
       {children}
     </PageShellMotion>

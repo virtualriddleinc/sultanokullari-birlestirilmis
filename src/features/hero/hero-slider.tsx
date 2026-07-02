@@ -426,7 +426,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
                     }}
                     focalPoint={slide.focalPoint}
                     priority={slide.id === slides[0].id}
-                    interactive={isMobileHexInteractive}
+                    interactive
                     onActivate={() => openSlideModal(slide)}
                     activateLabel={`${slide.tagline} — detayları görüntüle`}
                   />
@@ -491,6 +491,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
                   as="h1"
                   lines={slide.titleLines}
                   className="mb-2 lg:mb-3"
+                  flow
                 />
 
                 <p className={cn(HERO_SLIDE_DESCRIPTION_CLASS, "mb-0 lg:mb-4 xl:mb-6")}>

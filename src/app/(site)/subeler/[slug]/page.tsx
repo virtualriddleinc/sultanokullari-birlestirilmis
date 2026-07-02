@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "@/components/navigation/site-link";
 import { notFound } from "next/navigation";
+import { WhatsAppContactButton } from "@/components/branch/whatsapp-contact-button";
 import { BranchGallery } from "@/components/branch-gallery";
 import { BranchContactBlock } from "@/components/iletisim/branch-contact-block";
 import { branches, getBranchBySlug } from "@/content/branches";
@@ -87,6 +88,10 @@ export default async function SubelerPage({
           >
             Haritada aç
           </a>
+          <WhatsAppContactButton
+            phone={branch.phone}
+            className="rounded-md hover:bg-[#25D366]/10"
+          />
         </div>
       </section>
 

@@ -28,6 +28,11 @@ const branchRedirects = [
     destination: "/okullarimiz/ankara/sincan",
     permanent: true,
   },
+  {
+    source: "/destek-hizmetleri",
+    destination: "/#yemekhane",
+    permanent: true,
+  },
 ] as const;
 
 const nextConfig: NextConfig = {

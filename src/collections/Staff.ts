@@ -29,7 +29,7 @@ export const Staff: CollectionConfig = {
   fields: [
     adminHintField(
       "staffHint",
-      "Yönetim kadrosu için birim: Yönetim, şube alanı boş. Şube kadroları için birim + şube slug seçin. Sürükle-bırak ile sıralayın.",
+      "Yönetim kadrosu için birim: Yönetim, şube alanı boş. Şube kadroları için birim + şube slug seçin. Sürükle-bırak ile sıralayın. Fotoğraf kullanılmıyor; bunun yerine unvan, görev ve eğitim bilgisi öne çıkarılıyor.",
     ),
     siteLinkField("staffSiteLink", "/kurumsal/idari-kadro", "İdari kadro sayfasını aç →"),
     {
@@ -39,10 +39,26 @@ export const Staff: CollectionConfig = {
       required: true,
     },
     {
+      name: "academicTitle",
+      type: "text",
+      label: "Unvan (Dr., Öğr. Gör. vb.)",
+      admin: {
+        description: "Ad Soyad'ın önüne eklenir. Örn: Dr., Prof. Dr., Öğr. Gör. Boş bırakılabilir.",
+      },
+    },
+    {
       name: "title",
       type: "text",
-      label: "Unvan",
+      label: "Görev",
       required: true,
+    },
+    {
+      name: "education",
+      type: "text",
+      label: "En Yüksek Eğitim Derecesi",
+      admin: {
+        description: "Örn: X Üniversitesi Y Bölümü Doktorası. Boş bırakılabilir.",
+      },
     },
     {
       name: "department",
@@ -51,6 +67,7 @@ export const Staff: CollectionConfig = {
       required: true,
       options: [
         { label: "Yönetim", value: "yonetim" },
+        { label: "Eğitim Danışma Kurulu", value: "egitim_danisma" },
         { label: "Eğitim", value: "egitim" },
         { label: "İdari", value: "idari" },
       ],
@@ -60,7 +77,7 @@ export const Staff: CollectionConfig = {
       type: "select",
       label: "Şube",
       admin: {
-        description: "Yönetim kadrosu için boş bırakın.",
+        description: "Yönetim ve Eğitim Danışma Kurulu için boş bırakın.",
       },
       options: [
         { label: "Sancaktepe", value: "sancaktepe" },
@@ -68,12 +85,6 @@ export const Staff: CollectionConfig = {
         { label: "Serdivan", value: "serdivan" },
         { label: "Sincan", value: "sincan" },
       ],
-    },
-    {
-      name: "photo",
-      type: "upload",
-      relationTo: "media",
-      label: "Fotoğraf",
     },
     lastEditedByField,
   ],

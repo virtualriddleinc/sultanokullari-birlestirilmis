@@ -12,6 +12,7 @@ const sections = [
   { id: "gayemiz", label: "Gâyemiz" },
   { id: "neden", label: "Neden Sultan?" },
   { id: "video", label: "Tanıtım" },
+  { id: "yemekhane", label: "Yemekhane" },
   { id: "okullarimiz", label: "Okullarımız" },
   { id: "guncel", label: "Güncel" },
   { id: "kisa-yollar", label: "Kısa yollar" },

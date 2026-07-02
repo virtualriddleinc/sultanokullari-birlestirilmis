@@ -1,21 +1,28 @@
 "use client";
 
 import Link from "@/components/navigation/site-link";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type MouseEvent } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { X } from "lucide-react";
 import { InstagramEmbed } from "@/components/instagram/instagram-embed";
 import { InstagramGlyph } from "@/components/icons/instagram-glyph";
+import { InteractiveSiteVideo } from "@/components/media/interactive-site-video";
 import {
   instagramHandle,
   instagramPosts,
   instagramProfileUrl,
 } from "@/content/instagram";
 import type { InstagramPost } from "@/content/instagram";
+import { modalPanelVariants, t } from "@/lib/animations";
 import { cn } from "@/lib/cn";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
+
+/** px/s — masaüstü otomatik yatay kaydırma hızı */
+const DESKTOP_AUTO_SCROLL_SPEED = 48;
 
 export type HomeInstagramHorizontalProps = {
   eyebrow?: string;
@@ -29,16 +36,90 @@ export type HomeInstagramHorizontalProps = {
 export function HomeInstagramHorizontal({
   eyebrow = "Sosyal medya vitrini",
   title = "Sosyal Medyada Biz",
-  description = "Sultan Okulları'nın resmî sosyal medya hesaplarından okul atmosferi, etkinlikler ve kısa video paylaşımları — aşağı kaydırın, kareler yana doğru aksın.",
+  description = "Sultan Okulları'nın resmî sosyal medya hesaplarından okul atmosferi, etkinlikler ve kısa video paylaşımları — kareler kendi hızında yana doğru akar.",
   handle = instagramHandle,
   profileUrl = instagramProfileUrl,
   posts = instagramPosts,
 }: HomeInstagramHorizontalProps = {}) {
+  const reduce = useReducedMotion();
   const rootRef = useRef<HTMLElement>(null);
-  const wrapperRef = useRef<HTMLDivElement>(null);
   const stripRef = useRef<HTMLDivElement>(null);
+  const autoScrollTweenRef = useRef<gsap.core.Tween | null>(null);
+  const scrollPausedRef = useRef(false);
+  const hoveredIndexRef = useRef<number | null>(null);
+  const modalPostIndexRef = useRef<number | null>(null);
   const [isSectionInView, setIsSectionInView] = useState(false);
   const [activeVideoIndex, setActiveVideoIndex] = useState(0);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [modalPostIndex, setModalPostIndex] = useState<number | null>(null);
+
+  const pauseAutoScroll = useCallback(() => {
+    scrollPausedRef.current = true;
+    autoScrollTweenRef.current?.pause();
+  }, []);
+
+  const resumeAutoScroll = useCallback(() => {
+    scrollPausedRef.current = false;
+    if (
+      hoveredIndexRef.current !== null ||
+      modalPostIndexRef.current !== null
+    ) {
+      return;
+    }
+    autoScrollTweenRef.current?.play();
+  }, []);
+
+  const handleReelHoverStart = useCallback(
+    (index: number) => {
+      hoveredIndexRef.current = index;
+      setHoveredIndex(index);
+      pauseAutoScroll();
+    },
+    [pauseAutoScroll],
+  );
+
+  const handleReelHoverEnd = useCallback(() => {
+    hoveredIndexRef.current = null;
+    setHoveredIndex(null);
+    resumeAutoScroll();
+  }, [resumeAutoScroll]);
+
+  const handleReelOpen = useCallback(
+    (index: number) => {
+      modalPostIndexRef.current = index;
+      setModalPostIndex(index);
+      pauseAutoScroll();
+    },
+    [pauseAutoScroll],
+  );
+
+  const handleReelModalClose = useCallback(() => {
+    modalPostIndexRef.current = null;
+    setModalPostIndex(null);
+    resumeAutoScroll();
+  }, [resumeAutoScroll]);
+
+  const handleReelClick = useCallback(
+    (index: number, event: MouseEvent<HTMLElement>) => {
+      const target = event.target as HTMLElement;
+      if (target.closest(".site-vidstack-controls")) return;
+      handleReelOpen(index);
+    },
+    [handleReelOpen],
+  );
+
+  const shouldPlayReel = useCallback(
+    (index: number) => {
+      if (!isSectionInView || modalPostIndex !== null) return false;
+      if (hoveredIndex === index) return true;
+      if (hoveredIndex !== null) return false;
+      return activeVideoIndex === index;
+    },
+    [activeVideoIndex, hoveredIndex, isSectionInView, modalPostIndex],
+  );
+
+  const modalPost =
+    modalPostIndex !== null ? posts[modalPostIndex] ?? null : null;
 
   useEffect(() => {
     const section = rootRef.current;
@@ -72,55 +153,67 @@ export function HomeInstagramHorizontal({
       mm.add(
         "(min-width: 1024px) and (prefers-reduced-motion: no-preference)",
         () => {
-          let pinWrapWidth = strip.scrollWidth;
-          let horizontalScrollLength = pinWrapWidth - window.innerWidth;
+          let scrollLength = 0;
+          let tween: gsap.core.Tween | null = null;
+          let visibilityTrigger: ScrollTrigger | null = null;
 
-          const refresh = () => {
-            pinWrapWidth = strip.scrollWidth;
-            horizontalScrollLength = pinWrapWidth - window.innerWidth;
+          const rebuildAutoScroll = () => {
+            scrollLength = Math.max(strip.scrollWidth - window.innerWidth, 0);
+
+            tween?.kill();
+            visibilityTrigger?.kill();
+            gsap.set(strip, { x: 0 });
+
+            if (scrollLength <= 0) return;
+
+            tween = gsap.to(strip, {
+              x: -scrollLength,
+              duration: scrollLength / DESKTOP_AUTO_SCROLL_SPEED,
+              ease: "none",
+              repeat: -1,
+            });
+            autoScrollTweenRef.current = tween;
+
+            visibilityTrigger = ScrollTrigger.create({
+              trigger: section,
+              start: "top bottom",
+              end: "bottom top",
+              onEnter: () => {
+                if (!scrollPausedRef.current) tween?.play();
+              },
+              onEnterBack: () => {
+                if (!scrollPausedRef.current) tween?.play();
+              },
+              onLeave: () => tween?.pause(),
+              onLeaveBack: () => tween?.pause(),
+            });
+
+            tween.pause();
+            if (visibilityTrigger.isActive && !scrollPausedRef.current) {
+              tween.play();
+            }
           };
 
-          refresh();
-
-          const tween = gsap.to(strip, {
-            x: () => -Math.max(horizontalScrollLength, 0),
-            ease: "none",
-            scrollTrigger: {
-              trigger: section,
-              pin: section,
-              pinSpacing: true,
-              pinReparent: true,
-              anticipatePin: 1,
-              start: "center center",
-              end: () => `+=${Math.max(horizontalScrollLength, 1)}`,
-              scrub: true,
-              invalidateOnRefresh: true,
-            },
-          });
+          rebuildAutoScroll();
 
           const resizeObserver = new ResizeObserver(() => {
-            ScrollTrigger.refresh();
+            rebuildAutoScroll();
           });
           resizeObserver.observe(strip);
 
-          ScrollTrigger.addEventListener("refreshInit", refresh);
-
           // Instagram embed'leri asenkron büyüdüğü için layout settle olduktan
-          // sonra ScrollTrigger'ı tazele.
-          const settleTimer = window.setTimeout(
-            () => ScrollTrigger.refresh(),
-            600,
-          );
-          const onLoad = () => ScrollTrigger.refresh();
+          // sonra kaydırma mesafesini yeniden hesapla.
+          const settleTimer = window.setTimeout(rebuildAutoScroll, 600);
+          const onLoad = () => rebuildAutoScroll();
           window.addEventListener("load", onLoad);
 
           return () => {
             resizeObserver.disconnect();
-            ScrollTrigger.removeEventListener("refreshInit", refresh);
             window.removeEventListener("load", onLoad);
             window.clearTimeout(settleTimer);
-            tween.scrollTrigger?.kill();
-            tween.kill();
+            visibilityTrigger?.kill();
+            tween?.kill();
+            autoScrollTweenRef.current = null;
           };
         },
       );
@@ -136,13 +229,13 @@ export function HomeInstagramHorizontal({
       id="instagram"
       data-section="instagram"
       aria-label="Sultan Okulları Instagram galerisi"
-      className="border-charcoal/10 relative z-[1] overflow-hidden border-y bg-[linear-gradient(180deg,rgba(255,255,255,0.84),rgba(255,240,133,0.72))]"
+      className="border-charcoal/10 relative z-[1] overflow-hidden border-y bg-white"
     >
       <div className="pointer-events-none absolute inset-0 bg-[url('/desen.svg')] bg-cover bg-center bg-no-repeat opacity-[0.045] mix-blend-multiply" />
       <div className="bg-brand-green/10 pointer-events-none absolute top-12 -left-24 size-72 rounded-full blur-3xl" />
       <div className="bg-brand-honey/35 pointer-events-none absolute -right-24 bottom-12 size-72 rounded-full blur-3xl" />
 
-      <div className="section-page-grid py-fluid-8 sm:py-fluid-16">
+      <div className="section-page-grid pt-fluid-8 pb-0 sm:pt-fluid-16">
         <div className="section-page-grid__content">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <div className="max-w-2xl">
@@ -164,38 +257,101 @@ export function HomeInstagramHorizontal({
         </div>
       </div>
 
-      <div
-        ref={wrapperRef}
-        className="horiz-gallery-wrapper relative mt-12 w-full overflow-hidden lg:mt-16"
-      >
+      <div className="horiz-gallery-wrapper relative mt-5 w-full overflow-hidden sm:mt-6">
         <div
           ref={stripRef}
           className={cn(
             "horiz-gallery-strip flex flex-nowrap will-change-transform",
             // Mobile / reduced-motion fallback: native horizontal scroll-snap.
-            "snap-x snap-mandatory overflow-x-auto scroll-smooth px-4 pt-2 pb-6 [-ms-overflow-style:none] [scrollbar-width:none] sm:px-6 [&::-webkit-scrollbar]:hidden",
-            // Desktop with motion: GSAP takes over; disable native overflow.
+            "snap-x snap-mandatory overflow-x-auto scroll-smooth px-4 pb-6 [-ms-overflow-style:none] [scrollbar-width:none] sm:px-6 [&::-webkit-scrollbar]:hidden",
+            // Desktop with motion: GSAP auto-scroll; disable native overflow.
             "lg:motion-safe:overflow-visible lg:motion-safe:px-[6vw]",
           )}
         >
           {posts.map((post, index) => (
             <article
               key={post.id}
-              className="project-wrap relative box-border flex w-[min(82vw,18rem)] shrink-0 snap-start px-2 sm:w-[20rem] md:w-[22rem] lg:w-[23rem] lg:px-3"
+              tabIndex={0}
+              role="button"
+              aria-label={`${post.title} — büyüt`}
+              onMouseEnter={() => handleReelHoverStart(index)}
+              onMouseLeave={handleReelHoverEnd}
+              onFocus={() => handleReelHoverStart(index)}
+              onBlur={handleReelHoverEnd}
+              onClick={(event) => handleReelClick(index, event)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  handleReelOpen(index);
+                }
+              }}
+              className="project-wrap relative box-border flex w-[min(82vw,18rem)] shrink-0 cursor-pointer snap-start px-2 transition-transform duration-300 hover:z-10 hover:scale-[1.02] sm:w-[20rem] md:w-[22rem] lg:w-[23rem] lg:px-3"
             >
-              <div className="border-charcoal/10 relative flex w-full flex-col overflow-hidden rounded-[1.5rem] border bg-white/82 p-3 shadow-[0_30px_100px_rgba(26,28,24,0.12)] backdrop-blur-xl">
-                <InstagramEmbed
-                  post={post}
-                  shouldPlay={isSectionInView && activeVideoIndex === index}
-                  onEnded={() =>
-                    setActiveVideoIndex((index + 1) % instagramPosts.length)
-                  }
-                />
-              </div>
+              <InstagramEmbed
+                post={post}
+                shouldPlay={shouldPlayReel(index)}
+                onEnded={() =>
+                  setActiveVideoIndex((current) => (current + 1) % posts.length)
+                }
+              />
             </article>
           ))}
         </div>
       </div>
+
+      <AnimatePresence>
+        {modalPost?.videoSrc ? (
+          <motion.div
+            key="instagram-reel-lightbox"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={t(0.35)}
+          >
+            <motion.button
+              type="button"
+              aria-label="Kapat"
+              className="absolute inset-0 bg-emerald-950/70"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: reduce ? 0.7 : 0.7 }}
+              exit={{ opacity: 0 }}
+              transition={t(0.4)}
+              onClick={handleReelModalClose}
+            />
+            <motion.div
+              role="dialog"
+              aria-modal
+              aria-label={modalPost.title}
+              className="relative z-[101] w-[min(96vw,calc(94vh*9/16))] overflow-hidden rounded-[1.35rem] shadow-[0_40px_120px_rgba(0,0,0,0.55)]"
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={modalPanelVariants}
+              transition={reduce ? { duration: 0 } : undefined}
+            >
+              <button
+                type="button"
+                aria-label="Kapat"
+                onClick={handleReelModalClose}
+                className="absolute top-3 right-3 z-20 inline-flex size-9 items-center justify-center rounded-full bg-black/45 text-white backdrop-blur-sm transition hover:bg-black/60"
+              >
+                <X className="size-4" aria-hidden />
+              </button>
+              <div className="relative aspect-[9/16] w-full bg-black">
+                <InteractiveSiteVideo
+                  className="block h-full w-full"
+                  src={modalPost.videoSrc}
+                  title={modalPost.title}
+                  shouldPlay={modalPostIndex !== null}
+                  muted={false}
+                  loop
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </section>
   );
 }

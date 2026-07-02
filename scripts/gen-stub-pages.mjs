@@ -40,11 +40,6 @@ const pages = [
     "Atölyeler ve kulüpler",
     "Atölye ve kulüp programlarımız.",
   ],
-  [
-    "destek-hizmetleri",
-    "Destek hizmetleri",
-    "Yemekhane, servis, güvenlik, kıyafet, K12.",
-  ],
   ["rehberlik", "Rehberlik", "PDR ve veli akademisi."],
   ["guncel/etkinlikler", "Etkinlikler", "Okul etkinlik takvimi."],
   ["guncel/haberler", "Haberler ve duyurular", "Güncel haberler."],

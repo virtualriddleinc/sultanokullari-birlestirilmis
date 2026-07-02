@@ -18,7 +18,7 @@ export function AccordionRoot({
   return (
     <Accordion.Root
       type={type}
-      collapsible={collapsible}
+      {...(type === "single" ? { collapsible } : {})}
       className={cn(
         "divide-y divide-zinc-200 rounded-lg border border-zinc-200",
         className,

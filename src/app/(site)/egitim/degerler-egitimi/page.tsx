@@ -41,8 +41,7 @@ export default function Page() {
       <PedagojiSection
         eyebrow="Pedagojik yaklaşımımız"
         title="Değerlerimizi yaşatma yolumuz"
-        description="Sayfayı kaydırdıkça akan değerler — sınıfta, panoda, etkinlikte; günlük okul ritmimizin merkezinde."
-        bands={degerler.bands}
+        description="Sınıfta, panoda, etkinlikte — günlük okul ritmimizin merkezinde."
         items={degerler.accordion}
         theme="rose"
       />

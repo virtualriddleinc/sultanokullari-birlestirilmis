@@ -127,10 +127,12 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     overflow-x: clip;
+    overscroll-behavior-y: none;
   }
 
   html {
     overflow-x: clip;
+    overscroll-behavior-y: none;
   }
 
   /* -----------------------------------------------------------------------
@@ -617,6 +619,50 @@
     grid-column: 1 / -1;
     min-width: 0;
     width: 100%;
+  }
+
+  /*
+   * İç sayfa hero — header hizasından başlar, tam viewport genişliği.
+   * Logo (sarı halka) header z-index katmanında görselin üstünde kalır.
+   */
+  .page-hero-under-header {
+    position: relative;
+    z-index: 0;
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline: calc(50% - 50vw);
+    margin-top: calc(-1 * var(--header-height));
+  }
+
+  .page-hero-media--under-header {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    min-height: calc(
+      var(--header-height) + var(--hero-top-spacer) + clamp(10rem, 28vw, 18rem)
+    );
+    max-height: min(48rem, 90svh);
+    overflow: hidden;
+    margin-bottom: 0;
+    border: none;
+    border-radius: 0;
+    background-color: rgb(26 28 24 / 0.08);
+  }
+
+  /* Sayfa başlığı görselin üzerinde: kurumsal kimlik gibi "overlay" hero */
+  .page-hero-media--overlay {
+    min-height: calc(
+      var(--header-height) + var(--hero-top-spacer) + clamp(16rem, 40vw, 26rem)
+    );
+  }
+
+  .page-hero-media__content {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: clamp(1.75rem, 5vw, 3.5rem);
   }
 
   /* Gâyemiz — mobil/tablet (< lg): dikey yığın (kart → petek) */
@@ -1463,6 +1509,28 @@
       max-width: var(--hero-slide-content-max-width);
     }
 
+    /*
+     * Footer bandı — açıklama metniyle aynı yatay bant:
+     * sol/sağ girinti simetrik, ayraç + nav + progress tam genişlik.
+     */
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-content--band {
+      width: 100%;
+      max-width: none;
+      padding-left: var(--hero-slide-content-inset-x);
+      padding-right: var(--hero-slide-content-inset-x);
+      box-sizing: border-box;
+    }
+
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-footer {
+      width: 100%;
+      max-width: none;
+    }
+
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-footer-progress {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
     .hero-slide-copy {
       width: 100%;
       max-width: 100%;
@@ -1472,6 +1540,69 @@
     .hero-slide-cta {
       width: 100%;
       max-width: 100%;
+    }
+
+    /*
+     * Hero slider bilgi kartı — bölüm sırası (etiket → başlık → açıklama →
+     * buton → nav) sabit dursun; yazı uzunluğuna göre yukarı/aşağı kaymasın.
+     */
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-card > .hero-slide-content:first-child {
+      justify-content: flex-start;
+    }
+
+    /* Başlık/açıklama: sağda en az sol girinti kadar boşluk — kart içinde simetrik bant */
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-content:not(.hero-slide-content--band) {
+      padding-right: var(--hero-slide-content-inset-x);
+    }
+
+    /* Etiket + buton: KURUMSAL sol → EĞİTİM sağ bandı ile X ekseninde hizalı */
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-tagline {
+      width: auto;
+      max-width: var(--hero-slide-tagline-width);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-cta {
+      width: auto;
+      max-width: var(--hero-slide-tagline-width);
+    }
+
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-cta-label {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* Başlık: 3 satırlık sabit yükseklik ayrılır — 1/2 satırlık başlıklarda da yer sabit kalır */
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-title-flow {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: left;
+      text-wrap: normal;
+      width: 100%;
+      min-height: 3.36em;
+    }
+
+    /*
+     * Açıklama: 3 satırlık sabit yükseklik ayrılır.
+     * text-wrap:pretty (text-pretty) + line-clamp birlikte kullanıldığında
+     * Chromium satırı erken kırpabiliyor; clamp'li metinde normal sarımaya dön.
+     */
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-copy p {
+      margin-top: 0;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      text-overflow: ellipsis;
+      text-wrap: normal;
+      min-height: 4.125em;
     }
 
     .hero-slide-media-col {
@@ -1615,8 +1746,35 @@
         margin-left: var(--hero-narrow-outer-offset);
       }
 
+      [data-journey-stage] .journey-stage-grid .hero-slide-media-band {
+        margin-left: var(--hero-bounds-safety);
+        width: calc(100% - var(--hero-bounds-safety));
+        height: var(--hero-narrow-sync-height);
+        max-height: calc(
+          var(--hero-slide-max-height) - var(--hero-bounds-safety)
+        );
+      }
+
+      [data-journey-stage] .journey-stage-grid .hero-slide-media {
+        width: var(--hero-narrow-outer-width);
+        margin-left: var(--hero-narrow-outer-offset);
+      }
+
       .hero-section-grid:not(.journey-stage-grid) .hero-slide-content {
         padding-left: clamp(
+          0.75rem,
+          0.5rem + 0.5vw,
+          var(--hero-slide-content-inset-x)
+        );
+      }
+
+      .hero-section-grid:not(.journey-stage-grid) .hero-slide-content--band {
+        padding-left: clamp(
+          0.75rem,
+          0.5rem + 0.5vw,
+          var(--hero-slide-content-inset-x)
+        );
+        padding-right: clamp(
           0.75rem,
           0.5rem + 0.5vw,
           var(--hero-slide-content-inset-x)
@@ -1688,6 +1846,54 @@
       align-items: center;
     }
 
+    [data-journey-stage] .journey-stage-grid .hero-slide-media-col {
+      width: 100%;
+      height: auto;
+      align-self: center;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+    }
+
+    [data-journey-stage] .journey-stage-grid .hero-slide-media-band {
+      width: var(--hero-slide-media-band-width);
+      max-width: calc(100% - var(--hero-bounds-safety));
+      height: var(--hero-slide-sync-height);
+      max-height: calc(
+        var(--hero-slide-max-height) - var(--hero-bounds-safety)
+      );
+      margin-left: var(--hero-slide-media-offset-left);
+      margin-right: 0;
+      overflow: visible;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding-inline: 0;
+      container-type: normal;
+    }
+
+    [data-journey-stage] .journey-stage-grid .hero-slide-media {
+      width: var(--hero-slide-media-outer-width);
+      max-width: 100%;
+      margin-left: var(--hero-slide-media-outer-offset);
+      margin-top: 0;
+      height: auto;
+      aspect-ratio: 1563 / 1331;
+      flex-shrink: 0;
+    }
+
+    @media (width >= 1301px) {
+      [data-journey-stage] .journey-stage-grid .hero-slide-media-band {
+        margin-left: var(--hero-slide-media-offset-left);
+        width: var(--hero-slide-media-band-width);
+      }
+
+      [data-journey-stage] .journey-stage-grid .hero-slide-media {
+        width: var(--hero-slide-media-outer-width);
+        margin-left: var(--hero-slide-media-outer-offset);
+      }
+    }
+
     /*
      * Bilgi kartı — dar laptop (lg, ~1024–1280px) kart genişliğine göre ölçekleme
      * Referans: geniş laptop (~34.5rem kart) oranları; cqw ile sürekli geçiş
@@ -1709,6 +1915,10 @@
         line-height: 1.14 !important;
       }
 
+      .hero-slide-title-flow {
+        min-height: 3.42em;
+      }
+
       .hero-slide-copy p {
         font-size: clamp(
           0.8125rem,
@@ -1717,6 +1927,7 @@
         ) !important;
         margin-bottom: clamp(0.5rem, 0.25rem + 0.9cqi, 0.875rem) !important;
         line-height: 1.5 !important;
+        min-height: 4.5em;
       }
 
       .hero-slide-tagline {

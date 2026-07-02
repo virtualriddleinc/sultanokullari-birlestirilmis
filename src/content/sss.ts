@@ -54,12 +54,12 @@ export const SSS_CATEGORIES: SssCategory[] = [
       {
         question: "Servis hizmeti var mı?",
         answer:
-          "Destek hizmetlerimiz kapsamında servis imkânları kampüs bazında değerlendirilmektedir. Güncel bilgi için /destek-hizmetleri sayfasına veya ilgili kampüsümüze başvurabilirsiniz.",
+          "Servis imkânları kampüs bazında değerlendirilmektedir. Güncel bilgi için ilgili kampüsümüze başvurabilirsiniz.",
       },
       {
         question: "Yemek ve beslenme nasıl sağlanıyor?",
         answer:
-          "Okul yaşamımızın parçası olan beslenme düzeni, kampüs olanakları ve günlük program /destek-hizmetleri ile /yasam/sultanda-yasam sayfalarında anlatılmaktadır.",
+          "Beslenme düzenimiz ana sayfadaki Yemekhane bölümünde (/#yemekhane) anlatılmaktadır. Kantinsiz okul projesi kapsamında helal sertifikalı, günlük hazırlanan menüler sunulmaktadır.",
       },
     ],
   },

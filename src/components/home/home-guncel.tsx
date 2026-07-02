@@ -80,7 +80,7 @@ export function HomeGuncel({
       id="guncel"
       data-section="guncel"
       variant="honey"
-      className="border-charcoal/10 border-y !py-0"
+      className="!bg-brand-honey border-charcoal/10 border-y !py-0"
       innerClassName="!py-fluid-8 sm:!py-fluid-16"
     >
       <div className="border-charcoal/10 -mx-[var(--layout-margin)] border-y bg-white/50 sm:-mx-0">

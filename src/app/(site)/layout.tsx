@@ -3,6 +3,7 @@ import { Cinzel, Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { draftMode } from "next/headers";
 import { SiteFooter } from "@/components/site-footer";
+import { PreventTopOverscroll } from "@/components/layout/prevent-top-overscroll";
 import { SiteHeader } from "@/components/layout/site-header";
 import { MotionProviders } from "@/components/ui/motion-providers";
 import { getPublishedBranches } from "@/lib/branches-data";
@@ -91,6 +92,7 @@ export default async function RootLayout({
         </div>
 
         <MotionProviders>
+          <PreventTopOverscroll />
           <PayloadRefreshOnSave enabled={isDraft} />
           <SiteHeader />
           <main className="relative z-[1] flex w-full min-w-0 flex-1 flex-col overflow-x-clip">

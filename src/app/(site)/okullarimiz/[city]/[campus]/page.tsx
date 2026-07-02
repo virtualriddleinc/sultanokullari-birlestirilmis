@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "@/components/navigation/site-link";
 import { notFound } from "next/navigation";
 import { Clock } from "lucide-react";
+import { WhatsAppContactButton } from "@/components/branch/whatsapp-contact-button";
 import { BranchGallery } from "@/components/branch-gallery";
 import { BranchContactBlock } from "@/components/iletisim/branch-contact-block";
 import { ContentCard } from "@/components/layout/content-card";
@@ -190,6 +191,7 @@ export default async function CampusPage({
             >
               Haritada aç
             </a>
+            <WhatsAppContactButton phone={branch.phone} />
           </div>
         </section>
 

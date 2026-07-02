@@ -40,7 +40,8 @@ function FramedHexMediaInner({
     <div
       className={cn(
         "relative h-full w-full",
-        interactive && "cursor-pointer",
+        interactive &&
+          "cursor-pointer touch-manipulation transition-transform duration-300 hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1a1c18]",
       )}
       role={interactive ? "button" : undefined}
       tabIndex={interactive ? 0 : undefined}

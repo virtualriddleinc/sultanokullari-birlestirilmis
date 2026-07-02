@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 const MOBILE_HEX_QUERY = "(max-width: 1023px)";
 
-/** Hero / Gâyemiz / Yolculuk altıgen tıklama — yalnızca tablet-mobil (< lg). */
+/** Hero altıgen swipe ile tıklama çakışmasını önlemek için — yalnızca tablet-mobil (< lg). */
 export function useMobileHexInteractive(): boolean {
   const [isMobile, setIsMobile] = useState(false);
 

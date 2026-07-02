@@ -9,7 +9,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { HexLandingModal } from "@/components/ui/hex-landing-modal";
 import { HeroFramedHexMedia } from "@/features/hero/hero-framed-hex-media";
 import { HeroFramedHexStack } from "@/features/hero/hero-framed-hex-stack";
-import { useMobileHexInteractive } from "@/hooks/use-mobile-hex-interactive";
 import {
   mapJourneyChapterToModal,
   type HexLandingModalContent,
@@ -27,24 +26,19 @@ const DEFAULT_HEADLINE =
 
 const CHAPTER_STYLES = [
   {
-    accent: "from-amber-300/30 via-yellow-500/25 to-[var(--color-secondary)]",
-    wash: "bg-[radial-gradient(circle_at_18%_24%,rgba(251,191,36,0.34),transparent_34rem)]",
+    wash: "bg-[radial-gradient(circle_at_18%_24%,rgba(0,0,0,0.04),transparent_34rem)]",
   },
   {
-    accent: "from-amber-300/30 via-yellow-500/25 to-[var(--color-secondary)]",
-    wash: "bg-[radial-gradient(circle_at_28%_78%,rgba(253,224,71,0.28),transparent_34rem)]",
+    wash: "bg-[radial-gradient(circle_at_28%_78%,rgba(0,0,0,0.04),transparent_34rem)]",
   },
   {
-    accent: "from-amber-300/30 via-yellow-500/25 to-[var(--color-secondary)]",
-    wash: "bg-[radial-gradient(circle_at_34%_28%,rgba(251,191,36,0.30),transparent_34rem)]",
+    wash: "bg-[radial-gradient(circle_at_34%_28%,rgba(0,0,0,0.04),transparent_34rem)]",
   },
   {
-    accent: "from-amber-300/30 via-yellow-500/25 to-[var(--color-secondary)]",
-    wash: "bg-[radial-gradient(circle_at_74%_74%,rgba(251,191,36,0.28),transparent_34rem)]",
+    wash: "bg-[radial-gradient(circle_at_74%_74%,rgba(0,0,0,0.04),transparent_34rem)]",
   },
   {
-    accent: "from-amber-300/30 via-yellow-500/25 to-[var(--color-secondary)]",
-    wash: "bg-[radial-gradient(circle_at_78%_22%,rgba(253,224,71,0.30),transparent_34rem)]",
+    wash: "bg-[radial-gradient(circle_at_78%_22%,rgba(0,0,0,0.04),transparent_34rem)]",
   },
 ] as const;
 
@@ -81,7 +75,6 @@ export function HomeJourney({
   chapters: JourneyChapter[];
 }) {
   const rootRef = useRef<HTMLDivElement>(null);
-  const isMobileHexInteractive = useMobileHexInteractive();
   const [modalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] =
     useState<HexLandingModalContent | null>(null);
@@ -228,9 +221,8 @@ export function HomeJourney({
 
       <div
         data-journey-stage
-        className="relative hidden h-[100svh] w-full overflow-hidden bg-[linear-gradient(135deg,rgba(252,211,77,0.30),rgba(234,179,8,0.25),var(--color-secondary))] lg:block"
+        className="bg-brand-honey relative hidden h-[100svh] w-full overflow-hidden lg:block"
       >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_74%_74%,rgba(251,191,36,0.28),transparent_34rem)]" />
         <div className="absolute inset-0 bg-[url('/desen.svg')] bg-cover bg-center bg-no-repeat opacity-[0.08] mix-blend-multiply" />
         {chapters.map((chapter, i) => {
           const style = CHAPTER_STYLES[i] ?? CHAPTER_STYLES[0];
@@ -267,6 +259,9 @@ export function HomeJourney({
                       media={chapter.media}
                       priority={i === 0}
                       sizes="(max-width: 1024px) 60vw, 35vw"
+                      interactive
+                      onActivate={() => openChapterModal(chapter)}
+                      activateLabel={`${chapter.eyebrow} — detayları görüntüle`}
                     />
                   </HeroFramedHexStack>
                   <span
@@ -313,10 +308,7 @@ export function HomeJourney({
           return (
             <article
               key={chapter.title}
-              className={cn(
-                "relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br p-5 sm:p-6",
-                style.accent,
-              )}
+              className="relative overflow-hidden rounded-3xl border border-black/10 bg-brand-honey p-5 sm:p-6"
             >
               <span
                 className={cn(
@@ -329,7 +321,7 @@ export function HomeJourney({
                   <HeroFramedHexMedia
                     media={chapter.media}
                     sizes="(max-width: 640px) 38vw, 12rem"
-                    interactive={isMobileHexInteractive}
+                    interactive
                     onActivate={() => openChapterModal(chapter)}
                     activateLabel={`${chapter.eyebrow} — detayları görüntüle`}
                   />

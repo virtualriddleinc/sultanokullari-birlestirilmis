@@ -76,11 +76,22 @@ export function HeroSlideTitle({
   lines,
   as: Tag = "h2",
   className,
+  flow = false,
 }: {
   lines: string[];
   as?: "h1" | "h2";
   className?: string;
+  /** Satırları zorla bölmek yerine, mevcut genişliğe göre kelime kelime doğal sar */
+  flow?: boolean;
 }) {
+  if (flow) {
+    return (
+      <Tag className={cn(HERO_SLIDE_TITLE_CLASS, className)}>
+        <span className="hero-slide-title-flow">{lines.join(" ")}</span>
+      </Tag>
+    );
+  }
+
   return (
     <Tag className={cn(HERO_SLIDE_TITLE_CLASS, className)}>
       <span className="hero-slide-title-flow lg:hidden">{lines.join(" ")}</span>

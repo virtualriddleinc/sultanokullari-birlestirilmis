@@ -17,82 +17,177 @@ export function PageShellMotion({
   intro,
   children,
   headingLayout = "default",
+  mediaLayout = "default",
   media,
+  bodyMotion = "inView",
 }: {
   title: string;
   intro?: string;
   children?: ReactNode;
   headingLayout?: "default" | "centerHero";
+  mediaLayout?: "default" | "underHeader" | "overlay";
   media?: PageMedia;
+  bodyMotion?: "inView" | "immediate";
 }) {
   const reduce = useReducedMotion();
   const hero = headingLayout === "centerHero";
+  const underHeaderMedia = mediaLayout === "underHeader" && media;
+  const overlayMedia = mediaLayout === "overlay" && media;
 
   const headingClass = cn(
     "font-cinzel text-3xl font-bold tracking-tight text-charcoal sm:text-4xl",
     hero && "text-balance text-center text-4xl sm:text-5xl",
+    overlayMedia &&
+      "text-balance text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)] text-4xl sm:text-5xl lg:text-6xl",
   );
 
   const introClass = cn(
     "section-body mt-4 text-base sm:text-lg",
     hero && "mx-auto max-w-2xl text-center",
+    overlayMedia &&
+      "text-white/90 max-w-2xl text-base sm:text-lg lg:text-xl drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]",
   );
+
+  const sectionClass = cn(
+    "py-fluid-8 sm:py-fluid-16",
+    (underHeaderMedia || overlayMedia) && "pt-fluid-4 sm:pt-fluid-8",
+  );
+
+  const bodyClassName = "text-charcoal/85 mt-10 space-y-6";
+  const bodyContent = (
+    <div className={bodyClassName}>{children}</div>
+  );
+
+  const needsLogoClearance = !underHeaderMedia && !overlayMedia;
+
+  const logoClearanceSpacer = needsLogoClearance ? (
+    <div className="hero-logo-spacer lg:hidden" aria-hidden="true" />
+  ) : null;
+
+  const overlayHeadingContent = overlayMedia ? (
+    <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+      <h1 className={headingClass}>{title}</h1>
+      {intro ? <p className={introClass}>{intro}</p> : null}
+    </div>
+  ) : null;
+
+  const underHeaderHero = underHeaderMedia ? (
+    <div className="page-hero-under-header">
+      <PageHeroMedia media={media} variant="underHeader" priority />
+    </div>
+  ) : null;
+
+  const overlayHero = overlayMedia ? (
+    <div className="page-hero-under-header">
+      <PageHeroMedia media={media} variant="overlay" priority>
+        {overlayHeadingContent}
+      </PageHeroMedia>
+    </div>
+  ) : null;
 
   if (reduce) {
     return (
-      <SectionGrid variant="white" className="py-fluid-8">
-        <article>
-          {media ? <PageHeroMedia media={media} priority /> : null}
-          <h1 className={headingClass}>{title}</h1>
-          {intro ? <p className={introClass}>{intro}</p> : null}
-          <div className="text-charcoal/85 mt-10 space-y-6">{children}</div>
-        </article>
-      </SectionGrid>
+      <>
+        {underHeaderHero}
+        {overlayHero}
+        <SectionGrid variant="white" className={sectionClass}>
+          <article>
+            {logoClearanceSpacer}
+            {media && !underHeaderMedia && !overlayMedia ? (
+              <PageHeroMedia media={media} priority />
+            ) : null}
+            {!overlayMedia ? (
+              <>
+                <h1 className={headingClass}>{title}</h1>
+                {intro ? <p className={introClass}>{intro}</p> : null}
+              </>
+            ) : null}
+            {bodyContent}
+          </article>
+        </SectionGrid>
+      </>
     );
   }
 
   return (
-    <SectionGrid variant="white" className="py-fluid-8">
-      <article>
-        {media ? (
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeUpVariants}
-          >
-            <PageHeroMedia media={media} priority />
-          </motion.div>
-        ) : null}
-        <motion.h1
-          className={headingClass}
+    <>
+      {underHeaderMedia ? (
+        <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeUpVariants}
         >
-          {title}
-        </motion.h1>
-        {intro ? (
-          <motion.p
-            className={introClass}
+          {underHeaderHero}
+        </motion.div>
+      ) : null}
+      {overlayMedia ? (
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={fadeUpVariants}
+        >
+          {overlayHero}
+        </motion.div>
+      ) : null}
+      <SectionGrid variant="white" className={sectionClass}>
+        <article>
+          {logoClearanceSpacer}
+          {media && !underHeaderMedia && !overlayMedia ? (
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={fadeUpVariants}
+            >
+              <PageHeroMedia media={media} priority />
+            </motion.div>
+          ) : null}
+        {!overlayMedia ? (
+          <>
+            <motion.h1
+              className={headingClass}
+              initial="hidden"
+              animate="visible"
+              variants={fadeUpVariants}
+            >
+              {title}
+            </motion.h1>
+            {intro ? (
+              <motion.p
+                className={introClass}
+                initial="hidden"
+                animate="visible"
+                variants={fadeUpVariants}
+                transition={{ delay: 0.04 }}
+              >
+                {intro}
+              </motion.p>
+            ) : null}
+          </>
+        ) : null}
+        {bodyMotion === "immediate" ? (
+          <motion.div
+            className={bodyClassName}
             initial="hidden"
             animate="visible"
-            variants={fadeUpVariants}
-            transition={{ delay: 0.04 }}
+            variants={fadeUpDelayedBodyVariants}
+            transition={{ delay: 0.1 }}
           >
-            {intro}
-          </motion.p>
-        ) : null}
-        <motion.div
-          className="text-charcoal/85 mt-10 space-y-6"
-          initial="hidden"
-          whileInView="visible"
-          viewport={viewportInView}
-          variants={fadeUpDelayedBodyVariants}
-          transition={{ delay: 0.1 }}
-        >
-          {children}
-        </motion.div>
+            {children}
+          </motion.div>
+        ) : (
+          <motion.div
+            className={bodyClassName}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewportInView}
+            variants={fadeUpDelayedBodyVariants}
+            transition={{ delay: 0.1 }}
+          >
+            {children}
+          </motion.div>
+        )}
       </article>
     </SectionGrid>
+    </>
   );
 }

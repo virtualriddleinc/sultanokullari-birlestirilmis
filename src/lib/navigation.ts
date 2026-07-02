@@ -86,14 +86,14 @@ export const NAV_SECTIONS: NavSection[] = [
     description:
       "Bilginin hikmete, bilincin ise erdeme dönüştüğü özgün bir eğitim modeli",
     featured: {
-      label: "Sultan Mektep Modeli & Kademeler",
+      label: "Sultan Mektep Modeli",
       img: IMG.egitim,
       video: "/videos/kademeler.mp4",
       icon: "BookOpen",
     },
     items: [
       {
-        label: "Sultan Mektep Modeli & Kademeler",
+        label: "Sultan Mektep Modeli",
         href: "/egitim/kademeler",
         icon: "GraduationCap",
         video: "/videos/kademeler.mp4",
@@ -131,6 +131,25 @@ export const NAV_SECTIONS: NavSection[] = [
         href: "/akademik/gelisim",
         icon: "TrendingUp",
         video: "/videos/akademik-gelisim.mp4",
+      },
+      {
+        label: "Anaokulu",
+        href: "/egitim/anaokulu",
+        icon: "Baby",
+        video: "/site-media/VID-20260429-WA0181.mp4",
+        img: "/site-media/IMG-20260429-WA0133.jpg",
+      },
+      {
+        label: "İlkokul",
+        href: "/egitim/ilkokul",
+        icon: "School",
+        img: "/site-media/IMG-20260429-WA0082.jpg",
+      },
+      {
+        label: "Ortaokul",
+        href: "/egitim/ortaokul",
+        icon: "GraduationCap",
+        img: "/site-media/IMG-20260429-WA0175.jpg",
       },
       {
         label: "Yabancı Dil & Atölyeler",
@@ -200,31 +219,31 @@ export const NAV_SECTIONS: NavSection[] = [
     },
     items: [
       {
-        label: "İstanbul – Sancaktepe",
+        label: "Sancaktepe – İstanbul",
         href: "/okullarimiz/istanbul/sancaktepe",
         icon: "MapPin",
         img: IMG.istanbul,
       },
       {
-        label: "Kocaeli – Başiskele",
+        label: "Başiskele – Kocaeli",
         href: "/okullarimiz/kocaeli/basiskele",
         icon: "MapPin",
         img: IMG.kocaeli,
       },
       {
-        label: "Sakarya – Serdivan",
+        label: "Serdivan – Sakarya",
         href: "/okullarimiz/sakarya/serdivan",
         icon: "MapPin",
         img: IMG.sakarya,
       },
       {
-        label: "Ankara – Sincan",
+        label: "Sincan – Ankara",
         href: "/okullarimiz/ankara/sincan",
         icon: "MapPin",
         img: IMG.ankara,
       },
       {
-        label: "Konya – Mevlânâ",
+        label: "Mevlânâ – Konya",
         href: "/okullarimiz/konya/mevlana",
         icon: "MapPin",
         img: IMG.konya,

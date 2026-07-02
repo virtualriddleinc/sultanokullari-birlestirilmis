@@ -731,13 +731,20 @@ export interface Staff {
   id: number;
   _order?: string | null;
   fullName: string;
-  title: string;
-  department: 'yonetim' | 'egitim' | 'idari';
   /**
-   * Yönetim kadrosu için boş bırakın.
+   * Ad Soyad'ın önüne eklenir. Örn: Dr., Prof. Dr., Öğr. Gör. Boş bırakılabilir.
+   */
+  academicTitle?: string | null;
+  title: string;
+  /**
+   * Örn: X Üniversitesi Y Bölümü Doktorası. Boş bırakılabilir.
+   */
+  education?: string | null;
+  department: 'yonetim' | 'egitim_danisma' | 'egitim' | 'idari';
+  /**
+   * Yönetim ve Eğitim Danışma Kurulu için boş bırakın.
    */
   branchSlug?: ('sancaktepe' | 'basiskele' | 'serdivan' | 'sincan') | null;
-  photo?: (number | null) | Media;
   /**
    * Kaydı en son güncelleyen panel kullanıcısı.
    */
@@ -1194,10 +1201,11 @@ export interface PagesSelect<T extends boolean = true> {
 export interface StaffSelect<T extends boolean = true> {
   _order?: T;
   fullName?: T;
+  academicTitle?: T;
   title?: T;
+  education?: T;
   department?: T;
   branchSlug?: T;
-  photo?: T;
   lastEditedBy?: T;
   updatedAt?: T;
   createdAt?: T;

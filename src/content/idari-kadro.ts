@@ -1,19 +1,24 @@
-export type Department = "yonetim" | "egitim" | "idari";
+export type Department = "yonetim" | "egitim_danisma" | "egitim" | "idari";
 
 export type BranchSlug = "sancaktepe" | "basiskele" | "serdivan" | "sincan";
 
 export interface StaffMember {
   id: string;
   name: string;
+  /** Örn. "Dr.", "Prof. Dr.", "Öğr. Gör.". Opsiyonel; ad soyad'ın önüne eklenir. */
+  academicTitle?: string;
+  /** Görev (örn. "Müdür Yardımcısı"). */
   title: string;
+  /** En yüksek eğitim derecesi (örn. "X Üniversitesi Y Bölümü Doktorası"). Opsiyonel. */
+  education?: string;
   department: Department;
   /** Yönetim (merkez) kadrosunda undefined. Diğer departmanlarda zorunlu. */
   branchSlug?: BranchSlug;
-  photoUrl?: string;
 }
 
 export const departmentLabels: Record<Department, string> = {
   yonetim: "Yönetim",
+  egitim_danisma: "Eğitim Danışma Kurulu",
   egitim: "Eğitim",
   idari: "İdari",
 };
@@ -31,37 +36,71 @@ export const branchOptions: { slug: BranchSlug; name: string; city: string }[] =
  * Diğer kadrolar 4 okul için ayrı listelenir.
  */
 export const idariKadro: StaffMember[] = [
-  { id: "y1", name: "Ad Soyad", title: "Genel Müdür", department: "yonetim" },
+  {
+    id: "y1",
+    name: "Ad Soyad",
+    academicTitle: "Dr.",
+    title: "Genel Müdür",
+    education: "İstanbul Üniversitesi Eğitim Bilimleri Doktorası",
+    department: "yonetim",
+  },
   {
     id: "y2",
     name: "Ad Soyad",
+    academicTitle: "Dr.",
     title: "Genel Müdür Yardımcısı",
+    education: "Ankara Üniversitesi İşletme Yüksek Lisansı",
     department: "yonetim",
   },
   {
     id: "y3",
     name: "Ad Soyad",
+    academicTitle: "Öğr. Gör.",
     title: "Eğitim Koordinatörü",
+    education: "Marmara Üniversitesi Eğitim Yönetimi Yüksek Lisansı",
     department: "yonetim",
   },
+
   {
-    id: "y4",
+    id: "ed1",
     name: "Ad Soyad",
-    title: "Mali İşler Müdürü",
-    department: "yonetim",
+    academicTitle: "Prof. Dr.",
+    title: "Eğitim Danışma Kurulu Üyesi",
+    education: "Hacettepe Üniversitesi Eğitim Bilimleri Doktorası",
+    department: "egitim_danisma",
+  },
+  {
+    id: "ed2",
+    name: "Ad Soyad",
+    academicTitle: "Doç. Dr.",
+    title: "Eğitim Danışma Kurulu Üyesi",
+    education: "Boğaziçi Üniversitesi Psikoloji Doktorası",
+    department: "egitim_danisma",
+  },
+  {
+    id: "ed3",
+    name: "Ad Soyad",
+    academicTitle: "Dr.",
+    title: "Eğitim Danışma Kurulu Üyesi",
+    education: "ODTÜ Sosyoloji Yüksek Lisansı",
+    department: "egitim_danisma",
   },
 
   {
     id: "sn-e1",
     name: "Ad Soyad",
+    academicTitle: "Dr.",
     title: "Okul Müdürü",
+    education: "İstanbul Üniversitesi Eğitim Yönetimi Doktorası",
     department: "egitim",
     branchSlug: "sancaktepe",
   },
   {
     id: "sn-e2",
     name: "Ad Soyad",
+    academicTitle: "Öğr. Gör.",
     title: "Müdür Yardımcısı",
+    education: "Marmara Üniversitesi Okul Öncesi Öğretmenliği Lisansı",
     department: "egitim",
     branchSlug: "sancaktepe",
   },
@@ -69,6 +108,7 @@ export const idariKadro: StaffMember[] = [
     id: "sn-e3",
     name: "Ad Soyad",
     title: "Rehber Öğretmen",
+    education: "Anadolu Üniversitesi Rehberlik ve Psikolojik Danışmanlık Lisansı",
     department: "egitim",
     branchSlug: "sancaktepe",
   },
@@ -76,6 +116,7 @@ export const idariKadro: StaffMember[] = [
     id: "sn-i1",
     name: "Ad Soyad",
     title: "Okul Sekreteri",
+    education: "İstanbul Üniversitesi İşletme Lisansı",
     department: "idari",
     branchSlug: "sancaktepe",
   },
@@ -83,6 +124,7 @@ export const idariKadro: StaffMember[] = [
     id: "sn-i2",
     name: "Ad Soyad",
     title: "Muhasebe",
+    education: "Anadolu Üniversitesi Muhasebe Ön Lisans",
     department: "idari",
     branchSlug: "sancaktepe",
   },

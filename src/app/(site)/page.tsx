@@ -8,6 +8,7 @@ import { HomeJourney } from "@/components/home/home-journey";
 import { HomeNedenPreview } from "@/components/home/home-neden-preview";
 import { HomeQuickLinks } from "@/components/home/home-quick-links";
 import { HomeVideo } from "@/components/home/home-video";
+import { HomeYemekhane } from "@/components/home/home-yemekhane";
 import { InfoRequestModal } from "@/components/home/info-request-modal";
 import { MissionCounters } from "@/components/home/mission-counters";
 import { getHomePageData } from "@/lib/home-data";
@@ -34,6 +35,7 @@ export default async function HomePage() {
       <HomeJourney headline={home.journey.headline} chapters={home.journey.chapters} />
       <HomeNedenPreview {...home.neden} />
       <HomeVideo {...home.videoSection} />
+      <HomeYemekhane />
       <HomeBranchesShowcase {...home.branchesSection} />
       <HomeGuncel {...home.guncelSection} />
       <HomeInstagramHorizontal {...home.instagramSection} />

@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronDown } from "lucide-react";
 import type { StaffMember } from "@/content/idari-kadro";
 import {
   idariKadro,
@@ -10,6 +11,7 @@ import {
 } from "@/content/idari-kadro";
 import { StaffCard } from "@/components/kurumsal/staff-card";
 import { StaggerItem, StaggerList } from "@/components/motion/stagger-list";
+import { cn } from "@/lib/cn";
 
 function SectionTitle({
   eyebrow,
@@ -22,14 +24,14 @@ function SectionTitle({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <span className="text-[11px] font-semibold tracking-[0.22em] text-[var(--color-primary)] uppercase">
+      <span className="text-charcoal/70 text-[11px] font-semibold tracking-[0.22em] uppercase">
         {eyebrow}
       </span>
-      <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
+      <h2 className="text-charcoal text-2xl font-semibold tracking-tight sm:text-3xl">
         {title}
       </h2>
       {description ? (
-        <p className="max-w-2xl text-sm leading-6 text-zinc-600">
+        <p className="text-charcoal/75 max-w-2xl text-sm leading-6">
           {description}
         </p>
       ) : null}
@@ -40,13 +42,15 @@ function SectionTitle({
 function StaffGrid({
   members,
   featured = false,
+  singleRow = false,
 }: {
   members: StaffMember[];
   featured?: boolean;
+  singleRow?: boolean;
 }) {
   if (members.length === 0) {
     return (
-      <p className="py-8 text-center text-sm text-zinc-500">
+      <p className="text-charcoal/70 py-8 text-center text-sm">
         Bu bölümde henüz kayıt bulunmamaktadır.
       </p>
     );
@@ -55,7 +59,11 @@ function StaffGrid({
   return (
     <StaggerList
       as="ul"
-      className="grid grid-cols-1 place-items-center gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-12"
+      className={
+        singleRow
+          ? "grid grid-cols-1 place-items-center gap-y-10 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-12"
+          : "grid grid-cols-1 place-items-center gap-y-10 lg:grid-cols-2 lg:gap-x-8 lg:gap-y-12 xl:grid-cols-3"
+      }
     >
       {members.map((member) => (
         <StaggerItem key={member.id} className="list-none">
@@ -66,62 +74,124 @@ function StaffGrid({
   );
 }
 
-function BranchPicker({
+function BranchTitleSelector({
   value,
   onChange,
 }: {
   value: BranchSlug;
   onChange: (slug: BranchSlug) => void;
 }) {
-  const reduce = useReducedMotion();
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const current = branchOptions.find((b) => b.slug === value);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onPointerDown = (event: MouseEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
 
   return (
-    <div
-      role="tablist"
-      aria-label="Şube seçimi"
-      className="flex flex-wrap gap-2"
-    >
-      {branchOptions.map((opt) => {
-        const active = value === opt.slug;
-        return (
-          <button
-            key={opt.slug}
-            type="button"
-            role="tab"
-            aria-selected={active}
-            onClick={() => onChange(opt.slug)}
-            className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
-              active
-                ? "text-white"
-                : "text-zinc-700 hover:text-[var(--color-primary)]"
-            }`}
+    <div ref={rootRef} className="relative inline-block">
+      <h2
+        id="sube-baslik"
+        className="text-charcoal flex flex-wrap items-center gap-x-2 gap-y-1 text-2xl font-semibold tracking-tight sm:text-3xl"
+      >
+        <button
+          type="button"
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          aria-label={`Şube seç: ${current?.name ?? "Şube"}`}
+          onClick={() => setOpen((prev) => !prev)}
+          className="bg-brand-honey text-charcoal hover:ring-charcoal/20 inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.12)] ring-1 ring-black/5 transition hover:ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal"
+        >
+          <span>{current?.name ?? "Şube"}</span>
+          <ChevronDown
+            className={cn(
+              "size-5 shrink-0 transition-transform duration-200",
+              open && "rotate-180",
+            )}
+            aria-hidden
+          />
+        </button>
+        <span>Şube Kadromuz</span>
+      </h2>
+
+      <AnimatePresence>
+        {open ? (
+          <motion.ul
+            role="listbox"
+            aria-label="Şube seçimi"
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.15 }}
+            className="border-charcoal/10 absolute top-[calc(100%+0.5rem)] left-0 z-30 min-w-[14rem] overflow-hidden rounded-2xl border bg-[var(--color-brand-honey)] py-1.5 shadow-[0_18px_45px_rgba(0,0,0,0.18)]"
           >
-            {active && !reduce ? (
-              <motion.span
-                layoutId="branch-picker-pill"
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary-strong)] shadow-[0_10px_30px_rgba(18,138,54,0.25)]"
-                transition={{ type: "spring", stiffness: 350, damping: 30 }}
-              />
-            ) : null}
-            {active && reduce ? (
-              <span className="absolute inset-0 rounded-full bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-secondary-strong)]" />
-            ) : null}
-            {!active ? (
-              <span className="absolute inset-0 rounded-full border border-zinc-200 bg-white/60 backdrop-blur-sm" />
-            ) : null}
-            <span className="relative flex items-baseline gap-1.5">
-              <span>{opt.name}</span>
-              <span
-                className={`text-[10px] font-normal ${
-                  active ? "text-white/80" : "text-zinc-400"
-                }`}
-              >
-                {opt.city}
-              </span>
-            </span>
-          </button>
-        );
-      })}
+            {branchOptions.map((opt) => {
+              const active = value === opt.slug;
+              return (
+                <li key={opt.slug} role="presentation">
+                  <button
+                    type="button"
+                    role="option"
+                    aria-selected={active}
+                    onClick={() => {
+                      onChange(opt.slug);
+                      setOpen(false);
+                    }}
+                    className={cn(
+                      "text-charcoal flex w-full items-baseline justify-between gap-3 px-4 py-2.5 text-left text-sm transition",
+                      active
+                        ? "bg-black/8 font-semibold"
+                        : "hover:bg-black/5",
+                    )}
+                  >
+                    <span>{opt.name}</span>
+                    <span className="text-charcoal/60 text-xs">{opt.city}</span>
+                  </button>
+                </li>
+              );
+            })}
+          </motion.ul>
+        ) : null}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+function BranchSectionHeader({
+  value,
+  onChange,
+}: {
+  value: BranchSlug;
+  onChange: (slug: BranchSlug) => void;
+}) {
+  return (
+    <div className="flex flex-col gap-2">
+      <span className="text-charcoal/70 text-[11px] font-semibold tracking-[0.22em] uppercase">
+        Şube Kadroları
+      </span>
+      <BranchTitleSelector value={value} onChange={onChange} />
+      <p className="text-charcoal/75 max-w-2xl text-sm leading-6">
+        Her şube kendi idari ve eğitim kadrosuyla hizmet verir. Başlıktaki şube
+        adına tıklayarak görüntülemek istediğiniz okulu seçin.
+      </p>
     </div>
   );
 }
@@ -134,15 +204,18 @@ export function IdariKadroGrid({ members = idariKadro }: { members?: StaffMember
     [members],
   );
 
+  const egitimDanisma = useMemo(
+    () => members.filter((m) => m.department === "egitim_danisma"),
+    [members],
+  );
+
   const branchStaff = useMemo(
     () => members.filter((m) => m.branchSlug === branch),
     [members, branch],
   );
 
-  const branchEgitim = branchStaff.filter((m) => m.department === "egitim");
   const branchIdari = branchStaff.filter((m) => m.department === "idari");
-
-  const currentBranch = branchOptions.find((b) => b.slug === branch);
+  const branchEgitim = branchStaff.filter((m) => m.department === "egitim");
 
   return (
     <div className="space-y-20">
@@ -153,19 +226,22 @@ export function IdariKadroGrid({ members = idariKadro }: { members?: StaffMember
           title="Yönetim Kadrosu"
           description="Sultan Okulları'nın stratejik yönlendirmesini yapan merkez yönetim ekibi."
         />
-        <StaffGrid members={yonetim} featured />
+        <StaffGrid members={yonetim} featured singleRow />
+      </section>
+
+      {/* Eğitim Danışma Kurulu */}
+      <section aria-labelledby="danisma-baslik" className="space-y-8">
+        <SectionTitle
+          eyebrow="Merkez"
+          title="Eğitim Danışma Kurulumuz"
+          description="Kurumun eğitim politikalarına akademik ve mesleki danışmanlık sağlayan uzman kadro."
+        />
+        <StaffGrid members={egitimDanisma} featured />
       </section>
 
       {/* Şube Kadroları */}
       <section aria-labelledby="sube-baslik" className="space-y-10">
-        <div className="space-y-5">
-          <SectionTitle
-            eyebrow="Şube Kadroları"
-            title="Okulumuzu seçin"
-            description="Her şube kendi eğitim ve idari kadrosuyla hizmet verir. Görüntülemek istediğiniz okulu seçin."
-          />
-          <BranchPicker value={branch} onChange={setBranch} />
-        </div>
+        <BranchSectionHeader value={branch} onChange={setBranch} />
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -176,35 +252,26 @@ export function IdariKadroGrid({ members = idariKadro }: { members?: StaffMember
             transition={{ duration: 0.25 }}
             className="space-y-12"
           >
-            {currentBranch ? (
-              <p className="text-sm text-zinc-500">
-                <span className="font-semibold text-[var(--color-primary)]">
-                  {currentBranch.name}
-                </span>{" "}
-                kampüsü · {currentBranch.city}
-              </p>
-            ) : null}
-
-            {branchEgitim.length > 0 ? (
-              <div className="space-y-6">
-                <h3 className="text-sm font-semibold tracking-[0.18em] text-zinc-500 uppercase">
-                  Eğitim Kadrosu
-                </h3>
-                <StaffGrid members={branchEgitim} />
-              </div>
-            ) : null}
-
             {branchIdari.length > 0 ? (
               <div className="space-y-6">
-                <h3 className="text-sm font-semibold tracking-[0.18em] text-zinc-500 uppercase">
+                <h3 className="text-charcoal/70 text-sm font-semibold tracking-[0.18em] uppercase">
                   İdari Kadro
                 </h3>
                 <StaffGrid members={branchIdari} />
               </div>
             ) : null}
 
+            {branchEgitim.length > 0 ? (
+              <div className="space-y-6">
+                <h3 className="text-charcoal/70 text-sm font-semibold tracking-[0.18em] uppercase">
+                  Eğitim Kadrosu
+                </h3>
+                <StaffGrid members={branchEgitim} />
+              </div>
+            ) : null}
+
             {branchStaff.length === 0 ? (
-              <p className="py-8 text-center text-sm text-zinc-500">
+              <p className="text-charcoal/70 py-8 text-center text-sm">
                 Bu şube için henüz kadro bilgisi eklenmemiştir.
               </p>
             ) : null}

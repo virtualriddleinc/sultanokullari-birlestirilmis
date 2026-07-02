@@ -6,6 +6,7 @@ import Link from "@/components/navigation/site-link";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
+  Baby,
   Building2,
   Compass,
   Users,
@@ -24,6 +25,7 @@ import {
   MapPin,
   Landmark,
   BookOpen,
+  School,
   ChevronDown,
   Menu,
   X,
@@ -39,6 +41,7 @@ import logo from "@/images/logo.svg";
    menü başlıklarında ikon kullanılmaz)
    ------------------------------------------------------------------------- */
 const ICON_MAP: Record<string, React.ElementType> = {
+  Baby,
   Building2,
   Compass,
   Users,
@@ -57,6 +60,7 @@ const ICON_MAP: Record<string, React.ElementType> = {
   MapPin,
   Landmark,
   BookOpen,
+  School,
 };
 
 function NavIcon({ name, className }: { name: string; className?: string }) {
