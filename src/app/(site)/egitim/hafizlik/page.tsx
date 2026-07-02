@@ -6,17 +6,17 @@ import { MediaGallery } from "@/components/media/media-gallery";
 import { educationGalleryMedia } from "@/content/site-media";
 
 export const metadata: Metadata = {
-  title: "Hafızlık Eğitimi",
+  title: "Hâfızlık Eğitimi",
   description:
-    "Otağ-ı Hümâyun’umuzda mescid-rahle usulüyle anaokulundan başlayıp ilkokulda taçlanan hafızlık programı.",
+    "Otağ-ı Hümâyun’umuzda mescid-rahle usulüyle anaokulundan başlayıp ilkokulda taçlanan hâfızlık programı.",
 };
 
 export default function Page() {
   return (
     <EgitimSegmentShell
       slug="hafizlik"
-      title="Hafızlık Eğitimi"
-      intro="Mescid-rahle usulüyle Otağ-ı Hümâyun’umuzda Hamele-i Kur’an’lar yetiştiriyoruz; vahyin gölgesinde hafız bir nesil."
+      title="Hâfızlık Eğitimi"
+      intro="Mescid-rahle usulüyle Otağ-ı Hümâyun’umuzda Hamele-i Kur’an’lar yetiştiriyoruz; Vahyin gölgesinde hâfız bir nesil."
       quote={hafizlik.quote}
     >
       <div className="mt-6 space-y-4">
@@ -28,7 +28,7 @@ export default function Page() {
       </div>
       <PedagojiSection
         eyebrow="Pedagojik yaklaşımımız"
-        title="Hafızlık programının ruhu"
+        title="Hâfızlık programının ruhu"
         description="Sayfayı kaydırdıkça akan kavramlar — Otağ-ı Hümâyun’umuzun disiplini ve sevgi atmosferi."
         bands={hafizlik.bands}
         items={hafizlik.accordion}
@@ -36,7 +36,7 @@ export default function Page() {
       />
       <p className="mt-6 text-sm text-zinc-500">{hafizlik.not}</p>
       <MediaGallery
-        title="Hafızlık galerisi"
+        title="Hâfızlık galerisi"
         items={educationGalleryMedia.hafizlik}
       />
     </EgitimSegmentShell>

@@ -16,10 +16,10 @@ const IMG = {
   akademik: "/images/menu-gorselleri/akademik.jpg",
   rehberlik: "/images/menu-gorselleri/rehberlik-egitim-koclugu.jpg",
   yasam: "/images/menu-gorselleri/yasam.jpg",
-  istanbul: "/images/menu-gorselleri/istanbul.jpg",
+  istanbul: "/images/menu-gorselleri/istanbul.webp",
   kocaeli: "/images/menu-gorselleri/kocaeli.jpg",
   sakarya: "/images/menu-gorselleri/sakarya.jpg",
-  ankara: "/images/menu-gorselleri/ankara.jpg",
+  ankara: "/images/menu-gorselleri/ankara.png",
   konya: "/images/menu-gorselleri/konya.jpg",
 } as const;
 

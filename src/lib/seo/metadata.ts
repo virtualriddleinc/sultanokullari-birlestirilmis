@@ -7,7 +7,7 @@ export const DEFAULT_OG_IMAGE = "/logo.svg";
 export const SITE_NAME = "Sultan Okulları";
 
 export const DEFAULT_DESCRIPTION =
-  "Sultan Okulları — milli ve manevi değerlerle bütünleşik eğitim. Anaokulu, ilkokul ve ortaokul programları.";
+  "Sultan Okulları — milli ve Mânevî değerlerle bütünleşik eğitim. Anaokulu, ilkokul ve ortaokul programları.";
 
 export type PageMetadataInput = {
   title: string;

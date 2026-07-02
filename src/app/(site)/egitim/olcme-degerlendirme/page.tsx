@@ -19,7 +19,7 @@ export default function Page() {
     <EgitimSegmentShell
       slug="olcme-degerlendirme"
       title="Ölçme ve değerlendirme"
-      intro="Akademik ve manevi gelişimi destekleyen çok boyutlu değerlendirme anlayışı."
+      intro="Akademik ve Mânevî gelişimi destekleyen çok boyutlu değerlendirme anlayışı."
     >
       <p className="mt-2 text-zinc-700">{olcmeGiris}</p>
 

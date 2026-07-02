@@ -11,7 +11,7 @@ import { t } from "@/lib/animations";
 
 const highlights = [
   { icon: Leaf, label: "Kantinsiz okul" },
-  { icon: ShieldCheck, label: "Gimdes Helal Sertifikalı" },
+  { icon: ShieldCheck, label: "Gimdes Helâl Sertifikalı" },
 ] as const;
 
 const QUOTED_TEXT_PATTERN = /[“"]([^”"]+)[”"]/g;
@@ -70,7 +70,7 @@ export function HomeYemekhane() {
 
           <SectionHeading
             eyebrow="Destek hizmetleri · Yemekhane"
-            title="Kantinsiz okul, helal ve sağlıklı beslenme"
+            title="Kantinsiz okul, helâl ve sağlıklı beslenme"
             className="[&_.section-eyebrow]:text-charcoal/60 [&_.section-eyebrow]:font-semibold [&_.section-eyebrow]:tracking-wide [&_.section-title]:text-charcoal [&_.section-title]:text-xl [&_.section-title]:sm:text-2xl lg:[&_.section-title]:text-3xl"
           />
 

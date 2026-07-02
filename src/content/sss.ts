@@ -41,7 +41,7 @@ export const SSS_CATEGORIES: SssCategory[] = [
           "Değerler eğitimi müfredatın her alanına işlenir; aylık temalar, Değerler Eğitimi Komisyonu planı ve sınıf etkinlikleriyle yaşatılır. Ayrıntılar /egitim/degerler-egitimi sayfasında.",
       },
       {
-        question: "Sultan Mektep Modeli nedir?",
+        question: "Sultan Mektebi Modeli nedir?",
         answer:
           "Bilginin hikmete, bilincin erdeme dönüştüğü özgün eğitim modelimizdir. Her öğrenciyi ruhu, kalbi, bedeni ve şahsiyetiyle bütün olarak ele alır. /egitim/kademeler sayfasında özetlenmiştir.",
       },
@@ -59,7 +59,7 @@ export const SSS_CATEGORIES: SssCategory[] = [
       {
         question: "Yemek ve beslenme nasıl sağlanıyor?",
         answer:
-          "Beslenme düzenimiz ana sayfadaki Yemekhane bölümünde (/#yemekhane) anlatılmaktadır. Kantinsiz okul projesi kapsamında helal sertifikalı, günlük hazırlanan menüler sunulmaktadır.",
+          "Beslenme düzenimiz ana sayfadaki Yemekhane bölümünde (/#yemekhane) anlatılmaktadır. Kantinsiz okul projesi kapsamında helâl sertifikalı, günlük hazırlanan menüler sunulmaktadır.",
       },
     ],
   },

@@ -9,13 +9,27 @@ import {
   useState,
   type FormEvent,
 } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { submitContact, type ContactFormState } from "@/app/(site)/iletisim/actions";
 
 const initial: ContactFormState = { ok: false, message: "" };
 
-const STORAGE_KEY = "sultan-info-request-dismissed";
-const DISMISS_TTL_MS = 1000 * 60 * 60 * 24;
+const SESSION_KEY = "sultan-info-request-seen";
+
+function hasSeenInSession(): boolean {
+  try {
+    return window.sessionStorage.getItem(SESSION_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function markSessionSeen(): void {
+  try {
+    window.sessionStorage.setItem(SESSION_KEY, "1");
+  } catch {}
+}
 
 declare global {
   interface Window {
@@ -58,27 +72,18 @@ export function InfoRequestModal({
   useEffect(() => {
     if (!enabled) return;
     if (typeof window === "undefined") return;
-    let shouldShow = true;
-    try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        const ts = Number.parseInt(raw, 10);
-        if (Number.isFinite(ts) && Date.now() - ts < DISMISS_TTL_MS) {
-          shouldShow = false;
-        }
-      }
-    } catch {}
-    if (shouldShow) {
-      const id = window.setTimeout(() => setOpen(true), 600);
-      return () => window.clearTimeout(id);
-    }
+    if (hasSeenInSession()) return;
+
+    const id = window.setTimeout(() => {
+      markSessionSeen();
+      setOpen(true);
+    }, 600);
+    return () => window.clearTimeout(id);
   }, [enabled]);
 
   const close = useCallback(() => {
     setOpen(false);
-    try {
-      window.localStorage.setItem(STORAGE_KEY, String(Date.now()));
-    } catch {}
+    markSessionSeen();
   }, []);
 
   useEffect(() => {
@@ -123,12 +128,14 @@ export function InfoRequestModal({
     input.value = input.value.replace(/\D/g, "").slice(0, 11);
   }
 
-  return (
+  if (typeof document === "undefined") return null;
+
+  return createPortal(
     <AnimatePresence>
       {open ? (
         <motion.div
           key="info-modal"
-          className="fixed inset-0 z-[100]"
+          className="fixed inset-0 z-[1200] flex items-center justify-center p-3 sm:p-6"
           initial={reduce ? { opacity: 1 } : { opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={reduce ? { opacity: 0 } : { opacity: 0 }}
@@ -137,52 +144,50 @@ export function InfoRequestModal({
           role="dialog"
           aria-labelledby="info-request-title"
         >
-          {/* Backdrop: Tüm ekranı kaplar */}
           <button
             type="button"
             aria-label="Pop-up'ı kapat"
             onClick={close}
-            className="absolute inset-0 cursor-default bg-zinc-950/55 backdrop-blur-sm"
+            className="absolute inset-0 cursor-default bg-zinc-950/55 backdrop-blur-md"
           />
 
-          {/* Modal content alanı: logonun alt yayından ekranın altına kadar, ortada */}
-          <div className="absolute inset-x-0 top-[calc(var(--header-height)+var(--hero-top-spacer,107px))] bottom-0 flex items-center justify-center px-3 py-6 sm:px-6 sm:py-10">
-            <motion.div
-              ref={dialogRef}
-              className="relative z-[1] max-h-full w-full max-w-xl overflow-y-auto rounded-3xl border border-emerald-900/15 bg-white shadow-[0_40px_140px_rgba(7,32,17,0.35)]"
-              initial={
-                reduce ? { opacity: 1 } : { opacity: 0, y: 20, scale: 0.96 }
-              }
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={
-                reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.97 }
-              }
-              transition={{ type: "spring", stiffness: 240, damping: 26 }}
-            >
-              <div className="relative bg-[#fff085] px-6 pt-7 pb-6 sm:px-8 sm:pt-8">
-                <button
-                  type="button"
-                  onClick={close}
-                  aria-label="Kapat"
-                  className="absolute top-4 right-4 grid size-9 place-items-center rounded-full border border-emerald-900/15 bg-white/80 text-emerald-950 transition hover:bg-white"
-                >
-                  <X className="size-4" />
-                </button>
-                <p className="text-xs font-semibold tracking-[0.32em] text-emerald-900/70 uppercase">
-                  {brandLabel}
-                </p>
-                <h2
-                  id="info-request-title"
-                  className="mt-2 text-3xl leading-tight font-bold tracking-tight text-emerald-950 sm:text-4xl"
-                >
-                  {title}
-                </h2>
-                <p className="mt-2.5 max-w-sm text-sm leading-relaxed text-emerald-950/75">
-                  {subtitle}
-                </p>
-              </div>
+          <motion.div
+            ref={dialogRef}
+            onClick={(e) => e.stopPropagation()}
+            className="relative z-[1201] w-full max-w-xl overflow-hidden rounded-3xl border border-emerald-900/15 bg-white shadow-[0_40px_140px_rgba(7,32,17,0.35)]"
+            initial={
+              reduce ? { opacity: 1 } : { opacity: 0, y: 20, scale: 0.96 }
+            }
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={
+              reduce ? { opacity: 0 } : { opacity: 0, y: 12, scale: 0.97 }
+            }
+            transition={{ type: "spring", stiffness: 240, damping: 26 }}
+          >
+            <div className="relative bg-[#fff085] px-5 pt-5 pb-4 sm:px-8 sm:pt-8 sm:pb-6">
+              <button
+                type="button"
+                onClick={close}
+                aria-label="Kapat"
+                className="absolute top-3.5 right-3.5 grid size-9 place-items-center rounded-full border border-emerald-900/15 bg-white/80 text-emerald-950 transition hover:bg-white sm:top-4 sm:right-4"
+              >
+                <X className="size-4" />
+              </button>
+              <p className="text-[11px] font-semibold tracking-[0.28em] text-emerald-900/70 uppercase sm:text-xs sm:tracking-[0.32em]">
+                {brandLabel}
+              </p>
+              <h2
+                id="info-request-title"
+                className="mt-1.5 text-2xl leading-tight font-bold tracking-tight text-emerald-950 sm:mt-2 sm:text-4xl"
+              >
+                {title}
+              </h2>
+              <p className="mt-2 max-w-sm text-[13px] leading-snug text-emerald-950/75 sm:mt-2.5 sm:text-sm sm:leading-relaxed">
+                {subtitle}
+              </p>
+            </div>
 
-              <div className="px-6 pt-6 pb-7 sm:px-8 sm:pb-8">
+            <div className="px-5 pt-4 pb-5 sm:px-8 sm:pt-6 sm:pb-8">
                 {state.message ? (
                   <p
                     className={`mb-5 rounded-2xl px-4 py-3 text-sm ${state.ok ? "bg-emerald-50 text-emerald-900" : "bg-red-50 text-red-900"}`}
@@ -201,7 +206,7 @@ export function InfoRequestModal({
                     Kapat
                   </button>
                 ) : (
-                  <form ref={formRef} action={onSubmit} className="space-y-4">
+                  <form ref={formRef} action={onSubmit} className="space-y-3 sm:space-y-4">
                     <input
                       type="text"
                       name="website"
@@ -264,7 +269,7 @@ export function InfoRequestModal({
                       <FieldError errors={state.fieldErrors?.phone} />
                     </label>
 
-                    <label className="flex items-start gap-2.5 rounded-2xl border border-zinc-200 bg-zinc-50 p-3 text-xs leading-5 text-zinc-600">
+                    <label className="flex items-start gap-2 rounded-2xl border border-zinc-200 bg-zinc-50 p-2.5 text-[11px] leading-4 text-zinc-600 sm:gap-2.5 sm:p-3 sm:text-xs sm:leading-5">
                       <input
                         name="kvkk"
                         type="checkbox"
@@ -286,7 +291,7 @@ export function InfoRequestModal({
                     </label>
                     <FieldError errors={state.fieldErrors?.kvkk} />
 
-                    <div className="flex flex-col gap-2 pt-1 sm:flex-row sm:items-center sm:justify-end sm:gap-3">
+                    <div className="flex flex-col gap-2 pt-0.5 sm:flex-row sm:items-center sm:justify-end sm:gap-3 sm:pt-1">
                       <button
                         type="button"
                         onClick={close}
@@ -304,12 +309,12 @@ export function InfoRequestModal({
                     </div>
                   </form>
                 )}
-              </div>
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </motion.div>
       ) : null}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body,
   );
 }
 

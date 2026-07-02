@@ -4,15 +4,15 @@ export const anaokulu = {
   quote: "Her doğan fıtrat üzere doğar.",
   quoteCitation: "(Buhari)",
   intro: [
-    "Sultan Eğitim Kurumları olarak her çocuğumuzun safî fıtratının muhafazası için çocuklarımızın gönüllerine muhabbetle iman ve irfan tohumlarını, bireysel farklılıklarını göz önünde bulundurarak, onların ruhsal ve bedensel gelişimlerine göre atıyoruz.",
-    "Evlatlarımızın bize emanet olduğu bilinciyle onların gönüllerine hitap ederek bedeni, zihni ve ahlaki gelişimlerini destekliyoruz.",
-    "Kuran’ın gölgesinde eğitime elif ile başlıyor, her gün verdiğimiz “Kuran” ve “Peygamber Ahlakı” derslerimiz ile de çocuklarımıza Kuran ve Peygamber muhabbetini nakşediyoruz.",
-    "Ceddimizden aldığımız ilim sancağını atiye taşıyor, geleceğin Aliler’ini, Ömerleri’ni, Musabları’nı, Aişelerini, Fatımalarını, Esmalarını, Selahaddin Eyyübilerini, Alparslanlarını, Fatihlerini, Mimar Sinanlarını, Cezerîlerini, valide sultanlarını yetiştirmeyi hayal ediyoruz.",
+    "Sultan Eğitim Kurumları olarak her çocuğumuzun safî fıtratının muhâfazası için çocuklarımızın gönüllerine muhabbetle îmân ve irfân tohumlarını, bireysel farklılıklarını göz önünde bulundurarak, onların ruhsal ve bedensel gelişimlerine göre atıyoruz.",
+    "Evlatlarımızın bize emanet olduğu bilinciyle onların gönüllerine hitap ederek bedeni, zihni ve ahlâkî gelişimlerini destekliyoruz.",
+    "Kur’an’ın gölgesinde eğitime elif ile başlıyor, her gün verdiğimiz “Kur’an” ve “Peygamber (s.a.s) Ahlâkı” derslerimiz ile de çocuklarımıza Kur’an ve Peygamber (s.a.s) muhabbetini nakşediyoruz.",
+    "Ceddimizden aldığımız ilim sancağını âtiye taşıyor, geleceğin Aliler’ini, Ömerleri’ni, Musabları’nı, Aişelerini, Fatımalarını, Esmalarını, Selahaddin Eyyübilerini, Alparslanlarını, Fatihlerini, Mimar Sinanlarını, Cezerîlerini, valide sultanlarını yetiştirmeyi hayal ediyoruz.",
   ],
   accordion: [
     {
-      title: "Kur’an ve Peygamber ahlakı dersleri",
-      text: "Günlük derslerle Kur’an ve Peygamber sevgisini yaşatıyoruz.",
+      title: "Kur’an ve Peygamber (s.a.s) Ahlâkı dersleri",
+      text: "Günlük derslerle Kur’an ve Peygamber (s.a.s) sevgisini yaşatıyoruz.",
     },
     {
       title: "Oyun tabanlı öğrenme",
@@ -27,7 +27,7 @@ export const anaokulu = {
       text: "Her çocuğun gelişim hızına saygı.",
     },
     {
-      title: "Beden, zihin ve ahlak",
+      title: "Beden, zihin ve ahlâk",
       text: "Bütüncül gelişim odaklı program.",
     },
   ],
@@ -39,8 +39,8 @@ export const ilkokul = {
   quoteCitation: "(Alak-1)",
   paragraflar: [
     "İnsanlığa gönderilen ilk emir “Oku”. Bizler de verilen bu ilk ilahî emre tâbi olarak ilkokulumuzda çocuklarımıza okuma ve yazma sevgisini kazandırıyoruz.",
-    'Amacımız; milli ve manevi değerlerine sahip çıkan; akademik, sosyal, sanatsal yönü gelişmiş, geleceğe dair hedefleri olan, "Zaman bendedir ve mekân bana emanettir!" şuuruna ermiş, ahlaklı, edepli, cesur, gür hisli, gür imanlı beyinler yetiştirmektir.',
-    "Çocuklarımıza akademik eğitimle birlikte günde iki saat bireysel ve talim usulüyle Kur’an-ı Kerim, Peygamberimizin ahlakı, Siyer-i Nebî ve değerler eğitimiyle anaokulunda attığımız iman ve irfan tohumlarını okul sıralarında verdiğimiz ilim yağmurlarıyla yeşertiyoruz.",
+    'Amacımız; milli ve Mânevî değerlerine sahip çıkan; akademik, sosyal, sanatsal yönü gelişmiş, geleceğe dair hedefleri olan, "Zaman bendedir ve mekân bana emanettir!" şuuruna ermiş, ahlâklı, edepli, cesur, gür hisli, gür îmânlı beyinler yetiştirmektir.',
+    "Çocuklarımıza akademik eğitimle birlikte günde iki saat bireysel ve talîm usulüyle Kur’an-ı Kerîm, Peygamber (s.a.s) Ahlâkı, Siyer-i Nebî ve değerler eğitimiyle anaokulunda attığımız îmân ve irfân tohumlarını okul sıralarında verdiğimiz ilim yağmurlarıyla yeşertiyoruz.",
     "Eğitimin merkezine öğrenciyi alarak, yapılandırmacı yaklaşım yöntemi ile öğrendiklerini hayata geçirmelerine yardımcı oluyoruz. Deney ve gözlem tekniği ile fen laboratuvarında çocuklarımızın bilimsel deneylerle öğrenmesini ve bilgilerinin kalıcı olmasını sağlıyoruz.",
   ],
   takvimNotu:
@@ -52,8 +52,8 @@ export const ortaokul = {
   quoteCitation: "(İbrahim 24)",
   paragraflar: [
     "Köklerini attığımız sağlam ağacımızın meyvelerini ortaokulumuzda öğrencilerimizle birlikte topluyoruz.",
-    "Yaratılmışların en şereflisi olan insanın bu dünyadaki varlık sebebini onlara ilmek ilmek işliyor, ilk olarak O’nu yaratana sonra da yaratılmışlara karşı vefayla merhameti, samimiyetle muhabbeti, uhuvvetle birlikteliği, şecaatle adaleti öğretiyor, onları yiğit gençler olarak yetiştiriyoruz.",
-    "İngilizce ve Arapça’yı ileri seviyede, teknolojiyi bilinçli kullanan, sorunları fark edip çözüm üreten, benimsediği manevi değerleriyle toplumsal hayata yön verecek öğrencilerimizin faal olarak katılım sağladığı robotik kodlama, hobi bahçesi, akıl ve zeka oyunları, origami, doğal sabun, görsel sanatlar, yazarlık, el becerileri, atıktan sanata, İngilizce drama ve mental aritmetik atölyeleri ve sosyal yardımlaşma, tiyatro, helal gıda, münazara ve yarışma kulüpleri ile onların kendi yeteneklerini ve ilgi alanlarını keşfetmelerini sağlıyoruz.",
+    "Yaratılmışların en şereflisi olan insanın bu dünyadaki varlık sebebini onlara ilmek ilmek işliyor, ilk olarak O’nu yaratana sonra da yaratılmışlara karşı vefâyla merhameti, samimiyetle muhabbeti, uhuvvetle birlikteliği, şecâatle adaleti öğretiyor, onları yiğit gençler olarak yetiştiriyoruz.",
+    "İngilizce ve Arapça’yı ileri seviyede, teknolojiyi bilinçli kullanan, sorunları fark edip çözüm üreten, benimsediği Mânevî değerleriyle toplumsal hayata yön verecek öğrencilerimizin faal olarak katılım sağladığı robotik kodlama, hobi bahçesi, akıl ve zeka oyunları, origami, doğal sabun, görsel sanatlar, yazarlık, el becerileri, atıktan sanata, İngilizce drama ve mental aritmetik atölyeleri ve sosyal yardımlaşma, tiyatro, helâl gıdâ, münâzara ve yarışma kulüpleri ile onların kendi yeteneklerini ve ilgi alanlarını keşfetmelerini sağlıyoruz.",
   ],
   etut: "Öğrencilerimizin eksik konuları rehberlik birimi ve öğretmenlerinin işbirliği ile tespit ederek, haftada üç gün yapılan etüt çalışmalarında konu tekrarı ve soru çözümüyle tamamlıyoruz. Yurt dışından gelen ya da okul sürecinde sonradan kayıt yaptıran öğrencilerimizin ihtiyaçları doğrultusunda gerekli ders desteğini sağlıyoruz.",
 };
@@ -62,16 +62,16 @@ export const nebevi = {
   quote:
     "İçinizden Allah’ın lutfuna ve âhiret gününe umut bağlayanlar, Allah’ı çokça ananlar için hiç şüphe yok ki, Resûlullah’ta güzel bir örneklik vardır. (Ahzâb 21)",
   intro: [
-    "Âyet-i kerimesinde üsve-i hasene buyrulan Efendimiz “Ben muallim olarak gönderildim.” buyurmuştur. Hiç şüphesiz ki O, kendi asrında insanlara vermiş olduğu eğitimle bir devir açıp bir devir kapatan çağlar ötesi bir nesli yetiştirmiştir.",
-    "21. asırda da Sultan Eğitim Kurumları olarak bizler, Peygamber Efendimiz’in gençlere verdiği önem ve ihtimamı kendimize örnek alıyor ve O’nun muhabbetini “Siyer” ve “Peygamber Ahlakı” derslerimiz ile çocuklarımızın saf ve duru gönüllerine işliyoruz.",
+    "Âyet-i kerîmesinde üsve-i hasene buyrulan Efendimiz “Ben muallîm olarak gönderildim.” buyurmuştur. Hiç şüphesiz ki O, kendi asrında insanlara vermiş olduğu eğitimle bir devir açıp bir devir kapatan çağlar ötesi bir nesli yetiştirmiştir.",
+    "21. asırda da Sultan Eğitim Kurumları olarak bizler, Peygamber Efendimiz’in (s.a.s) gençlere verdiği önem ve ihtimamı kendimize örnek alıyor ve O’nun muhabbetini “Siyer” ve “Peygamber (s.a.s) Ahlâkı” derslerimiz ile çocuklarımızın saf ve duru gönüllerine işliyoruz.",
   ],
   accordion: [
     {
       title: "Siyer dersleri",
-      text: "Peygamber Efendimizin hayatını yaşına ve gönlüne uygun anlatımlarla aktarıyoruz.",
+      text: "Peygamber Efendimizin (s.a.s) hayatını yaşına ve gönlüne uygun anlatımlarla aktarıyoruz.",
     },
     {
-      title: "Peygamber ahlakı",
+      title: "Peygamber (s.a.s) Ahlâkı",
       text: "Saf ve duru gönüllere üsve-i hasene örnekliğini işliyoruz.",
     },
     {
@@ -95,7 +95,7 @@ export const nebevi = {
       text: "Efendimizin (s.a.v.) örnekliği, programımızın tam kalbinde yer alır.",
     },
   ],
-  not: "Siyer takvimi ve Peygamber ahlakı dersi kazanımları yakında paylaşılacaktır.",
+  not: "Siyer takvimi ve Peygamber (s.a.s) Ahlâkı dersi kazanımları yakında paylaşılacaktır.",
 };
 
 export const hafizlik = {
@@ -103,7 +103,7 @@ export const hafizlik = {
     "Kim Kur’ân’ı küçük yaşlarda öğrenirse Kur’ân onun etine ve kanına işler (yâni Kur’ân’ın feyziyle nûrlanır.) (Ali el-Müttakî, I, 532)",
   intro: [
     "Mescid-rahle usulüyle “Otağ-ı Hümâyun”umuzda Hamele-i Kur’anlar’ı yetiştiriyoruz.",
-    "Vahyin gölgesinde tohumlanıp yeşermiş genç ashabın izindeki nesilleri, anaokulundan itibaren Kur’an’la buluşturuyor, ilkokulumuzda bu buluşmayı hafızlık eğitimimizle taçlandırıyoruz.",
+    "Vahyin gölgesinde tohumlanıp yeşermiş genç ashabın izindeki nesilleri, anaokulundan itibaren Kur’an’la buluşturuyor, ilkokulumuzda bu buluşmayı hâfızlık eğitimimizle taçlandırıyoruz.",
   ],
   bands: [
     {
@@ -120,7 +120,7 @@ export const hafizlik = {
     {
       phrases: [
         "Anaokulundan itibaren Kur’an",
-        "İlkokulda taçlanan hafızlık",
+        "İlkokulda taçlanan hâfızlık",
         "Tertîl üzere talim",
         "Kalpten kalbe Kur’an",
       ],
@@ -131,7 +131,7 @@ export const hafizlik = {
       phrases: [
         "Hayata Kur’an",
         "Sözlerin en güzeli",
-        "Talim · Tashih · Tekrar",
+        "Talîm · Tashih · Tekrar",
         "Genç ashab izinde",
       ],
       direction: 1 as const,
@@ -141,7 +141,7 @@ export const hafizlik = {
   accordion: [
     {
       title: "Otağ-ı Hümâyun",
-      text: "Hafızlık halkamız için ayrılan özel mekânda mescid-rahle disiplini.",
+      text: "Hâfızlık halkamız için ayrılan özel mekânda mescid-rahle disiplini.",
     },
     {
       title: "Mescid-rahle usulü",
@@ -149,10 +149,10 @@ export const hafizlik = {
     },
     {
       title: "Anaokulu köprüsü",
-      text: "Erken yaşta Kur’an muhabbeti tohumlarını ekiyor, ilkokulda hafızlığa taşıyoruz.",
+      text: "Erken yaşta Kur’an muhabbeti tohumlarını ekiyor, ilkokulda hâfızlığa taşıyoruz.",
     },
     {
-      title: "Talim · Tashih · Tekrar",
+      title: "Talîm · Tashih · Tekrar",
       text: "Sahih telaffuz ve kalıcı ezber için günlük çalışma akışı.",
     },
     {
@@ -160,8 +160,8 @@ export const hafizlik = {
       text: "Kur’an’ı yüklenen, hayatına yön veren bir nesil yetiştiriyoruz.",
     },
     {
-      title: "Hafız doktor hayali",
-      text: "Akademik başarıyla hafızlığı bütünleşik kılıyoruz.",
+      title: "Hâfız doktor hayali",
+      text: "Akademik başarıyla hâfızlığı bütünleşik kılıyoruz.",
     },
   ],
   not: "Otağ-ı Hümâyun’un dış ve iç görselleri yakında eklenecektir.",
@@ -171,7 +171,7 @@ export const degerler = {
   quote:
     "Güzel sözü, kökü sabit, dalları gökte olan güzel bir ağaca benzetti. (İbrahim 24)",
   intro: [
-    "Sultan Eğitim Kurumları olarak çocuklarımızın doğmuş oldukları fıtrat üzere manevi terbiyeyi almalarına özen gösteriyor, anaokul, ilkokul ve ortaokul müfredatı oluştururken; milli eğitim müfredatının her alanına nakış nakış işlenmiş “değerler eğitimi” temelli bir sistem esas alıyoruz.",
+    "Sultan Eğitim Kurumları olarak çocuklarımızın doğmuş oldukları fıtrat üzere Mânevî terbiyeyi almalarına özen gösteriyor, anaokul, ilkokul ve ortaokul müfredatı oluştururken; milli eğitim müfredatının her alanına nakış nakış işlenmiş “değerler eğitimi” temelli bir sistem esas alıyoruz.",
     "Her ay dürüstlük, sorumluluk, yardımlaşma, iyilik, hoşgörü gibi değerleri; “Değerler Eğitimi Komisyonu”muz tarafından seçip planlayarak eğitim sürecimize dahil ediyor, bu değerleri sınıf ve sınıf rehber öğretmenleri ile birlikte derslerle ilişkilendirerek etkinlik ve uygulamalarla gerekli kazanımları öğrencilerimize kazandırıyoruz.",
     "Sınıflarımızda öğrencilerimizle birlikte pano, sınıf kapılarının süslenmesi, afiş, duvar gazetesi, broşür, şiir, kompozisyon vb. çalışmaları yapıyoruz.",
   ],

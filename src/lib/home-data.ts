@@ -116,30 +116,30 @@ const DEFAULT_MISSION = {
     "",
   ] as [string, string, string],
   description:
-    "Peygamber Efendimizin (s.a.v.) izinde, üsve-i hasene olmayı hedefleyen; ilim, hikmet ve ahlakla bütünleşmiş nesiller yetiştiriyoruz.",
+    "Peygamber Efendimizin (s.a.s) izinde, üsve-i hasene olmayı hedefleyen; ilim, hikmet ve ahlâkla bütünleşmiş nesiller yetiştiriyoruz.",
   secondaryDescription:
-    "Anaokulu, ilkokul ve ortaokul kademeleriyle bütüncül bir eğitim yolculuğu; okul öncesinden üniversiteye, cami ve hafızlık binasıyla bütünleşik eğitim külliyesi ufkumuz.",
+    "Anaokulu, ilkokul ve ortaokul kademeleriyle bütüncül bir eğitim yolculuğu; okul öncesinden üniversiteye, câmi ve hâfızlık binasıyla bütünleşik Eğitim Külliyesi ufkumuz.",
   levels: ["Anaokulu", "İlkokul", "Ortaokul"],
   decorMedia: hexGalleryMedia.slice(0, 6) as unknown as SiteMedia[],
 };
 
 const DEFAULT_JOURNEY_HEADLINE =
-  "Peygamber Efendimiz (sas)'in İzinde Geleceğe Örnek Nesiller...";
+  "Peygamber Efendimiz'in (s.a.s) İzinde Geleceğe Örnek Nesiller...";
 
 const DEFAULT_NEDEN = {
   eyebrow: "Ayırt edici yaklaşım",
   title: "Neden",
   titleHighlight: "Sultan Okulları?",
   description:
-    "Temiz ve huzurlu ortamdan nebevî eğitime, doğa ile iç içe yaşamdan hafızlık ufkuna uzanan güçlü bir kurum dili.",
+    "Temiz ve huzurlu ortamdan nebevî eğitime, doğa ile iç içe yaşamdan hâfızlık ufkuna uzanan güçlü bir kurum dili.",
   ctaLabel: `${nedenSultanItems.length} maddenin tamamı`,
   ctaHref: "/kurumsal/neden-sultan",
   marqueeValues: [
     "İlim",
     "Hikmet",
-    "Ahlak",
+    "Ahlâk",
     "Nebevî eğitim",
-    "Hafızlık",
+    "Hâfızlık",
     "Doğa",
     "Butik okul",
   ],
@@ -192,7 +192,7 @@ const DEFAULT_QUICK_LINKS = {
   description:
     "Kademeler, olanaklar ve duyurular için en sık kullanılan bağlantılar — şeritte gezinin veya tıklayın.",
   links: [
-    { href: "/egitim/kademeler", label: "Kademeler", description: "Sultan Mektep Modeli", iconKey: "book-open" },
+    { href: "/egitim/kademeler", label: "Kademeler", description: "Sultan Mektebi Modeli", iconKey: "book-open" },
     { href: "/egitim/nebevi-egitim", label: "Nebevî Eğitim", description: "Kur'an-ı Kerîm", iconKey: "graduation-cap" },
     { href: "/akademik/yabanci-dil", label: "Atölyeler", description: "Yabancı dil & atölye", iconKey: "palette" },
     { href: "/#yemekhane", label: "Yemekhane", description: "Kantinsiz okul projesi", iconKey: "hand-heart" },
@@ -214,6 +214,39 @@ const DEFAULT_INFO_MODAL = {
   kvkkText:
     "KVKK aydınlatma metnini okudum, kişisel verilerimin işlenmesini, tarafıma arama yapılmasını ve SMS gönderilmesini kabul ediyorum.",
 };
+
+function mapInfoModal(
+  infoRaw?: Record<string, unknown>,
+): HomePageData["infoModal"] {
+  return {
+    enabled: infoRaw?.enabled !== false,
+    brandLabel: (infoRaw?.brandLabel as string) || DEFAULT_INFO_MODAL.brandLabel,
+    title: (infoRaw?.title as string) || DEFAULT_INFO_MODAL.title,
+    subtitle: (infoRaw?.subtitle as string) || DEFAULT_INFO_MODAL.subtitle,
+    submitLabel: (infoRaw?.submitLabel as string) || DEFAULT_INFO_MODAL.submitLabel,
+    dismissLabel: (infoRaw?.dismissLabel as string) || DEFAULT_INFO_MODAL.dismissLabel,
+    kvkkText: (infoRaw?.kvkkText as string) || DEFAULT_INFO_MODAL.kvkkText,
+  };
+}
+
+export async function getInfoModalData(
+  options: FetchOptions = {},
+): Promise<HomePageData["infoModal"]> {
+  try {
+    const payload = await getPayloadClient();
+    const global = await payload.findGlobal({
+      slug: "ana-sayfa",
+      depth: 0,
+      draft: options.draft,
+    });
+    const infoRaw = (global as Record<string, unknown>).infoModal as
+      | Record<string, unknown>
+      | undefined;
+    return mapInfoModal(infoRaw);
+  } catch {
+    return mapInfoModal(undefined);
+  }
+}
 
 function mapHeroSlide(doc: Record<string, unknown>, index: number): HeroSlide {
   const fallback = HERO_SLIDES[index];
@@ -252,7 +285,7 @@ const JOURNEY_FALLBACK_ICONS = [
 
 const JOURNEY_FALLBACK_MEDIA = [
   { kind: "video" as const, src: "/site-media/VID-20260429-WA0127.mp4", alt: "Nebevî eğitim", poster: "/site-media/IMG-20260429-WA0090.jpg" },
-  { kind: "video" as const, src: "/site-media/VID-20260429-WA0119.mp4", alt: "Hafızlık", poster: "/site-media/IMG-20260429-WA0122.jpg" },
+  { kind: "video" as const, src: "/site-media/VID-20260429-WA0119.mp4", alt: "Hâfızlık", poster: "/site-media/IMG-20260429-WA0122.jpg" },
   { kind: "image" as const, src: "/site-media/IMG-20260429-WA0086.jpg", alt: "Keşf-i Bilim" },
   { kind: "video" as const, src: "/site-media/VID-20260429-WA0141.mp4", alt: "Sanat ve Spor", poster: "/site-media/IMG-20260429-WA0130.jpg" },
   { kind: "image" as const, src: "/site-media/IMG-20260429-WA0089.jpg", alt: "Ayakkabısız okul" },
@@ -262,16 +295,16 @@ const DEFAULT_JOURNEY_CHAPTERS: JourneyChapter[] = [
   {
     eyebrow: "01 / Köken",
     title: "Nebevî eğitim",
-    body: "Peygamberimizi tanıyan, seven ve hayatına rehber edinen; üsve-i hasene ile İslam ahlakı ile ahlaklanmış nesiller yetiştiriyoruz.",
+    body: "Peygamberimizi (s.a.s) tanıyan, seven ve hayatına rehber edinen; üsve-i hasene ile İslam ahlâkı ile ahlâklanmış nesiller yetiştiriyoruz.",
     cta: { href: "/egitim/nebevi-egitim", label: "Nebevî eğitim" },
     iconKey: "book-open-text",
     media: JOURNEY_FALLBACK_MEDIA[0],
   },
   {
     eyebrow: "02 / Kalp",
-    title: "Hafızlık ve Otağ-ı Hümâyun",
-    body: "Mescid-rahle usulüyle Kur'an ile bütünleşen; kalbe erişen ilmi irfana çeviren bir hafızlık programı.",
-    cta: { href: "/egitim/hafizlik", label: "Hafızlık programı" },
+    title: "Hâfızlık ve Otağ-ı Hümâyun",
+    body: "Mescid-rahle usulüyle Kur'an ile bütünleşen; kalbe erişen ilmi irfâna çeviren bir hâfızlık programı.",
+    cta: { href: "/egitim/hafizlik", label: "Hâfızlık programı" },
     iconKey: "compass",
     media: JOURNEY_FALLBACK_MEDIA[1],
   },
@@ -549,15 +582,7 @@ export async function getHomePageData(
             }))
           : DEFAULT_QUICK_LINKS.links,
     },
-    infoModal: {
-      enabled: infoRaw?.enabled !== false,
-      brandLabel: (infoRaw?.brandLabel as string) || DEFAULT_INFO_MODAL.brandLabel,
-      title: (infoRaw?.title as string) || DEFAULT_INFO_MODAL.title,
-      subtitle: (infoRaw?.subtitle as string) || DEFAULT_INFO_MODAL.subtitle,
-      submitLabel: (infoRaw?.submitLabel as string) || DEFAULT_INFO_MODAL.submitLabel,
-      dismissLabel: (infoRaw?.dismissLabel as string) || DEFAULT_INFO_MODAL.dismissLabel,
-      kvkkText: (infoRaw?.kvkkText as string) || DEFAULT_INFO_MODAL.kvkkText,
-    },
+    infoModal: mapInfoModal(infoRaw),
   };
 }
 

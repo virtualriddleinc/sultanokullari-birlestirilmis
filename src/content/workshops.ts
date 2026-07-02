@@ -76,18 +76,18 @@ export const workshopItems: WorkshopItem[] = [
     title: "Sosyal yardımlaşma kulübü",
     category: "sosyal",
     description:
-      "Sosyal sorumluluk projeleriyle vefa, paylaşma, birlik ve beraberlik, yardımlaşma, diğergamlık, hürmet, merhamet, infak ve îsar duygularını kazandırıyoruz.",
+      "Sosyal sorumluluk projeleriyle Vefâ, paylaşma, birlik ve beraberlik, yardımlaşma, diğergâmlık, hürmet, merhamet, infak ve îsar duygularını kazandırıyoruz.",
   },
   {
     id: "helal-gida",
-    title: "Helal gıda kulübü",
+    title: "Helâl gıdâ kulübü",
     category: "sosyal",
     description:
-      "“Yiyeceklerimiz helal mi? Sağlıklı mı?” sorularının cevabını araştırarak öğrencilerimizi ve toplumu bilinçlendirmek için çalışmalar yapılmaktadır.",
+      "“Yiyeceklerimiz helâl mi? Sağlıklı mı?” sorularının cevabını araştırarak öğrencilerimizi ve toplumu bilinçlendirmek için çalışmalar yapılmaktadır.",
   },
   {
     id: "munazara",
-    title: "Münazara kulübü",
+    title: "Münâzara kulübü",
     category: "sosyal",
     description:
       "Fikirler arası sentez yaparak görüşünü savunabilen, araştırma becerisini geliştiren, toplum önünde konuşma kabiliyetini artıran öğrencilerin yetişmesini sağlar.",

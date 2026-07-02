@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { degerler } from "@/content/egitim";
-import { EgitimSegmentShell } from "@/components/egitim/egitim-segment-shell";
+import { degerlerEgitimiSayfasi } from "@/content/page-templates";
+import { educationGalleryMedia } from "@/content/site-media";
 import { PedagojiSection } from "@/components/egitim/pedagoji-section";
 import { GeoCitationBlock } from "@/components/geo/geo-citation-block";
-import { MediaGallery } from "@/components/media/media-gallery";
-import { educationGalleryMedia } from "@/content/site-media";
+import { QuoteOverlayPageShell } from "@/components/layout/quote-overlay-page-shell";
+import { PageStorySection } from "@/components/layout/page-story-section";
+import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-galeri";
 import { PAGE_MEDIA } from "@/lib/menu-images";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
@@ -16,28 +18,26 @@ export const metadata: Metadata = buildPageMetadata({
 });
 
 export default function Page() {
+  const { story, gallery } = degerlerEgitimiSayfasi;
+
   return (
-    <EgitimSegmentShell
-      slug="degerler-egitimi"
+    <QuoteOverlayPageShell
       title="Değerler Eğitimi"
-      intro="Müfredatın her alanına nakış nakış işlenmiş değerler eğitimi; komisyon planı, sınıf rehberliği ve etkinliklerle yaşatılır."
-      quote={degerler.quote}
+      intro={degerlerEgitimiSayfasi.intro}
       media={PAGE_MEDIA.degerlerEgitimi}
+      quote={degerler.quote}
     >
       <GeoCitationBlock>
         Sultan Okulları, 2017&apos;de kurulan, İstanbul, Kocaeli, Sakarya, Ankara ve
         Konya&apos;da kampüsleri bulunan MEB onaylı bir özel eğitim kurumudur. Sultan
-        Mektep Modeli ile değerler eğitimi, nebevî eğitim ve çift yabancı dil
+        Mektebi Modeli ile değerler eğitimi, nebevî eğitim ve çift yabancı dil
         programlarını anaokulu, ilkokul ve ortaokul kademelerinde sunar.
       </GeoCitationBlock>
-      <div className="mt-6 space-y-4">
-        {degerler.intro.map((p, i) => (
-          <p key={i} className="text-zinc-700">
-            {p}
-          </p>
-        ))}
-      </div>
-
+      <PageStorySection
+        eyebrow={story.eyebrow}
+        motto={story.motto}
+        rows={story.rows}
+      />
       <PedagojiSection
         eyebrow="Pedagojik yaklaşımımız"
         title="Değerlerimizi yaşatma yolumuz"
@@ -45,7 +45,6 @@ export default function Page() {
         items={degerler.accordion}
         theme="rose"
       />
-
       <section className="mt-14">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-xs font-semibold tracking-[0.32em] text-rose-600 uppercase">
@@ -75,12 +74,12 @@ export default function Page() {
           ))}
         </ul>
       </section>
-
-      <p className="mt-6 text-sm text-zinc-500">{degerler.not}</p>
-      <MediaGallery
-        title="Değerler eğitimi galerisi"
+      <p className="section-body mt-6 text-sm text-zinc-500">{degerler.not}</p>
+      <KurumsalKimlikGalerisi
+        title={gallery.title}
+        description={gallery.description}
         items={educationGalleryMedia.degerler}
       />
-    </EgitimSegmentShell>
+    </QuoteOverlayPageShell>
   );
 }

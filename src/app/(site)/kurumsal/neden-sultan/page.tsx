@@ -16,7 +16,7 @@ export default async function Page() {
   return (
     <PageShell
       title="Niçin Sultan Okulları?"
-      intro="Temiz ve huzurlu ortamdan nebevî eğitime, doğa ile iç içe yaşamdan hafızlık vizyonuna kadar on bir başlıkta özet."
+      intro="Temiz ve huzurlu ortamdan nebevî eğitime, doğa ile iç içe yaşamdan hâfızlık vizyonuna kadar on bir başlıkta özet."
     >
       <StaggerList as="ol" className="list-none space-y-6">
         {items.map((item, i) => (

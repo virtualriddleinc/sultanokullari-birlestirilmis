@@ -10,8 +10,8 @@ export const nedenSultanItems: NedenItem[] = [
     body: "Ayakkabısız okul projemizle öğrencilerimize temiz, kendilerini rahat ve huzurlu hissettikleri sıcak bir okul ortamı hazırladık.",
   },
   {
-    headline: "Peygamberinin izinde geleceğe örnek nesiller… Sultan Okulları",
-    body: "Nebevi eğitimle insanlığa üsve-i hasene (en güzel örnek) Peygamberimizi, tanıyan, seven ve hayatına rehber edinen, İslam ahlakı ile ahlaklanmış, geleceğe öncü örnek nesiller yetiştiriyoruz.",
+    headline: "Peygamberinin (s.a.s) izinde geleceğe örnek nesiller… Sultan Okulları",
+    body: "Nebevî eğitimle insanlığa üsve-i hasene (en güzel örnek) Peygamberimizi (s.a.s) tanıyan, seven ve hayatına rehber edinen, İslam ahlâkı ile ahlâklanmış, geleceğe öncü örnek nesiller yetiştiriyoruz.",
   },
   {
     headline: "İlmin hayatla buluşması… Sultan Okulları",
@@ -26,27 +26,27 @@ export const nedenSultanItems: NedenItem[] = [
     body: "Öğrencilerimizin uygulamalı tarım etkinlikleri, sebze ve meyve bahçeleri ile toprakla iç içe, doğal çevreyle barışık bireyler olarak yetiştiriyoruz.",
   },
   {
-    headline: "Maziyi okuyup âtiyî yazanların okulu Sultan Okulları",
-    body: "Köklerine bağlı, milli ve manevi değerlerinin bilincinde, geçmişini saygı ve sevgiyle yâd eden ve onlardan ilham alan çocuklar yetiştiriyoruz.",
+    headline: "Mâzîyi okuyup âtiyî yazanların okulu Sultan Okulları",
+    body: "Köklerine bağlı, milli ve Mânevî değerlerinin bilincinde, geçmişini saygı ve sevgiyle yâd eden ve onlardan ilham alan çocuklar yetiştiriyoruz.",
   },
   {
-    headline: "Sağlıklı gıdalar Sultan Okullarında",
-    body: "Öğrencilerimizin sağlıklı beslenmesini önemsiyor, helal sertifikalı, temiz ortamda hazırlanan lezzetli günlük menüleri çocuklarımıza sunuyoruz.",
+    headline: "Sağlıklı gıdâlar Sultan Okullarında",
+    body: "Öğrencilerimizin sağlıklı beslenmesini önemsiyor, helâl sertifikalı, temiz ortamda hazırlanan lezzetli günlük menüleri çocuklarımıza sunuyoruz.",
   },
   {
-    headline: "Geleceğin hafız doktorları Sultan Okullarında",
-    body: "Ashab-ı Suffa’nın ve Medrese-i Ali Osmanî’nin mirasını ileriye taşıyarak sözlerin en güzeli ve hayatımızın rehberi Kur’an’ın muhafızlarını yetiştiriyoruz.",
+    headline: "Geleceğin hâfız doktorları Sultan Okullarında",
+    body: "Ashab-ı Suffa’nın ve Medrese-i Ali Osmanî’nin mirasını ileriye taşıyarak sözlerin en güzeli ve hayatımızın rehberi Kur’an’ın muhâfızlarını yetiştiriyoruz.",
   },
   {
     headline: "Değerlerini yaşatan sultanlar bu okulda",
-    body: "Çocuklarımıza maddi ve manevi değerlerimizi öğretiyor ve bu değerlerle bireysel ve toplumsal hayatına yön veren nesiller yetiştiriyoruz.",
+    body: "Çocuklarımıza Mâddî ve Mânevî değerlerimizi öğretiyor ve bu değerlerle bireysel ve toplumsal hayatına yön veren nesiller yetiştiriyoruz.",
   },
   {
     headline: "Gökyüzüne kanat açıp güneşe uçanların okulu… Sultan Okulları",
-    body: "Maddi ve manevi eğitimi birbirini tamamlayan ve ayrılmaz bir bütünün parçaları olarak görüyor, buna uygun eğitim planları oluşturuyoruz.",
+    body: "Mâddî ve Mânevî eğitimi birbirini tamamlayan ve ayrılmaz bir bütünün parçaları olarak görüyor, buna uygun eğitim planları oluşturuyoruz.",
   },
   {
     headline: "Muhammedî muhabbetle öğreten okul Sultan Okulları",
-    body: "Kalbe erişmeyen bilginin irfana dönüşmeyeceğinin farkında olarak önce çocuklarımızın kalbine Allah ve peygamber sevginin tohumlarını ekiyoruz.",
+    body: "Kalbe erişmeyen bilginin irfana dönüşmeyeceğinin farkında olarak önce çocuklarımızın kalbine Allah ve Peygamber (s.a.s) sevgisinin tohumlarını ekiyoruz.",
   },
 ];

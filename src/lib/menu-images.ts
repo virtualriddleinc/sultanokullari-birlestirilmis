@@ -10,10 +10,10 @@ export const MENU_IMAGES = {
   akademik: "/images/menu-gorselleri/akademik.jpg",
   rehberlik: "/images/menu-gorselleri/rehberlik-egitim-koclugu.jpg",
   yasam: "/images/menu-gorselleri/yasam.jpg",
-  istanbul: "/images/menu-gorselleri/istanbul.jpg",
+  istanbul: "/images/menu-gorselleri/istanbul.webp",
   kocaeli: "/images/menu-gorselleri/kocaeli.jpg",
   sakarya: "/images/menu-gorselleri/sakarya.jpg",
-  ankara: "/images/menu-gorselleri/ankara.jpg",
+  ankara: "/images/menu-gorselleri/ankara.png",
   konya: "/images/menu-gorselleri/konya.jpg",
 } as const;
 
@@ -50,7 +50,7 @@ export const PAGE_MEDIA = {
     src: "/videos/kademeler.mp4",
     type: "video",
     poster: MENU_IMAGES.egitim,
-    alt: "Sultan Mektep Modeli ve Kademeler",
+    alt: "Sultan Mektebi Modeli ve Kademeler",
   },
   degerlerEgitimi: {
     src: MENU_IMAGES.egitim,
@@ -60,7 +60,7 @@ export const PAGE_MEDIA = {
   akademikGelisim: {
     src: MENU_IMAGES.akademik,
     type: "image",
-    alt: "Akademik Gelişim ve Takip",
+    alt: "Akademik Gelişim ve Tâkib",
   },
   yabanciDil: {
     src: "/videos/yabanci-dil.mp4",
@@ -89,6 +89,28 @@ export const PAGE_MEDIA = {
     type: "video",
     poster: MENU_IMAGES.yasam,
     alt: "Sultanda Yaşam",
+  },
+  anaokulu: {
+    src: "/site-media/VID-20260429-WA0181.mp4",
+    type: "video",
+    poster: "/site-media/IMG-20260429-WA0133.jpg",
+    alt: "Anaokulu programı",
+  },
+  ilkokul: {
+    src: "/site-media/IMG-20260429-WA0082.jpg",
+    type: "image",
+    alt: "İlkokul sınıf atmosferi",
+  },
+  ortaokul: {
+    src: "/site-media/IMG-20260429-WA0175.jpg",
+    type: "image",
+    alt: "Ortaokul kademe vitrini",
+  },
+  nebeviEgitim: {
+    src: "/site-media/VID-20260429-WA0127.mp4",
+    type: "video",
+    poster: "/site-media/IMG-20260429-WA0090.jpg",
+    alt: "Nebevî eğitim ve Kur'an-ı Kerîm",
   },
 } as const satisfies Record<string, PageMedia>;
 

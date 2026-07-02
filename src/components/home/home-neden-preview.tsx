@@ -3,7 +3,14 @@
 import Link from "@/components/navigation/site-link";
 import { motion, useReducedMotion } from "framer-motion";
 import type { Variants } from "framer-motion";
-import { useCallback, useEffect, useState, type CSSProperties } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+} from "react";
 import type { NedenItem } from "@/content/neden-sultan";
 import { nedenSultanItems } from "@/content/neden-sultan";
 import { Marquee } from "@/components/ui/marquee";
@@ -112,10 +119,10 @@ const DEFAULT_VALUES = [
   "Edeb",
   "Ahlâk",
   "Üsve-i hasene",
-  "İrfan",
+  "İrfân",
   "Muhabbet",
   "Müteyakkız",
-  "Hafızlık",
+  "Hâfızlık",
   "Köklere bağlı",
 ];
 
@@ -134,7 +141,7 @@ export function HomeNedenPreview({
   eyebrow = "Ayırt edici yaklaşım",
   title = "Neden",
   titleHighlight = "Sultan Okulları?",
-  description = "Temiz ve huzurlu ortamdan nebevî eğitime, doğa ile iç içe yaşamdan hafızlık ufkuna uzanan güçlü bir kurum dili.",
+  description = "Temiz ve huzurlu ortamdan nebevî eğitime, doğa ile iç içe yaşamdan hâfızlık ufkuna uzanan güçlü bir kurum dili.",
   ctaLabel = `${nedenSultanItems.length} maddenin tamamı`,
   ctaHref = "/kurumsal/neden-sultan",
   marqueeValues = DEFAULT_VALUES,
@@ -281,6 +288,101 @@ type HexCellProps = {
   onOpenModal: (item: HoneycombItem, index: number) => void;
 };
 
+const HEX_BACK_MIN_FONT_PX = 6.5;
+
+function fitHexBackBodyText(
+  container: HTMLElement,
+  text: HTMLElement,
+  body: string,
+): void {
+  const { width: cw, height: ch } = container.getBoundingClientRect();
+  if (cw <= 0 || ch <= 0) return;
+
+  text.textContent = body;
+  container.style.overflowY = "hidden";
+
+  let lo = HEX_BACK_MIN_FONT_PX;
+  let hi = Math.min(cw * 0.2, ch * 0.32, 15);
+  let best = lo;
+
+  while (hi - lo > 0.2) {
+    const mid = (lo + hi) / 2;
+    text.style.fontSize = `${mid}px`;
+    const { width, height } = text.getBoundingClientRect();
+    if (width <= cw && height <= ch) {
+      best = mid;
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+  }
+
+  text.style.fontSize = `${best}px`;
+  if (text.getBoundingClientRect().height > ch) {
+    container.style.overflowY = "auto";
+  }
+}
+
+type HexCellBackFaceProps = {
+  body: string;
+  isPrimary: boolean;
+};
+
+function HexCellBackFace({ body, isPrimary }: HexCellBackFaceProps) {
+  const textAreaRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
+
+  useLayoutEffect(() => {
+    const container = textAreaRef.current;
+    const text = textRef.current;
+    if (!container || !text) return;
+
+    let cancelled = false;
+
+    const runFit = () => {
+      if (cancelled) return;
+      fitHexBackBodyText(container, text, body);
+    };
+
+    runFit();
+    void document.fonts?.ready?.then(runFit);
+
+    const observer = new ResizeObserver(runFit);
+    observer.observe(container);
+    return () => {
+      cancelled = true;
+      observer.disconnect();
+    };
+  }, [body]);
+
+  return (
+    <div className="pointer-events-none relative flex h-full flex-col items-center justify-center px-[10%] text-center">
+      <div
+        ref={textAreaRef}
+        className="flex max-h-[75%] w-full min-h-0 items-center justify-center overflow-hidden overscroll-contain [-webkit-overflow-scrolling:touch]"
+      >
+        <p
+          ref={textRef}
+          className="m-0 font-medium leading-[1.25] text-balance text-charcoal"
+        >
+          {body}
+        </p>
+      </div>
+      <span
+        className={cn(
+          "mt-1 shrink-0 self-center rounded-full border px-2.5 py-0.5 text-[0.65rem] font-bold tracking-wide uppercase sm:px-3 sm:py-1 sm:text-[0.68rem]",
+          isPrimary
+            ? "border-charcoal/20 bg-white/40 text-charcoal"
+            : "border-charcoal/20 bg-white/20 text-charcoal",
+        )}
+        aria-hidden
+      >
+        İncele
+      </span>
+    </div>
+  );
+}
+
 function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
   const [tapped, setTapped] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -378,7 +480,7 @@ function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
             <div className="relative flex h-full flex-col items-center justify-center px-[10%] text-center">
               <h3
                 className={cn(
-                  "line-clamp-3 text-[0.95rem] leading-snug font-semibold tracking-tight text-balance sm:text-[0.78rem] md:text-sm lg:text-base xl:text-lg",
+                  "line-clamp-3 text-[1.32rem] leading-snug font-semibold tracking-tight text-balance sm:text-[1.14rem] md:text-[1.05rem] lg:text-[1.2rem] xl:text-[1.35rem]",
                   isPrimary ? "text-charcoal" : "text-charcoal",
                 )}
               >
@@ -399,22 +501,7 @@ function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
             style={{ ...faceStyle, transform: "rotateY(180deg)" }}
           >
             <div className="pointer-events-none absolute inset-0 bg-[url('/desen.svg')] bg-cover bg-center bg-no-repeat opacity-[0.06] mix-blend-screen" />
-            <div className="pointer-events-none relative flex h-full flex-col items-center justify-center gap-2 px-[12%] text-center">
-              <p className="line-clamp-5 text-[0.78rem] leading-snug font-medium text-balance text-charcoal sm:text-[0.7rem] md:text-[0.78rem] lg:text-[0.85rem] xl:text-[0.92rem]">
-                {item.body}
-              </p>
-              <span
-                className={cn(
-                  "mt-1 shrink-0 rounded-full border px-3 py-1 text-[0.65rem] font-bold tracking-wide uppercase sm:text-[0.6rem] md:px-3.5 md:py-1.5 md:text-[0.65rem]",
-                  isPrimary
-                    ? "border-charcoal/20 bg-white/40 text-charcoal"
-                    : "border-charcoal/20 bg-white/20 text-charcoal",
-                )}
-                aria-hidden
-              >
-                İncele
-              </span>
-            </div>
+            <HexCellBackFace body={item.body} isPrimary={isPrimary} />
           </div>
         </div>
       </div>

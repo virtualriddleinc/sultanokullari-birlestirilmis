@@ -37,7 +37,7 @@ const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
 const talentPillars = [
   {
     title: "Değer merkezli ekip",
-    body: "Milli ve manevi değerleri eğitim diline taşıyan, öğrencinin kalbine temas etmeyi önemseyen bir kadro.",
+    body: "Milli ve Mânevî değerleri eğitim diline taşıyan, öğrencinin kalbine temas etmeyi önemseyen bir kadro.",
     icon: HeartHandshake,
   },
   {
@@ -497,7 +497,7 @@ export function IkHumanResourcesPage({
             </h2>
             <p className="mt-4 text-sm leading-7 text-zinc-600 sm:text-base">
               Form üç kısa adımdan oluşur. Başvurunuz demo ortamında doğrulanır;
-              canlı kullanımda CV yükleme, e-posta bildirimi ve aday takip
+              canlı kullanımda CV yükleme, e-posta bildirimi ve aday tâkib
               süreci eklenebilir.
             </p>
             <div className="mt-6 rounded-3xl border border-emerald-900/10 bg-white/80 p-5 text-sm leading-7 text-zinc-700 shadow-sm backdrop-blur">

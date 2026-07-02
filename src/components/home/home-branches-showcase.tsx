@@ -2,11 +2,12 @@
 
 import Image from "next/image";
 import Link from "@/components/navigation/site-link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, MapPin } from "lucide-react";
+import { ArrowUpRight, ChevronDown, MapPin } from "lucide-react";
 import { branches as staticBranches } from "@/content/branches";
 import { branchPreviewMedia } from "@/content/site-media";
+import type { SiteMedia } from "@/content/site-media";
 import { AmbientSiteVideo } from "@/components/media/ambient-site-video";
 import { ContentCard } from "@/components/layout/content-card";
 import { SectionGrid } from "@/components/layout/section-grid";
@@ -18,6 +19,44 @@ import { t } from "@/lib/animations";
 import { cn } from "@/lib/cn";
 
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
+
+function getBranchMedia(branch: CmsBranch): SiteMedia | undefined {
+  return branch.previewMedia ?? branchPreviewMedia[branch.slug ?? ""];
+}
+
+function BranchPreviewMedia({
+  media,
+  className,
+  sizes,
+  autoPlay = true,
+}: {
+  media: SiteMedia;
+  className?: string;
+  sizes: string;
+  autoPlay?: boolean;
+}) {
+  if (media.kind === "video") {
+    return (
+      <AmbientSiteVideo
+        className={className}
+        src={media.src}
+        poster={media.poster}
+        title={media.alt}
+        autoPlay={autoPlay}
+      />
+    );
+  }
+
+  return (
+    <Image
+      src={media.src}
+      alt={media.alt}
+      fill
+      sizes={sizes}
+      className={className}
+    />
+  );
+}
 
 export type HomeBranchesShowcaseProps = {
   eyebrow?: string;
@@ -38,9 +77,65 @@ export function HomeBranchesShowcase({
 }: HomeBranchesShowcaseProps = {}) {
   const reduce = useReducedMotion();
   const [active, setActive] = useState(0);
+  const mobileItemRefs = useRef<(HTMLLIElement | null)[]>([]);
+  const intersectionRatios = useRef<Record<number, number>>({});
   const branch = branches[active] ?? branches[0];
-  const media =
-    branch?.previewMedia ?? branchPreviewMedia[branch?.slug ?? ""];
+  const media = getBranchMedia(branch);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+
+    const connectObserver = () => {
+      if (mq.matches) return () => {};
+
+      const items = mobileItemRefs.current.filter(
+        (item): item is HTMLLIElement => item !== null,
+      );
+      if (!items.length) return () => {};
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            const index = Number(
+              (entry.target as HTMLLIElement).dataset.branchIndex,
+            );
+            if (Number.isNaN(index)) continue;
+            intersectionRatios.current[index] = entry.isIntersecting
+              ? entry.intersectionRatio
+              : 0;
+          }
+
+          const best = Object.entries(intersectionRatios.current).sort(
+            ([, a], [, b]) => b - a,
+          )[0];
+
+          if (best && best[1] > 0) {
+            setActive(Number(best[0]));
+          }
+        },
+        {
+          rootMargin: "-18% 0px -52% 0px",
+          threshold: [0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1],
+        },
+      );
+
+      items.forEach((item) => observer.observe(item));
+      return () => observer.disconnect();
+    };
+
+    let disconnect = connectObserver();
+    const onBreakpointChange = () => {
+      disconnect();
+      intersectionRatios.current = {};
+      disconnect = connectObserver();
+    };
+
+    mq.addEventListener("change", onBreakpointChange);
+    return () => {
+      mq.removeEventListener("change", onBreakpointChange);
+      disconnect();
+    };
+  }, [branches.length]);
 
   if (!branch) return null;
 
@@ -68,7 +163,106 @@ export function HomeBranchesShowcase({
       />
 
       <div className="mt-12 grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-stretch">
-        <ol className="divide-charcoal/15 border-charcoal/15 divide-y border-y">
+        {/* Mobil — kaydırma tetiklemeli akordiyon; fotoğraf okul adının hemen altında */}
+        <ol className="divide-charcoal/15 border-charcoal/15 divide-y border-y lg:hidden">
+          {branches.map((b, i) => {
+            const isActive = i === active;
+            const branchMedia = getBranchMedia(b);
+
+            return (
+              <li
+                key={b.slug}
+                ref={(el) => {
+                  mobileItemRefs.current[i] = el;
+                }}
+                data-branch-index={i}
+                className="py-1"
+              >
+                <div className="flex items-start justify-between gap-3 py-4">
+                  <Link
+                    href={getCampusRouteFromBranch(b)}
+                    className="group min-w-0 flex-1"
+                  >
+                    <div className="flex items-start gap-3">
+                      <span
+                        className={cn(
+                          "pt-1 text-sm font-semibold tracking-wide tabular-nums",
+                          isActive ? "text-brand-green" : "text-charcoal/40",
+                        )}
+                      >
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                      <div className="min-w-0">
+                        <p
+                          className={cn(
+                            "font-cinzel text-xl font-bold tracking-tight transition-colors sm:text-2xl",
+                            isActive ? "text-charcoal" : "text-charcoal/70",
+                          )}
+                        >
+                          {b.district}
+                          <span className="text-charcoal/45"> · {b.city}</span>
+                        </p>
+                        <p className="text-charcoal/55 mt-1 text-xs font-medium tracking-[0.22em] uppercase">
+                          {b.upcoming
+                            ? "Yakında açılacak"
+                            : b.levels.join(" · ")}
+                        </p>
+                      </div>
+                    </div>
+                  </Link>
+
+                  <ChevronDown
+                    aria-hidden
+                    className={cn(
+                      "mt-1 size-5 shrink-0 text-charcoal/35 transition-transform duration-300",
+                      isActive && "rotate-180 text-brand-green",
+                    )}
+                  />
+                </div>
+
+                <div
+                  className={cn(
+                    "grid transition-[grid-template-rows] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+                    reduce ? "duration-0" : "duration-500",
+                    isActive ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+                  )}
+                  aria-hidden={!isActive}
+                >
+                  <div className="overflow-hidden">
+                    {branchMedia ? (
+                      <div
+                        className={cn(
+                          "relative mb-4 aspect-[16/9] overflow-hidden rounded-xl transition-opacity",
+                          reduce ? "duration-0" : "duration-300",
+                          isActive ? "opacity-100" : "opacity-0",
+                        )}
+                      >
+                        <BranchPreviewMedia
+                          media={branchMedia}
+                          className="absolute inset-0 h-full w-full object-cover"
+                          sizes="100vw"
+                          autoPlay={isActive && !reduce}
+                        />
+                        <div className="from-charcoal/70 absolute inset-0 bg-gradient-to-t via-charcoal/15 to-transparent" />
+                        <div className="absolute right-4 bottom-4 left-4">
+                          <p className="font-cinzel text-lg leading-tight font-bold text-white">
+                            {b.name}
+                          </p>
+                          <p className="mt-1 line-clamp-2 text-xs text-white/85">
+                            {b.address}
+                          </p>
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
+
+        {/* Masaüstü — hover ile sağ panelde önizleme */}
+        <ol className="divide-charcoal/15 border-charcoal/15 divide-y border-y max-lg:hidden">
           {branches.map((b, i) => {
             const isActive = i === active;
             return (
@@ -124,7 +318,7 @@ export function HomeBranchesShowcase({
 
         <ContentCard
           inset={false}
-          className="relative h-[28rem] overflow-hidden"
+          className="relative hidden h-[28rem] overflow-hidden lg:block"
         >
           <AnimatePresence mode="wait">
             <motion.div
@@ -135,21 +329,12 @@ export function HomeBranchesShowcase({
               transition={t(0.55)}
               className="absolute inset-0"
             >
-              {media?.kind === "video" ? (
-                <AmbientSiteVideo
+              {media ? (
+                <BranchPreviewMedia
+                  media={media}
                   className="absolute inset-0 h-full w-full object-cover"
-                  src={media.src}
-                  poster={media.poster}
-                  title={media.alt}
-                  autoPlay={!reduce}
-                />
-              ) : media ? (
-                <Image
-                  src={media.src}
-                  alt={media.alt}
-                  fill
                   sizes="(max-width: 1024px) 100vw, 32rem"
-                  className="absolute inset-0 object-cover"
+                  autoPlay={!reduce}
                 />
               ) : null}
               <div className="from-charcoal/80 via-charcoal/25 absolute inset-0 bg-gradient-to-t to-transparent" />

@@ -46,7 +46,7 @@ export const NAV_SECTIONS: NavSection[] = [
     label: "Kurumsal",
     title: "",
     description:
-      "İlimde âlim, ibadette âbid, gayrette mücahit bir neslin yetiştiği çift kanatlı eğitim modeli",
+      "İlimde âlim, ibâdette âbid, gayrette mücahit bir neslin yetiştiği çift kanatlı eğitim modeli",
     featured: {
       label: "",
       img: IMG.kurumsalKimlik,
@@ -86,14 +86,14 @@ export const NAV_SECTIONS: NavSection[] = [
     description:
       "Bilginin hikmete, bilincin ise erdeme dönüştüğü özgün bir eğitim modeli",
     featured: {
-      label: "Sultan Mektep Modeli",
+      label: "Sultan Mektebi Modeli",
       img: IMG.egitim,
       video: "/videos/kademeler.mp4",
       icon: "BookOpen",
     },
     items: [
       {
-        label: "Sultan Mektep Modeli",
+        label: "Sultan Mektebi Modeli",
         href: "/egitim/kademeler",
         icon: "GraduationCap",
         video: "/videos/kademeler.mp4",
@@ -118,16 +118,16 @@ export const NAV_SECTIONS: NavSection[] = [
     label: "Akademik",
     title: "",
     description:
-      "Her evladımızın kabiliyetini emanet bilinciyle takip ediyor, ilmini ve gayretini adım adım büyütüyoruz",
+      "Her evladımızın kabiliyetini emanet bilinciyle tâkib ediyor, ilmini ve gayretini adım adım büyütüyoruz",
     featured: {
-      label: "Akademik Gelişim ve Takip",
+      label: "Akademik Gelişim ve Tâkib",
       img: IMG.akademik,
       video: "/videos/akademik-gelisim.mp4",
       icon: "Award",
     },
     items: [
       {
-        label: "Akademik Gelişim ve Takip",
+        label: "Akademik Gelişim ve Tâkib",
         href: "/akademik/gelisim",
         icon: "TrendingUp",
         video: "/videos/akademik-gelisim.mp4",
@@ -190,7 +190,7 @@ export const NAV_SECTIONS: NavSection[] = [
     label: "Sultanda Yaşam",
     title: "",
     description:
-      "Özel Sultan Okulları'nda eğitim; öğrencilerimizin akademik gelişimlerinin yanında kişisel, sosyal ve ahlaki becerilerini de desteklemeyi amaçlar.",
+      "Özel Sultan Okulları'nda eğitim; öğrencilerimizin akademik gelişimlerinin yanında kişisel, sosyal ve ahlâkî becerilerini de desteklemeyi amaçlar.",
     featured: {
       label: "Sultanda Yaşam",
       img: IMG.yasam,

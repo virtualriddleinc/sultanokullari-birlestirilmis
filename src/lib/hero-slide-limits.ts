@@ -2,7 +2,7 @@ import type { HeroSlide } from "@/features/hero/slides";
 
 /** Rehberlik slaytı referans alınarak belirlenen hero bilgi kartı metin limitleri */
 export const HERO_SLIDE_LIMITS = {
-  /** En uzun mevcut etiket: AKADEMİK GELİŞİM VE BİREYSEL TAKİP (34) */
+  /** En uzun mevcut etiket: AKADEMİK GELİŞİM VE BİREYSEL TÂKİB (34) */
   tagline: 34,
   titleLine: 26,
   description: 100,

@@ -1,36 +1,42 @@
 import type { Metadata } from "next";
 import { ilkokul } from "@/content/egitim";
-import { EgitimSegmentShell } from "@/components/egitim/egitim-segment-shell";
-import { MediaGallery } from "@/components/media/media-gallery";
+import { ilkokulSayfasi } from "@/content/page-templates";
 import { educationGalleryMedia } from "@/content/site-media";
+import { QuoteOverlayPageShell } from "@/components/layout/quote-overlay-page-shell";
+import { PageStorySection } from "@/components/layout/page-story-section";
+import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-galeri";
+import { PAGE_MEDIA } from "@/lib/menu-images";
 
 export const metadata: Metadata = {
   title: "İlkokul",
   description:
-    "İlkokul programı; akademik ve manevi gelişim, yapılandırmacı yaklaşım.",
+    "İlkokul programı; akademik ve Mânevî gelişim, yapılandırmacı yaklaşım.",
 };
 
 export default function Page() {
+  const { story, gallery } = ilkokulSayfasi;
+
   return (
-    <EgitimSegmentShell
-      slug="ilkokul"
+    <QuoteOverlayPageShell
       title="İlkokul"
-      intro="Okuma sevgisi, milli ve manevi değerler, Kur’an ve siyer dersleriyle güçlü temeller."
+      intro={ilkokulSayfasi.intro}
+      media={PAGE_MEDIA.ilkokul}
       quote={ilkokul.quote}
       quoteCitation={ilkokul.quoteCitation}
     >
-      <div className="mt-6 space-y-4">
-        {ilkokul.paragraflar.map((p, i) => (
-          <p key={i} className="text-zinc-700">
-            {p}
-          </p>
-        ))}
-      </div>
-      <p className="mt-8 text-sm text-zinc-500">{ilkokul.takvimNotu}</p>
-      <MediaGallery
-        title="İlkokul galerisi"
+      <PageStorySection
+        eyebrow={story.eyebrow}
+        motto={story.motto}
+        rows={story.rows}
+      />
+      <p className="section-body mt-6 text-sm text-zinc-500">
+        {ilkokul.takvimNotu}
+      </p>
+      <KurumsalKimlikGalerisi
+        title={gallery.title}
+        description={gallery.description}
         items={educationGalleryMedia.ilkokul}
       />
-    </EgitimSegmentShell>
+    </QuoteOverlayPageShell>
   );
 }

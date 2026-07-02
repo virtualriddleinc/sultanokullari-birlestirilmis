@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
-import { ortaokul } from "@/content/egitim";
-import { EgitimSegmentShell } from "@/components/egitim/egitim-segment-shell";
-import { MediaGallery } from "@/components/media/media-gallery";
+import { ortaokulSayfasi } from "@/content/page-templates";
 import { educationGalleryMedia } from "@/content/site-media";
+import { QuoteOverlayPageShell } from "@/components/layout/quote-overlay-page-shell";
+import { PageDividerSection } from "@/components/layout/page-divider-heading";
+import { PageStoryRowsCard } from "@/components/layout/page-overlay-sections";
+import { PageStorySection } from "@/components/layout/page-story-section";
+import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-galeri";
+import { ortaokul } from "@/content/egitim";
+import { PAGE_MEDIA } from "@/lib/menu-images";
 
 export const metadata: Metadata = {
   title: "Ortaokul",
@@ -11,28 +16,32 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
+  const { story, gallery, etut } = ortaokulSayfasi;
+
   return (
-    <EgitimSegmentShell
-      slug="ortaokul"
+    <QuoteOverlayPageShell
       title="Ortaokul"
-      intro="Kökleri sağlam, teknolojiyi bilinçli kullanan ve topluma yön verecek yiğit gençler."
+      intro={ortaokulSayfasi.intro}
+      media={PAGE_MEDIA.ortaokul}
       quote={ortaokul.quote}
       quoteCitation={ortaokul.quoteCitation}
     >
-      <div className="mt-6 space-y-4">
-        {ortaokul.paragraflar.map((p, i) => (
-          <p key={i} className="text-zinc-700">
-            {p}
-          </p>
-        ))}
-      </div>
-      <p className="mt-6 rounded-lg border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-700">
-        {ortaokul.etut}
-      </p>
-      <MediaGallery
-        title="Ortaokul galerisi"
+      <PageStorySection
+        eyebrow={story.eyebrow}
+        motto={story.motto}
+        rows={story.rows}
+      />
+      <PageDividerSection
+        id="etut-baslik"
+        title="Etüt ve birebir çalışmalar"
+      >
+        <PageStoryRowsCard rows={[etut]} />
+      </PageDividerSection>
+      <KurumsalKimlikGalerisi
+        title={gallery.title}
+        description={gallery.description}
         items={educationGalleryMedia.ortaokul}
       />
-    </EgitimSegmentShell>
+    </QuoteOverlayPageShell>
   );
 }

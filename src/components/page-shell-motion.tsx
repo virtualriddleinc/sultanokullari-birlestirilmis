@@ -65,7 +65,7 @@ export function PageShellMotion({
   ) : null;
 
   const overlayHeadingContent = overlayMedia ? (
-    <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div className="page-shell-content">
       <h1 className={headingClass}>{title}</h1>
       {intro ? <p className={introClass}>{intro}</p> : null}
     </div>
@@ -90,7 +90,11 @@ export function PageShellMotion({
       <>
         {underHeaderHero}
         {overlayHero}
-        <SectionGrid variant="white" className={sectionClass}>
+        <SectionGrid
+          variant="white"
+          className={cn(sectionClass, overlayMedia && "page-shell-section")}
+          innerClassName={overlayMedia ? "page-shell-content" : undefined}
+        >
           <article>
             {logoClearanceSpacer}
             {media && !underHeaderMedia && !overlayMedia ? (
@@ -129,7 +133,11 @@ export function PageShellMotion({
           {overlayHero}
         </motion.div>
       ) : null}
-      <SectionGrid variant="white" className={sectionClass}>
+      <SectionGrid
+        variant="white"
+        className={cn(sectionClass, overlayMedia && "page-shell-section")}
+        innerClassName={overlayMedia ? "page-shell-content" : undefined}
+      >
         <article>
           {logoClearanceSpacer}
           {media && !underHeaderMedia && !overlayMedia ? (

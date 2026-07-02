@@ -46,7 +46,7 @@ const JOURNEY_CHAPTERS = [
     order: 1,
     eyebrow: "01 / Köken",
     title: "Nebevî eğitim",
-    body: "Peygamberimizi tanıyan, seven ve hayatına rehber edinen; üsve-i hasene ile İslam ahlakı ile ahlaklanmış nesiller yetiştiriyoruz.",
+    body: "Peygamberimizi (s.a.s) tanıyan, seven ve hayatına rehber edinen; üsve-i hasene ile İslam ahlâkı ile ahlâklanmış nesiller yetiştiriyoruz.",
     ctaLabel: "Nebevî eğitim",
     ctaHref: "/egitim/nebevi-egitim",
     iconKey: "book-open-text",
@@ -55,9 +55,9 @@ const JOURNEY_CHAPTERS = [
   {
     order: 2,
     eyebrow: "02 / Kalp",
-    title: "Hafızlık ve Otağ-ı Hümâyun",
-    body: "Mescid-rahle usulüyle Kur'an ile bütünleşen; kalbe erişen ilmi irfana çeviren bir hafızlık programı.",
-    ctaLabel: "Hafızlık programı",
+    title: "Hâfızlık ve Otağ-ı Hümâyun",
+    body: "Mescid-rahle usulüyle Kur'an ile bütünleşen; kalbe erişen ilmi irfâna çeviren bir hâfızlık programı.",
+    ctaLabel: "Hâfızlık programı",
     ctaHref: "/egitim/hafizlik",
     iconKey: "compass",
     chapterMedia: toMediaGroup(heroMedia[2]),
@@ -111,9 +111,9 @@ async function seedHomepage() {
           titleLine2: "güçlü bir gelecek vizyonu ile birleşiyor.",
           titleLine3: "",
           description:
-            "Peygamber Efendimizin (s.a.v.) izinde, üsve-i hasene olmayı hedefleyen; ilim, hikmet ve ahlakla bütünleşmiş nesiller yetiştiriyoruz.",
+            "Peygamber Efendimizin (s.a.s) izinde, üsve-i hasene olmayı hedefleyen; ilim, hikmet ve ahlâkla bütünleşmiş nesiller yetiştiriyoruz.",
           secondaryDescription:
-            "Anaokulu, ilkokul ve ortaokul kademeleriyle bütüncül bir eğitim yolculuğu; okul öncesinden üniversiteye, cami ve hafızlık binasıyla bütünleşik eğitim külliyesi ufkumuz.",
+            "Anaokulu, ilkokul ve ortaokul kademeleriyle bütüncül bir eğitim yolculuğu; okul öncesinden üniversiteye, câmi ve hâfızlık binasıyla bütünleşik Eğitim Külliyesi ufkumuz.",
           levels: [
             { label: "Anaokulu" },
             { label: "İlkokul" },
@@ -125,22 +125,22 @@ async function seedHomepage() {
         },
         journey: {
           headline:
-            "Peygamber Efendimiz (sas)'in İzinde Geleceğe Örnek Nesiller...",
+            "Peygamber Efendimiz'in (s.a.s) İzinde Geleceğe Örnek Nesiller...",
         },
         neden: {
           eyebrow: "Ayırt edici yaklaşım",
           title: "Neden",
           titleHighlight: "Sultan Okulları?",
           description:
-            "Temiz ve huzurlu ortamdan nebevî eğitime, doğa ile iç içe yaşamdan hafızlık ufkuna uzanan güçlü bir kurum dili.",
+            "Temiz ve huzurlu ortamdan nebevî eğitime, doğa ile iç içe yaşamdan hâfızlık ufkuna uzanan güçlü bir kurum dili.",
           ctaLabel: `${nedenSultanItems.length} maddenin tamamı`,
           ctaHref: "/kurumsal/neden-sultan",
           marqueeValues: [
             { value: "İlim" },
             { value: "Hikmet" },
-            { value: "Ahlak" },
+            { value: "Ahlâk" },
             { value: "Nebevî eğitim" },
-            { value: "Hafızlık" },
+            { value: "Hâfızlık" },
             { value: "Doğa" },
             { value: "Butik okul" },
           ],
@@ -188,7 +188,7 @@ async function seedHomepage() {
           description:
             "Kademeler, olanaklar ve duyurular için en sık kullanılan bağlantılar — şeritte gezinin veya tıklayın.",
           links: [
-            { href: "/egitim/kademeler", label: "Kademeler", description: "Sultan Mektep Modeli", iconKey: "book-open" },
+            { href: "/egitim/kademeler", label: "Kademeler", description: "Sultan Mektebi Modeli", iconKey: "book-open" },
             { href: "/egitim/nebevi-egitim", label: "Nebevî Eğitim", description: "Kur'an-ı Kerîm", iconKey: "graduation-cap" },
             { href: "/akademik/yabanci-dil", label: "Atölyeler", description: "Yabancı dil & atölye", iconKey: "palette" },
             { href: "/#yemekhane", label: "Yemekhane", description: "Kantinsiz okul projesi", iconKey: "hand-heart" },

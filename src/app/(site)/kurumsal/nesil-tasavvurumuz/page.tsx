@@ -1,29 +1,42 @@
 import type { Metadata } from "next";
-import { kurulusParagraflari, kurumsalTimeline } from "@/content/kurumsal";
+import { nesilTasavvurumuz } from "@/content/page-templates";
+import { pageGalleryMedia } from "@/content/site-media";
 import { PageShell } from "@/components/page-shell";
-import { ContentCard } from "@/components/layout/content-card";
+import { PageStorySection } from "@/components/layout/page-story-section";
+import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-galeri";
+import { KurumsalTimelineSection } from "@/components/kurumsal/kurumsal-timeline-section";
 import { PAGE_MEDIA } from "@/lib/menu-images";
 
 export const metadata: Metadata = {
   title: "Nesil Tasavvurumuz",
+  description: nesilTasavvurumuz.intro,
 };
 
 export default function Page() {
-  const ufku = kurumsalTimeline.find((t) => t.year === "Ufkumuz");
+  const { story, gallery, timeline } = nesilTasavvurumuz;
 
   return (
-    <PageShell title="Nesil Tasavvurumuz" media={PAGE_MEDIA.nesilTasavvur}>
-      <ContentCard>
-        <p className="section-body">{kurulusParagraflari[2]}</p>
-      </ContentCard>
-      {ufku ? (
-        <section className="mt-8">
-          <h2 className="font-cinzel text-charcoal text-xl font-bold">
-            {ufku.title}
-          </h2>
-          <p className="section-body mt-3">{ufku.detail}</p>
-        </section>
-      ) : null}
+    <PageShell
+      title="Nesil Tasavvurumuz"
+      intro={nesilTasavvurumuz.intro}
+      media={PAGE_MEDIA.nesilTasavvur}
+      mediaLayout="overlay"
+    >
+      <PageStorySection
+        eyebrow={story.eyebrow}
+        motto={story.motto}
+        rows={story.rows}
+      />
+      <KurumsalTimelineSection
+        items={timeline}
+        title="Ufkumuz"
+        description="Geleceğe dönük hedeflerimiz ve Eğitim Külliyesi vizyonumuz."
+      />
+      <KurumsalKimlikGalerisi
+        title={gallery.title}
+        description={gallery.description}
+        items={pageGalleryMedia.nesilTasavvur}
+      />
     </PageShell>
   );
 }

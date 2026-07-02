@@ -38,7 +38,7 @@ const cards: HexCard[] = [
     media: hexGalleryMedia[1],
   },
   {
-    label: "Hafızlık halkası",
+    label: "Hâfızlık halkası",
     background: "linear-gradient(135deg,#0a3d1a 0%,#0d6b2a 60%,#e2a21a 100%)",
     accent: "rgba(255,255,255,0.18)",
     media: hexGalleryMedia[2],

@@ -36,7 +36,7 @@ export function buildOrganizationGraph(options: {
           url: absoluteUrl("/logo.svg"),
         },
         description:
-          "Milli ve manevi değerlerle bütünleşik eğitim. Anaokulu, ilkokul ve ortaokul programları.",
+          "Milli ve Mânevî değerlerle bütünleşik eğitim. Anaokulu, ilkokul ve ortaokul programları.",
         foundingDate: "2017",
         email: "info@sultanokullari.com",
         sameAs,
@@ -44,7 +44,7 @@ export function buildOrganizationGraph(options: {
         knowsAbout: [
           "Değerler Eğitimi",
           "Nebevî Eğitim",
-          "Sultan Mektep Modeli",
+          "Sultan Mektebi Modeli",
           "Çift Yabancı Dil",
         ],
         ...(subOrganizations.length ? { subOrganization: subOrganizations } : {}),

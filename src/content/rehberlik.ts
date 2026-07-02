@@ -4,7 +4,7 @@
    ÖLÇME VE DEĞERLENDİRME
    ───────────────────────────────────────────────────────────────── */
 export const olcmeGiris =
-  "Dönem sonunda öğrencilerimizin akademik ve manevi başarılarını ödüllendiriyor; öğrenme süreçlerini çeşitli araç ve yöntemlerle değerlendiriyoruz.";
+  "Dönem sonunda öğrencilerimizin akademik ve Mânevî başarılarını ödüllendiriyor; öğrenme süreçlerini çeşitli araç ve yöntemlerle değerlendiriyoruz.";
 
 export const pisaIntro =
   'Açılımı "Uluslararası Öğrenci Değerlendirme Programı" olan PISA, Ekonomik İşbirliği ve Kalkınma Örgütü (OECD) tarafından üçer yıllık dönemler hâlinde, 15 yaş grubundaki öğrencilerin kazanmış oldukları bilgi ve becerileri değerlendiren bir araştırmadır.';
@@ -52,7 +52,7 @@ export const portfolyoContent =
    REHBERLİK VE PSİKOLOJİK DANIŞMA
    ───────────────────────────────────────────────────────────────── */
 export const rehberlikGiris =
-  "Çocuklarımızın ruhsal ve bedensel gelişiminde doğru rehberliğin önemini ve onların her birinin ayrı bir birey olduğunun bilincinde olarak öğrencilerimizin akademik, duygusal, manevi ve sosyal gelişimlerini destekleyici çalışmalar yapıyoruz. Yaptığımız bireysel veli görüşmeleri ile velilerimizi çocuklarımızın gelişim süreci hakkında bilgilendiriyoruz. Çalışmalarımızı okul yönetimi, eğitim koordinatörü, sınıf danışman öğretmeni ve veli işbirliği düzenleyerek dört başlık altında yürütüyoruz.";
+  "Çocuklarımızın ruhsal ve bedensel gelişiminde doğru rehberliğin önemini ve onların her birinin ayrı bir birey olduğunun bilincinde olarak öğrencilerimizin akademik, duygusal, Mânevî ve sosyal gelişimlerini destekleyici çalışmalar yapıyoruz. Yaptığımız bireysel veli görüşmeleri ile velilerimizi çocuklarımızın gelişim süreci hakkında bilgilendiriyoruz. Çalışmalarımızı okul yönetimi, eğitim koordinatörü, sınıf danışman öğretmeni ve veli işbirliği düzenleyerek dört başlık altında yürütüyoruz.";
 
 export const ogrenciCalismalari = [
   "Okula uyum",

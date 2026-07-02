@@ -22,7 +22,7 @@ import type { JourneyChapter } from "@/lib/home-shared";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const DEFAULT_HEADLINE =
-  "Peygamber Efendimiz (sas)'in İzinde Geleceğe Örnek Nesiller...";
+  "Peygamber Efendimiz'in (s.a.s) İzinde Geleceğe Örnek Nesiller...";
 
 const CHAPTER_STYLES = [
   {

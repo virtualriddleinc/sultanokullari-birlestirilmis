@@ -28,7 +28,7 @@ export type Branch = z.infer<typeof branchSchema>;
 export const branches: Branch[] = branchSchema.array().parse([
   {
     slug: "sancaktepe",
-    name: "Özel Sultan Anne Anaokulu",
+    name: "Özel Sultan Anaokulu",
     city: "İstanbul",
     district: "Sancaktepe",
     address: "Eyüp Sultan, Emsal Sk. No: 7 D:1, 34885 Sancaktepe/İstanbul",
@@ -38,7 +38,7 @@ export const branches: Branch[] = branchSchema.array().parse([
   },
   {
     slug: "basiskele",
-    name: "Özel Başiskele Sultan Anne İlkokulu ve Ortaokulu",
+    name: "Özel Başiskele Sultan İlkokulu ve Ortaokulu",
     city: "Kocaeli",
     district: "Başiskele",
     address: "Yaylacık, Yaylacık Cd. No:45/1, 41140 Başiskele/Kocaeli",
@@ -48,7 +48,7 @@ export const branches: Branch[] = branchSchema.array().parse([
   },
   {
     slug: "serdivan",
-    name: "Özel Sultan Anne Anaokulu",
+    name: "Özel Sultan Anaokulu",
     city: "Sakarya",
     district: "Serdivan",
     address: "Köprübaşı, Fevzi Çakmak Cd. No: 46, 54130 Serdivan/Sakarya",
@@ -58,7 +58,7 @@ export const branches: Branch[] = branchSchema.array().parse([
   },
   {
     slug: "sincan",
-    name: "Özel Sincan Sultan Anne Anaokulu",
+    name: "Özel Sincan Sultan Anaokulu",
     city: "Ankara",
     district: "Sincan",
     address: "Pınarbaşı, 128. Sk. No:23, 31270 Sincan/Ankara",

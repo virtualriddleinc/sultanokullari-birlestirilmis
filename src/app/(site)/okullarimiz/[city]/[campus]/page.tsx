@@ -3,11 +3,14 @@ import Link from "@/components/navigation/site-link";
 import { notFound } from "next/navigation";
 import { Clock } from "lucide-react";
 import { WhatsAppContactButton } from "@/components/branch/whatsapp-contact-button";
-import { BranchGallery } from "@/components/branch-gallery";
 import { BranchContactBlock } from "@/components/iletisim/branch-contact-block";
 import { ContentCard } from "@/components/layout/content-card";
-import { PageHeroMedia } from "@/components/layout/page-hero-media";
+import { PageDividerSection } from "@/components/layout/page-divider-heading";
+import { PageStorySection } from "@/components/layout/page-story-section";
+import { PageShell } from "@/components/page-shell";
+import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-galeri";
 import { SectionGrid } from "@/components/layout/section-grid";
+import type { Branch } from "@/content/branches";
 import { getBranchBySlugFromCms } from "@/lib/branches-data";
 import {
   CAMPUS_ROUTE_MAP,
@@ -51,6 +54,29 @@ export async function generateMetadata({
   });
 }
 
+function branchStory(branch: Branch) {
+  return {
+    eyebrow: "Okullarımız",
+    motto: `${branch.district} kampüsünde Sultan eğitim modeli`,
+    rows: [
+      {
+        eyebrow: "Adres",
+        text: branch.address,
+        highlights: [branch.district, branch.city],
+      },
+      ...(branch.levels.length > 0
+        ? [
+            {
+              eyebrow: "Kademeler",
+              text: branch.levels.join(", "),
+              highlights: [...branch.levels],
+            },
+          ]
+        : []),
+    ],
+  };
+}
+
 export default async function CampusPage({
   params,
 }: {
@@ -81,60 +107,57 @@ export default async function CampusPage({
       { name: branch.name, path: campusPath },
     ]),
   ];
+  const story = branchStory(branch);
 
   if (branch.upcoming) {
     return (
       <>
         <JsonLd data={structuredData} />
         <SectionGrid variant="honey" className="py-fluid-8">
-        <article className="mx-auto max-w-3xl text-center">
-          <p className="section-eyebrow">Okullarımız</p>
-          <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
-            <h1 className="section-title">{branch.name}</h1>
-            <span className="border-charcoal/15 text-charcoal rounded-full border bg-white/80 px-3 py-1 text-xs font-semibold tracking-[0.22em] uppercase">
-              Yakında
-            </span>
-          </div>
-          <p className="section-body mx-auto mt-4 max-w-xl">
-            {branch.city} — Çok Yakında
-          </p>
-
-          <ContentCard className="mt-10 p-8 sm:p-12">
-            <div className="bg-brand-green/20 text-charcoal mx-auto flex size-16 items-center justify-center rounded-full">
-              <Clock className="size-8" aria-hidden />
+          <article className="mx-auto max-w-3xl text-center">
+            <p className="section-eyebrow">Okullarımız</p>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-3">
+              <h1 className="section-title">{branch.name}</h1>
+              <span className="border-charcoal/15 text-charcoal rounded-full border bg-white/80 px-3 py-1 text-xs font-semibold tracking-[0.22em] uppercase">
+                Yakında
+              </span>
             </div>
-            <h2 className="font-cinzel text-charcoal mt-8 text-2xl font-bold tracking-tight sm:text-3xl">
-              Konya&apos;da Sultan Rüzgarı Esecek
-            </h2>
-            <p className="section-body mx-auto mt-4 max-w-lg">
-              Konya — Mevlânâ şubemiz çok yakında açılacak. Ön bilgi almak ve
-              kayıt listesine girmek için bizimle iletişime geçebilirsiniz.
+            <p className="section-body mx-auto mt-4 max-w-xl">
+              {branch.city} — Çok Yakında
             </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Link href="/iletisim" className="cta-pill">
-                Ön Bilgi Talep Et
-              </Link>
-            </div>
-          </ContentCard>
 
-          {campusMedia ? (
-            <PageHeroMedia media={campusMedia} priority className="mt-10" />
-          ) : null}
+            <ContentCard className="mt-10 p-8 sm:p-12">
+              <div className="bg-brand-green/20 text-charcoal mx-auto flex size-16 items-center justify-center rounded-full">
+                <Clock className="size-8" aria-hidden />
+              </div>
+              <h2 className="font-cinzel text-charcoal mt-8 text-2xl font-bold tracking-tight sm:text-3xl">
+                Konya&apos;da Sultan Rüzgarı Esecek
+              </h2>
+              <p className="section-body mx-auto mt-4 max-w-lg">
+                Konya — Mevlânâ şubemiz çok yakında açılacak. Ön bilgi almak ve
+                kayıt listesine girmek için bizimle iletişime geçebilirsiniz.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                <Link href="/iletisim" className="cta-pill">
+                  Ön Bilgi Talep Et
+                </Link>
+              </div>
+            </ContentCard>
 
-          <section className="mt-12 text-left">
-            <h2 className="text-charcoal text-lg font-semibold">
-              Kayıt listesi ve ön bilgi
-            </h2>
-            <p className="section-body mt-2">
-              Aşağıdaki formda kampüs alanı Konya — Mevlânâ için ön
-              doldurulmuştur.
-            </p>
-            <div className="mt-6">
-              <BranchContactBlock branchSlug={branch.slug} />
-            </div>
-          </section>
-        </article>
-      </SectionGrid>
+            <section className="mt-12 text-left">
+              <h2 className="text-charcoal text-lg font-semibold">
+                Kayıt listesi ve ön bilgi
+              </h2>
+              <p className="section-body mt-2">
+                Aşağıdaki formda kampüs alanı Konya — Mevlânâ için ön
+                doldurulmuştur.
+              </p>
+              <div className="mt-6">
+                <BranchContactBlock branchSlug={branch.slug} />
+              </div>
+            </section>
+          </article>
+        </SectionGrid>
       </>
     );
   }
@@ -142,14 +165,17 @@ export default async function CampusPage({
   return (
     <>
       <JsonLd data={structuredData} />
-      <SectionGrid variant="white" className="py-fluid-8">
-      <article className="max-w-4xl">
-        {campusMedia ? <PageHeroMedia media={campusMedia} priority /> : null}
-        <p className="section-eyebrow">Okullarımız</p>
-        <h1 className="section-title mt-3">{branch.name}</h1>
-        <p className="section-body mt-2 text-lg">
-          {branch.district} / {branch.city}
-        </p>
+      <PageShell
+        title={branch.name}
+        intro={`${branch.district} / ${branch.city}`}
+        media={campusMedia}
+        mediaLayout="overlay"
+      >
+        <PageStorySection
+          eyebrow={story.eyebrow}
+          motto={story.motto}
+          rows={story.rows}
+        />
 
         {branch.levels.length > 0 ? (
           <div className="mt-8 flex flex-wrap gap-2">
@@ -164,53 +190,56 @@ export default async function CampusPage({
           </div>
         ) : null}
 
-        <section className="text-charcoal/85 mt-10 space-y-4">
-          <h2 className="text-charcoal text-lg font-semibold">İletişim</h2>
-          <p>
-            <span className="text-charcoal font-medium">Adres:</span>{" "}
-            {branch.address}
-          </p>
-          <p>
-            <span className="text-charcoal font-medium">Telefon:</span>{" "}
-            <a
-              className="text-charcoal hover:underline"
-              href={`tel:${branch.phone.replace(/\s/g, "")}`}
-            >
-              {branch.phone}
-            </a>
-          </p>
-          <div className="flex flex-wrap gap-3 pt-2">
-            <Link href="/iletisim" className="cta-pill">
-              İletişim / ön kayıt
-            </Link>
-            <a
-              className="border-charcoal/15 text-charcoal hover:border-brand-green/40 inline-flex rounded-full border px-4 py-2 text-sm font-semibold transition"
-              href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Haritada aç
-            </a>
-            <WhatsAppContactButton phone={branch.phone} />
+        <PageDividerSection id="iletisim-baslik" title="İletişim">
+          <div className="text-charcoal/85 mt-8 space-y-4">
+            <p>
+              <span className="text-charcoal font-medium">Adres:</span>{" "}
+              {branch.address}
+            </p>
+            <p>
+              <span className="text-charcoal font-medium">Telefon:</span>{" "}
+              <a
+                className="text-charcoal hover:underline"
+                href={`tel:${branch.phone.replace(/\s/g, "")}`}
+              >
+                {branch.phone}
+              </a>
+            </p>
+            <div className="flex flex-wrap gap-3 pt-2">
+              <Link href="/iletisim" className="cta-pill">
+                İletişim / ön kayıt
+              </Link>
+              <a
+                className="border-charcoal/15 text-charcoal hover:border-brand-green/40 inline-flex rounded-full border px-4 py-2 text-sm font-semibold transition"
+                href={`https://www.google.com/maps/search/?api=1&query=${mapsQuery}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Haritada aç
+              </a>
+              <WhatsAppContactButton phone={branch.phone} />
+            </div>
           </div>
-        </section>
+        </PageDividerSection>
 
-        <BranchGallery branch={branch} />
+        {branch.gallery.length > 0 ? (
+          <KurumsalKimlikGalerisi
+            title="Görsel Galeri"
+            description="Okulumuzdan seçilen fotoğraf ve video görüntüleri. Büyütmek için bir görsele dokunun."
+            items={branch.gallery}
+          />
+        ) : null}
 
-        <section className="border-charcoal/10 mt-12 border-t pt-10">
-          <h2 className="text-charcoal text-lg font-semibold">
-            Kampüs ile iletişim formu
-          </h2>
-          <p className="section-body mt-2">
-            Aşağıdaki form genel iletişim sunucu eylemini kullanır; kampüs alanı
-            bu sayfa için ön doldurulmuştur.
-          </p>
-          <div className="mt-6">
+        <PageDividerSection
+          id="iletisim-formu-baslik"
+          title="Kampüs ile iletişim formu"
+          description="Aşağıdaki form genel iletişim sunucu eylemini kullanır; kampüs alanı bu sayfa için ön doldurulmuştur."
+        >
+          <div className="mt-8">
             <BranchContactBlock branchSlug={branch.slug} />
           </div>
-        </section>
-      </article>
-    </SectionGrid>
+        </PageDividerSection>
+      </PageShell>
     </>
   );
 }

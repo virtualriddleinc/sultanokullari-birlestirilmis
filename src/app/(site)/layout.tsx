@@ -3,10 +3,12 @@ import { Cinzel, Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { draftMode } from "next/headers";
 import { SiteFooter } from "@/components/site-footer";
+import { InfoRequestModal } from "@/components/home/info-request-modal";
 import { PreventTopOverscroll } from "@/components/layout/prevent-top-overscroll";
 import { SiteHeader } from "@/components/layout/site-header";
 import { MotionProviders } from "@/components/ui/motion-providers";
 import { getPublishedBranches } from "@/lib/branches-data";
+import { getInfoModalData } from "@/lib/home-data";
 import { PayloadRefreshOnSave } from "@/components/payload/RefreshOnSave";
 import { getRootMetadata } from "@/lib/seo/metadata";
 import { buildOrganizationGraph } from "@/lib/schema/organization";
@@ -55,11 +57,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [branches, settings] = await Promise.all([
+  const { isEnabled: isDraft } = await draftMode();
+  const [branches, settings, infoModal] = await Promise.all([
     getPublishedBranches(),
     getSiteSettings(),
+    getInfoModalData({ draft: isDraft }),
   ]);
-  const { isEnabled: isDraft } = await draftMode();
   const organizationSchema = buildOrganizationGraph({
     sameAs: buildSameAs(settings),
     branches,
@@ -94,6 +97,7 @@ export default async function RootLayout({
         <MotionProviders>
           <PreventTopOverscroll />
           <PayloadRefreshOnSave enabled={isDraft} />
+          <InfoRequestModal {...infoModal} />
           <SiteHeader />
           <main className="relative z-[1] flex w-full min-w-0 flex-1 flex-col overflow-x-clip">
             {children}

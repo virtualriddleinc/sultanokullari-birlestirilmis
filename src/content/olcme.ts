@@ -1,7 +1,7 @@
 /** site-icerigi.docx — Ölçme ve değerlendirme (PISA, hazırbulunuşluk, rubrik, portfolyo). */
 
 export const olcmeGiris =
-  "Dönem sonunda öğrencilerimizin akademik ve manevi başarılarını ödüllendiriyoruz.";
+  "Dönem sonunda öğrencilerimizin akademik ve Mânevî başarılarını ödüllendiriyoruz.";
 
 export const pisaBolumu = {
   title: "PISA",

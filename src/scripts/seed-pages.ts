@@ -81,7 +81,7 @@ async function main() {
       title: "Kurumsal Kimliğimiz",
       slug: "kurumsal-kimligimiz",
       intro:
-        "İlimde âlim, ibadette âbid, gayrette mücahit bir neslin yetiştiği çift kanatlı eğitim modeli.",
+        "İlimde âlim, ibâdette âbid, gayrette mücahit bir neslin yetiştiği çift kanatlı eğitim modeli.",
       sections: [
         {
           blockType: "textSection" as const,

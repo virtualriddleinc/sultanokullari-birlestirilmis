@@ -1,38 +1,44 @@
 import type { Metadata } from "next";
 import { anaokulu } from "@/content/egitim";
-import { AnaokuluPedagojikYaklasim } from "@/components/egitim/anaokulu-pedagojik-yaklasim";
-import { EgitimSegmentShell } from "@/components/egitim/egitim-segment-shell";
-import { MediaGallery } from "@/components/media/media-gallery";
+import { anaokuluSayfasi } from "@/content/page-templates";
 import { educationGalleryMedia } from "@/content/site-media";
+import { AnaokuluPedagojikYaklasim } from "@/components/egitim/anaokulu-pedagojik-yaklasim";
+import { QuoteOverlayPageShell } from "@/components/layout/quote-overlay-page-shell";
+import { PageStorySection } from "@/components/layout/page-story-section";
+import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-galeri";
+import { PAGE_MEDIA } from "@/lib/menu-images";
 
 export const metadata: Metadata = {
   title: "Anaokulu",
   description:
-    "Anaokulu programı, Kur’an ve Peygamber ahlakı, oyun tabanlı öğrenme.",
+    "Anaokulu programı, Kur’an ve Peygamber (s.a.s) Ahlâkı, oyun tabanlı öğrenme.",
 };
 
 export default function Page() {
+  const { story, gallery } = anaokuluSayfasi;
+
   return (
-    <EgitimSegmentShell
-      slug="anaokulu"
+    <QuoteOverlayPageShell
       title="Anaokulu"
-      intro="Fıtrat üzere güvenli ve sevgi dolu bir başlangıç; Kur’an ve Peygamber muhabbetiyle bütünleşik okul öncesi eğitim."
+      intro={anaokuluSayfasi.intro}
+      media={PAGE_MEDIA.anaokulu}
       quote={anaokulu.quote}
       quoteCitation={anaokulu.quoteCitation}
     >
-      <div className="mt-6 space-y-4">
-        {anaokulu.intro.map((p, i) => (
-          <p key={i} className="text-zinc-700">
-            {p}
-          </p>
-        ))}
-      </div>
+      <PageStorySection
+        eyebrow={story.eyebrow}
+        motto={story.motto}
+        rows={story.rows}
+      />
       <AnaokuluPedagojikYaklasim items={anaokulu.accordion} />
-      <p className="mt-6 text-sm text-zinc-500">{anaokulu.gunlukProgramNotu}</p>
-      <MediaGallery
-        title="Anaokulu galerisi"
+      <p className="section-body mt-6 text-sm text-zinc-500">
+        {anaokulu.gunlukProgramNotu}
+      </p>
+      <KurumsalKimlikGalerisi
+        title={gallery.title}
+        description={gallery.description}
         items={educationGalleryMedia.anaokulu}
       />
-    </EgitimSegmentShell>
+    </QuoteOverlayPageShell>
   );
 }

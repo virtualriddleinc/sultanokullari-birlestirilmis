@@ -28,9 +28,9 @@ const DEFAULT_MISSION = {
     "güçlü bir gelecek vizyonu ile birleşiyor.",
   ] as [string, string],
   description:
-    "Peygamber Efendimizin (s.a.v.) izinde, üsve-i hasene olmayı hedefleyen; ilim, hikmet ve ahlakla bütünleşmiş nesiller yetiştiriyoruz.",
+    "Peygamber Efendimizin (s.a.s) izinde, üsve-i hasene olmayı hedefleyen; ilim, hikmet ve ahlâkla bütünleşmiş nesiller yetiştiriyoruz.",
   secondaryDescription:
-    "Anaokulu, ilkokul ve ortaokul kademeleriyle bütüncül bir eğitim yolculuğu; okul öncesinden üniversiteye, cami ve hafızlık binasıyla bütünleşik eğitim külliyesi ufkumuz.",
+    "Anaokulu, ilkokul ve ortaokul kademeleriyle bütüncül bir eğitim yolculuğu; okul öncesinden üniversiteye, câmi ve hâfızlık binasıyla bütünleşik Eğitim Külliyesi ufkumuz.",
 };
 
 export type MissionCountersProps = {

@@ -31,7 +31,7 @@ export const heroMedia = [
   image("IMG-20260429-WA0089.jpg", "Okul içinde temiz ve huzurlu yaşam alanı"),
   video(
     "VID-20260429-WA0119.mp4",
-    "Hafızlık ve değerler eğitimi atmosferinden video kesiti",
+    "Hâfızlık ve değerler eğitimi atmosferinden video kesiti",
     "IMG-20260429-WA0122.jpg",
   ),
   video(
@@ -76,7 +76,7 @@ export const headerMedia = {
   ),
   hafizlik: video(
     "VID-20260429-WA0119.mp4",
-    "Hafızlık halkasından kısa video",
+    "Hâfızlık halkasından kısa video",
     "IMG-20260429-WA0114.jpg",
   ),
   degerler: image(
@@ -113,7 +113,7 @@ export const hexGalleryMedia = [
     "Atölye atmosferinden kısa video",
     "IMG-20260429-WA0102.jpg",
   ),
-  image("IMG-20260429-WA0114.jpg", "Hafızlık halkasından bir kare"),
+  image("IMG-20260429-WA0114.jpg", "Hâfızlık halkasından bir kare"),
   image("IMG-20260429-WA0112.jpg", "Bahçede oyun anı"),
   video(
     "VID-20260429-WA0165.mp4",
@@ -276,8 +276,8 @@ export const educationGalleryMedia = {
   ],
   hafizlik: [
     heroMedia[2],
-    image("IMG-20260429-WA0121.jpg", "Hafızlık galerisinden fotoğraf"),
-    image("IMG-20260429-WA0143.jpg", "Hafızlık ve etkinlik atmosferi"),
+    image("IMG-20260429-WA0121.jpg", "Hâfızlık galerisinden fotoğraf"),
+    image("IMG-20260429-WA0143.jpg", "Hâfızlık ve etkinlik atmosferi"),
   ],
   degerler: [
     image("IMG-20260429-WA0112.jpg", "Değerler eğitimi panosundan bir kare"),
@@ -308,16 +308,16 @@ export const kurumsalKimlikGalleryMedia = [
   video(
     "VID-20260429-WA0134.mp4",
     "Sultan Okulları kurumsal tanıtım videosu",
-    "IMG-20260429-WA0113.jpg",
+    "IMG-20260429-WA0140.jpg",
   ),
   image("IMG-20260429-WA0113.jpg", "Kurucu mesajı için temsilî okul atmosferi"),
   image("IMG-20260429-WA0123.jpg", "Kampüs yaşamından seçili kare"),
   video(
     "VID-20260429-WA0119.mp4",
     "İdari kadro ve çalışma atmosferi videosu",
-    "IMG-20260429-WA0114.jpg",
+    "IMG-20260429-WA0122.jpg",
   ),
-  image("IMG-20260429-WA0114.jpg", "Hafızlık halkasından bir kare"),
+  image("IMG-20260429-WA0114.jpg", "Hâfızlık halkasından bir kare"),
   image("IMG-20260429-WA0111.jpg", "Okul töreninden bir kare"),
   video(
     "VID-20260429-WA0141.mp4",
@@ -334,3 +334,68 @@ export const kurumsalKimlikGalleryMedia = [
   image("IMG-20260429-WA0089.jpg", "Okul içinde temiz ve huzurlu yaşam alanı"),
   image("IMG-20260429-WA0086.jpg", "Keşf-i Bilim — bilim ve keşif alanından bir kare"),
 ] as const satisfies readonly SiteMedia[];
+
+export const pageGalleryMedia = {
+  niyetimiz: kurumsalKimlikGalleryMedia.slice(0, 9),
+  nesilTasavvur: kurumsalKimlikGalleryMedia.slice(2, 11),
+  kurumsalDegerler: kurumsalKimlikGalleryMedia.slice(4, 12),
+  kademeler: [
+    ...educationGalleryMedia.anaokulu,
+    ...educationGalleryMedia.ilkokul.slice(1),
+    ...educationGalleryMedia.ortaokul.slice(1),
+  ],
+  akademikGelisim: [
+    image("IMG-20260429-WA0082.jpg", "İlkokul sınıf atmosferi"),
+    image("IMG-20260429-WA0175.jpg", "Ortaokul kademe vitrini"),
+    image("IMG-20260429-WA0122.jpg", "İlkokul etkinliklerinden fotoğraf"),
+    video(
+      "VID-20260429-WA0126.mp4",
+      "İlkokul etkinliklerinden video",
+      "IMG-20260429-WA0090.jpg",
+    ),
+    image("IMG-20260429-WA0139.jpg", "Ortaokul sosyal alanlarından fotoğraf"),
+    image("IMG-20260429-WA0113.jpg", "Akademik çalışma atmosferi"),
+  ],
+  yabanciDil: educationGalleryMedia.ciftDil,
+  rehberlikKocluk: [
+    image("IMG-20260429-WA0129.jpg", "Rehberlik ve danışmanlık atmosferi"),
+    image("IMG-20260429-WA0111.jpg", "Sınıf rehberliği etkinliği"),
+    image("IMG-20260429-WA0112.jpg", "Değerler eğitimi sınıf etkinliği"),
+    video(
+      "VID-20260429-WA0165.mp4",
+      "Sınıf etkinliklerinden kısa video",
+      "IMG-20260429-WA0177.jpg",
+    ),
+    image("IMG-20260429-WA0104.jpg", "Anaokulu sınıf atmosferi"),
+    image("IMG-20260429-WA0089.jpg", "Okul içinde huzurlu yaşam alanı"),
+  ],
+  veli: [
+    video(
+      "VID-20260429-WA0134.mp4",
+      "Veli etkinliklerinden video",
+      "IMG-20260429-WA0140.jpg",
+    ),
+    image("IMG-20260429-WA0111.jpg", "Okul töreninden bir kare"),
+    image("IMG-20260429-WA0143.jpg", "Mezuniyet ve etkinlik karesi"),
+    image("IMG-20260429-WA0123.jpg", "Kampüs yaşamından seçili kare"),
+    image("IMG-20260429-WA0089.jpg", "Okul içinde temiz ve huzurlu yaşam alanı"),
+    image("IMG-20260429-WA0113.jpg", "Veli buluşması atmosferi"),
+  ],
+  sultandaYasam: [
+    video(
+      "VID-20260429-WA0141.mp4",
+      "Spor ve sanat etkinliklerinden video kesiti",
+      "IMG-20260429-WA0130.jpg",
+    ),
+    image("IMG-20260429-WA0089.jpg", "Okul içinde temiz ve huzurlu yaşam alanı"),
+    image("IMG-20260429-WA0086.jpg", "Keşf-i Bilim — bilim ve keşif alanından bir kare"),
+    image("IMG-20260429-WA0135.jpg", "Okul olanaklarından seçili kare"),
+    image("IMG-20260429-WA0130.jpg", "Spor zamanından bir kare"),
+    image("IMG-20260429-WA0142.jpg", "Anaokulu etkinliklerinden fotoğraf"),
+    video(
+      "VID-20260429-WA0124.mp4",
+      "Atölye çalışmalarından kısa video",
+      "IMG-20260429-WA0110.jpg",
+    ),
+  ],
+} as const satisfies Record<string, readonly SiteMedia[]>;

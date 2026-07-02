@@ -1,24 +1,32 @@
 import type { Metadata } from "next";
-import { olcmeGiris } from "@/content/olcme";
+import { akademikGelisim } from "@/content/page-templates";
+import { pageGalleryMedia } from "@/content/site-media";
 import { PageShell } from "@/components/page-shell";
-import { ContentCard } from "@/components/layout/content-card";
+import { PageStorySection } from "@/components/layout/page-story-section";
+import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-galeri";
 import { PAGE_MEDIA } from "@/lib/menu-images";
 import Link from "@/components/navigation/site-link";
 
 export const metadata: Metadata = {
-  title: "Akademik Gelişim ve Takip",
+  title: "Akademik Gelişim ve Tâkib",
+  description: akademikGelisim.intro,
 };
 
 export default function Page() {
+  const { story, gallery } = akademikGelisim;
+
   return (
     <PageShell
-      title="Akademik Gelişim ve Takip"
-      intro="Her evladımızın kabiliyetini emanet bilinciyle takip ediyor, ilmini ve gayretini adım adım büyütüyoruz."
+      title="Akademik Gelişim ve Tâkib"
+      intro={akademikGelisim.intro}
       media={PAGE_MEDIA.akademikGelisim}
+      mediaLayout="overlay"
     >
-      <ContentCard>
-        <p className="section-body">{olcmeGiris}</p>
-      </ContentCard>
+      <PageStorySection
+        eyebrow={story.eyebrow}
+        motto={story.motto}
+        rows={story.rows}
+      />
       <p className="section-body mt-6">
         <Link
           href="/egitim/olcme-degerlendirme"
@@ -27,6 +35,11 @@ export default function Page() {
           Ölçme ve değerlendirme detayları →
         </Link>
       </p>
+      <KurumsalKimlikGalerisi
+        title={gallery.title}
+        description={gallery.description}
+        items={pageGalleryMedia.akademikGelisim}
+      />
     </PageShell>
   );
 }

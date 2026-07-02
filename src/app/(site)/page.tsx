@@ -9,7 +9,6 @@ import { HomeNedenPreview } from "@/components/home/home-neden-preview";
 import { HomeQuickLinks } from "@/components/home/home-quick-links";
 import { HomeVideo } from "@/components/home/home-video";
 import { HomeYemekhane } from "@/components/home/home-yemekhane";
-import { InfoRequestModal } from "@/components/home/info-request-modal";
 import { MissionCounters } from "@/components/home/mission-counters";
 import { getHomePageData } from "@/lib/home-data";
 import { buildPageMetadata } from "@/lib/seo/metadata";
@@ -19,7 +18,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = buildPageMetadata({
   title: "Ana sayfa",
   description:
-    "Sultan Okulları — köklerine bağlı, fenni ve İslami ilimlerle donanmış nesiller için eğitim. Nebevî eğitim, ayakkabısız okul, butik sınıflar.",
+    "Sultan Okulları — köklerine bağlı, fennî ve İslami ilimlerle donanmış nesiller için eğitim. Nebevî eğitim, ayakkabısız okul, butik sınıflar.",
   path: "/",
 });
 
@@ -29,7 +28,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <InfoRequestModal {...home.infoModal} />
       <HeroSection slides={home.heroSlides} />
       <MissionCounters {...home.mission} />
       <HomeJourney headline={home.journey.headline} chapters={home.journey.chapters} />

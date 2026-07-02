@@ -4,31 +4,45 @@ import Image from "next/image";
 import {
   useCallback,
   useEffect,
-  useMemo,
+  useLayoutEffect,
   useRef,
   useState,
   type TouchEvent,
 } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Play, X } from "lucide-react";
-import { InteractiveSiteVideo } from "@/components/media/interactive-site-video";
 import type { SiteMedia } from "@/content/site-media";
 import { t } from "@/lib/animations";
 import { cn } from "@/lib/cn";
 
 type KurumsalKimlikGalerisiProps = {
   items: readonly SiteMedia[];
+  title?: string;
+  description?: string;
+};
+
+type LightboxState = {
+  index: number;
+  mediaSrc: string;
 };
 
 export function KurumsalKimlikGalerisi({
   items,
+  title = "Görsel Galeri",
+  description = "Kurumsal kimliğimizi yansıtan fotoğraf ve videolardan bir seçki. Büyütmek için bir görsele dokunun.",
 }: KurumsalKimlikGalerisiProps) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [lightbox, setLightbox] = useState<LightboxState | null>(null);
 
-  const open = useCallback((index: number) => setActiveIndex(index), []);
-  const close = useCallback(() => setActiveIndex(null), []);
+  const open = useCallback(
+    (index: number) => {
+      const item = items[index];
+      if (!item) return;
+      setLightbox({ index, mediaSrc: item.src });
+    },
+    [items],
+  );
 
-  const [featured, ...gridItems] = items;
+  const close = useCallback(() => setLightbox(null), []);
 
   return (
     <section aria-labelledby="galeri-baslik" className="mt-16">
@@ -37,48 +51,85 @@ export function KurumsalKimlikGalerisi({
           id="galeri-baslik"
           className="font-cinzel text-charcoal shrink-0 text-2xl font-bold sm:text-3xl"
         >
-          Görsel Galeri
+          {title}
         </h2>
         <div className="from-brand-green/60 h-px flex-1 bg-gradient-to-r to-transparent" />
       </div>
-      <p className="section-body mt-3 max-w-2xl text-base">
-        Kurumsal kimliğimizi yansıtan fotoğraf ve videolardan bir seçki.
-        Büyütmek için bir görsele dokunun.
-      </p>
+      <p className="section-body mt-3 max-w-2xl text-base">{description}</p>
 
       <div className="mt-8 space-y-4 sm:space-y-5">
-        {featured ? (
-          <GalleryTile
-            item={featured}
-            index={0}
-            variant="featured"
-            onOpen={open}
-          />
-        ) : null}
+        {items.map((item, index) =>
+          index === 0 ? (
+            <GalleryTile
+              key={`tile-${index}-${item.src}`}
+              item={item}
+              index={index}
+              variant="featured"
+              onOpen={open}
+            />
+          ) : null,
+        )}
 
-        {gridItems.length > 0 ? (
+        {items.length > 1 ? (
           <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
-            {gridItems.map((item, i) => (
-              <li key={`${item.src}-${i + 1}`}>
-                <GalleryTile
-                  item={item}
-                  index={i + 1}
-                  variant="grid"
-                  onOpen={open}
-                />
-              </li>
-            ))}
+            {items.slice(1).map((item, i) => {
+              const index = i + 1;
+              return (
+                <li key={`tile-${index}-${item.src}`}>
+                  <GalleryTile
+                    item={item}
+                    index={index}
+                    variant="grid"
+                    onOpen={open}
+                  />
+                </li>
+              );
+            })}
           </ul>
         ) : null}
       </div>
 
       <KurumsalKimlikLightbox
         items={items}
-        activeIndex={activeIndex}
+        lightbox={lightbox}
         onClose={close}
-        onNavigate={setActiveIndex}
+        onNavigate={(index) => {
+          const item = items[index];
+          if (!item) return;
+          setLightbox({ index, mediaSrc: item.src });
+        }}
       />
     </section>
+  );
+}
+
+function VideoThumbnail({ src, className }: { src: string; className?: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const showPreviewFrame = () => {
+      if (el.duration && Number.isFinite(el.duration)) {
+        el.currentTime = Math.min(0.1, el.duration / 10);
+      }
+    };
+
+    el.addEventListener("loadeddata", showPreviewFrame, { once: true });
+    return () => el.removeEventListener("loadeddata", showPreviewFrame);
+  }, [src]);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      muted
+      playsInline
+      preload="metadata"
+      aria-hidden
+      className={className}
+    />
   );
 }
 
@@ -94,67 +145,122 @@ function GalleryTile({
   onOpen: (index: number) => void;
 }) {
   const isFeatured = variant === "featured";
-  const thumbSrc = item.kind === "video" ? item.poster! : item.src;
 
   return (
     <button
       type="button"
+      data-gallery-index={index}
+      data-gallery-kind={item.kind}
+      data-gallery-src={item.src}
       onClick={() => onOpen(index)}
       className={cn(
         "group focus-visible:ring-brand-green relative block w-full overflow-hidden rounded-2xl border border-black/5 bg-zinc-100 shadow-sm ring-0 transition duration-300 hover:shadow-md focus-visible:ring-2 focus-visible:outline-none sm:rounded-3xl",
         isFeatured ? "aspect-[16/9] sm:aspect-[21/9]" : "aspect-[4/3]",
       )}
-      aria-label={`${item.alt} — büyüt`}
+      aria-label={item.kind === "video" ? "Videoyu büyüt" : "Görseli büyüt"}
     >
-      <Image
-        src={thumbSrc}
-        alt={item.alt}
-        fill
-        sizes={
-          isFeatured
-            ? "100vw"
-            : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 320px"
-        }
-        className="object-cover transition duration-500 ease-out group-hover:scale-[1.03]"
-      />
-
-      <div className="from-charcoal/75 absolute inset-0 bg-gradient-to-t via-charcoal/10 to-transparent opacity-0 transition duration-300 group-hover:opacity-100" />
+      {item.kind === "video" ? (
+        <VideoThumbnail
+          src={item.src}
+          className="absolute inset-0 h-full w-full object-cover transition duration-500 ease-out group-hover:scale-[1.03]"
+        />
+      ) : (
+        <Image
+          src={item.src}
+          alt=""
+          fill
+          sizes={
+            isFeatured
+              ? "100vw"
+              : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 320px"
+          }
+          className="object-cover transition duration-500 ease-out group-hover:scale-[1.03]"
+        />
+      )}
 
       {item.kind === "video" ? (
-        <span className="bg-charcoal/55 border-brand-honey/60 absolute top-3 right-3 grid size-9 place-items-center rounded-full border text-white backdrop-blur-sm sm:top-4 sm:right-4 sm:size-10">
+        <span className="bg-charcoal/55 border-brand-honey/60 pointer-events-none absolute top-3 right-3 grid size-9 place-items-center rounded-full border text-white backdrop-blur-sm sm:top-4 sm:right-4 sm:size-10">
           <Play className="size-4 translate-x-px fill-white" />
         </span>
       ) : null}
-
-      <span
-        className={cn(
-          "absolute inset-x-0 bottom-0 translate-y-full px-4 py-3 text-left transition duration-300 group-hover:translate-y-0",
-          isFeatured ? "sm:px-6 sm:py-4" : "px-3 py-2.5 sm:px-4",
-        )}
-      >
-        <span className="font-cinzel line-clamp-2 text-xs leading-snug font-semibold text-white sm:text-sm">
-          {item.alt}
-        </span>
-      </span>
     </button>
+  );
+}
+
+function LightboxVideo({ src }: { src: string }) {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    el.pause();
+    el.removeAttribute("src");
+    el.load();
+
+    el.src = src;
+    el.muted = false;
+    el.currentTime = 0;
+    el.load();
+
+    const play = () => {
+      const attempt = el.play();
+      if (attempt) {
+        attempt.catch(() => {
+          el.muted = true;
+          void el.play();
+        });
+      }
+    };
+
+    if (el.readyState >= 2) {
+      play();
+    } else {
+      el.addEventListener("loadeddata", play, { once: true });
+    }
+
+    return () => {
+      el.pause();
+      el.removeAttribute("src");
+      el.load();
+    };
+  }, [src]);
+
+  return (
+    <video
+      ref={ref}
+      controls
+      playsInline
+      preload="auto"
+      className="max-h-full max-w-full rounded-2xl shadow-2xl"
+    />
   );
 }
 
 function KurumsalKimlikLightbox({
   items,
-  activeIndex,
+  lightbox,
   onClose,
   onNavigate,
 }: {
   items: readonly SiteMedia[];
-  activeIndex: number | null;
+  lightbox: LightboxState | null;
   onClose: () => void;
   onNavigate: (index: number) => void;
 }) {
   const reduce = useReducedMotion();
   const [direction, setDirection] = useState(1);
   const touchStartX = useRef<number | null>(null);
-  const isOpen = activeIndex !== null;
+  const touchStartY = useRef<number | null>(null);
+
+  const activeIndex = lightbox?.index ?? null;
+  const activeItem =
+    activeIndex !== null ? (items[activeIndex] ?? null) : null;
+  const isOpen =
+    activeItem !== null &&
+    activeIndex !== null &&
+    lightbox !== null &&
+    activeItem.src === lightbox.mediaSrc;
 
   const goTo = useCallback(
     (nextIndex: number, dir: 1 | -1) => {
@@ -178,9 +284,20 @@ function KurumsalKimlikLightbox({
   useEffect(() => {
     if (!isOpen) return;
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowRight") goNext();
-      if (e.key === "ArrowLeft") goPrev();
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        goNext();
+        return;
+      }
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        goPrev();
+      }
     };
     document.addEventListener("keydown", onKeyDown);
     const prevOverflow = document.body.style.overflow;
@@ -191,28 +308,32 @@ function KurumsalKimlikLightbox({
     };
   }, [isOpen, onClose, goNext, goPrev]);
 
-  const activeItem = useMemo(
-    () => (activeIndex !== null ? items[activeIndex] : null),
-    [activeIndex, items],
-  );
-
   function handleTouchStart(e: TouchEvent) {
     touchStartX.current = e.touches[0]?.clientX ?? null;
+    touchStartY.current = e.touches[0]?.clientY ?? null;
   }
 
   function handleTouchEnd(e: TouchEvent) {
-    if (touchStartX.current === null) return;
+    if (touchStartX.current === null || touchStartY.current === null) return;
+
     const endX = e.changedTouches[0]?.clientX ?? touchStartX.current;
-    const delta = endX - touchStartX.current;
+    const endY = e.changedTouches[0]?.clientY ?? touchStartY.current;
+    const deltaX = endX - touchStartX.current;
+    const deltaY = endY - touchStartY.current;
+
     touchStartX.current = null;
-    if (Math.abs(delta) < 40) return;
-    if (delta < 0) goNext();
+    touchStartY.current = null;
+
+    if (Math.abs(deltaX) < 48) return;
+    if (Math.abs(deltaX) <= Math.abs(deltaY)) return;
+
+    if (deltaX < 0) goNext();
     else goPrev();
   }
 
   return (
     <AnimatePresence>
-      {isOpen && activeItem ? (
+      {isOpen && activeItem && activeIndex !== null ? (
         <motion.div
           key="kurumsal-kimlik-lightbox"
           className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6"
@@ -222,7 +343,9 @@ function KurumsalKimlikLightbox({
           transition={t(0.35)}
           role="dialog"
           aria-modal="true"
-          aria-label={activeItem.alt}
+          aria-label="Görsel galerisi"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
           <motion.button
             type="button"
@@ -235,11 +358,7 @@ function KurumsalKimlikLightbox({
             onClick={onClose}
           />
 
-          <div
-            className="relative z-[1] flex h-full w-full max-w-5xl flex-col items-center justify-center"
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
-          >
+          <div className="relative z-[1] flex h-full w-full max-w-5xl flex-col items-center justify-center">
             <button
               type="button"
               onClick={onClose}
@@ -253,7 +372,7 @@ function KurumsalKimlikLightbox({
               type="button"
               onClick={goPrev}
               aria-label="Önceki görsel"
-              className="border-brand-honey/30 text-charcoal bg-brand-honey/95 hover:bg-brand-green absolute top-1/2 left-0 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full border shadow-lg transition sm:size-12"
+              className="border-brand-honey/30 text-charcoal bg-brand-honey/95 hover:bg-brand-green absolute top-1/2 left-0 z-10 hidden size-10 -translate-y-1/2 place-items-center rounded-full border shadow-lg transition sm:grid sm:size-12"
             >
               <ChevronLeft className="size-5 sm:size-6" />
             </button>
@@ -261,15 +380,28 @@ function KurumsalKimlikLightbox({
               type="button"
               onClick={goNext}
               aria-label="Sonraki görsel"
-              className="border-brand-honey/30 text-charcoal bg-brand-honey/95 hover:bg-brand-green absolute top-1/2 right-0 z-10 grid size-10 -translate-y-1/2 place-items-center rounded-full border shadow-lg transition sm:size-12"
+              className="border-brand-honey/30 text-charcoal bg-brand-honey/95 hover:bg-brand-green absolute top-1/2 right-0 z-10 hidden size-10 -translate-y-1/2 place-items-center rounded-full border shadow-lg transition sm:grid sm:size-12"
             >
               <ChevronRight className="size-5 sm:size-6" />
             </button>
 
-            <div className="relative flex h-[70vh] w-full max-w-4xl items-center justify-center overflow-hidden px-12 sm:px-16">
+            <button
+              type="button"
+              aria-label="Önceki görsel"
+              className="absolute top-1/2 left-0 z-[5] h-2/3 w-1/4 -translate-y-1/2 sm:hidden"
+              onClick={goPrev}
+            />
+            <button
+              type="button"
+              aria-label="Sonraki görsel"
+              className="absolute top-1/2 right-0 z-[5] h-2/3 w-1/4 -translate-y-1/2 sm:hidden"
+              onClick={goNext}
+            />
+
+            <div className="relative flex h-[70vh] w-full max-w-4xl items-center justify-center overflow-hidden px-4 sm:px-16">
               <AnimatePresence mode="wait" custom={direction} initial={false}>
                 <motion.div
-                  key={activeIndex}
+                  key={`slide-${activeIndex}-${activeItem.src}`}
                   custom={direction}
                   initial={
                     reduce
@@ -286,20 +418,15 @@ function KurumsalKimlikLightbox({
                   className="relative flex h-full w-full items-center justify-center"
                 >
                   {activeItem.kind === "video" ? (
-                    <div className="relative aspect-video w-full max-h-full overflow-hidden rounded-2xl shadow-2xl">
-                      <InteractiveSiteVideo
-                        className="h-full w-full object-contain"
-                        src={activeItem.src}
-                        poster={activeItem.poster}
-                        title={activeItem.alt}
-                        autoPlay
-                      />
-                    </div>
+                    <LightboxVideo
+                      key={`lightbox-video-${activeItem.src}`}
+                      src={activeItem.src}
+                    />
                   ) : (
                     <div className="relative h-full w-full overflow-hidden rounded-2xl shadow-2xl">
                       <Image
                         src={activeItem.src}
-                        alt={activeItem.alt}
+                        alt=""
                         fill
                         sizes="(max-width: 768px) 100vw, 70vw"
                         className="object-contain"
@@ -311,14 +438,9 @@ function KurumsalKimlikLightbox({
               </AnimatePresence>
             </div>
 
-            <div className="mt-4 flex flex-col items-center gap-2 text-center">
-              <p className="font-cinzel max-w-xl px-4 text-sm font-semibold text-white sm:text-base">
-                {activeItem.alt}
-              </p>
-              <p className="text-brand-honey text-xs font-bold tracking-[0.2em] uppercase">
-                {(activeIndex ?? 0) + 1} / {items.length}
-              </p>
-            </div>
+            <p className="text-brand-honey mt-4 text-xs font-bold tracking-[0.2em] uppercase">
+              {activeIndex + 1} / {items.length}
+            </p>
           </div>
         </motion.div>
       ) : null}

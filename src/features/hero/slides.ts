@@ -35,7 +35,7 @@ export const HERO_SLIDES: HeroSlide[] = [
   {
     id: "kurumsal",
     tagline: "KURUMSAL KİMLİĞİMİZ",
-    titleLines: ["İlimde âlim,", "ibadette âbid,", "gayrette mücahit"],
+    titleLines: ["İlimde âlim,", "ibâdette âbid,", "gayrette mücahit"],
     description: "bir neslin yetiştiği çift kanatlı eğitim modeli",
     buttonText: "Kurumsal Kimliğimiz",
     buttonLink: "/kurumsal/kurumsal-kimligimiz",
@@ -45,15 +45,15 @@ export const HERO_SLIDES: HeroSlide[] = [
   },
   {
     id: "egitim",
-    tagline: "SULTAN MEKTEP MODELİ",
+    tagline: "SULTAN MEKTEBİ MODELİ",
     titleLines: [
       "Bilginin hikmete,",
       "bilincin ise erdeme",
       "dönüştüğü özgün model",
     ],
     description:
-      "Her öğrenciyi ruhu, kalbi, bedeni ve şahsiyetiyle bütün ele alır; mazide kök, âtîde nesil yetişir.",
-    buttonText: "Sultan Mektep Modeli & Kademeler",
+      "Her öğrenciyi ruhu, kalbi, bedeni ve şahsiyetiyle bütün ele alır; mâzide kök, âtîde nesil yetişir.",
+    buttonText: "Sultan Mektebi Modeli & Kademeler",
     buttonLink: "/egitim/kademeler",
     mediaUrl: "/videos/kademeler.mp4",
     mediaType: "video",
@@ -62,14 +62,14 @@ export const HERO_SLIDES: HeroSlide[] = [
   },
   {
     id: "akademik",
-    tagline: "AKADEMİK GELİŞİM VE BİREYSEL TAKİP",
+    tagline: "AKADEMİK GELİŞİM VE BİREYSEL TÂKİB",
     titleLines: [
       "Her evladımızın",
       "kabiliyetini emanet",
-      "bilinciyle takip ediyor",
+      "bilinciyle tâkib ediyor",
     ],
     description: "ilmini ve gayretini adım adım büyütüyoruz.",
-    buttonText: "Akademik Gelişim ve Takip",
+    buttonText: "Akademik Gelişim ve Tâkib",
     buttonLink: "/akademik/gelisim",
     mediaUrl: MENU_IMAGES.akademik,
     mediaType: "image",
@@ -97,7 +97,7 @@ export const HERO_SLIDES: HeroSlide[] = [
     titleLines: [
       "Özel Sultan Okulları'nda",
       "eğitim; akademik gelişimin",
-      "yanında ahlaki becerileri",
+      "yanında ahlâkî becerileri",
     ],
     description:
       "öğrencilerimizin sosyal gelişimini desteklemeyi amaçlar.",

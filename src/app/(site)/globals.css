@@ -622,6 +622,41 @@
   }
 
   /*
+   * Overlay sayfa kabuğu — hero başlığı ile gövde aynı X ekseni hizası.
+   * max-w-6xl + px-4 / sm:px-6 / lg:px-8
+   */
+  .page-shell-content {
+    width: 100%;
+    max-width: 72rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  @media (width >= 640px) {
+    .page-shell-content {
+      padding-inline: 1.5rem;
+    }
+  }
+
+  @media (width >= 1024px) {
+    .page-shell-content {
+      padding-inline: 2rem;
+    }
+  }
+
+  /* Arkaplan tam genişlik; içerik page-shell-content ile hizalanır */
+  .section-page-grid.page-shell-section {
+    padding-inline: 0;
+    column-gap: 0;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .section-page-grid.page-shell-section > .section-page-grid__content {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  /*
    * İç sayfa hero — header hizasından başlar, tam viewport genişliği.
    * Logo (sarı halka) header z-index katmanında görselin üstünde kalır.
    */
@@ -911,9 +946,10 @@
     height: var(--hero-top-spacer);
   }
 
-  /* Mobil yığın: logo ↔ etiket ↔ altıgen ↔ bilgi kartı arası eşit dikey boşluk */
+  /* Mobil yığın: logo↔etiket = 3× stack-gap; etiket↔altıgen↔kart = 1× stack-gap */
   :root {
     --hero-mobile-stack-gap: clamp(0.5rem, 2.5vw, 0.75rem);
+    --hero-mobile-logo-tagline-gap: calc(3 * var(--hero-mobile-stack-gap));
     --hero-mobile-nav-btn: 2.5rem;
     --hero-mobile-stage-gap: clamp(0.25rem, 1.5vw, 0.5rem);
     --hero-mobile-nav-rail: calc(
@@ -922,8 +958,8 @@
     --hero-mobile-tagline-band: 2.75rem;
     --hero-mobile-hex-vh-budget: calc(
       100svh - var(--header-height) - var(--hero-top-spacer) -
-        var(--hero-mobile-tagline-band) - 3 * var(--hero-mobile-stack-gap) -
-        0.25rem
+        var(--hero-mobile-tagline-band) - var(--hero-mobile-logo-tagline-gap) -
+        2 * var(--hero-mobile-stack-gap) - 0.25rem
     );
     /* Hero altıgen + Gâyemiz petek — ortak x genişliği (viewport bazlı) */
     --hero-mobile-chrome-content-width: calc(
@@ -947,11 +983,11 @@
 
   /*
    * Mobil slider sütunu — etiket ve bilgi kartı header chrome ile aynı x sınırları
-   * Kalan dikey alanda yığın ortalanır (logo spacer + dalga sabit)
+   * Yığın logo spacer altından başlar; logo↔etiket = 3× etiket↔altıgen boşluğu
    */
   .hero-section-grid:not(.journey-stage-grid) .hero-mobile-slider-stack {
     flex: 1;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 0;
     gap: var(--hero-mobile-stack-gap);
   }
@@ -959,7 +995,7 @@
   .hero-section-grid:not(.journey-stage-grid)
     .hero-mobile-slider-stack
     > .hero-slide-tagline-slot {
-    margin-top: 0;
+    margin-top: var(--hero-mobile-logo-tagline-gap);
     margin-bottom: 0;
   }
 

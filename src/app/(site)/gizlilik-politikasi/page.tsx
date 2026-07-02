@@ -409,7 +409,7 @@ export default function Page() {
       <SectionHeading id="veri-ihlali">Veri İhlali Bildirimi</SectionHeading>
       <p className="mt-3 text-sm leading-7 text-zinc-700">
         Olası bir veri ihlali durumunda şeffaflık ilkemiz doğrultusunda sizleri
-        bilgilendirmek ve gerekli önlemleri almak için aşağıdaki süreci takip
+        bilgilendirmek ve gerekli önlemleri almak için aşağıdaki süreci tâkib
         etmekteyiz.
       </p>
 

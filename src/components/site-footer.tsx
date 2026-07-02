@@ -48,7 +48,7 @@ export function SiteFooter({ branches = staticBranches }: { branches?: Branch[] 
             <div className="max-w-2xl">
               <p className="section-eyebrow">Sultan Okulları</p>
               <h2 className="section-title mt-3">
-                İlimde âlim, ibadette âbid, gayrette mücahit bir neslin
+                İlimde âlim, ibâdette âbid, gayrette mücahit bir neslin
                 yetiştiği çift kanatlı eğitim modeli
               </h2>
               <p className="section-body mt-4">
@@ -167,7 +167,7 @@ function FooterGrid({
           />
         </Link>
         <p className="section-body mx-auto mt-4 max-w-xs lg:mx-0">
-          Milli ve manevi değerlerle bütünleşik eğitim vizyonu — anaokulundan
+          Milli ve Mânevî değerlerle bütünleşik eğitim vizyonu — anaokulundan
           ortaokula, nebevî eğitim yolculuğu.
         </p>
         <div className="mt-5 flex items-center justify-center gap-2 lg:justify-start">

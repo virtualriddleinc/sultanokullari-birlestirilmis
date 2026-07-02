@@ -1,33 +1,35 @@
 import type { Metadata } from "next";
 import { nebevi } from "@/content/egitim";
-import { EgitimSegmentShell } from "@/components/egitim/egitim-segment-shell";
-import { PedagojiSection } from "@/components/egitim/pedagoji-section";
-import { MediaGallery } from "@/components/media/media-gallery";
+import { nebeviEgitimSayfasi } from "@/content/page-templates";
 import { educationGalleryMedia } from "@/content/site-media";
+import { PedagojiSection } from "@/components/egitim/pedagoji-section";
+import { QuoteOverlayPageShell } from "@/components/layout/quote-overlay-page-shell";
+import { PageStorySection } from "@/components/layout/page-story-section";
+import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-galeri";
+import { PAGE_MEDIA } from "@/lib/menu-images";
 
 export const metadata: Metadata = {
   title: "Nebevî Eğitim",
   description:
-    "Üsve-i hasene Efendimizi rehber alan, siyer ve peygamber ahlakı dersleriyle bütünleşik nebevî eğitim programı.",
+    "Üsve-i hasene Efendimizi rehber alan, siyer ve Peygamber (s.a.s) Ahlâkı dersleriyle bütünleşik nebevî eğitim programı.",
 };
 
 export default function Page() {
+  const { story, gallery } = nebeviEgitimSayfasi;
+
   return (
-    <EgitimSegmentShell
-      slug="nebevi-egitim"
+    <QuoteOverlayPageShell
       title="Nebevî Eğitim"
-      intro="Peygamber Efendimizin (s.a.v.) muallim oluşunu rehber alan; siyer, peygamber ahlakı ve üsve-i hasene örnekliğiyle çocuklarımızın gönüllerine dokunan program."
+      intro={nebeviEgitimSayfasi.intro}
+      media={PAGE_MEDIA.nebeviEgitim}
       quote={nebevi.quote}
-      headingLayout="centerHero"
       quoteFullWidth
     >
-      <div className="mt-6 space-y-4">
-        {nebevi.intro.map((p, i) => (
-          <p key={i} className="text-zinc-700">
-            {p}
-          </p>
-        ))}
-      </div>
+      <PageStorySection
+        eyebrow={story.eyebrow}
+        motto={story.motto}
+        rows={story.rows}
+      />
       <PedagojiSection
         eyebrow="Pedagojik yaklaşımımız"
         title="Nebevî eğitim yöntemimiz"
@@ -36,12 +38,12 @@ export default function Page() {
         theme="teal"
         itemsLayout="honeycomb"
       />
-      <p className="mt-6 text-sm text-zinc-500">{nebevi.not}</p>
-      <MediaGallery
-        title="Nebevî eğitim galerisi"
+      <p className="section-body mt-6 text-sm text-zinc-500">{nebevi.not}</p>
+      <KurumsalKimlikGalerisi
+        title={gallery.title}
+        description={gallery.description}
         items={educationGalleryMedia.nebevi}
-        size="large"
       />
-    </EgitimSegmentShell>
+    </QuoteOverlayPageShell>
   );
 }

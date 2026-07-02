@@ -11,7 +11,7 @@ import { resolveQuickLinkIcon, type QuickLinkItem } from "@/lib/home-shared";
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
 
 const DEFAULT_LINKS: QuickLinkItem[] = [
-  { href: "/egitim/kademeler", label: "Kademeler", description: "Sultan Mektep Modeli", iconKey: "book-open" },
+  { href: "/egitim/kademeler", label: "Kademeler", description: "Sultan Mektebi Modeli", iconKey: "book-open" },
   { href: "/egitim/nebevi-egitim", label: "Nebevî Eğitim", description: "Kur'an-ı Kerîm", iconKey: "graduation-cap" },
   { href: "/akademik/yabanci-dil", label: "Atölyeler", description: "Yabancı dil & atölye", iconKey: "palette" },
   { href: "/#yemekhane", label: "Yemekhane", description: "Kantinsiz okul projesi", iconKey: "hand-heart" },

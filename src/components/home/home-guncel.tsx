@@ -270,7 +270,7 @@ export function HomeGuncel({
                 >
                   güncel bölümünü
                 </Link>{" "}
-                takip edin.
+                tâkib edin.
               </p>
             )}
           </GlassPanel>
