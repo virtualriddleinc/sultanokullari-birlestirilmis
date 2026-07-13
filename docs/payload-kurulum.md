@@ -72,10 +72,10 @@ Girişte **özel dashboard** görünür: taslak sayıları, okunmamış form mes
 | Admin girişi | Site bölümü |
 |---|---|
 | Ana Sayfa Düzeni | Gâyemiz, Yolculuk, Neden Sultan, Tanıtım, Okullarımız, Güncel, Instagram, Kısa Yollar, Yemekhane, Sizi Arayalım modal |
-| 1 · Hero Slaytları | Hero slider |
-| 3 · Yolculuk Bölümleri | `#yolculuk` |
-| 4 · Neden Sultan Maddeleri | `#neden` + kurumsal sayfa |
-| 8 · Instagram Gönderileri | `#instagram` |
+| Hero Slaytları | Hero slider |
+| Yolculuk Bölümleri | `#yolculuk` |
+| Neden Sultan Maddeleri | `#neden` + kurumsal sayfa |
+| Instagram Gönderileri | `#instagram` |
 
 ### İçerik
 

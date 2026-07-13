@@ -14,7 +14,7 @@ export const NedenSultanItems: CollectionConfig = {
   defaultSort: "_order",
   labels: {
     singular: "Neden Sultan Maddesi",
-    plural: "4 · Neden Sultan Maddeleri",
+    plural: "Neden Sultan Maddeleri",
   },
   admin: {
     useAsTitle: "headline",

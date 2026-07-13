@@ -23,7 +23,7 @@ export const HeroSlides: CollectionConfig = {
   defaultSort: "_order",
   labels: {
     singular: "Hero Slaytı",
-    plural: "1 · Hero Slaytları",
+    plural: "Hero Slaytları",
   },
   hooks: {
     beforeChange: [trackLastEditedBy],

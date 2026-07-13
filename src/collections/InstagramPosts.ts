@@ -15,7 +15,7 @@ export const InstagramPosts: CollectionConfig = {
   defaultSort: "_order",
   labels: {
     singular: "Instagram Gönderisi",
-    plural: "8 · Instagram Gönderileri",
+    plural: "Instagram Gönderileri",
   },
   admin: {
     useAsTitle: "title",
