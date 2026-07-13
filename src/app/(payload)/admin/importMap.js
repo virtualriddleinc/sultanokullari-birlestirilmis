@@ -41,6 +41,7 @@ import { default as default_f2f4ad940bc5ce687ba6128476969b8a } from '@/component
 import { default as default_1fa6a6a2bb55985c4523e19cfb9420d6 } from '@/components/payload/admin/AdminLogo'
 import { default as default_f3d7b197b906b2ece578c00293cabc51 } from '@/components/payload/admin/DashboardWelcome'
 import { default as default_2000e57b62931ee40afb24bc4eea57f7 } from '@/components/payload/admin/AdminLoginBackdrop'
+import { default as default_90048818f8460cb65e9cab925a05b011 } from '@/components/payload/admin/AdminHomeNavLink'
 import { default as default_31f8ab3df74841aa90634a685c07a4d5 } from '@/components/payload/admin/InboxNavLinks'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
@@ -90,6 +91,7 @@ export const importMap = {
   "@/components/payload/admin/AdminLogo#default": default_1fa6a6a2bb55985c4523e19cfb9420d6,
   "@/components/payload/admin/DashboardWelcome#default": default_f3d7b197b906b2ece578c00293cabc51,
   "@/components/payload/admin/AdminLoginBackdrop#default": default_2000e57b62931ee40afb24bc4eea57f7,
+  "@/components/payload/admin/AdminHomeNavLink#default": default_90048818f8460cb65e9cab925a05b011,
   "@/components/payload/admin/InboxNavLinks#default": default_31f8ab3df74841aa90634a685c07a4d5,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1

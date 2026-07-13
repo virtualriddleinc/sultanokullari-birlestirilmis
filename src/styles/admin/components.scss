@@ -48,6 +48,42 @@
   display: none;
 }
 
+/* Sidebar — yönetim paneli anasayfası */
+.sultan-nav-home {
+  padding: 0.5rem 0.75rem 0.65rem;
+  margin-bottom: 0.15rem;
+  border-bottom: 1px solid var(--sultan-border);
+}
+
+.sultan-nav-home__link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--sultan-radius);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  color: var(--sultan-charcoal);
+  background: color-mix(in srgb, var(--sultan-green) 14%, white);
+  border: 1px solid color-mix(in srgb, var(--sultan-green) 28%, var(--sultan-border));
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.sultan-nav-home__link:hover {
+  background: color-mix(in srgb, var(--sultan-green) 26%, white);
+  border-color: color-mix(in srgb, var(--sultan-green) 45%, var(--sultan-border));
+}
+
+.sultan-nav-home__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+
 /* Sidebar gelen kutusu */
 .sultan-nav-inbox {
   display: flex;

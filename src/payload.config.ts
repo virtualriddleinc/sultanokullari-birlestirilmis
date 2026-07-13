@@ -79,7 +79,10 @@ export default buildConfig({
     components: {
       beforeLogin: ["@/components/payload/admin/AdminLoginBackdrop"],
       beforeDashboard: ["@/components/payload/admin/DashboardWelcome"],
-      beforeNavLinks: ["@/components/payload/admin/InboxNavLinks"],
+      beforeNavLinks: [
+        "@/components/payload/admin/AdminHomeNavLink",
+        "@/components/payload/admin/InboxNavLinks",
+      ],
       afterNavLinks: [],
       graphics: {
         Logo: "@/components/payload/admin/AdminLogo",

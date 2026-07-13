@@ -13,6 +13,7 @@ const importMapPath = path.join(root, "src/app/(payload)/admin/importMap.js");
 const requiredPaths = [
   "@/components/payload/admin/DashboardWelcome",
   "@/components/payload/admin/AdminLoginBackdrop",
+  "@/components/payload/admin/AdminHomeNavLink",
   "@/components/payload/admin/InboxNavLinks",
   "@/components/payload/admin/InboxBulkActions",
   "@/components/payload/admin/AdminHint",
