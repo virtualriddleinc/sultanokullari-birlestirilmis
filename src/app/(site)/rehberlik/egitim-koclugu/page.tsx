@@ -49,7 +49,6 @@ export default async function Page() {
       <PageListSection
         id="rehberlik-calismalari"
         title="Rehberlik çalışmaları"
-        description="Okul yönetimi, eğitim koordinatörü, sınıf danışman öğretmeni ve veli işbirliğiyle yürütülen başlıklar."
         groups={calismaBasliklari}
         gapClassName="gap-fluid-12"
       />

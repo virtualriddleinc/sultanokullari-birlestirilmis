@@ -9,7 +9,7 @@ import { cn } from "@/lib/cn";
 gsap.registerPlugin(ScrollToPlugin);
 
 const sections = [
-  { id: "kurulus", label: "Kuruluş" },
+  { id: "kimligimiz", label: "Kimliğimiz" },
   { id: "kurucu-mesaji", label: "Kurucu mesajı" },
   { id: "zaman-cizelgesi", label: "Zaman çizelgesi" },
 ] as const;

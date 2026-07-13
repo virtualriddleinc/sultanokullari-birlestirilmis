@@ -124,7 +124,7 @@ export default function HexFocalPointPicker() {
     [localAspect, scale, fX, fY],
   );
 
-  // Scale değişince odak reticle sınırları içinde kalsın
+  // Scale değişince odak reticle sınırları içinde kalsın (sonsuz döngüyü önle)
   React.useEffect(() => {
     const clamped = clampFocalPoint(
       fX,
@@ -132,16 +132,11 @@ export default function HexFocalPointPicker() {
       placement.reticleWPct,
       placement.reticleHPct,
     );
-    if (clamped.x !== fX) setFocalX(clamped.x);
-    if (clamped.y !== fY) setFocalY(clamped.y);
-  }, [
-    placement.reticleWPct,
-    placement.reticleHPct,
-    fX,
-    fY,
-    setFocalX,
-    setFocalY,
-  ]);
+    if (Math.abs(clamped.x - fX) > 0.01) setFocalX(clamped.x);
+    if (Math.abs(clamped.y - fY) > 0.01) setFocalY(clamped.y);
+    // Yalnızca reticle boyutu değişince yeniden hizala
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- fX/fY kasıtlı dışarıda
+  }, [placement.reticleWPct, placement.reticleHPct, setFocalX, setFocalY]);
 
   const handleMediaLoad = (
     e: React.SyntheticEvent<HTMLImageElement | HTMLVideoElement>,
@@ -195,17 +190,6 @@ export default function HexFocalPointPicker() {
         <strong style={{ display: "block", marginBottom: 4 }}>
           Canlı Odak Noktası
         </strong>
-        <p
-          style={{
-            margin: 0,
-            fontSize: 13,
-            color: "var(--theme-elevation-800)",
-            lineHeight: 1.45,
-          }}
-        >
-          Altıgen çerçevenin merkezini belirlemek için görsel üzerinde tıklayın
-          veya sürükleyin. Yakınlaştırma ile kırpma alanını daraltabilirsiniz.
-        </p>
       </div>
 
       {resolvedUrl ? (

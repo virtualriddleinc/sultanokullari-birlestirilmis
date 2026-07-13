@@ -14,9 +14,8 @@ import { getPageByPath } from "@/lib/pages-data";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Nebevî Eğitim",
-  description:
-    "Üsve-i hasene Efendimizi rehber alan, siyer ve Peygamber (s.a.s) Ahlâkı dersleriyle bütünleşik nebevî eğitim programı.",
+  title: "Nebevî Eğitim ve Hâl Dili",
+  description: nebevi.intro[0],
 };
 
 export default async function Page() {
@@ -25,7 +24,7 @@ export default async function Page() {
     draft: isDraft,
   });
   const content = mapCmsOverlayContent(cmsPage, {
-    title: "Nebevî Eğitim",
+    title: "Nebevî Eğitim ve Hâl Dili",
     intro: nebeviEgitimSayfasi.intro,
     story: nebeviEgitimSayfasi.story,
     gallery: {

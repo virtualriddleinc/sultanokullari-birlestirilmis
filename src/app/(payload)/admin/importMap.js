@@ -1,6 +1,8 @@
-import { default as default_dd23946560bc2ed8f5eff8459afbc84c } from '@/components/payload/admin/AdminHint'
 import { SiteLink as SiteLink_dd23946560bc2ed8f5eff8459afbc84c } from '@/components/payload/admin/AdminHint'
+import { default as default_1b0b34899c066d98eb7f6d0f76471806 } from '@/components/payload/admin/LimitedTextField'
+import { default as default_b298e1068af0279cb9ccbaa1898ffbcc } from '@/components/payload/admin/MediaAltSync'
 import { default as default_8dfba45c0f396e130ba3246de2921977 } from '@/components/payload/admin/HexFocalPointPicker'
+import { default as default_dd23946560bc2ed8f5eff8459afbc84c } from '@/components/payload/admin/AdminHint'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { LexicalDiffComponent as LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -49,9 +51,11 @@ import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } f
 
 /** @type import('payload').ImportMap */
 export const importMap = {
-  "@/components/payload/admin/AdminHint#default": default_dd23946560bc2ed8f5eff8459afbc84c,
   "@/components/payload/admin/AdminHint#SiteLink": SiteLink_dd23946560bc2ed8f5eff8459afbc84c,
+  "@/components/payload/admin/LimitedTextField#default": default_1b0b34899c066d98eb7f6d0f76471806,
+  "@/components/payload/admin/MediaAltSync#default": default_b298e1068af0279cb9ccbaa1898ffbcc,
   "@/components/payload/admin/HexFocalPointPicker#default": default_8dfba45c0f396e130ba3246de2921977,
+  "@/components/payload/admin/AdminHint#default": default_dd23946560bc2ed8f5eff8459afbc84c,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#LexicalDiffComponent": LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e,

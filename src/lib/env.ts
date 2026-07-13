@@ -43,7 +43,11 @@ export function assertCmsEnv(): {
     );
   }
 
-  if (isProd) {
+  // Yerel production smoke / TestSprite için: ALLOW_LOCAL_PRODUCTION=true
+  const allowLocalProduction =
+    process.env.ALLOW_LOCAL_PRODUCTION?.trim() === "true";
+
+  if (isProd && !allowLocalProduction) {
     if (!previewSecret) {
       throw new Error("[env] Üretimde PREVIEW_SECRET zorunludur.");
     }

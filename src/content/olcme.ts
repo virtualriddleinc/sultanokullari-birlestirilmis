@@ -1,7 +1,46 @@
-/** site-icerigi.docx — Ölçme ve değerlendirme (PISA, hazırbulunuşluk, rubrik, portfolyo). */
+/** Web Sitesi İçerik Çalışması.pdf — Akademik Gelişim ve Bireysel Takip */
 
-export const olcmeGiris =
-  "Dönem sonunda öğrencilerimizin akademik ve Mânevî başarılarını ödüllendiriyoruz.";
+export const akademikGelisimGiris = [
+  "Özel Sultan Okulları’nda akademik takip, yalnızca not ölçümü ya da sınav sonucunu görmek değil; öğrencinin zihinsel, duygusal ve şahsiyet gelişimini bütüncül olarak izleyen, öğrenme sürecindeki güçlü yönlerini, gelişim alanlarını ve desteklenmesi gereken kazanımlarını ölçme-değerlendirme çalışmaları, haftalık veli görüşmeleri, mentor öğretmen takibi ve rehberlik desteğiyle yakından takip eden bir rehberlik sürecidir.",
+  "Her evladımızın kabiliyetini emanet bilinciyle takip ediyor, ilmini ve gayretini adım adım büyütüyoruz. Amacımız; öğrencimizin akademik ve şahsiyet yolculuğunu bütüncül bir sistemle izlemek, eksiklerini tamamlamak ve potansiyelini en üst seviyeye taşımaktır.",
+] as const;
+
+export const akademikGelisimBolumleri = [
+  {
+    title: "Bireysel Akademik Takip",
+    text: "Her öğrencimizin derse katılımı, ödev düzeni, konu kavrama düzeyi ve akademik gelişimi düzenli olarak takip edilir. Öğrencinin yalnızca sınav sonucu değil; öğrenme sürecindeki gayreti, çalışma disiplini ve ilerleme düzeyi de değerlendirilir.",
+  },
+  {
+    title: "Kazanım Odaklı Ölçme",
+    text: "KDS, Okulistik, deneme sınavları, konu tarama çalışmaları ve öğretmen gözlemleriyle öğrencilerimizin akademik gelişimi ölçülür. Hangi kazanımlarda güçlü oldukları, hangi alanlarda desteğe ihtiyaç duydukları net olarak belirlenir.",
+  },
+  {
+    title: "Etüt ve Destek Çalışmaları",
+    text: "Öğrencilerimizin öğrenme açıklarını kapatmak ve başarılarını güçlendirmek için düzenli etüt çalışmaları yapılır. Etütlerde konu tekrarı, soru çözümü, birebir anlatım ve sınav hazırlığına yönelik çalışmalar uygulanır.",
+  },
+  {
+    title: "Eğitim Koçluğu ve Mentor Öğretmen Sistemi",
+    text: "Her öğrencimizin akademik gelişimi eğitim koçları ve mentor öğretmenler tarafından yakından izlenir. Öğrencinin çalışma alışkanlığı, hedefleri, ders takibi ve gelişim ihtiyacı düzenli olarak değerlendirilir.",
+  },
+  {
+    title: "Akademik Ajanda Takibi",
+    text: "Öğrencilerimizin günlük ve haftalık çalışma düzeni akademik ajanda üzerinden takip edilir. Böylece öğrenci planlı çalışma alışkanlığı kazanır, veli de çocuğunun akademik sürecini somut olarak görebilir.",
+  },
+  {
+    title: "Rehberlik Destekli Akademik İzleme",
+    text: "Akademik başarı; motivasyon, dikkat, zaman yönetimi ve sınav kaygısıyla birlikte ele alınır. Rehberlik birimimiz, öğrencinin akademik sürecini duygusal ve psikolojik yönleriyle de destekler.",
+  },
+  {
+    title: "Veli ile Düzenli İletişim",
+    text: "Velilerimiz, öğrencinin akademik gelişimi hakkında düzenli olarak bilgilendirilir. Ders durumu, ödev takibi, sınav performansı, eksik kazanımları ve destek ihtiyacı okul-aile iş birliği içinde paylaşılır.",
+  },
+] as const;
+
+/**
+ * PDF dışı (eski site-icerigi) — silinmedi; karar bekleniyor.
+ * Aşağıdaki ölçme içerikleri PDF’de yoktur.
+ */
+export const olcmeGiris = akademikGelisimGiris[0];
 
 export const pisaBolumu = {
   title: "PISA",

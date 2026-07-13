@@ -1,4 +1,8 @@
-/** site-icerigi.docx — Atölyeler ve kulüpler (kategori site yapısı ile eşleştirildi). */
+/**
+ * Atölyeler ve kulüpler.
+ * PDF genel tanım metni: `@/content/sultanda-yasam` → `atolyelerVeKulupler`.
+ * Aşağıdaki madde madde envanter PDF’de yok; silinmedi — karar bekleniyor.
+ */
 export type WorkshopCategory = "bilim" | "sanat" | "sosyal" | "spor";
 
 export interface WorkshopItem {
@@ -8,6 +12,16 @@ export interface WorkshopItem {
   description: string;
 }
 
+/** PDF: Atölyeler ve Kulüpler — genel giriş */
+export const workshopIntro = [
+  "Özel Sultan Okulları’nda atölyeler ve kulüpler; öğrencilerimizin ilgi alanlarını keşfetmeleri, kabiliyetlerini geliştirmeleri ve üretken bireyler olarak yetişmeleri için planlanır.",
+  "Bilginin yalnızca kitaplarda kalmasını değil; öğrencinin zihninde, elinde, davranışında ve üretiminde karşılık bulmasını önemsiyoruz. Bu anlayışla öğrencilerimize yaparak, yaşayarak, deneyerek ve üreterek öğrenebilecekleri zengin gelişim alanları sunuyoruz.",
+  "Atölye ve kulüp çalışmalarımızda bilim, sanat, spor, sosyal sorumluluk ve geleneksel değerler bir bütün olarak ele alınır. Akıl oyunları, deney çalışmaları, görsel sanatlar, ebru, el becerileri, okçuluk, geleneksel oyunlar, sosyal sorumluluk ve vefa çalışmalarıyla öğrencilerimizin farklı yönlerini keşfetmeleri desteklenir.",
+  "Bu çalışmalar sayesinde öğrencilerimiz; ekip çalışması yapmayı, problem çözmeyi, üretmeyi, paylaşmayı, sorumluluk almayı ve özgüven kazanmayı öğrenir.",
+  "Atölyelerimizde temel amacımız; hazır bilgiyle yetinen değil, düşünen, üreten, paylaşan ve değer katan öğrenciler yetiştirmektir.",
+] as const;
+
+/** PDF dışı envanter — silinmedi; karar bekleniyor */
 export const workshopItems: WorkshopItem[] = [
   {
     id: "robotik",

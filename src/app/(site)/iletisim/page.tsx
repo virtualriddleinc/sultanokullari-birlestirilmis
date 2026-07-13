@@ -13,7 +13,8 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "İletişim",
-  description: "İletişim formu, şube seçimi ve KVKK onayı.",
+  description:
+    "Özel Sultan Eğitim Kurumları hakkında detaylı bilgi almak, kayıt süreciyle ilgili görüşmek veya okul birimlerimizle iletişime geçmek için bize ulaşabilirsiniz.",
 };
 
 export default async function Page() {
@@ -49,16 +50,18 @@ export default async function Page() {
               <div className="flex flex-col gap-fluid-6">
                 <div>
                   <p className="text-charcoal/70 text-[length:var(--text-xs)] font-semibold tracking-[0.32em] uppercase">
-                    İletişim formu
+                    Ön Kayıt / Bilgi Talep Formu
                   </p>
                   <h2 className="text-charcoal mt-fluid-3 text-[length:var(--text-3xl)] leading-tight font-semibold tracking-tight text-balance">
-                    Soru, ön kayıt veya bilgi talebi göndermek için formu
-                    doldurun.
+                    Ön Kayıt / Bilgi Talep Formu
                   </h2>
                   <p className="text-charcoal/75 mt-fluid-4 max-w-xl text-[length:var(--text-base)] leading-7">
-                    Mesajlar sunucuda doğrulanır; üretim ortamında e-posta veya
-                    CRM entegrasyonu etkinleştirildiğinde size en kısa sürede
-                    dönüş yapılacaktır. Şube seçimi isteğe bağlıdır.
+                    Çocuğunuzun Sultan Okulları eğitim yolculuğuna ilk adımı
+                    atması için ön kayıt / bilgi talep formunu
+                    doldurabilirsiniz. Formunuz bize ulaştığında ilgili
+                    kampüsümüz sizinle iletişime geçerek kayıt süreci, kontenjan
+                    durumu ve okul tanıtımı hakkında detaylı bilgilendirme
+                    yapacaktır.
                   </p>
                 </div>
 

@@ -154,69 +154,31 @@ export interface UserAuthOperations {
   };
 }
 /**
- * Ana sayfa en üstündeki kaydırmalı hero bölümü. Kayıt anında canlıya geçer (taslak yok). Listede sürükle-bırak ile sıralayın.
- *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "hero-slides".
  */
 export interface HeroSlide {
   id: number;
   _order?: string | null;
-  /**
-   * Tek satır pill; Rehberlik slaytı ~27 karakter. En fazla 34 karakter.
-   */
   tagline: string;
-  /**
-   * Başlık satırı; satır başına ~20 karakter ideal. En fazla 26 karakter.
-   */
   titleLine1: string;
-  /**
-   * Başlık satırı; satır başına ~20 karakter ideal. En fazla 26 karakter.
-   */
   titleLine2: string;
-  /**
-   * Başlık satırı; satır başına ~20 karakter ideal. En fazla 26 karakter.
-   */
   titleLine3: string;
-  /**
-   * Destek cümlesi; Rehberlik slaytı ~102 karakter. En fazla 100 karakter.
-   */
   description: string;
-  /**
-   * CTA butonu; tek satır. En fazla 36 karakter.
-   */
   buttonText: string;
   buttonLink: string;
-  /**
-   * Medya yükleyin veya public klasöründeki dosya yolunu girin. Video için poster yolu ekleyin.
-   */
   slideMedia: {
     kind?: ('image' | 'video') | null;
-    /**
-     * Dosya yüklerseniz aşağıdaki yol alanına gerek kalmaz.
-     */
     media?: (number | null) | Media;
-    /**
-     * Örn. /site-media/IMG-....jpg veya /videos/kademeler.mp4
-     */
     src?: string | null;
     alt: string;
     poster?: string | null;
   };
-  /**
-   * Altıgen çerçevede görünen alanın merkezi (yüzde). Canlı seçici ile ayarlayın.
-   */
   focalPoint?: {
     x?: number | null;
     y?: number | null;
   };
-  /**
-   * 1x–3x. Canlı seçicideki kaydırıcı ile de ayarlanır.
-   */
   mediaScale?: number | null;
-  /**
-   * Görsel/video yüklendiğinde otomatik hesaplanır (genişlik ÷ yükseklik).
-   */
   mediaAspect?: number | null;
   displayDuration?: number | null;
   /**

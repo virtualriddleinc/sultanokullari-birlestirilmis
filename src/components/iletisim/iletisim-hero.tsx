@@ -40,7 +40,7 @@ export function IletisimHero() {
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            İletişim · Ön kayıt
+            İletişim
           </motion.span>
           <motion.h1
             className="text-brand-green max-w-3xl text-[length:var(--text-4xl)] leading-[1.05] font-semibold tracking-tight text-balance"
@@ -48,10 +48,7 @@ export function IletisimHero() {
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.05 }}
           >
-            Bize ulaşın,{" "}
-            <span className="text-zinc-900">
-              çocuğunuzun yolculuğu burada başlasın.
-            </span>
+            Bize Ulaşın
           </motion.h1>
           <motion.p
             className="max-w-2xl text-[length:var(--text-base)] leading-7 text-zinc-600 md:text-[length:var(--text-lg)]"
@@ -59,8 +56,10 @@ export function IletisimHero() {
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.12 }}
           >
-            Soru, ön kayıt veya bilgi talebi için aşağıdaki formu doldurabilir,
-            dilerseniz size en yakın şubeden doğrudan iletişime geçebilirsiniz.
+            Özel Sultan Eğitim Kurumları hakkında detaylı bilgi almak, kayıt
+            süreciyle ilgili görüşmek veya okul birimlerimizle iletişime geçmek
+            için bize ulaşabilirsiniz. İlgili kampüsümüz en kısa sürede sizinle
+            iletişime geçecektir.
           </motion.p>
 
           <motion.div

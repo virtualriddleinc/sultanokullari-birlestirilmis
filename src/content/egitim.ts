@@ -1,5 +1,272 @@
-/** site-icerigi.docx — Eğitim metinleri (özet alanlar). */
+/** Web Sitesi İçerik Çalışması.pdf — Eğitim metinleri */
 
+/** PDF: Sultan Mektep Modeli */
+export const sultanMektepModeli = {
+  intro: [
+    "Sultan Mektep Modeli, çağın fenni ilimlerini köklü medeniyet değerlerimizle harmanlayarak; bilginin hikmete, bilincin ise erdeme dönüştüğü özgün bir eğitim modelidir. Her öğrenciyi ruhu, kalbi, bedeni ve şahsiyetiyle bir bütün olarak ele alır; kökü mazide, ufku âtîde bir nesil yetiştirmeyi amaçlar.",
+    "Sultan Eğitim Kurumları olarak eğitim yaklaşımımızı; Türkiye Yüzyılı Maarif Modeli’nin yetkinlik çerçevesiyle uyumlu, akademik başarıyı şahsiyet inşası ve manevi derinlikle birleştiren özgün bir yapıda kurguluyoruz. Her öğrencimizi bizlere emanet edilen bir değer olarak görüyor; onları hem fenni hem de manevi ilimlerle donatan “çift kanatlı” gelişim yolculuğuna çıkarıyoruz.",
+  ],
+  kademeler: [
+    {
+      title: "Anaokulu",
+      text: "Anaokulunda safî fıtratlarını koruyarak iman ve irfan tohumlarını gönüllerine ekiyor,",
+    },
+    {
+      title: "İlkokul",
+      text: "İlkokulda bu tohumlarını ilim ve edep ile yeşerterek ruhlarını Kur’an’ın nuruyla besliyor,",
+    },
+    {
+      title: "Ortaokul",
+      text: "Ortaokulda ise tüm bu birikimini sağlam bir şahsiyetle mühürleyerek; vatanına ve değerlerine sadık, her enlem ve boylamda adaleti temsil eden mütefekkir gençler olarak mezun ediyoruz.",
+    },
+  ],
+  nihaiHedef:
+    "Sultan Mektep Modeli’nin nihai hedefi; değerleriyle çağın imkânlarını kuşanabilen, yaşadığı zamanı okuyabilen ve bu kademeli inşa süreciyle yarının dünyasına yön verebilen “İnsan-ı Kâmil” bireyler yetiştirmektir.",
+  pillars: [
+    {
+      title: "Bütüncül Şahsiyet İnşası",
+      text: "Öğrencilerimizi yalnızca akademik başarılarıyla değil; kalbi, zihni, ahlâkı ve davranışlarıyla bir bütün olarak ele alıyoruz. Amaç, zihinsel gelişimin yanı sıra ruhsal, ahlaki ve bedensel tekâmülü destekleyerek insan-ı kâmil olma yolunda rehberlik etmektir.",
+    },
+    {
+      title: "Maarif Modeli ile Uyumlu Eğitim",
+      text: "Eğitim anlayışımızı Türkiye Yüzyılı Maarif Modeli’nin erdem, değer ve eylem merkezli yaklaşımıyla uyumlu şekilde yürütüyoruz. Çağın bilimsel yöntemleri ile medeniyet değerlerimizi iç içe işleyerek kalıcı ve anlamlı öğrenme sağlıyoruz.",
+    },
+    {
+      title: "Nebevî Eğitim ve Hâl Dili",
+      text: "Eğitimi bir ders anlatımı değil, Peygamber Efendimiz’in (sav) şefkatli, sabırlı ve müjdeleyici üslubunu esas alan bir \"muallim\" duruşu olarak görüyoruz. Bu Nebevi usulü; matematik dersinden oyun saatine kadar tüm süreçlere bir \"hâl dili\" olarak mezcediyoruz.",
+    },
+    {
+      title: "Tam Öğrenme ve Akademik Takip",
+      text: "Her öğrencimizin öğrenme sürecini düzenli olarak takip ediyor; eksik kazanımlarını etüt, birebir çalışma ve ölçme-değerlendirme uygulamalarıyla destekliyoruz. Amacımız, bilginin zihinde kalıcı hâle gelmesi ve öğrencinin akademik yolculuğunda emin adımlarla ilerlemesidir.",
+    },
+    {
+      title: "Bireysel Öğrenme ve Eğitim Koçluğu",
+      text: "Her çocuğun fıtratı, kabiliyeti ve öğrenme hızı farklıdır. Bu bilinçle öğrencilerimizi yakından tanıyor; akademik, sosyal ve duygusal gelişimlerini bireysel takip ve rehberlik sistemiyle destekliyoruz.",
+    },
+    {
+      title: "Kur’an-ı Kerim ve Hafızlık Eğitimi",
+      text: "Kur’an-ı Kerim eğitimini, öğrencilerimizin kalbine muhabbetle yerleşen bir istikamet rehberi olarak görüyoruz. Anaokulundan itibaren Kur’an sevgisiyle tanışan evlatlarımızı; doğru okuma, güzel telaffuz, ezber, talim ve hafızlık çalışmalarıyla destekliyor, Kur’an ahlâkını hayatına taşıyan nesiller yetiştirmeyi hedefliyoruz.",
+    },
+    {
+      title: "Değerler Eğitimi",
+      text: "Değerler eğitimini yalnızca belirli ders saatleriyle sınırlı görmüyor; okul hayatının tamamına yayılan bir terbiye iklimi olarak ele alıyoruz. Sevgi, edep, merhamet, sorumluluk, doğruluk, vefa ve yardımlaşma gibi temel değerleri; etkinlikler, sınıf içi uygulamalar ve örnek davranışlarla öğrencilerimizin gönül dünyasına nakşetmeyi amaçlıyoruz.",
+    },
+    {
+      title: "Beceri ve Atölye Temelli Gelişim",
+      text: "Bilginin sadece satırlarda kalmasını değil, hayata ve üretime dönüşmesini önemsiyoruz. Atölye, deney, sanat, teknoloji ve uygulamalı çalışmalarla öğrencilerimizin keşfetmesini, üretmesini ve kabiliyetlerini inkişaf ettirmesini hedefliyoruz.",
+    },
+  ],
+} as const;
+
+/** PDF: Kur’an-ı Kerim ve Hafızlık Eğitimi */
+export const hafizlik = {
+  quote:
+    "Kim Kur’ân’ı küçük yaşlarda öğrenirse Kur’ân onun etine ve kanına işler (Yâni Kur’ân’ın feyziyle nûrlanır.).",
+  quoteCitation: "(Hadis-i Şerif)",
+  intro: [
+    "Anaokulunda Kur’an’ın nuruyla tanışıp vahyin gölgesinde tohumlanan evlatlarımızı; genç yaşta Kur’an’ı hayatına rehber edinen genç ashabın izinde yetiştiriyoruz. Anaokulunda muhabbetle başlayan bu tanışıklığı, ilkokul yıllarımızda sistemli bir hafızlık eğitimiyle taçlandırıyoruz. Amacımız; Hadis-i Şerif’te müjdelendiği üzere Kur’an’ın feyziyle nurlanan, o yüce kelamın ahlakıyla hemhâl olup Kur’an’ı \"etine ve kanına işleyen\" birer şahsiyet abidesi olarak temsil eden nesilleri geleceğe hazırlamaktır.",
+    "Gayemiz; Kur’an’ı sadece ezberleyen değil, Kur’an’ın edebiyle yürüyen, ahlâkıyla güzelleşen, sözünde doğruluk ve kalbinde merhamet taşıyan nesiller yetiştirmektir. Çünkü inanıyoruz ki küçük yaşta Kur’an’la hemhâl olan bir evlat, hayat yolculuğuna en kıymetli rehberle başlamış olur.",
+  ],
+  /** PDF dışı — mevcut UI için bırakıldı; karar bekleniyor */
+  bands: [
+    {
+      phrases: [
+        "Anaokulunda Kur’an’ın nuruyla",
+        "Vahyin gölgesinde",
+        "Sistemli hafızlık eğitimi",
+        "Kur’an ahlakıyla hemhâl",
+      ],
+      direction: 1 as const,
+      scale: "xl" as const,
+    },
+    {
+      phrases: [
+        "Etine ve kanına işleyen",
+        "Doğru okuma",
+        "Güzel telaffuz",
+        "Ezber · Talim · Hafızlık",
+      ],
+      direction: -1 as const,
+      scale: "lg" as const,
+    },
+    {
+      phrases: [
+        "Kur’an’ın edebiyle yürüyen",
+        "Ahlâkıyla güzelleşen",
+        "Sözünde doğruluk",
+        "Kalbinde merhamet",
+      ],
+      direction: 1 as const,
+      scale: "md" as const,
+    },
+  ],
+  accordion: [
+    {
+      title: "Anaokulundan başlayan tanışıklık",
+      text: "Anaokulunda Kur’an’ın nuruyla tanışıp vahyin gölgesinde tohumlanan evlatlarımızı; genç yaşta Kur’an’ı hayatına rehber edinen genç ashabın izinde yetiştiriyoruz.",
+    },
+    {
+      title: "İlkokulda hafızlık",
+      text: "Anaokulunda muhabbetle başlayan bu tanışıklığı, ilkokul yıllarımızda sistemli bir hafızlık eğitimiyle taçlandırıyoruz.",
+    },
+    {
+      title: "Kur’an ahlakı",
+      text: "Gayemiz; Kur’an’ı sadece ezberleyen değil, Kur’an’ın edebiyle yürüyen, ahlâkıyla güzelleşen, sözünde doğruluk ve kalbinde merhamet taşıyan nesiller yetiştirmektir.",
+    },
+  ],
+  not: "",
+};
+
+/** PDF: Değerler ve Manevi Eğitim */
+export const degerler = {
+  quote: "",
+  quoteCitation: "",
+  intro: [
+    "Sultan Eğitim Kurumları olarak eğitimi yalnızca bilgi aktarma süreci olarak değil; çocuğun kalbine, zihnine ve şahsiyetine dokunan bir inşa yolculuğu olarak görüyoruz.",
+    "Anaokulundan ortaokula kadar tüm kademelerimizde; Türkiye Yüzyılı Maarif Modeli’nin değer merkezli yaklaşımını esas alıyor, öğrencilerimizin akademik gelişimini ahlâk, edep, merhamet ve sorumluluk bilinciyle bütünleştiriyoruz.",
+    "Özel Sultan Okulları’nda değerler ve manevi eğitim; yalnızca bir ders başlığı değil, okul hayatının tamamına yayılan bir mektep iklimidir. Değerlerimiz; sınıf ortamında, öğretmen-öğrenci ilişkisinde, arkadaşlık bağlarında, sofrada, mescitte, oyunda, etkinliklerde ve günlük hayatın her anında yaşanarak öğrenilir.",
+    "Özel Sultan Okulları’nda amacımız; yalnızca başarılı öğrenciler yetiştirmek değil, güzel ahlâkı hayatına taşıyan, ibadet bilinci gelişmiş, merhametli, sorumluluk sahibi ve şahsiyetli nesillerin yetişmesine vesile olmaktır.",
+  ],
+  bolumler: [
+    {
+      title: "Değerler Eğitimi",
+      text: "Her ay belirlenen değerler, Değerler Eğitimi Komisyonumuzun planlamasıyla derslerimize, etkinliklerimize ve okul hayatımıza dâhil edilir. Sevgi, saygı, sorumluluk, dürüstlük, adalet, merhamet, yardımlaşma, sabır ve vefa gibi temel değerlerin öğrencilerimizin davranışlarına yansımasını hedefliyoruz.",
+    },
+    {
+      title: "Dua Bilinci",
+      text: "Dua eğitimini, çocuğun Rabbiyle bağ kurmasını sağlayan zarif bir gönül terbiyesi olarak görüyoruz. Öğrencilerimize duanın yalnızca ezberlenen sözler değil; şükür, niyaz, teslimiyet ve kulluk bilinci olduğunu yaşlarına uygun bir dille kazandırıyoruz. Okul hayatımızda güne dua ile başlama, yemeğe besmele ve dua ile oturma, nimetlere şükretme gibi uygulamalarla duayı günlük yaşamın tabiî bir parçası hâline getiriyoruz.",
+    },
+    {
+      title: "İbadet Bilinci",
+      text: "İbadeti, çocuğun kalbini güzelleştiren ve hayatına istikamet kazandıran bir bilinç olarak görüyoruz. Öğrencilerimiz; namaz, abdest, temizlik, Kur’an sevgisi ve günlük manevi hatırlatmalarla ibadeti sevgiyle tanır. Okulumuzda öğle vakitlerinde ezan okunur, cemaatle namaz iklimi yaşatılır; cuma namazı bilinci ve geleneksel Namaz Şenliği ile çocuklarımızın ibadeti huzurla sevmesi desteklenir.",
+    },
+    {
+      title: "Manevi Gün ve Geceler",
+      text: "Ramazan ayı, kandiller, cuma günleri, bayramlar ve özel manevi zamanlar; yaş gruplarına uygun etkinlikler, sohbetler, dualar, iyilik çalışmaları ve paylaşma faaliyetleriyle okul hayatımızda anlamlı bir şekilde yaşatılır.",
+    },
+    {
+      title: "Edep ve Güzel Ahlak",
+      text: "Edebi, eğitimin özü ve şahsiyetin ziyneti olarak görüyoruz. Öğrencilerimizin sözünde, davranışında, arkadaşlık ilişkilerinde ve sosyal hayatında nezaket, saygı, mahremiyet bilinci ve zarafet sahibi olmalarını hedefliyoruz.",
+    },
+    {
+      title: "Aile ile Gönül Birliği",
+      text: "Değerler ve manevi eğitimin okul-aile iş birliğiyle güçleneceğine inanıyoruz. Çocuğun şahsiyet yolculuğunda okulda verilen değerlerin ev ortamında da desteklenmesini önemsiyoruz. Bu amaçla veli seminerleri, kitap okuma çalışmaları, aylık bültenler ve düzenli bilgilendirmelerle ailelerimizle aynı değer ikliminde buluşuyoruz.",
+    },
+  ],
+  /** PDF dışı UI yapıları — karar bekleniyor; metinler PDF’den */
+  bands: [
+    {
+      phrases: [
+        "Sevgi",
+        "Saygı",
+        "Sorumluluk",
+        "Dürüstlük",
+        "Adalet",
+        "Merhamet",
+        "Yardımlaşma",
+        "Sabır",
+        "Vefa",
+      ],
+      direction: 1 as const,
+      scale: "xl" as const,
+    },
+    {
+      phrases: [
+        "Değerler Eğitimi Komisyonu",
+        "Dua Bilinci",
+        "İbadet Bilinci",
+        "Manevi Gün ve Geceler",
+      ],
+      direction: -1 as const,
+      scale: "lg" as const,
+    },
+    {
+      phrases: [
+        "Edep ve Güzel Ahlak",
+        "Aile ile Gönül Birliği",
+        "Namaz Şenliği",
+        "Okul-aile iş birliği",
+      ],
+      direction: 1 as const,
+      scale: "md" as const,
+    },
+  ],
+  accordion: [
+    {
+      title: "Değerler Eğitimi",
+      text: "Her ay belirlenen değerler, Değerler Eğitimi Komisyonumuzun planlamasıyla derslerimize, etkinliklerimize ve okul hayatımıza dâhil edilir. Sevgi, saygı, sorumluluk, dürüstlük, adalet, merhamet, yardımlaşma, sabır ve vefa gibi temel değerlerin öğrencilerimizin davranışlarına yansımasını hedefliyoruz.",
+    },
+    {
+      title: "Dua Bilinci",
+      text: "Dua eğitimini, çocuğun Rabbiyle bağ kurmasını sağlayan zarif bir gönül terbiyesi olarak görüyoruz. Öğrencilerimize duanın yalnızca ezberlenen sözler değil; şükür, niyaz, teslimiyet ve kulluk bilinci olduğunu yaşlarına uygun bir dille kazandırıyoruz.",
+    },
+    {
+      title: "İbadet Bilinci",
+      text: "İbadeti, çocuğun kalbini güzelleştiren ve hayatına istikamet kazandıran bir bilinç olarak görüyoruz. Okulumuzda öğle vakitlerinde ezan okunur, cemaatle namaz iklimi yaşatılır; cuma namazı bilinci ve geleneksel Namaz Şenliği ile çocuklarımızın ibadeti huzurla sevmesi desteklenir.",
+    },
+    {
+      title: "Manevi Gün ve Geceler",
+      text: "Ramazan ayı, kandiller, cuma günleri, bayramlar ve özel manevi zamanlar; yaş gruplarına uygun etkinlikler, sohbetler, dualar, iyilik çalışmaları ve paylaşma faaliyetleriyle okul hayatımızda anlamlı bir şekilde yaşatılır.",
+    },
+    {
+      title: "Edep ve Güzel Ahlak",
+      text: "Edebi, eğitimin özü ve şahsiyetin ziyneti olarak görüyoruz. Öğrencilerimizin sözünde, davranışında, arkadaşlık ilişkilerinde ve sosyal hayatında nezaket, saygı, mahremiyet bilinci ve zarafet sahibi olmalarını hedefliyoruz.",
+    },
+    {
+      title: "Aile ile Gönül Birliği",
+      text: "Değerler ve manevi eğitimin okul-aile iş birliğiyle güçleneceğine inanıyoruz. Bu amaçla veli seminerleri, kitap okuma çalışmaları, aylık bültenler ve düzenli bilgilendirmelerle ailelerimizle aynı değer ikliminde buluşuyoruz.",
+    },
+  ],
+  /** PDF dışı — aylık örnek takvim PDF’de yok */
+  aylikOrnek: [] as { ay: string; deger: string }[],
+  not: "",
+};
+
+/** PDF: Yabancı Dil Eğitimi (yalnızca İngilizce) */
+export const ciftDil = {
+  quote: "",
+  quoteCitation: "",
+  motto: "İngilizceyi bilen değil; İngilizceyle iletişim kurabilen öğrenciler",
+  mottoCitation: "",
+  intro: [
+    "Özel Sultan Okulları’nda yabancı dil eğitimi; öğrencilerimizin İngilizceyi sevmesini, anlamasını ve günlük hayatta kullanabilecek özgüvene ulaşmasını hedefler. Temel İngilizce dersi ve speaking dersi ayrı olarak yapılandırılır. Böylece öğrencilerimiz hem dilin temel becerilerini sistemli şekilde öğrenir hem de konuşma çalışmalarıyla İngilizceyi aktif biçimde kullanır.",
+    "Anaokulundan ortaokula kadar kademeli olarak ilerleyen programımız; oyun, drama, diyalog, dinleme çalışmaları, hikâye, şarkı ve etkinliklerle desteklenir. Öğrencilerimizin kelime, okuma, yazma, dinleme ve konuşma gelişimleri düzenli olarak takip edilir. Amacımız, İngilizceyi bilen değil; İngilizceyle iletişim kurabilen öğrenciler yetiştirmektir.",
+  ],
+  bolumler: [
+    {
+      title: "Temel İngilizce Dersi",
+      text: "Temel İngilizce derslerinde öğrencilerimizin kelime bilgisi, dil yapıları, okuma, yazma ve dinleme becerileri sistemli şekilde geliştirilir. Öğrencilerimizin İngilizceyi doğru anlayabilmeleri, cümle kurabilmeleri ve akademik süreçlerde kullanabilmeleri hedeflenir.",
+    },
+    {
+      title: "Speaking Dersi",
+      text: "Speaking derslerinde öğrencilerimizin İngilizceyi aktif olarak konuşmaları, soru sormaları, cevap vermeleri ve günlük yaşamda kendilerini ifade etmeleri desteklenir. Bu derslerde amaç, öğrencinin öğrendiği dili yalnızca bilmesi değil; doğal, akıcı ve rahat şekilde kullanabilmesidir. Ders içeriklerimiz, sınıf içi uygulamalarımız, kullanılan materyaller, dijital çalışmalar ve etkinlikler; öğrencilerimizin İngilizceyi yaşayarak, eğlenerek ve kalıcı şekilde öğrenmelerine imkân sağlayacak biçimde hazırlanır.",
+    },
+    {
+      title: "Eğlenceli ve Kalıcı Öğrenme Deneyimi",
+      text: "Dil öğreniminin yalnızca akademik bir süreç değil, aynı zamanda keyifli ve özgüven kazandıran bir yolculuk olduğuna inanıyoruz. Bu nedenle yıl boyunca öğrencilerimiz için İngilizce oyunlar, kelime yarışmaları, drama çalışmaları, kültür günleri, sunumlar ve konuşma etkinlikleri düzenlenir. Bu çalışmalar sayesinde öğrencilerimiz öğrendikleri dili gerçek iletişim ortamlarında kullanma fırsatı bulur; İngilizceyi bir ders olmaktan çıkarıp hayatın içinde kullanılabilen canlı bir beceri olarak kazanırlar.",
+    },
+  ],
+  accordion: [
+    {
+      title: "Temel İngilizce Dersi",
+      text: "Temel İngilizce derslerinde öğrencilerimizin kelime bilgisi, dil yapıları, okuma, yazma ve dinleme becerileri sistemli şekilde geliştirilir. Öğrencilerimizin İngilizceyi doğru anlayabilmeleri, cümle kurabilmeleri ve akademik süreçlerde kullanabilmeleri hedeflenir.",
+    },
+    {
+      title: "Speaking Dersi",
+      text: "Speaking derslerinde öğrencilerimizin İngilizceyi aktif olarak konuşmaları, soru sormaları, cevap vermeleri ve günlük yaşamda kendilerini ifade etmeleri desteklenir. Bu derslerde amaç, öğrencinin öğrendiği dili yalnızca bilmesi değil; doğal, akıcı ve rahat şekilde kullanabilmesidir.",
+    },
+    {
+      title: "Eğlenceli ve Kalıcı Öğrenme Deneyimi",
+      text: "Yıl boyunca öğrencilerimiz için İngilizce oyunlar, kelime yarışmaları, drama çalışmaları, kültür günleri, sunumlar ve konuşma etkinlikleri düzenlenir.",
+    },
+  ],
+  not: "",
+};
+
+/**
+ * PDF dışı (eski site-icerigi) — silinmedi; karar bekleniyor.
+ * PDF’de yalnızca Sultan Mektep Modeli içinde kısa kademe atıfları vardır.
+ */
 export const anaokulu = {
   quote: "Her doğan fıtrat üzere doğar.",
   quoteCitation: "(Buhari)",
@@ -34,6 +301,7 @@ export const anaokulu = {
   gunlukProgramNotu: "Örnek saat çizelgesi yakında yayınlanacaktır.",
 };
 
+/** PDF dışı (eski site-icerigi) — silinmedi; karar bekleniyor. */
 export const ilkokul = {
   quote: "Oku.",
   quoteCitation: "(Alak-1)",
@@ -47,6 +315,7 @@ export const ilkokul = {
     "MEB akademik takvimi ile uyumlu; kurum içi takvim yakında paylaşılacaktır.",
 };
 
+/** PDF dışı (eski site-icerigi) — silinmedi; karar bekleniyor. */
 export const ortaokul = {
   quote: "Güzel sözü, kökü sabit, dalları gökte olan güzel bir ağaca benzetti.",
   quoteCitation: "(İbrahim 24)",
@@ -58,20 +327,17 @@ export const ortaokul = {
   etut: "Öğrencilerimizin eksik konuları rehberlik birimi ve öğretmenlerinin işbirliği ile tespit ederek, haftada üç gün yapılan etüt çalışmalarında konu tekrarı ve soru çözümüyle tamamlıyoruz. Yurt dışından gelen ya da okul sürecinde sonradan kayıt yaptıran öğrencilerimizin ihtiyaçları doğrultusunda gerekli ders desteğini sağlıyoruz.",
 };
 
+/**
+ * Ana metin: PDF “Nebevî Eğitim ve Hâl Dili”.
+ * quote / accordion / not: PDF’de karşılığı yok — olduğu gibi bırakıldı.
+ */
 export const nebevi = {
   quote:
     "İçinizden Allah’ın lutfuna ve âhiret gününe umut bağlayanlar, Allah’ı çokça ananlar için hiç şüphe yok ki, Resûlullah’ta güzel bir örneklik vardır. (Ahzâb 21)",
-  /** Hadîs-i şerîf — metin akışında diğer vurgularla aynı highlight. */
   hadithQuote: "Ben muallîm olarak gönderildim.",
-  intro: [
-    "Âyet-i kerîmesinde üsve-i hasene buyrulan Efendimiz (s.a.s) “Ben muallîm olarak gönderildim.” buyurmuştur. Hiç şüphesiz ki O, kendi asrında insanlara vermiş olduğu eğitimle bir devir açıp bir devir kapatan çağlar ötesi bir nesli yetiştirmiştir.",
-    "21. asırda da Sultan Eğitim Kurumları olarak bizler, Peygamber Efendimiz’in (s.a.s) gençlere verdiği önem ve ihtimamı kendimize örnek alıyor ve O’nun muhabbetini “Siyer” ve “Peygamber (s.a.s) Ahlâkı” derslerimiz ile çocuklarımızın saf ve duru gönüllerine işliyoruz.",
-  ],
-  /** İlk intro paragrafı — alıntı öncesi / sonrası (nebevi-scroll vb.). */
-  introLead:
-    "Âyet-i kerîmesinde üsve-i hasene buyrulan Efendimiz (s.a.s)",
-  introTrail:
-    "buyurmuştur. Hiç şüphesiz ki O, kendi asrında insanlara vermiş olduğu eğitimle bir devir açıp bir devir kapatan çağlar ötesi bir nesli yetiştirmiştir.",
+  intro: [sultanMektepModeli.pillars[2].text],
+  introLead: sultanMektepModeli.pillars[2].text,
+  introTrail: "",
   accordion: [
     {
       title: "Siyer dersleri",
@@ -102,197 +368,5 @@ export const nebevi = {
       text: "Efendimizin (s.a.v.) örnekliği, programımızın tam kalbinde yer alır.",
     },
   ],
-  not: "Siyer takvimi ve Peygamber (s.a.s) Ahlâkı dersi kazanımları yakında paylaşılacaktır.",
-};
-
-export const hafizlik = {
-  quote:
-    "Kim Kur’ân’ı küçük yaşlarda öğrenirse Kur’ân onun etine ve kanına işler (yâni Kur’ân’ın feyziyle nûrlanır.) (Ali el-Müttakî, I, 532)",
-  intro: [
-    "Mescid-rahle usulüyle “Otağ-ı Hümâyun”umuzda Hamele-i Kur’anlar’ı yetiştiriyoruz.",
-    "Vahyin gölgesinde tohumlanıp yeşermiş genç ashabın izindeki nesilleri, anaokulundan itibaren Kur’an’la buluşturuyor, ilkokulumuzda bu buluşmayı hâfızlık eğitimimizle taçlandırıyoruz.",
-  ],
-  bands: [
-    {
-      phrases: [
-        "Otağ-ı Hümâyun",
-        "Mescid-rahle usulü",
-        "Hamele-i Kur’an",
-        "Vahyin gölgesinde",
-        "Ashab-ı Suffa mirası",
-      ],
-      direction: 1 as const,
-      scale: "xl" as const,
-    },
-    {
-      phrases: [
-        "Anaokulundan itibaren Kur’an",
-        "İlkokulda taçlanan hâfızlık",
-        "Tertîl üzere talim",
-        "Kalpten kalbe Kur’an",
-      ],
-      direction: -1 as const,
-      scale: "lg" as const,
-    },
-    {
-      phrases: [
-        "Hayata Kur’an",
-        "Sözlerin en güzeli",
-        "Talîm · Tashih · Tekrar",
-        "Genç ashab izinde",
-      ],
-      direction: 1 as const,
-      scale: "md" as const,
-    },
-  ],
-  accordion: [
-    {
-      title: "Otağ-ı Hümâyun",
-      text: "Hâfızlık halkamız için ayrılan özel mekânda mescid-rahle disiplini.",
-    },
-    {
-      title: "Mescid-rahle usulü",
-      text: "Geleneksel talim metoduyla Kur’an’ı tertîl üzere okumayı öğretiyoruz.",
-    },
-    {
-      title: "Anaokulu köprüsü",
-      text: "Erken yaşta Kur’an muhabbeti tohumlarını ekiyor, ilkokulda hâfızlığa taşıyoruz.",
-    },
-    {
-      title: "Talîm · Tashih · Tekrar",
-      text: "Sahih telaffuz ve kalıcı ezber için günlük çalışma akışı.",
-    },
-    {
-      title: "Hamele-i Kur’an",
-      text: "Kur’an’ı yüklenen, hayatına yön veren bir nesil yetiştiriyoruz.",
-    },
-    {
-      title: "Hâfız doktor hayali",
-      text: "Akademik başarıyla hâfızlığı bütünleşik kılıyoruz.",
-    },
-  ],
-  not: "Otağ-ı Hümâyun’un dış ve iç görselleri yakında eklenecektir.",
-};
-
-export const degerler = {
-  quote:
-    "Güzel sözü, kökü sabit, dalları gökte olan güzel bir ağaca benzetti. (İbrahim 24)",
-  intro: [
-    "Sultan Eğitim Kurumları olarak çocuklarımızın doğmuş oldukları fıtrat üzere Mânevî terbiyeyi almalarına özen gösteriyor, anaokul, ilkokul ve ortaokul müfredatı oluştururken; milli eğitim müfredatının her alanına nakış nakış işlenmiş “değerler eğitimi” temelli bir sistem esas alıyoruz.",
-    "Her ay dürüstlük, sorumluluk, yardımlaşma, iyilik, hoşgörü gibi değerleri; “Değerler Eğitimi Komisyonu”muz tarafından seçip planlayarak eğitim sürecimize dahil ediyor, bu değerleri sınıf ve sınıf rehber öğretmenleri ile birlikte derslerle ilişkilendirerek etkinlik ve uygulamalarla gerekli kazanımları öğrencilerimize kazandırıyoruz.",
-    "Sınıflarımızda öğrencilerimizle birlikte pano, sınıf kapılarının süslenmesi, afiş, duvar gazetesi, broşür, şiir, kompozisyon vb. çalışmaları yapıyoruz.",
-  ],
-  bands: [
-    {
-      phrases: [
-        "Dürüstlük",
-        "Sorumluluk",
-        "Yardımlaşma",
-        "İyilik",
-        "Hoşgörü",
-        "Vefâ",
-        "Merhamet",
-      ],
-      direction: 1 as const,
-      scale: "xl" as const,
-    },
-    {
-      phrases: [
-        "Değerler Eğitimi Komisyonu",
-        "Aylık seçilmiş tema",
-        "Sınıf rehberliği",
-        "Müfredata işlenmiş değerler",
-      ],
-      direction: -1 as const,
-      scale: "lg" as const,
-    },
-    {
-      phrases: [
-        "Pano · Afiş · Duvar gazetesi",
-        "Şiir · Kompozisyon",
-        "Toplumsal hayata yön",
-        "Fıtrat üzere terbiye",
-      ],
-      direction: 1 as const,
-      scale: "md" as const,
-    },
-  ],
-  accordion: [
-    {
-      title: "Komisyon planlaması",
-      text: "Aylık değerleri Değerler Eğitimi Komisyonu seçer ve takvime bağlar.",
-    },
-    {
-      title: "Sınıf rehberliği",
-      text: "Rehber öğretmenler değerleri ders kazanımlarıyla ilişkilendirir.",
-    },
-    {
-      title: "Etkinlik ve uygulama",
-      text: "Pano, afiş, broşür, şiir ve kompozisyonla değerleri yaşatıyoruz.",
-    },
-    {
-      title: "Müfredata nakış nakış",
-      text: "MEB müfredatının her alanına işlenmiş bir değerler omurgası.",
-    },
-    {
-      title: "Aylık tematik akış",
-      text: "Dürüstlük, sorumluluk, yardımlaşma, iyilik, hoşgörü ve dahası.",
-    },
-    {
-      title: "Bireyden topluma",
-      text: "Bireysel kazanımı toplumsal sorumluluğa dönüştüren projeler.",
-    },
-  ],
-  aylikOrnek: [
-    { ay: "Eylül", deger: "Dürüstlük" },
-    { ay: "Ekim", deger: "Sorumluluk" },
-    { ay: "Kasım", deger: "Yardımlaşma" },
-    { ay: "Aralık", deger: "İyilik" },
-    { ay: "Ocak", deger: "Hoşgörü" },
-    { ay: "Şubat", deger: "Vefâ" },
-    { ay: "Mart", deger: "Merhamet" },
-    { ay: "Nisan", deger: "Sabır" },
-    { ay: "Mayıs", deger: "Şükür" },
-    { ay: "Haziran", deger: "Kardeşlik" },
-  ],
-  not: "Aylık değerler takvimi her dönem başında veliler ile paylaşılır.",
-};
-
-export const ciftDil = {
-  quote: "Gelin tanış olalım / İşi kolay kılalım.",
-  quoteCitation: "(Âşık Yunus)",
-  motto: "Her lisan bir insan.",
-  mottoCitation: "(Atasözü)",
-  intro: [
-    "Arapça ve İngilizce çift dil eğitimi ile çocuklarımıza farklı dünyaların kapılarını açıyoruz. Eğitimin her kademesinde alanında uzman yabancı öğretmenlerimiz ile çocuklarımızın dil eğitimini destekliyoruz.",
-    "Yabancı dil eğitimiyle öğrencilerimizin yabancı dil öğrenme konusundaki isteklerini canlı tutup; onlara dinleme, anlama, konuşma, okuma ve yazma becerisi kazandırmayı amaçlıyoruz.",
-    "Okul öncesi kademesinden itibaren İngilizce ve Arapça dillerini öğrenen yarınlarımız için gelecek, çok iyi gelecek…",
-  ],
-  accordion: [
-    {
-      title: "Anaokulundan başlayan dil",
-      text: "Erken yaşta sezgisel öğrenmeyle iki dile aşinalık.",
-    },
-    {
-      title: "Uzman yabancı kadro",
-      text: "Alanında uzman yabancı öğretmenlerle özgün telaffuz ve doğal akış.",
-    },
-    {
-      title: "Dört temel beceri",
-      text: "Dinleme, anlama, konuşma, okuma ve yazmayı dengeli geliştiriyoruz.",
-    },
-    {
-      title: "Drama ve atölyeler",
-      text: "İngilizce drama ve etkinliklerle eğlenerek pratik imkânı.",
-    },
-    {
-      title: "Arapça dünyası",
-      text: "Anaokulundan itibaren Arapça ile gönül ve kültür köprüsü.",
-    },
-    {
-      title: "Süreklilik ilkesi",
-      text: "Kademeler arası kesintisiz dil yolculuğu.",
-    },
-  ],
-  not: "Öğretmen tanıtımları, kullanılan yöntemler ve değerlendirme kriterleri yakında eklenecektir.",
+  not: "Siyer takvimi ve Peygamber (s.a.s) Ahlâkı dersi kazanımları yakında eklenecektir.",
 };

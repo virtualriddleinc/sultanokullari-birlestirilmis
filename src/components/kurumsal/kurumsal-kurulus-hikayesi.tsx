@@ -3,28 +3,39 @@ import { PageStorySection } from "@/components/layout/page-story-section";
 
 const hikayeSatirlari = [
   {
-    eyebrow: "Kuruluş · 2016–2017",
+    eyebrow: "Kimliğimiz",
     highlights: [
-      "fennî ve İslami ilimlerle",
-      "Nebevî eğitim modeliyle",
       "2016-2017",
+      "çift kanatlı eğitim modelimize",
+      "ilimde âlim, ibadette âbid, gayrette mücahit",
     ],
   },
   {
     eyebrow: "Gayemiz",
-    highlights: ["milli ve Mânevî değerlerle", "millet ve ümmet bilincine"],
+    highlights: [
+      "milli ve manevi değerlerle",
+      "millet ve ümmet bilincine",
+      "geçmişini bilip geleceğine sahip çıkan",
+    ],
   },
   {
-    eyebrow: "Hedeflerimiz",
-    highlights: ["Anadolu ve Fen lisesi", "Eğitim Külliyesi"],
+    eyebrow: "Eğitim Külliyesi",
+    highlights: ["Anadolu ve Fen Lisemizi", "Eğitim Külliyesi"],
+  },
+  {
+    eyebrow: "Maksadımız",
+    highlights: [
+      "17 yıllık eğitim yolculuğunda",
+      "fenni ve dini ilimlerle",
+    ],
   },
 ] as const;
 
 export function KurumsalKurulusHikayesi() {
   return (
     <PageStorySection
-      eyebrow="Biz Kimiz?"
-      motto="Köklerinden geleceğe yürüyen bir eğitim yolculuğu"
+      eyebrow="Kimliğimiz"
+      motto="İlimde âlim, ibadette âbid, gayrette mücahit bir neslin yetiştiği çift kanatlı eğitim modeli"
       rows={kurulusParagraflari.map((text, i) => {
         const satir = hikayeSatirlari[i];
         if (!satir) return null;

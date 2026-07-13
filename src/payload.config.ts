@@ -113,6 +113,42 @@ export default buildConfig({
   i18n: {
     supportedLanguages: { tr, en },
     fallbackLanguage: "tr",
+    translations: {
+      tr: {
+        error: {
+          unknown: "Bir şeyler ters gitti.",
+          unspecific: "Bir şeyler ters gitti.",
+          problemUploadingFile: "Dosya yüklenirken bir sorun oluştu.",
+        },
+        general: {
+          error: "Bir şeyler ters gitti.",
+          somethingWentWrong: "Bir şeyler ters gitti.",
+          errors: "Hatalar",
+          or: "veya",
+        },
+        fields: {
+          chooseBetweenCustomTextOrDocument:
+            "Özel bir URL girmek veya başka bir belgeye bağlanmak arasında seçim yapın.",
+          itemsAndMore: "{{items}} ve {{count}} tane daha",
+          labelRelationship: "{{label}} ilişkisi",
+          relationTo: "İlişki",
+          swapRelationship: "İlişkiyi değiştir",
+        },
+        validation: {
+          invalidBlocks:
+            "Bu alan artık izin verilmeyen bloklar içeriyor: {{blocks}}.",
+          invalidSelections: "Bu alanda geçersiz seçimler var:",
+          shorterThanMax:
+            "Bu değer en fazla {{maxLength}} karakter uzunluğunda olabilir.",
+          longerThanMin:
+            "Bu değer en az {{minLength}} karakter uzunluğunda olmalıdır.",
+        },
+        upload: {
+          dragAndDrop: "Bir dosyayı sürükleyip bırakabilirsiniz",
+          dragAndDropHere: "veya buraya bir dosya sürükleyip bırakabilirsiniz",
+        },
+      },
+    },
   },
   collections: [
     HeroSlides,
@@ -172,4 +208,30 @@ export default buildConfig({
     }),
   ],
   sharp,
+  hooks: {
+    afterError: [
+      async ({ result }) => {
+        if (!result || typeof result !== "object") return;
+        const message =
+          "message" in result && typeof result.message === "string"
+            ? result.message
+            : null;
+        if (
+          message === "Something went wrong." ||
+          message === "Something went wrong" ||
+          message === "There was an error initializing Payload"
+        ) {
+          return {
+            response: {
+              ...result,
+              message:
+                message === "There was an error initializing Payload"
+                  ? "Payload başlatılırken bir hata oluştu."
+                  : "Bir şeyler ters gitti.",
+            },
+          };
+        }
+      },
+    ],
+  },
 });

@@ -1,0 +1,1637 @@
+[
+  {
+    "id": "TC001",
+    "title": "Admin logs out and protected access is blocked",
+    "description": "Verifies that an authenticated admin can log out and is redirected away from protected admin content afterward.",
+    "category": "Admin Login Logout Auth",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the logout control"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the login page is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify protected admin content is not accessible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Sign out and return to login",
+    "description": "An admin can log out from the dashboard and is redirected back to the login screen.",
+    "category": "Admin Login Logout And Auth Gating",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin"
+      },
+      {
+        "type": "action",
+        "description": "Log out of the admin account"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the login screen is shown again"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "Admin signs in to the dashboard",
+    "description": "Verifies that an admin can sign in from the login page and reach the dashboard successfully.",
+    "category": "Admin Login Logout Auth",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the admin dashboard is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Admin logs out and is blocked from admin access",
+    "description": "An admin can log out and is returned to the login screen when trying to access protected admin areas afterward.",
+    "category": "Role Matrix Editor Inbox",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the form"
+      },
+      {
+        "type": "action",
+        "description": "Click the logout control"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the login screen is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify protected admin access is no longer available"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Auto-mark a contact message as read",
+    "description": "An inbox user can open a new contact message and see it change to read automatically.",
+    "category": "Contact Inbox Deep",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/contact-messages"
+      },
+      {
+        "type": "action",
+        "description": "Open a new contact message"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the message status changes to read"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Admin dashboard shows inbox and content entry points",
+    "description": "Verifies that the dashboard surfaces status summaries and quick links that let an admin jump into key content and inbox areas.",
+    "category": "Admin Dashboard And Nav",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dashboard summary cards are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify quick links to content and inbox sections are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Admin opens an IK application and marks it examined",
+    "description": "An admin can review an IK application, mark it as examined, and see the updated status in the list.",
+    "category": "IK Inbox And Application Files",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the form"
+      },
+      {
+        "type": "action",
+        "description": "Open the IK applications collection"
+      },
+      {
+        "type": "action",
+        "description": "Open a new application"
+      },
+      {
+        "type": "action",
+        "description": "Mark the application as examined"
+      },
+      {
+        "type": "action",
+        "description": "Return to the list view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the application shows an examined status"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the reviewed item remains listed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Archive a contact message from the inbox",
+    "description": "An inbox user can archive a contact message with the quick action and see it reflected in the list.",
+    "category": "Contact Inbox Deep",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/contact-messages"
+      },
+      {
+        "type": "action",
+        "description": "Use the archive quick action on a message"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the message appears with archived status in the list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Admin creates a hero slide and saves it to the list",
+    "description": "Verifies that an admin can create a new hero slide with required content and see it appear in the ordered list after saving.",
+    "category": "Hero Slides Deep",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/hero-slides/create"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the required hero slide text fields with valid content"
+      },
+      {
+        "type": "action",
+        "description": "Select a media asset for the hero slide"
+      },
+      {
+        "type": "action",
+        "description": "Save the hero slide"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new hero slide appears in the hero slides list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "Admin is rejected with invalid credentials",
+    "description": "Verifies that invalid login credentials keep the user on the login page and show rejection feedback.",
+    "category": "Admin Login Logout Auth",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin email field with invalid@example.com"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with invalid-password"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the login form remains available"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a login rejection message is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Archive multiple contact messages at once",
+    "description": "An inbox user can select multiple contact messages and archive them in bulk.",
+    "category": "Contact Inbox Deep",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/contact-messages"
+      },
+      {
+        "type": "action",
+        "description": "Select multiple contact messages"
+      },
+      {
+        "type": "action",
+        "description": "Apply bulk archive"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the selected messages show archived status"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Create a news draft",
+    "description": "An admin can create a news item, save it as a draft, and see it appear in the list with draft status.",
+    "category": "News Events Pages Drafts",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/news"
+      },
+      {
+        "type": "action",
+        "description": "Create a new news item"
+      },
+      {
+        "type": "action",
+        "description": "Save the item as a draft"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the news item appears in the list with draft status"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "Hero slides can be reordered in the list",
+    "description": "Verifies that an admin can change the order of hero slides and see the updated ordering in the list.",
+    "category": "Hero Slides Deep",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/hero-slides"
+      },
+      {
+        "type": "action",
+        "description": "Change the order of two hero slides"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the hero slides list shows the updated order"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC014",
+    "title": "Editor can access content areas but not admin-only screens",
+    "description": "An editor can sign in and review allowed content areas while admin-only collections and globals stay inaccessible.",
+    "category": "Role Matrix Editor Inbox",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with editor@test.local"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with admin123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the form"
+      },
+      {
+        "type": "action",
+        "description": "Open the users list"
+      },
+      {
+        "type": "action",
+        "description": "Open the site settings screen"
+      },
+      {
+        "type": "action",
+        "description": "Open the navigation settings screen"
+      },
+      {
+        "type": "action",
+        "description": "Open the audit logs screen"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the allowed content area remains accessible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify admin-only screens are not accessible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC015",
+    "title": "Admin opens a filtered inbox view from the dashboard",
+    "description": "Verifies that an admin can use a dashboard inbox indicator to open the corresponding filtered inbox list.",
+    "category": "Admin Dashboard And Nav",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the inbox status link on the dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a filtered inbox list is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the inbox list reflects the selected status"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC016",
+    "title": "Create a staff item and see it in the ordered list",
+    "description": "This verifies an admin can create a staff item, save it, and return to the staff list where the new published entry appears.",
+    "category": "Branches And Staff",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the staff collection link"
+      },
+      {
+        "type": "action",
+        "description": "Create a new staff item"
+      },
+      {
+        "type": "action",
+        "description": "Fill in a name for the staff item"
+      },
+      {
+        "type": "action",
+        "description": "Save the item"
+      },
+      {
+        "type": "action",
+        "description": "Return to the staff list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the published staff entry appears in the list"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC017",
+    "title": "Publish a news draft",
+    "description": "An admin can open a draft news item, publish it, and see the item move to published status in the list.",
+    "category": "News Events Pages Drafts",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/news"
+      },
+      {
+        "type": "action",
+        "description": "Open a draft news item"
+      },
+      {
+        "type": "action",
+        "description": "Publish the item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the news list shows the item with published status"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC018",
+    "title": "Inbox user can access inbox collections only",
+    "description": "An inbox user can sign in and access inbox-related collections while unrelated admin areas remain inaccessible.",
+    "category": "Role Matrix Editor Inbox",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with inbox@test.local"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with admin123"
+      },
+      {
+        "type": "action",
+        "description": "Submit the form"
+      },
+      {
+        "type": "action",
+        "description": "Open the contact messages collection"
+      },
+      {
+        "type": "action",
+        "description": "Open the IK applications collection"
+      },
+      {
+        "type": "action",
+        "description": "Open the users list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify inbox collections are accessible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify non-inbox admin areas are not accessible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC019",
+    "title": "Hero slide focal point and scale persist after reopening",
+    "description": "Verifies that focal point and scale adjustments on a hero slide are saved and still shown when the item is reopened.",
+    "category": "Hero Slides Deep",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/hero-slides/create"
+      },
+      {
+        "type": "action",
+        "description": "Select a media asset for the hero slide"
+      },
+      {
+        "type": "action",
+        "description": "Adjust the focal point and scale controls"
+      },
+      {
+        "type": "action",
+        "description": "Save the hero slide"
+      },
+      {
+        "type": "action",
+        "description": "Reopen the saved hero slide"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the focal point and scale settings are still displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC020",
+    "title": "Upload media by URL with required alt text",
+    "description": "An admin can add a media asset from a pasted URL with alt text and see it appear in the media library.",
+    "category": "Media Library And Archive",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/media"
+      },
+      {
+        "type": "action",
+        "description": "Start adding a new media asset"
+      },
+      {
+        "type": "action",
+        "description": "Paste a valid media URL into the URL field"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the alt text field with a descriptive label"
+      },
+      {
+        "type": "action",
+        "description": "Save the media asset"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the new media asset appears in the library"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC021",
+    "title": "Hero slide preview matches mobile and desktop views",
+    "description": "Verifies that the live preview for a hero slide can be opened and checked in both mobile and desktop breakpoint views.",
+    "category": "Hero Slides Deep",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/hero-slides"
+      },
+      {
+        "type": "action",
+        "description": "Open the live preview for a hero slide"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the mobile preview view"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the desktop preview view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the hero layout is displayed in preview"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify both breakpoint views are available"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC022",
+    "title": "Hero slide media alt text stays synced with the selected asset",
+    "description": "Verifies that choosing a media asset updates the hero slide alt text automatically so the saved slide uses the asset description.",
+    "category": "Hero Slides Deep",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/hero-slides/create"
+      },
+      {
+        "type": "action",
+        "description": "Select a media asset for the hero slide"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the media alt text is populated from the selected asset"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the synced alt text remains visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC023",
+    "title": "Search and edit a branch from the branches list",
+    "description": "This verifies an admin can search the branch list, open a branch, review its sections, and save changes from the branch editor.",
+    "category": "Branches And Staff",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the branches collection link"
+      },
+      {
+        "type": "action",
+        "description": "Search the branch list"
+      },
+      {
+        "type": "action",
+        "description": "Open a branch from the filtered results"
+      },
+      {
+        "type": "action",
+        "description": "Review the branch editor sections"
+      },
+      {
+        "type": "action",
+        "description": "Save the branch changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the branch remains accessible after saving"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC024",
+    "title": "Admin returns to the dashboard from a content section",
+    "description": "Verifies that an admin can move from the dashboard into a content section and back again using the main navigation.",
+    "category": "Admin Dashboard And Nav",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click a quick link to a content section"
+      },
+      {
+        "type": "action",
+        "description": "Click the dashboard navigation link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the dashboard is displayed again"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC025",
+    "title": "Save a new event draft",
+    "description": "An admin can create an event item, save it, and return to the events list where the draft is visible.",
+    "category": "News Events Pages Drafts",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/events"
+      },
+      {
+        "type": "action",
+        "description": "Create a new event item"
+      },
+      {
+        "type": "action",
+        "description": "Save the item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the event appears in the list as a draft item"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC026",
+    "title": "Admin updates site settings and saves them",
+    "description": "An admin can edit site settings fields and save the changes successfully.",
+    "category": "Settings Globals Users Audit",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the form"
+      },
+      {
+        "type": "action",
+        "description": "Open the site settings screen"
+      },
+      {
+        "type": "action",
+        "description": "Edit a footer or site setting field"
+      },
+      {
+        "type": "action",
+        "description": "Save the changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated settings are shown after saving"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a success confirmation is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC027",
+    "title": "Switch between homepage layout tabs and save a change",
+    "description": "This verifies an admin can open the homepage global settings, move through the main layout tabs, make a small change, and save it successfully.",
+    "category": "Ana Sayfa Global Tabs",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the homepage global settings link"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the section for the homepage layout tabs"
+      },
+      {
+        "type": "action",
+        "description": "Switch to another homepage layout section"
+      },
+      {
+        "type": "action",
+        "description": "Make a small change to the global settings"
+      },
+      {
+        "type": "action",
+        "description": "Save the settings"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the saved homepage settings remain available"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC028",
+    "title": "Edit page blocks and save changes",
+    "description": "An admin can open a page item, change its template or content blocks, and save the updated page successfully.",
+    "category": "News Events Pages Drafts",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/pages"
+      },
+      {
+        "type": "action",
+        "description": "Open a page item"
+      },
+      {
+        "type": "action",
+        "description": "Edit the template or content blocks"
+      },
+      {
+        "type": "action",
+        "description": "Save the page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the page changes are saved successfully"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC029",
+    "title": "Admin changes the navigation global and saves it",
+    "description": "An admin can toggle the CMS menu setting in navigation globals and save the updated configuration.",
+    "category": "Settings Globals Users Audit",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the form"
+      },
+      {
+        "type": "action",
+        "description": "Open the navigation settings screen"
+      },
+      {
+        "type": "action",
+        "description": "Toggle the CMS menu usage setting"
+      },
+      {
+        "type": "action",
+        "description": "Save the changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the navigation configuration is updated"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a success confirmation is visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC030",
+    "title": "Manage a journey chapter from the ordered list",
+    "description": "This verifies an admin can open the journey chapters collection, create or edit a chapter, save it, and return to the ordered list with the item available.",
+    "category": "Journey Neden Instagram",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to the journey chapters collection"
+      },
+      {
+        "type": "action",
+        "description": "Create a new journey chapter"
+      },
+      {
+        "type": "action",
+        "description": "Fill in a title for the journey chapter"
+      },
+      {
+        "type": "action",
+        "description": "Save the item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the journey chapter appears in the ordered list"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC031",
+    "title": "Filter contact messages to new status",
+    "description": "An inbox user can filter the contact inbox to new messages and see only new results.",
+    "category": "Contact Inbox Deep",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/contact-messages"
+      },
+      {
+        "type": "action",
+        "description": "Filter the list to new status"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify only new messages are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC032",
+    "title": "Admin reviews users and audit logs",
+    "description": "An admin can open the users and audit logs screens and review the recorded information in read-only mode.",
+    "category": "Settings Globals Users Audit",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the form"
+      },
+      {
+        "type": "action",
+        "description": "Open the users list"
+      },
+      {
+        "type": "action",
+        "description": "Open the audit logs list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the users list is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the audit log list is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC033",
+    "title": "Manage a Neden Sultan item from the ordered list",
+    "description": "This verifies an admin can open the Neden Sultan items collection, create or edit an item, save it, and return to the ordered list with the item available.",
+    "category": "Journey Neden Instagram",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to the Neden Sultan items collection"
+      },
+      {
+        "type": "action",
+        "description": "Create a new reason item"
+      },
+      {
+        "type": "action",
+        "description": "Fill in a title for the reason item"
+      },
+      {
+        "type": "action",
+        "description": "Save the item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the reason item appears in the ordered list"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC034",
+    "title": "Manage an Instagram item from the ordered list",
+    "description": "This verifies an admin can open the Instagram posts collection, create or edit an item, save it, and return to the ordered list with the item available.",
+    "category": "Journey Neden Instagram",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to the Instagram posts collection"
+      },
+      {
+        "type": "action",
+        "description": "Create a new Instagram item"
+      },
+      {
+        "type": "action",
+        "description": "Fill in a title for the Instagram item"
+      },
+      {
+        "type": "action",
+        "description": "Save the item"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the Instagram item appears in the ordered list"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC035",
+    "title": "Open a homepage section preview from global settings",
+    "description": "This verifies an admin can use a section preview link from homepage global settings to jump to the related anchored preview and return to the settings view.",
+    "category": "Ana Sayfa Global Tabs",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the homepage global settings link"
+      },
+      {
+        "type": "action",
+        "description": "Open a section preview link"
+      },
+      {
+        "type": "action",
+        "description": "Verify the related section preview is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Return to the homepage global settings view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the global settings view is still available"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC036",
+    "title": "Find media by alt text",
+    "description": "An admin can search the media library by alt text and see matching results.",
+    "category": "Media Library And Archive",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/media"
+      },
+      {
+        "type": "action",
+        "description": "Search the library using an alt text term"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify only matching media results are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC037",
+    "title": "Create a media archive draft",
+    "description": "An admin can create a media archive item, save it as a draft, and return to the archive list.",
+    "category": "Media Library And Archive",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/media-items"
+      },
+      {
+        "type": "action",
+        "description": "Create a new media archive item"
+      },
+      {
+        "type": "action",
+        "description": "Save the item as a draft"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the archive list shows the new item in draft status"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC038",
+    "title": "Hero slide text is truncated at the allowed limit",
+    "description": "Verifies that over-limit hero text is shortened to the permitted length while editing a hero slide.",
+    "category": "Hero Slides Deep",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the admin email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /admin/collections/hero-slides/create"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the hero text field with text longer than the allowed limit"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the hero text is truncated to the allowed length"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the text counter reflects the limit"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC039",
+    "title": "Admin reviews application files without creating a new item",
+    "description": "An admin can open the application files list, review existing files in read-only mode, and cannot start a new file entry from that screen.",
+    "category": "IK Inbox And Application Files",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /admin/login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the form"
+      },
+      {
+        "type": "action",
+        "description": "Open the application files collection"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to start creating a new application file"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the files list is displayed in read-only mode"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no new item creation flow is available"
+      }
+    ],
+    "priority": "Low"
+  }
+]

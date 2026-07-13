@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { nesilTasavvurumuz } from "@/content/page-templates";
 import { pageGalleryMedia } from "@/content/site-media";
-import { CmsPageSections } from "@/components/cms/cms-page-sections";
 import { PageShell } from "@/components/page-shell";
 import { PageStorySection } from "@/components/layout/page-story-section";
 import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-galeri";
-import { KurumsalTimelineSection } from "@/components/kurumsal/kurumsal-timeline-section";
+import { mapCmsOverlayContent, toPageMedia } from "@/lib/cms-overlay";
 import { getPageBySlug } from "@/lib/pages-data";
 import { PAGE_MEDIA } from "@/lib/menu-images";
 
@@ -20,38 +19,33 @@ export const metadata: Metadata = {
 export default async function Page() {
   const { isEnabled: isDraft } = await draftMode();
   const cmsPage = await getPageBySlug("nesil-tasavvurumuz", { draft: isDraft });
-
-  if (cmsPage?.sections?.length) {
-    return (
-      <PageShell title={cmsPage.title} intro={cmsPage.intro ?? undefined}>
-        <CmsPageSections sections={cmsPage.sections} />
-      </PageShell>
-    );
-  }
-
-  const { story, gallery, timeline } = nesilTasavvurumuz;
+  const content = mapCmsOverlayContent(cmsPage, {
+    title: "Nesil Tasavvurumuz",
+    intro: nesilTasavvurumuz.intro,
+    story: nesilTasavvurumuz.story,
+    gallery: {
+      ...nesilTasavvurumuz.gallery,
+      items: pageGalleryMedia.nesilTasavvur,
+    },
+    heroMedia: PAGE_MEDIA.nesilTasavvur,
+  });
 
   return (
     <PageShell
-      title="Nesil Tasavvurumuz"
-      intro={nesilTasavvurumuz.intro}
-      media={PAGE_MEDIA.nesilTasavvur}
+      title={content.title}
+      intro={content.intro ?? nesilTasavvurumuz.intro}
+      media={toPageMedia(content.heroMedia) ?? PAGE_MEDIA.nesilTasavvur}
       mediaLayout="overlay"
     >
       <PageStorySection
-        eyebrow={story.eyebrow}
-        motto={story.motto}
-        rows={story.rows}
-      />
-      <KurumsalTimelineSection
-        items={timeline}
-        title="Ufkumuz"
-        description="Geleceğe dönük hedeflerimiz ve Eğitim Külliyesi vizyonumuz."
+        eyebrow={content.story.eyebrow}
+        motto={content.story.motto}
+        rows={content.story.rows}
       />
       <KurumsalKimlikGalerisi
-        title={gallery.title}
-        description={gallery.description}
-        items={pageGalleryMedia.nesilTasavvur}
+        title={content.gallery.title}
+        description={content.gallery.description}
+        items={content.gallery.items}
       />
     </PageShell>
   );

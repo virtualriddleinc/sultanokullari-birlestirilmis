@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { AtolyeHoneycomb } from "@/components/atolyeler/atolye-honeycomb";
 import { SectionGrid } from "@/components/layout/section-grid";
+import { workshopIntro } from "@/content/workshops";
 
 export const metadata: Metadata = {
-  title: "Atölyeler ve kulüpler",
-  description:
-    "Sultan Okulları atölyeleri ve kulüpleri — bilim, sanat, sosyal ve spor kategorilerinde altıgen petek görünümünde envanter.",
+  title: "Atölyeler ve Kulüpler",
+  description: workshopIntro[0],
 };
 
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
@@ -24,18 +24,18 @@ export default function Page() {
             aria-hidden
           />
           <p className="text-[length:var(--text-xs)] font-semibold tracking-[0.36em] text-[var(--color-primary)] uppercase">
-            Atölye · Kulüp
+            Atölyeler ve Kulüpler
           </p>
         </div>
 
         <h1 className="mt-fluid-4 text-[length:var(--text-3xl)] font-semibold tracking-tight text-[var(--color-primary)] md:text-[length:var(--text-4xl)]">
           Atölyeler ve Kulüpler
         </h1>
-        <p className="mt-fluid-4 max-w-2xl text-[length:var(--text-base)] leading-7 text-zinc-600 md:text-[length:var(--text-lg)]">
-          Öğrencilerimizin ilgi ve yeteneklerini keşfetmelerine yönelik atölye
-          ve kulüp envanterimiz. Kategoriye göre filtreleyebilir, bir altıgene
-          tıklayarak ayrıntıları görebilirsiniz.
-        </p>
+        <div className="mt-fluid-4 max-w-2xl space-y-4 text-[length:var(--text-base)] leading-7 text-zinc-600 md:text-[length:var(--text-lg)]">
+          {workshopIntro.map((p) => (
+            <p key={p.slice(0, 48)}>{p}</p>
+          ))}
+        </div>
       </header>
 
       <div className="mt-fluid-12">

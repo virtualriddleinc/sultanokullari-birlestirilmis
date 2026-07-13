@@ -24,44 +24,47 @@ export const branchSchema = z.object({
 
 export type Branch = z.infer<typeof branchSchema>;
 
-/** Docx esaslı şube listesi (dört aktif lokasyon + Konya yakında) */
+/**
+ * Web Sitesi İçerik Çalışması.pdf — OKULLARIMIZ
+ * Konya/Mevlânâ PDF’de yok; silinmedi (upcoming), karar bekleniyor.
+ */
 export const branches: Branch[] = branchSchema.array().parse([
   {
     slug: "sancaktepe",
-    name: "Özel Sultan Anaokulu",
+    name: "Özel Sultan Anne Anaokulu",
     city: "İstanbul",
     district: "Sancaktepe",
-    address: "Eyüp Sultan, Emsal Sk. No: 7 D:1, 34885 Sancaktepe/İstanbul",
+    address: "Eyüp Sultan, Emsal Sk. No: 7 D:1, 34885 Sancaktepe / İstanbul",
     phone: "0506 057 60 72",
     levels: ["Anaokulu"],
     gallery: branchGalleryMedia.sancaktepe,
   },
   {
     slug: "basiskele",
-    name: "Özel Başiskele Sultan İlkokulu ve Ortaokulu",
+    name: "Özel Sultan Okulları Anaokulu, İlkokul ve Ortaokulu",
     city: "Kocaeli",
     district: "Başiskele",
-    address: "Yaylacık, Yaylacık Cd. No:45/1, 41140 Başiskele/Kocaeli",
+    address: "Yaylacık, Yaylacık Cd. No:45/1, 41140 Başiskele / Kocaeli",
     phone: "0532 327 88 34",
-    levels: ["İlkokul", "Ortaokul"],
+    levels: ["Anaokulu", "İlkokul", "Ortaokul"],
     gallery: branchGalleryMedia.basiskele,
   },
   {
     slug: "serdivan",
-    name: "Özel Sultan Anaokulu",
+    name: "Özel Sultan Anne Anaokulu",
     city: "Sakarya",
     district: "Serdivan",
-    address: "Köprübaşı, Fevzi Çakmak Cd. No: 46, 54130 Serdivan/Sakarya",
+    address: "Köprübaşı, Fevzi Çakmak Cd. No: 46, 54130 Serdivan / Sakarya",
     phone: "0552 070 24 90",
     levels: ["Anaokulu"],
     gallery: branchGalleryMedia.serdivan,
   },
   {
     slug: "sincan",
-    name: "Özel Sincan Sultan Anaokulu",
+    name: "Özel Sincan Sultan Anne Anaokulu",
     city: "Ankara",
     district: "Sincan",
-    address: "Pınarbaşı, 128. Sk. No:23, 31270 Sincan/Ankara",
+    address: "Pınarbaşı, 128. Sk. No:23, 31270 Sincan / Ankara",
     phone: "0546 916 06 60",
     levels: ["Anaokulu"],
     gallery: branchGalleryMedia.sincan,

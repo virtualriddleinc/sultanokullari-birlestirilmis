@@ -147,6 +147,26 @@
   color: color-mix(in srgb, var(--sultan-charcoal) 70%, var(--sultan-green));
 }
 
+/* Karakter limiti sayacı — hero slayt metin alanları */
+.sultan-limited-text__counter {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--theme-elevation-500, #666);
+  text-align: right;
+}
+
+.sultan-limited-text__counter--at-max,
+.sultan-limited-text--at-max .sultan-limited-text__counter {
+  color: #c62828;
+  font-weight: 600;
+}
+
+.sultan-limited-text--at-max input,
+.sultan-limited-text--at-max textarea {
+  border-color: #c62828 !important;
+}
+
 /* Dashboard — açık site yüzeyi */
 .sultan-dashboard {
   margin-bottom: 2rem;

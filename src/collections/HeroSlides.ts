@@ -1,4 +1,4 @@
-import type { CollectionConfig } from "payload";
+import type { CollectionConfig, TextField, TextareaField } from "payload";
 
 import { ADMIN_GROUPS } from "@/payload/admin-groups";
 import { HERO_SLIDE_LIMITS } from "@/lib/hero-slide-limits";
@@ -10,12 +10,57 @@ import {
   createAuditAfterChange,
   createAuditAfterDelete,
 } from "@/payload/hooks/audit-log-hooks";
+import { debugHeroSlideOrderBeforeChange } from "@/payload/hooks/debug-hero-order";
 import { siteMediaField } from "@/payload/fields/site-media-fields";
-import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
+import { siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
 import { hexFocalPickerField } from "@/payload/fields/hex-focal-picker-field";
 
 const { tagline, titleLine, description, buttonText } = HERO_SLIDE_LIMITS;
+
+const LIMITED_TEXT_FIELD =
+  "@/components/payload/admin/LimitedTextField#default";
+
+function limitedText(
+  field: Omit<TextField, "type" | "hasMany"> & { type?: "text" },
+  max: number,
+): TextField {
+  return {
+    ...field,
+    type: "text",
+    hasMany: false,
+    maxLength: max,
+    admin: {
+      ...field.admin,
+      components: {
+        Field: {
+          path: LIMITED_TEXT_FIELD,
+          clientProps: { maxLength: max },
+        },
+      },
+    },
+  } as TextField;
+}
+
+function limitedTextarea(
+  field: Omit<TextareaField, "type"> & { type?: "textarea" },
+  max: number,
+): TextareaField {
+  return {
+    ...field,
+    type: "textarea",
+    maxLength: max,
+    admin: {
+      ...field.admin,
+      components: {
+        Field: {
+          path: LIMITED_TEXT_FIELD,
+          clientProps: { maxLength: max, multiline: true },
+        },
+      },
+    },
+  };
+}
 
 export const HeroSlides: CollectionConfig = {
   slug: "hero-slides",
@@ -26,7 +71,7 @@ export const HeroSlides: CollectionConfig = {
     plural: "1 · Hero Slaytları",
   },
   hooks: {
-    beforeChange: [trackLastEditedBy],
+    beforeChange: [debugHeroSlideOrderBeforeChange, trackLastEditedBy],
     afterChange: [
       ...homeRevalidateHooks.afterChange,
       createAuditAfterChange("hero-slides"),
@@ -42,98 +87,76 @@ export const HeroSlides: CollectionConfig = {
     useAsTitle: "tagline",
     group: ADMIN_GROUPS.home,
     defaultColumns: ["tagline", "updatedAt"],
-    description:
-      "Ana sayfa en üstündeki kaydırmalı hero bölümü. Kayıt anında canlıya geçer (taslak yok). Listede sürükle-bırak ile sıralayın.",
     livePreview: {
       url: () => buildPreviewUrl("/"),
     },
   },
   fields: [
-    adminHintField(
-      "heroLayoutHint",
-      "Rehberlik slaytı referans alınır: 3 satırlık tam cümle başlık + kısa açıklama. Limit aşılırsa sitede metin '...' ile kısaltılır.",
-    ),
-    adminHintField(
-      "heroHint",
-      "Ana sayfa hero slider. Sürükle-bırak ile sıra değişir; kayıt sonrası anında yansır.",
-    ),
     siteLinkField("heroSiteLink", "/", "Ana sayfayı aç →"),
-    {
-      name: "tagline",
-      type: "text",
-      label: "Üst etiket",
-      required: true,
-      maxLength: tagline,
-      admin: {
-        description: `Tek satır pill; Rehberlik slaytı ~27 karakter. En fazla ${tagline} karakter.`,
+    limitedText(
+      {
+        name: "tagline",
+        label: "Üst etiket",
+        required: true,
       },
-    },
-    {
-      name: "titleLine1",
-      type: "text",
-      label: "Başlık satırı 1",
-      required: true,
-      maxLength: titleLine,
-      admin: {
-        description: `Başlık satırı; satır başına ~20 karakter ideal. En fazla ${titleLine} karakter.`,
+      tagline,
+    ),
+    limitedText(
+      {
+        name: "titleLine1",
+        label: "Başlık satırı 1",
+        required: true,
       },
-    },
-    {
-      name: "titleLine2",
-      type: "text",
-      label: "Başlık satırı 2",
-      required: true,
-      maxLength: titleLine,
-      admin: {
-        description: `Başlık satırı; satır başına ~20 karakter ideal. En fazla ${titleLine} karakter.`,
+      titleLine,
+    ),
+    limitedText(
+      {
+        name: "titleLine2",
+        label: "Başlık satırı 2",
+        required: true,
       },
-    },
-    {
-      name: "titleLine3",
-      type: "text",
-      label: "Başlık satırı 3",
-      required: true,
-      maxLength: titleLine,
-      admin: {
-        description: `Başlık satırı; satır başına ~20 karakter ideal. En fazla ${titleLine} karakter.`,
+      titleLine,
+    ),
+    limitedText(
+      {
+        name: "titleLine3",
+        label: "Başlık satırı 3",
+        required: true,
       },
-    },
-    {
-      name: "description",
-      type: "textarea",
-      label: "Açıklama",
-      required: true,
-      maxLength: description,
-      admin: {
-        description: `Destek cümlesi; Rehberlik slaytı ~102 karakter. En fazla ${description} karakter.`,
+      titleLine,
+    ),
+    limitedTextarea(
+      {
+        name: "description",
+        label: "Açıklama",
+        required: true,
       },
-    },
-    {
-      name: "buttonText",
-      type: "text",
-      label: "Buton metni",
-      required: true,
-      maxLength: buttonText,
-      admin: {
-        description: `CTA butonu; tek satır. En fazla ${buttonText} karakter.`,
+      description,
+    ),
+    limitedText(
+      {
+        name: "buttonText",
+        label: "Buton metni",
+        required: true,
       },
-    },
+      buttonText,
+    ),
     {
       name: "buttonLink",
       type: "text",
       label: "Buton bağlantısı",
       required: true,
     },
-    siteMediaField("slideMedia", "Slayt medyası", { required: true }),
+    siteMediaField("slideMedia", "Slayt medyası", {
+      required: true,
+      hideDescriptions: true,
+      syncAltFromMedia: true,
+    }),
     hexFocalPickerField(),
     {
       name: "focalPoint",
       type: "group",
       label: "Odak noktası",
-      admin: {
-        description:
-          "Altıgen çerçevede görünen alanın merkezi (yüzde). Canlı seçici ile ayarlayın.",
-      },
       fields: [
         {
           name: "x",
@@ -164,7 +187,6 @@ export const HeroSlides: CollectionConfig = {
       max: 3,
       admin: {
         step: 0.05,
-        description: "1x–3x. Canlı seçicideki kaydırıcı ile de ayarlanır.",
       },
     },
     {
@@ -173,8 +195,6 @@ export const HeroSlides: CollectionConfig = {
       label: "Medya en-boy oranı",
       admin: {
         readOnly: true,
-        description:
-          "Görsel/video yüklendiğinde otomatik hesaplanır (genişlik ÷ yükseklik).",
       },
     },
     {

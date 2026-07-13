@@ -14,7 +14,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Hakkımızda",
-  description: "Kuruluş, gâye ve kurumsal zaman çizelgesi.",
+  description: kurulusParagraflari[0],
 };
 
 export default async function Page() {
@@ -34,22 +34,19 @@ export default async function Page() {
   }
 
   return (
-    <PageShell
-      title="Hakkımızda"
-      intro="Köklerine bağlı, âtiye yürüyen nesiller için eğitim yolculuğumuz."
-    >
+    <PageShell title="Hakkımızda" intro={kurulusParagraflari[0]}>
       <HakkimizdaNav />
 
       <section
-        id="kurulus"
-        aria-labelledby="kurulus-baslik"
+        id="kimligimiz"
+        aria-labelledby="kimligimiz-baslik"
         className="scroll-mt-32"
       >
         <h2
-          id="kurulus-baslik"
+          id="kimligimiz-baslik"
           className="text-lg font-semibold text-[var(--color-primary)]"
         >
-          Kuruluş
+          Kimliğimiz
         </h2>
         <div className="mt-4 space-y-4">
           {kurulusParagraflari.map((p, i) => (

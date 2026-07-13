@@ -1,4 +1,7 @@
-/** site-icerigi.docx — Burs (docx’te %x; kurum politikası gereği sitede %10 olarak gösterilmiştir). */
+/**
+ * PDF dışı (eski site-icerigi) — silinmedi; karar bekleniyor.
+ * PDF’de burs bölümü yoktur.
+ */
 
 export const bursGiris =
   "Hem akademik olarak başarılı olan hem de yönetim kurulunun uygun gördüğü ihtiyaç sahibi öğrencilerin eğitim yaşamlarına burs imkânı sunulmaktadır. Ayrıca;";

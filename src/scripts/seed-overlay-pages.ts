@@ -8,7 +8,10 @@ import {
   degerlerEgitimiSayfasi,
   ilkokulSayfasi,
   kademeler,
+  kurumsalDegerlerimiz,
   nebeviEgitimSayfasi,
+  nesilTasavvurumuz,
+  niyetimizIstikametimiz,
   ortaokulSayfasi,
   rehberlikKocluk,
   sultandaYasam,
@@ -21,7 +24,7 @@ import type { PageStoryRow } from "@/components/layout/page-story-section";
 type OverlaySeed = {
   title: string;
   slug: string;
-  pathPrefix: "egitim" | "rehberlik" | "akademik" | "yasam" | "root";
+  pathPrefix: "egitim" | "rehberlik" | "akademik" | "yasam" | "kurumsal" | "root";
   template: "overlay-story" | "egitim-segment" | "rehberlik";
   intro: string;
   storyEyebrow: string;
@@ -33,6 +36,8 @@ type OverlaySeed = {
   }>;
   galleryTitle?: string;
   galleryDescription?: string;
+  /** Overlay sayfalarda eski kurumsal-blok içeriklerini temizler */
+  sections?: [];
   _status: "published";
 };
 
@@ -70,11 +75,36 @@ function fromTemplate(
     storyRows: mapRows(opts.story.rows),
     galleryTitle: opts.gallery?.title,
     galleryDescription: opts.gallery?.description,
+    sections: [],
     _status: "published",
   };
 }
 
 const pages: OverlaySeed[] = [
+  fromTemplate({
+    title: "Niyetimiz ve İstikametimiz",
+    slug: "niyetimiz-istikametimiz",
+    pathPrefix: "kurumsal",
+    intro: niyetimizIstikametimiz.intro,
+    story: niyetimizIstikametimiz.story,
+    gallery: niyetimizIstikametimiz.gallery,
+  }),
+  fromTemplate({
+    title: "Nesil Tasavvurumuz",
+    slug: "nesil-tasavvurumuz",
+    pathPrefix: "kurumsal",
+    intro: nesilTasavvurumuz.intro,
+    story: nesilTasavvurumuz.story,
+    gallery: nesilTasavvurumuz.gallery,
+  }),
+  fromTemplate({
+    title: "Kurumsal Değerlerimiz",
+    slug: "kurumsal-degerlerimiz",
+    pathPrefix: "kurumsal",
+    intro: kurumsalDegerlerimiz.intro,
+    story: kurumsalDegerlerimiz.story,
+    gallery: kurumsalDegerlerimiz.gallery,
+  }),
   fromTemplate({
     title: "Anaokulu",
     slug: "anaokulu",

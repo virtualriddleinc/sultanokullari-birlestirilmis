@@ -1,5 +1,7 @@
-/** site-icerigi.docx — Keşf-i bilim ve sanat-spor */
-
+/**
+ * PDF dışı (eski site-icerigi) — silinmedi; karar bekleniyor.
+ * PDF Atölyeler bölümünde genel tanım vardır; bu metinler PDF’de yoktur.
+ */
 export const kesfBilim =
   "Okulumuzda okul öncesinden başlayan bilim eğitimini yaparak ve yaşayarak, planlı ve birbirinden eğlenceli etkinliklerle destekliyoruz. Öğrencilerimizle birlikte, fen bilimlerinde bilimsel projeler, deneyler ve etkinlikler yaparken mâzînin ilim ve bilim mirasını oluşturan “Müslüman Türk Bilginleri” ile geçmişe yolculuk yaparak Cezerî’nin ilk robotunu tanıyor, İbni Sina’nın ilaçlarıyla şifa buluyor, Ali Kuşçuyla evreni gözlemliyoruz.";
 

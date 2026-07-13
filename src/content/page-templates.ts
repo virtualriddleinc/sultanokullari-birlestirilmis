@@ -1,4 +1,4 @@
-/** Kurumsal kimlik sayfası şablonu — sayfa içerikleri (site-icerigi.docx kaynaklı). */
+/** Web Sitesi İçerik Çalışması.pdf — Sayfa şablon metinleri */
 
 import type { PageStoryRow } from "@/components/layout/page-story-section";
 import {
@@ -8,16 +8,34 @@ import {
   ilkokul,
   nebevi,
   ortaokul,
+  sultanMektepModeli,
 } from "@/content/egitim";
-import { kurulusParagraflari, kurumsalTimeline } from "@/content/kurumsal";
+import {
+  kurumsalDegerlerGiris,
+  kurumsalDegerlerMaddeleri,
+  kurulusParagraflari,
+  kurumsalTimeline,
+  nesilTasavvurParagraflari,
+  niyetimizParagraflari,
+} from "@/content/kurumsal";
+import {
+  akademikGelisimBolumleri,
+  akademikGelisimGiris,
+} from "@/content/olcme";
 import {
   ogrenciCalismalari,
   ogretmenCalismalari,
   rehberlikGiris,
+  rehberlikHedefimiz,
+  sultandaVeliOlmak,
   veliAkademisi,
   veliCalismalari,
 } from "@/content/rehberlik";
-import { olcmeGiris } from "@/content/olcme";
+import {
+  ayakkabisizOkul,
+  butikOkul,
+  sultandaYasamBilgilendirme,
+} from "@/content/sultanda-yasam";
 
 export type OverlayPageStory = {
   eyebrow: string;
@@ -31,334 +49,389 @@ export type OverlayPageGallery = {
 };
 
 export const niyetimizIstikametimiz = {
-  intro:
-    "Sultan eğitim kurumları olarak gayemiz, milli ve Mânevî değerlerle kuşanmış, millet ve ümmet bilincine sahip nesiller yetiştirmektir.",
+  intro: niyetimizParagraflari[0],
   story: {
-    eyebrow: "Niyetimiz",
-    motto: "Gayemiz ve istikametimizle âtiyeye yürüyoruz",
+    eyebrow: "Niyetimiz ve İstikametimiz",
+    motto: "Niyetimiz (Gayemiz)",
     rows: [
       {
-        eyebrow: "Gayemiz",
-        text: kurulusParagraflari[1],
+        eyebrow: "Niyetimiz (Gayemiz)",
+        text: niyetimizParagraflari[0],
         highlights: [
-          "milli ve Mânevî değerlerle",
-          "millet ve ümmet bilincine",
-          "ahlâklı, dürüst, çalışkan, saygılı",
+          "çift kanatlı",
+          "İslam fıtratlarını muhafaza ederek",
+          "şahsiyetli nesiller",
         ],
       },
       {
         eyebrow: "İstikametimiz",
-        text: kurulusParagraflari[0],
+        text: niyetimizParagraflari[1],
         highlights: [
-          "fennî ve İslami ilimlerle",
-          "Nebevî eğitim modeliyle",
-          "2016-2017",
+          "adalet ile merhameti",
+          "medeniyet inşasına",
+          "insanlığa rehberlik",
         ],
       },
     ],
   } satisfies OverlayPageStory,
   gallery: {
     title: "Görsel Galeri",
-    description:
-      "Niyetimizi ve istikametimizi yansıtan kampüs ve eğitim atmosferinden bir seçki.",
+    description: "",
   } satisfies OverlayPageGallery,
 } as const;
 
 export const nesilTasavvurumuz = {
-  intro: "Yetişmesini hedeflediğimiz neslin tasavvuru ve ufku.",
+  intro: nesilTasavvurParagraflari[0],
   story: {
     eyebrow: "Nesil Tasavvurumuz",
-    motto: "Kökü mâzide, ufku âtîde bir nesil yetiştirmek",
+    motto: "Kökü mazide, ufku âtîde",
     rows: [
       {
-        eyebrow: "Tasavvurumuz",
-        text: kurulusParagraflari[2],
-        highlights: ["Anadolu ve Fen lisesi", "Eğitim Külliyesi"],
+        text: nesilTasavvurParagraflari[0],
+        highlights: [
+          "iyiliğin, merhametin ve adaletin",
+          "kökü mazide, ufku âtîde",
+        ],
       },
       {
-        eyebrow: "Gayemiz",
-        text: kurulusParagraflari[1],
+        text: nesilTasavvurParagraflari[1],
         highlights: [
-          "geçmişini bilip geleceğine sahip çıkan",
-          "çağın sorunlarını fark ederek",
+          "vicdanı diri",
+          "merhameti güçlü",
+          "emanet bilinciyle",
+        ],
+      },
+      {
+        text: nesilTasavvurParagraflari[2],
+        highlights: ["Kanuni Sultan Süleyman", "Ebussuûd Efendi"],
+      },
+      {
+        text: nesilTasavvurParagraflari[3],
+        highlights: ["Karıncanın dahi hakkını"],
+      },
+      {
+        text: nesilTasavvurParagraflari[4],
+        highlights: [
+          "yaradılanı Yaradan’dan ötürü",
+          "ailesine huzur",
+          "topluma güven",
         ],
       },
     ],
   } satisfies OverlayPageStory,
-  timeline: kurumsalTimeline,
   gallery: {
     title: "Görsel Galeri",
-    description:
-      "Nesil tasavvurumuzu yansıtan eğitim ve kampüs yaşamından fotoğraf ve videolar.",
+    description: "",
   } satisfies OverlayPageGallery,
 } as const;
 
 export const kurumsalDegerlerimiz = {
-  intro:
-    "Mâddî ve Mânevî eğitimi birbirini tamamlayan ve ayrılmaz bir bütünün parçaları olarak görüyor, buna uygun eğitim planları oluşturuyoruz.",
+  intro: kurumsalDegerlerGiris[0],
   story: {
-    eyebrow: "Değerlerimiz",
-    motto: "Değerlerini yaşatan sultanlar bu okulda",
+    eyebrow: "Kurumsal Değerlerimiz",
+    motto: "Kalbi incelten, zihni aydınlatan, şahsiyeti olgunlaştıran bir eğitim iklimi",
     rows: [
       {
-        eyebrow: "Temel değerler",
-        text: kurulusParagraflari[1],
+        eyebrow: "Değerlerimiz",
+        text: kurumsalDegerlerGiris[0],
         highlights: [
-          "milli ve Mânevî değerlerle",
-          "ahlâklı, dürüst, çalışkan, saygılı",
-          "çevresine örnek",
+          "kalbine hikmet",
+          "zihnine nur",
+          "şahsiyetine istikamet",
         ],
       },
       {
-        eyebrow: "Eğitim anlayışı",
-        text: "Çocuklarımıza Mâddî ve Mânevî değerlerimizi öğretiyor ve bu değerlerle bireysel ve toplumsal hayatına yön veren nesiller yetiştiriyoruz.",
+        eyebrow: "Emanet",
+        text: kurumsalDegerlerGiris[1],
+        highlights: ["mükerrem bir can", "asli vazifesidir"],
+      },
+      {
+        eyebrow: "Sultan Mektebi",
+        text: kurumsalDegerlerGiris[2],
         highlights: [
-          "Mâddî ve Mânevî değerlerimizi",
-          "bireysel ve toplumsal hayatına yön veren",
+          "kalbi incelten",
+          "zihni aydınlatan",
+          "şahsiyeti olgunlaştıran",
         ],
       },
+      ...kurumsalDegerlerMaddeleri.map((m) => ({
+        eyebrow: m.title,
+        text: m.text,
+        highlights: [m.title] as string[],
+      })),
     ],
   } satisfies OverlayPageStory,
   gallery: {
     title: "Görsel Galeri",
-    description:
-      "Kurumsal değerlerimizi yaşatan okul atmosferinden fotoğraf ve videolar.",
+    description: "",
   } satisfies OverlayPageGallery,
 } as const;
 
 export const kademeler = {
-  intro:
-    "Bilginin hikmete, bilincin ise erdeme dönüştüğü özgün bir eğitim modeli",
+  intro: sultanMektepModeli.intro[0],
   story: {
-    eyebrow: "Sultan Mektebi Modeli",
-    motto: "Her öğrenciyi ruhu, kalbi, bedeni ve şahsiyetiyle bütün olarak ele alırız",
+    eyebrow: "Sultan Mektep Modeli",
+    motto: "Bilginin hikmete, bilincin ise erdeme dönüştüğü özgün bir eğitim modeli",
     rows: [
       {
         eyebrow: "Model",
-        text: "Her öğrenciyi ruhu, kalbi, bedeni ve şahsiyetiyle bir bütün olarak ele alır; kökü mâzide, ufku âtîde bir nesil yetiştirmeyi amaçlar.",
+        text: sultanMektepModeli.intro[0],
         highlights: [
-          "ruhu, kalbi, bedeni ve şahsiyetiyle",
-          "kökü mâzide, ufku âtîde",
+          "bilginin hikmete",
+          "bilincin ise erdeme",
+          "kökü mazide, ufku âtîde",
         ],
       },
       {
-        eyebrow: "Kademeler",
-        text: "Anaokulu, ilkokul ve ortaokul kademelerinde uygulanır.",
-        highlights: ["Anaokulu, ilkokul ve ortaokul"],
+        eyebrow: "Yaklaşım",
+        text: sultanMektepModeli.intro[1],
+        highlights: [
+          "Türkiye Yüzyılı Maarif Modeli",
+          "çift kanatlı",
+        ],
       },
+      {
+        eyebrow: "Nihai hedef",
+        text: sultanMektepModeli.nihaiHedef,
+        highlights: ["İnsan-ı Kâmil"],
+      },
+      ...sultanMektepModeli.pillars.map((p) => ({
+        eyebrow: p.title,
+        text: p.text,
+        highlights: [p.title] as string[],
+      })),
     ],
   } satisfies OverlayPageStory,
-  kademeSatirlari: [
-    {
-      eyebrow: "Anaokulu",
-      text: anaokulu.intro[0],
-      highlights: ["îmân ve irfân tohumlarını", "ruhsal ve bedensel gelişimlerine"],
-    },
-    {
-      eyebrow: "İlkokul",
-      text: ilkokul.paragraflar[0],
-      highlights: ["okuma ve yazma sevgisini", "ilk ilahî emre"],
-    },
-    {
-      eyebrow: "Ortaokul",
-      text: ortaokul.paragraflar[0],
-      highlights: ["sağlam ağacımızın meyvelerini", "ortaokulumuzda"],
-    },
-  ] satisfies readonly PageStoryRow[],
+  kademeSatirlari: sultanMektepModeli.kademeler.map((k) => ({
+    eyebrow: k.title,
+    text: k.text,
+    highlights: [k.title] as string[],
+  })) satisfies readonly PageStoryRow[],
   gallery: {
     title: "Görsel Galeri",
-    description:
-      "Sultan Mektebi Modeli ve kademelerimizden fotoğraf ve videolardan bir seçki.",
+    description: "",
   } satisfies OverlayPageGallery,
 } as const;
 
 export const akademikGelisim = {
-  intro:
-    "Her evladımızın kabiliyetini emanet bilinciyle tâkib ediyor, ilmini ve gayretini adım adım büyütüyoruz.",
+  intro: akademikGelisimGiris[0],
   story: {
-    eyebrow: "Akademik Gelişim",
-    motto: "Öğrenme süreçlerini çeşitli araç ve yöntemlerle değerlendiriyoruz",
+    eyebrow: "Akademik Gelişim ve Bireysel Takip",
+    motto: "Her evladımızın kabiliyetini emanet bilinciyle takip ediyoruz",
     rows: [
       {
-        eyebrow: "Tâkib",
-        text: olcmeGiris,
-        highlights: ["akademik ve Mânevî başarılarını", "ödüllendiriyoruz"],
+        eyebrow: "Akademik takip",
+        text: akademikGelisimGiris[0],
+        highlights: [
+          "bütüncül olarak izleyen",
+          "mentor öğretmen",
+          "rehberlik desteğiyle",
+        ],
       },
       {
-        eyebrow: "Emanet bilinci",
-        text: "Her evladımızın kabiliyetini emanet bilinciyle tâkib ediyor, ilmini ve gayretini adım adım büyütüyoruz.",
-        highlights: ["emanet bilinciyle", "adım adım büyütüyoruz"],
+        eyebrow: "Amacımız",
+        text: akademikGelisimGiris[1],
+        highlights: ["emanet bilinciyle", "en üst seviyeye"],
       },
+      ...akademikGelisimBolumleri.map((b) => ({
+        eyebrow: b.title,
+        text: b.text,
+        highlights: [b.title] as string[],
+      })),
     ],
   } satisfies OverlayPageStory,
   gallery: {
     title: "Görsel Galeri",
-    description:
-      "Akademik gelişim ve ölçme-değerlendirme süreçlerimizden görsel bir seçki.",
+    description: "",
   } satisfies OverlayPageGallery,
 } as const;
 
 export const yabanciDil = {
-  intro:
-    "Arapça ve İngilizce; alanında uzman yabancı öğretmenlerle okul öncesi kademesinden itibaren dinleme, anlama, konuşma, okuma ve yazma becerilerinin tümünü dengeli geliştiren program.",
+  intro: ciftDil.intro[0],
   story: {
-    eyebrow: "Çift Yabancı Dil",
+    eyebrow: "Yabancı Dil Eğitimi",
     motto: ciftDil.motto,
-    rows: ciftDil.intro.map((text, i) => ({
-      eyebrow:
-        i === 0
-          ? "Çift dil"
-          : i === 1
-            ? "Beceriler"
-            : "Gelecek",
-      text,
-      highlights:
-        i === 0
-          ? ["Arapça ve İngilizce", "uzman yabancı öğretmenlerimiz"]
-          : i === 1
-            ? [
-                "dinleme, anlama, konuşma, okuma ve yazma",
-                "yabancı dil öğrenme",
-              ]
-            : ["İngilizce ve Arapça", "çok iyi gelecek"],
-    })),
+    rows: [
+      {
+        eyebrow: "Yaklaşım",
+        text: ciftDil.intro[0],
+        highlights: [
+          "Temel İngilizce dersi",
+          "speaking dersi",
+        ],
+      },
+      {
+        eyebrow: "Program",
+        text: ciftDil.intro[1],
+        highlights: [
+          "İngilizceyi bilen değil",
+          "İngilizceyle iletişim kurabilen",
+        ],
+      },
+      ...ciftDil.bolumler.map((b) => ({
+        eyebrow: b.title,
+        text: b.text,
+        highlights: [b.title] as string[],
+      })),
+    ],
   } satisfies OverlayPageStory,
   gallery: {
     title: "Görsel Galeri",
-    description:
-      "Çift yabancı dil eğitimi ve atölye çalışmalarından fotoğraf ve videolar.",
+    description: "",
   } satisfies OverlayPageGallery,
 } as const;
 
 export const rehberlikKocluk = {
-  intro: "Başarıdan ziyade şahsiyete odaklanan bir model uyguluyoruz",
+  intro: rehberlikGiris,
   story: {
-    eyebrow: "Rehberlik",
-    motto: "Her birinin ayrı bir birey olduğunun bilincindeyiz",
+    eyebrow: "Rehberlik ve Eğitim Koçluğu",
+    motto: "Başarıdan ziyade şahsiyete odaklanan bir model",
     rows: [
       {
         eyebrow: "Yaklaşımımız",
         text: rehberlikGiris,
         highlights: [
-          "akademik, duygusal, Mânevî ve sosyal",
-          "dört başlık altında",
+          "nevi şahsına münhasır",
+          "başarıdan ziyade şahsiyete",
+          "üç temel sütun",
+        ],
+      },
+      {
+        eyebrow: "Hedefimiz",
+        text: rehberlikHedefimiz,
+        highlights: [
+          "bütüncül bir rehberlik sistemiyle",
+          "safî fıtratını koruyarak",
         ],
       },
     ],
   } satisfies OverlayPageStory,
   calismaBasliklari: [
-    { title: "Öğrenci çalışmaları", items: ogrenciCalismalari },
-    { title: "Veli çalışmaları", items: veliCalismalari },
-    { title: "Öğretmen çalışmaları", items: ogretmenCalismalari },
+    { title: "1. Öğrenci Gelişimi", items: ogrenciCalismalari },
+    { title: "2. Öğretmen Gelişimi", items: ogretmenCalismalari },
+    { title: "3. Veli Gelişimi", items: veliCalismalari },
   ],
   gallery: {
     title: "Görsel Galeri",
-    description:
-      "Rehberlik ve eğitim koçluğu çalışmalarımızdan fotoğraf ve videolar.",
+    description: "",
   } satisfies OverlayPageGallery,
 } as const;
 
 export const veliSayfasi = {
-  intro: "Başarıdan ziyade şahsiyete odaklanan bir model uyguluyoruz",
+  intro: sultandaVeliOlmak[0],
   story: {
-    eyebrow: "Veli Akademisi",
-    motto: "Okul–veli işbirliğiyle çocuğun gelişim yolculuğu",
+    eyebrow: "Sultanda Veli Olmak",
+    motto: "Aynı niyet ve istikamette buluşmak",
     rows: [
       {
-        eyebrow: "Veli olmak",
-        text: "Çocuklarımızın ruhsal ve bedensel gelişiminde doğru rehberliğin hayati önem taşıdığının bilincindeyiz.",
-        highlights: ["ruhsal ve bedensel gelişiminde", "doğru rehberliğin"],
+        eyebrow: "Sultanda Veli Olmak",
+        text: sultandaVeliOlmak[0],
+        highlights: [
+          "aynı niyet ve istikamette",
+          "yol arkadaşımızdır",
+        ],
+      },
+      {
+        eyebrow: "Okul-aile iş birliği",
+        text: sultandaVeliOlmak[1],
+        highlights: [
+          "veli görüşmeleri",
+          "seminerler",
+          "rehberlik çalışmalarıyla",
+        ],
+      },
+      {
+        eyebrow: "Ortak dil",
+        text: sultandaVeliOlmak[2],
+        highlights: [
+          "aynı değer dünyasında",
+          "bilgili, erdemli, sorumluluk sahibi",
+        ],
       },
       {
         eyebrow: "Veli Akademisi",
         text: veliAkademisi,
         highlights: [
-          "iletişim ve işbirliğini güçlendirmek",
-          "seminerler",
-          "ebeveyn kitap buluşmaları",
+          "Veli Akademisi",
+          "uzman seminerleri",
+          "okul-aile iş birliği",
         ],
       },
     ],
   } satisfies OverlayPageStory,
   gallery: {
     title: "Görsel Galeri",
-    description:
-      "Veli akademisi ve okul–veli etkinliklerinden fotoğraf ve videolar.",
+    description: "",
   } satisfies OverlayPageGallery,
 } as const;
 
 export const sultandaYasam = {
-  intro:
-    "Özel Sultan Okulları'nda eğitim; öğrencilerimizin akademik gelişimlerinin yanında kişisel, sosyal ve ahlâkî becerilerini de desteklemeyi amaçlar.",
+  intro: sultandaYasamBilgilendirme.giris,
   story: {
     eyebrow: "Sultanda Yaşam",
-    motto: "Akademik gelişimin yanında kişisel, sosyal ve ahlâkî beceriler",
+    motto: "Butik okul, ayakkabısız okul ve okul-aile iş birliği",
     rows: [
       {
-        eyebrow: "Yaşam",
-        text: "Özel Sultan Okulları'nda eğitim; öğrencilerimizin akademik gelişimlerinin yanında kişisel, sosyal ve ahlâkî becerilerini de desteklemeyi amaçlar.",
+        eyebrow: "1. Butik Okul",
+        text: butikOkul.join(" "),
         highlights: [
-          "akademik gelişimlerinin yanında",
-          "kişisel, sosyal ve ahlâkî becerilerini",
+          "butik okul",
+          "az öğrenciyle çok ilgi",
         ],
       },
       {
-        eyebrow: "Okul ortamı",
-        text: "Ayakkabısız okul projemizle öğrencilerimize temiz, kendilerini rahat ve huzurlu hissettikleri sıcak bir okul ortamı hazırladık.",
-        highlights: ["Ayakkabısız okul projemizle", "temiz", "huzurlu"],
+        eyebrow: "2. Ayakkabısız Okul",
+        text: ayakkabisizOkul,
+        highlights: ["Temizlik imandandır", "Ayakkabısız Okul"],
       },
+      {
+        eyebrow: "Velilere Bilgilendirme",
+        text: sultandaYasamBilgilendirme.giris,
+        highlights: [
+          "kişisel, sosyal ve ahlaki",
+          "okul-aile iş birliğini",
+        ],
+      },
+      ...sultandaYasamBilgilendirme.bolumler.map((b) => ({
+        eyebrow: b.title,
+        text: b.text,
+        highlights: [b.title] as string[],
+      })),
     ],
   } satisfies OverlayPageStory,
   gallery: {
     title: "Görsel Galeri",
-    description:
-      "Sultanda yaşam ve okul atmosferinden fotoğraf ve videolardan bir seçki.",
+    description: "",
   } satisfies OverlayPageGallery,
 } as const;
 
+/** PDF dışı kademe sayfaları — eski içerik korundu; karar bekleniyor */
 export const anaokuluSayfasi = {
-  intro:
-    "Fıtrat üzere güvenli ve sevgi dolu bir başlangıç; Kur’an ve Peygamber (s.a.s) muhabbetiyle bütünleşik okul öncesi eğitim.",
+  intro: anaokulu.intro[0],
   story: {
     eyebrow: "Anaokulu",
     motto: "Saf fıtratın muhafazası için sevgi dolu bir başlangıç",
-    rows: [
-      {
-        eyebrow: "Program",
-        text: anaokulu.intro[0],
-        highlights: ["îmân ve irfân tohumlarını", "ruhsal ve bedensel gelişimlerine"],
-      },
-      {
-        eyebrow: "Emanet bilinci",
-        text: anaokulu.intro[1],
-        highlights: ["gönüllerine hitap", "bedeni, zihni ve ahlâkî gelişimlerini"],
-      },
-      {
-        eyebrow: "Kur’an yolculuğu",
-        text: anaokulu.intro[2],
-        highlights: [
-          "“Kur’an”",
-          "“Peygamber (s.a.s) Ahlâkı”",
-          "Kur’an ve Peygamber (s.a.s) muhabbetini",
-        ],
-      },
-      {
-        eyebrow: "Âtiye hayali",
-        text: anaokulu.intro[3],
-        highlights: ["ilim sancağını âtiye taşıyor", "geleceğin Aliler’ini"],
-      },
-    ],
+    rows: anaokulu.intro.map((text, i) => ({
+      eyebrow:
+        i === 0
+          ? "Program"
+          : i === 1
+            ? "Emanet bilinci"
+            : i === 2
+              ? "Kur’an yolculuğu"
+              : "Âtiye hayali",
+      text,
+      highlights: [] as string[],
+    })),
   } satisfies OverlayPageStory,
   gallery: {
     title: "Görsel Galeri",
-    description:
-      "Anaokulu programımızdan fotoğraf ve videolardan bir seçki. Büyütmek için bir görsele dokunun.",
+    description: "",
   } satisfies OverlayPageGallery,
 } as const;
 
 export const ilkokulSayfasi = {
-  intro:
-    "Okuma sevgisi, milli ve Mânevî değerler, Kur’an ve siyer dersleriyle güçlü temeller.",
+  intro: ilkokul.paragraflar[0],
   story: {
     eyebrow: "İlkokul",
     motto: "İlk ilahî emir olan “Oku” ile başlayan bir yolculuk",
@@ -372,29 +445,17 @@ export const ilkokulSayfasi = {
               ? "İlim yağmurları"
               : "Yapılandırmacı yaklaşım",
       text,
-      highlights:
-        i === 0
-          ? ["ilk ilahî emre", "okuma ve yazma sevgisini"]
-          : i === 1
-            ? [
-                "milli ve Mânevî değerlerine",
-                "Zaman bendedir ve mekân bana emanettir!",
-              ]
-            : i === 2
-              ? ["Kur’an-ı Kerîm", "îmân ve irfân tohumlarını", "ilim yağmurlarıyla"]
-              : ["yapılandırmacı yaklaşım", "fen laboratuvarında"],
+      highlights: [] as string[],
     })),
   } satisfies OverlayPageStory,
   gallery: {
     title: "Görsel Galeri",
-    description:
-      "İlkokul programımızdan fotoğraf ve videolardan bir seçki. Büyütmek için bir görsele dokunun.",
+    description: "",
   } satisfies OverlayPageGallery,
 } as const;
 
 export const ortaokulSayfasi = {
-  intro:
-    "Kökleri sağlam, teknolojiyi bilinçli kullanan ve topluma yön verecek yiğit gençler.",
+  intro: ortaokul.paragraflar[0],
   story: {
     eyebrow: "Ortaokul",
     motto: "Kökü sabit, dalları gökte olan güzel bir ağaç",
@@ -406,94 +467,78 @@ export const ortaokulSayfasi = {
             ? "Yiğit gençler"
             : "Atölye ve kulüpler",
       text,
-      highlights:
-        i === 0
-          ? ["sağlam ağacımızın meyvelerini", "ortaokulumuzda"]
-          : i === 1
-            ? ["vefâyla merhameti", "yiğit gençler"]
-            : [
-                "robotik kodlama",
-                "İngilizce drama",
-                "münâzara ve yarışma kulüpleri",
-              ],
+      highlights: [] as string[],
     })),
   } satisfies OverlayPageStory,
   etut: {
     eyebrow: "Etüt",
     text: ortaokul.etut,
-    highlights: [
-      "haftada üç gün",
-      "konu tekrarı ve soru çözümüyle",
-      "gerekli ders desteğini",
-    ],
+    highlights: [] as string[],
   } satisfies PageStoryRow,
   gallery: {
     title: "Görsel Galeri",
-    description:
-      "Ortaokul programımızdan fotoğraf ve videolardan bir seçki. Büyütmek için bir görsele dokunun.",
+    description: "",
   } satisfies OverlayPageGallery,
 } as const;
 
+/** PDF: Nebevî Eğitim ve Hâl Dili */
 export const nebeviEgitimSayfasi = {
-  intro:
-    "Peygamber Efendimizin (s.a.s) muallîm oluşunu rehber alan; siyer, Peygamber (s.a.s) Ahlâkı ve üsve-i hasene örnekliğiyle çocuklarımızın gönüllerine dokunan program.",
+  intro: nebevi.intro[0],
   story: {
-    eyebrow: "Nebevî Eğitim",
-    motto: "Üsve-i hasene ile gönüllere işlenen muhabbet",
+    eyebrow: "Nebevî Eğitim ve Hâl Dili",
+    motto: "Nebevî Eğitim ve Hâl Dili",
     rows: [
       {
+        eyebrow: "Nebevî Eğitim ve Hâl Dili",
         text: nebevi.intro[0],
         highlights: [
-          "üsve-i hasene",
-          `“${nebevi.hadithQuote}”`,
-          "çağlar ötesi",
-        ],
-      },
-      {
-        text: nebevi.intro[1],
-        highlights: [
-          "Siyer",
-          "Peygamber (s.a.s) Ahlâkı",
-          "saf ve duru gönüllerine",
+          "muallim",
+          "hâl dili",
+          "Peygamber Efendimiz’in (sav)",
         ],
       },
     ],
   } satisfies OverlayPageStory,
   gallery: {
     title: "Görsel Galeri",
-    description:
-      "Nebevî eğitim programımızdan fotoğraf ve videolardan bir seçki. Büyütmek için bir görsele dokunun.",
+    description: "",
   } satisfies OverlayPageGallery,
 } as const;
 
 export const degerlerEgitimiSayfasi = {
-  intro:
-    "Müfredatın her alanına nakış nakış işlenmiş değerler eğitimi; komisyon planı, sınıf rehberliği ve etkinliklerle yaşatılır.",
+  intro: degerler.intro[0],
   story: {
-    eyebrow: "Değerler Eğitimi",
-    motto: "Müfredata nakış nakış işlenmiş değerler omurgası",
-    rows: degerler.intro.map((text, i) => ({
-      eyebrow:
-        i === 0
-          ? "Fıtrat üzere"
-          : i === 1
-            ? "Komisyon planı"
-            : "Sınıf etkinlikleri",
-      text,
-      highlights:
-        i === 0
-          ? ["değerler eğitimi", "nakış nakış işlenmiş"]
-          : i === 1
-            ? [
-                "Değerler Eğitimi Komisyonu",
-                "dürüstlük, sorumluluk, yardımlaşma",
-              ]
-            : ["pano", "duvar gazetesi", "şiir, kompozisyon"],
-    })),
+    eyebrow: "Değerler ve Manevi Eğitim",
+    motto: "Okul hayatının tamamına yayılan bir mektep iklimi",
+    rows: [
+      ...degerler.intro.map((text, i) => ({
+        eyebrow:
+          i === 0
+            ? "İnşa yolculuğu"
+            : i === 1
+              ? "Maarif Modeli"
+              : i === 2
+                ? "Mektep iklimi"
+                : "Amacımız",
+        text,
+        highlights: [] as string[],
+      })),
+      ...degerler.bolumler.map((b) => ({
+        eyebrow: b.title,
+        text: b.text,
+        highlights: [b.title] as string[],
+      })),
+    ],
   } satisfies OverlayPageStory,
   gallery: {
     title: "Görsel Galeri",
-    description:
-      "Değerler eğitimi programımızdan fotoğraf ve videolardan bir seçki. Büyütmek için bir görsele dokunun.",
+    description: "",
   } satisfies OverlayPageGallery,
+} as const;
+
+/** Kurumsal kimlik — PDF Kimliğimiz paragrafları */
+export const kurumsalKimligimiz = {
+  intro: kurulusParagraflari[0],
+  paragraphs: kurulusParagraflari,
+  timeline: kurumsalTimeline,
 } as const;

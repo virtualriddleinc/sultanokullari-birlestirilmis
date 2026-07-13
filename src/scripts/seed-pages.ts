@@ -10,6 +10,9 @@ import {
   kurulusParagraflari,
   kurucuMesajiNotu,
   kurumsalTimeline,
+  niyetimizParagraflari,
+  nesilTasavvurParagraflari,
+  kurumsalDegerlerGiris,
 } from "@/content/kurumsal";
 
 async function main() {
@@ -72,19 +75,15 @@ async function main() {
         },
       ],
     },
+    // Tasarlanmış overlay sayfalar — sections boş; içerik page-templates + overlay seed’ten gelir.
     {
       title: "Nesil Tasavvurumuz",
       slug: "nesil-tasavvurumuz",
       pathPrefix: "kurumsal" as const,
-      template: "kurumsal-blok" as const,
+      template: "overlay-story" as const,
       _status: "published" as const,
-      intro: "Yetişmesini hedeflediğimiz neslin tasavvuru ve ufku.",
-      sections: [
-        {
-          blockType: "textSection" as const,
-          paragraphs: [{ text: kurulusParagraflari[2] ?? kurulusParagraflari[0] }],
-        },
-      ],
+      intro: nesilTasavvurParagraflari[0],
+      sections: [],
     },
     {
       title: "Kurumsal Kimliğimiz",
@@ -94,40 +93,26 @@ async function main() {
       _status: "published" as const,
       intro:
         "İlimde âlim, ibâdette âbid, gayrette mücahit bir neslin yetiştiği çift kanatlı eğitim modeli.",
-      sections: [
-        {
-          blockType: "textSection" as const,
-          paragraphs: kurulusParagraflari.map((text) => ({ text })),
-        },
-      ],
+      // Statik KurumsalKurulusHikayesi + timeline + galeri için sections boş bırakılır.
+      sections: [],
     },
     {
       title: "Kurumsal Değerlerimiz",
       slug: "kurumsal-degerlerimiz",
       pathPrefix: "kurumsal" as const,
-      template: "kurumsal-blok" as const,
+      template: "overlay-story" as const,
       _status: "published" as const,
-      intro: "Sultan Okulları'nın temel değerleri ve eğitim anlayışı.",
-      sections: [
-        {
-          blockType: "textSection" as const,
-          paragraphs: [{ text: kurulusParagraflari[0] }],
-        },
-      ],
+      intro: kurumsalDegerlerGiris[0],
+      sections: [],
     },
     {
       title: "Niyetimiz ve İstikametimiz",
       slug: "niyetimiz-istikametimiz",
       pathPrefix: "kurumsal" as const,
-      template: "kurumsal-blok" as const,
+      template: "overlay-story" as const,
       _status: "published" as const,
-      intro: "Kurum niyeti ve eğitim istikametimiz.",
-      sections: [
-        {
-          blockType: "textSection" as const,
-          paragraphs: [{ text: kurucuMesajiNotu }],
-        },
-      ],
+      intro: niyetimizParagraflari[0],
+      sections: [],
     },
   ];
 

@@ -1,4 +1,7 @@
-/** site-icerigi.docx — Niçin Sultan Okulları maddeleri (sıra korunmuştur). */
+/**
+ * PDF dışı (eski site-icerigi) — silinmedi; karar bekleniyor.
+ * PDF’de “Niçin Sultan” / neden-sultan bölümü yoktur.
+ */
 export interface NedenItem {
   headline: string;
   body: string;

@@ -10,32 +10,30 @@ import { getPageByPath } from "@/lib/pages-data";
 
 export const dynamic = "force-dynamic";
 
-const FALLBACK_INTRO =
-  "Mescid-rahle usulüyle Otağ-ı Hümâyun’umuzda Hamele-i Kur’an’lar yetiştiriyoruz; Vahyin gölgesinde hâfız bir nesil.";
+const FALLBACK_INTRO = hafizlik.intro[0];
 
 export const metadata: Metadata = {
-  title: "Hâfızlık Eğitimi",
-  description:
-    "Otağ-ı Hümâyun’umuzda mescid-rahle usulüyle anaokulundan başlayıp ilkokulda taçlanan hâfızlık programı.",
+  title: "Kur’an-ı Kerim ve Hafızlık Eğitimi",
+  description: hafizlik.intro[0],
 };
 
 export default async function Page() {
   const { isEnabled: isDraft } = await draftMode();
   const cmsPage = await getPageByPath("egitim", "hafizlik", { draft: isDraft });
   const content = mapCmsOverlayContent(cmsPage, {
-    title: "Hâfızlık Eğitimi",
+    title: "Kur’an-ı Kerim ve Hafızlık Eğitimi",
     intro: FALLBACK_INTRO,
     story: {
-      eyebrow: "Hâfızlık",
-      motto: "Vahyin gölgesinde hâfız bir nesil",
+      eyebrow: "Kur’an-ı Kerim ve Hafızlık Eğitimi",
+      motto: hafizlik.quote,
       rows: hafizlik.intro.map((text, i) => ({
-        eyebrow: i === 0 ? "Program" : undefined,
+        eyebrow: i === 0 ? "Program" : "Gayemiz",
         text,
         highlights: [],
       })),
     },
     gallery: {
-      title: "Hâfızlık galerisi",
+      title: "Görsel Galeri",
       description: "",
       items: educationGalleryMedia.hafizlik,
     },

@@ -77,16 +77,6 @@ export const NAV_SECTIONS: NavSection[] = [
         icon: "Heart",
         img: IMG.kurumsalDegerler,
       },
-      {
-        label: "Burs Olanakları",
-        href: "/kurumsal/burs-olanaklari",
-        icon: "Sprout",
-      },
-      {
-        label: "İnsan Kaynakları",
-        href: "/kurumsal/insan-kaynaklari",
-        icon: "Briefcase",
-      },
     ],
   },
   {

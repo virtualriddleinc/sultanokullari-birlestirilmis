@@ -9,6 +9,7 @@ import * as migration_20260701_000000_staff_education_fields from './20260701_00
 import * as migration_20260701_010000_staff_egitim_danisma_department from './20260701_010000_staff_egitim_danisma_department';
 import * as migration_20260711_000000_hero_slide_focal_point from './20260711_000000_hero_slide_focal_point';
 import * as migration_20260711_010000_cms_security_maturity from './20260711_010000_cms_security_maturity';
+import * as migration_20260714_000000_fix_orderable_fractional_keys from './20260714_000000_fix_orderable_fractional_keys';
 
 export const migrations = [
   {
@@ -65,5 +66,10 @@ export const migrations = [
     up: migration_20260711_010000_cms_security_maturity.up,
     down: migration_20260711_010000_cms_security_maturity.down,
     name: '20260711_010000_cms_security_maturity',
+  },
+  {
+    up: migration_20260714_000000_fix_orderable_fractional_keys.up,
+    down: migration_20260714_000000_fix_orderable_fractional_keys.down,
+    name: '20260714_000000_fix_orderable_fractional_keys',
   },
 ];

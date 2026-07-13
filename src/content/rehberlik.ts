@@ -1,9 +1,111 @@
-/** site-icerigi.docx — Ölçme-Değerlendirme ve Rehberlik bölümleri */
+/** Web Sitesi İçerik Çalışması.pdf — Rehberlik ve Eğitim Koçluğu */
 
-/* ─────────────────────────────────────────────────────────────────
-   ÖLÇME VE DEĞERLENDİRME
-   ───────────────────────────────────────────────────────────────── */
-export const olcmeGiris =
+export const rehberlikGiris =
+  "Çocuklarımızın ruhsal ve bedensel gelişiminde doğru rehberliğin hayati önem taşıdığının bilincindeyiz. Her bir öğrencimizin nevi şahsına münhasır bir cevher olduğu gerçeğinden hareketle akademik, duygusal, manevi ve sosyal gelişimini destekleyen, başarıdan ziyade şahsiyete odaklanan bir model uyguluyoruz. Rehberlik birimi, eğitim koçu, mentör öğretmen ve veli iş birliğiyle yürüttüğümüz çalışmalarımızı üç temel sütun üzerine kuruyoruz.";
+
+export const ogrenciGelisimiGiris =
+  "Öğrencilerimizin safî fıtratlarını muhafaza ederek ilgi, kabiliyet ve ihtiyaçları istikametinde yönlendirilmelerini önemsiyoruz.";
+
+export const ogrenciCalismalariDetay = [
+  {
+    title: "Bireysel Tanıma ve Takip",
+    text: "Gözlem ve ölçme değerlendirme çalışmalarıyla her öğrencimizin güçlü yönlerini tanıyor, ihtiyaçlarına uygun akademik ve kişisel gelişim planlamalarını yapıyoruz.",
+  },
+  {
+    title: "Karakter ve Manevi Gelişim",
+    text: "Sadece akademik başarıyı değil, edep ve merhamet gibi değerlerin öğrencinin şahsiyetinde kökleşmesini hedefliyoruz.",
+  },
+  {
+    title: "Akademik Motivasyon ve Çalışma Disiplini",
+    text: "Eğitim koçluğu sistemiyle planlı çalışma ve sorumluluk alma becerilerini geliştiriyor, akademik süreci takip ediyoruz.",
+  },
+  {
+    title: "Duygusal Gelişim ve Uyum Süreci",
+    text: "Öğrencilerimizin kendilerini güvende hissettikleri, duygularını rahatça ifade edebildikleri huzurlu bir okul ikliminde gelişimlerini sürdürmelerini destekliyoruz.",
+  },
+  {
+    title: "Sosyal Beceri ve İletişim",
+    text: "Diğergâmlık, nezaket ve iş birliği temelinde sosyal hayatta dengeli ve güçlü ilişkiler kurabilen nesiller yetiştiriyoruz.",
+  },
+] as const;
+
+export const ogretmenGelisimiGiris =
+  "Öğrencinin gelişimindeki en güçlü rehberin öğretmen olduğu inancıyla eğitim kadromuzun mesleki, pedagojik ve şahsî tekâmülünü destekliyoruz.";
+
+export const ogretmenCalismalariDetay = [
+  {
+    title: "Mesleki Gelişim Seminerleri",
+    text: "Güncel pedagojik yaklaşımlar ve eğitim teknolojileri üzerine düzenli mesleki gelişim programları gerçekleştiriyoruz.",
+  },
+  {
+    title: "Sınıf Yönetimi Desteği",
+    text: "Verimli bir öğrenme ortamı için öğretmenlerimize davranış yönetimi, öğrenci iştiyakı ve sınıf iklimini güçlendirme konularında rehberlik desteği sunuyoruz.",
+  },
+  {
+    title: "Öğrenci Tanıma ve Yönlendirme Desteği",
+    text: "Öğretmenlerimizin öğrencileri yalnızca akademik başarısıyla değil, duygu dünyası, şahsiyet özellikleri, öğrenme biçimleri ve gelişim ihtiyaçlarıyla tanımasını sağlıyoruz.",
+  },
+  {
+    title: "Veli İletişimi Desteği",
+    text: "Ailelerle net, dürüst ve yapıcı bir lisanla iletişim kurulması için gereken rehberlik zeminini hazırlıyoruz.",
+  },
+  {
+    title: "Rehberlik Birimiyle Koordinasyon",
+    text: "Öğretmen, rehberlik ve idare arasındaki kesintisiz bilgi akışıyla evlatlarımızın ihtiyaçlarını zamanında tespit ederek gerekli destek planını oluşturuyoruz.",
+  },
+] as const;
+
+export const veliGelisimiGiris =
+  "Eğitim yolculuğunu okul ve aile iş birliğiyle güçlenen bir bütün olarak görüyor; velilerimizi bu sürecin aktif ve bilinçli paydaşları olarak konumlandırıyoruz.";
+
+export const veliCalismalariDetay = [
+  {
+    title: "Veli Akademisi",
+    text: "Ailelerimizi çocuk gelişimi, mahremiyet bilinci, değerler eğitimi, iletişim ve teknoloji kullanımı gibi konularda uzman isimlerle destekliyoruz.",
+  },
+  {
+    title: "Ebeveyn Kitap Buluşmaları",
+    text: "Belirlenen eserler üzerinden çocuk yetiştirme ve aile içi iletişim üzerine ortak bir anlayış geliştiriyoruz.",
+  },
+  {
+    title: "Bireysel Veli Görüşmeleri",
+    text: "Öğrencilerimizin akademik, sosyal, duygusal ve manevi gelişimleri hakkında velilerimizi düzenli bilgilendiriyor, ihtiyaç duyulan hallerde aileye özel yönlendirme ve rehberlik desteği sunuyoruz.",
+  },
+  {
+    title: "Okul-Aile İş Birliği",
+    text: "Öğrenci gelişimini okul ve aile bütünlüğü içerisinde takip ediyor, güvene dayalı iş birliği ile çocuğun hem akademik hem de şahsiyet gelişimini birlikte destekliyoruz.",
+  },
+  {
+    title: "Sosyal Aidiyet Çalışmaları",
+    text: "“Sultan Ailesi” çatısı altında; güven, aidiyet ve ortak değerler çerçevesinde velilerimizle güçlü bir birliktelik oluşturacak sosyal etkinlikler düzenliyoruz.",
+  },
+] as const;
+
+export const rehberlikHedefimiz =
+  "Hedefimiz; öğrenciyi tanıyan, öğretmeni destekleyen ve veliyi sürece dâhil eden bütüncül bir rehberlik sistemiyle çocuklarımızın akademik, sosyal, duygusal ve manevi gelişimine güçlü bir yol arkadaşlığı sunmaktır. Özel Sultan Okulları’nda rehberlik ve eğitim koçluğu; her öğrencinin safî fıtratını koruyarak hayra, başarıya ve şahsiyetli bir geleceğe yürümesine eşlik eden kıymetli bir destek yolculuğudur.";
+
+/** Liste görünümü için başlıklar (PDF başlıkları) */
+export const ogrenciCalismalari = ogrenciCalismalariDetay.map((x) => x.title);
+
+export const veliCalismalari = veliCalismalariDetay.map((x) => x.title);
+
+export const ogretmenCalismalari = ogretmenCalismalariDetay.map((x) => x.title);
+
+export const veliAkademisi =
+  "Sultan Okulları’nda öğrencilerimizin akademik başarıları kadar; mutlu, dengeli, sağlıklı ve değerleriyle güçlü bireyler olarak yetişmelerini de önemsiyoruz. Bu süreçte velilerimizi, çocuklarımızın gelişim yolculuğunun en kıymetli paydaşları olarak görüyoruz. Veli Akademisi çalışmalarıyla anne babaların; çocuklarının akademik, sosyal, duygusal ve manevi gelişimine daha bilinçli şekilde eşlik etmelerini destekliyoruz. Yıl boyunca düzenlenen uzman seminerleri, söyleşiler ve atölyelerle velilerimize; çocuk gelişimi, iletişim, değerler eğitimi, dijital dünya ve okul-aile iş birliği gibi alanlarda rehberlik sunuyoruz.";
+
+export const sultandaVeliOlmak = [
+  "Sultan Okulları’nda veli olmak; evladının eğitim, karakter ve şahsiyet yolculuğunda okuluyla aynı niyet ve istikamette buluşmak demektir. Bizim için veli, süreci yalnızca dışarıdan takip eden kişi değil; çocuğun gelişimine emek veren, okulla gönül bağı kuran ve bu mektep ikliminin kıymetli bir parçası olan yol arkadaşımızdır.",
+  "Çocuklarımızın akademik başarısı kadar ahlaki, sosyal ve manevi gelişimini de önemsiyoruz. Bu nedenle ailelerimizle düzenli veli görüşmeleri, seminerler, kitap okumaları, aile buluşmaları, bilgilendirme toplantıları ve rehberlik çalışmalarıyla güçlü bir iletişim zemini kuruyoruz.",
+  "Sultan Okulları’nda okul-aile iş birliği; sadece bilgi paylaşımı değil, aynı değer dünyasında buluşma gayretidir. Velilerimizin görüşlerini, ihtiyaçlarını ve katkılarını önemsiyor; her çocuğun gelişimini aile ile birlikte takip ediyoruz. Çünkü inanıyoruz ki bir çocuğun yolculuğu, okul ve aile aynı dili konuştuğunda daha sağlam, daha huzurlu ve daha bereketli ilerler. Sultan Okulları olarak velilerimizle birlikte; evlatlarımızı bilgili, erdemli, sorumluluk sahibi ve güzel ahlaklı bireyler olarak yetiştirmeyi hedefliyoruz.",
+] as const;
+
+/** PDF dışı — silinmedi; karar bekleniyor */
+export const veliAkademisiTakvimNotu =
+  "Seminer, sosyal etkinlik ve kitap buluşmalarının takvimi yakında eklenecektir.";
+
+/** PDF dışı (eski site-icerigi ölçme içerikleri) — silinmedi; karar bekleniyor */
+export const olcmeGirisLegacy =
   "Dönem sonunda öğrencilerimizin akademik ve Mânevî başarılarını ödüllendiriyor; öğrenme süreçlerini çeşitli araç ve yöntemlerle değerlendiriyoruz.";
 
 export const pisaIntro =
@@ -47,41 +149,3 @@ export const dereceliPuanlamaAmac = [
 
 export const portfolyoContent =
   "Öğrenci ürün dosyası, öğrencilerin bir ya da birkaç alandaki çalışmalarını, harcadığı çabayı, geçirdiği evreleri gösteren başarılarının koleksiyonudur. Öğrencinin gelişimini velisi ve öğretmenlerinin izleyebilmesine olanak sağlayan bu çalışma; sınıf içi etkinliklerin öğrencinin seçimi sonucunda bir araya getirilip yansıtılmasıyla oluşur. Kullanım amacına ve içeriğinde yer alan ürünlere göre farklı türlerde ürün dosyaları vardır.";
-
-/* ─────────────────────────────────────────────────────────────────
-   REHBERLİK VE PSİKOLOJİK DANIŞMA
-   ───────────────────────────────────────────────────────────────── */
-export const rehberlikGiris =
-  "Çocuklarımızın ruhsal ve bedensel gelişiminde doğru rehberliğin önemini ve onların her birinin ayrı bir birey olduğunun bilincinde olarak öğrencilerimizin akademik, duygusal, Mânevî ve sosyal gelişimlerini destekleyici çalışmalar yapıyoruz. Yaptığımız bireysel veli görüşmeleri ile velilerimizi çocuklarımızın gelişim süreci hakkında bilgilendiriyoruz. Çalışmalarımızı okul yönetimi, eğitim koordinatörü, sınıf danışman öğretmeni ve veli işbirliği düzenleyerek dört başlık altında yürütüyoruz.";
-
-export const ogrenciCalismalari = [
-  "Okula uyum",
-  "Test ve anket",
-  "Öğrenci seminerleri",
-  "Probleme yönelik danışmanlık",
-  "Öğrenciyi tanıma; ilgi ve yeteneklerine uygun yönlendirme",
-  "Akademik başarıyı destekleyici çalışmalar",
-  "Sınıf ve grup rehberliği",
-  "Sosyal ve duygusal gelişimi destekleyici çalışmalar",
-] as const;
-
-export const veliCalismalari = [
-  "Veli tanıma",
-  "Seminerler ve sempozyumlar",
-  "Sosyal etkinlikler",
-  "Bireysel danışmanlık hizmeti",
-  "Ebeveyn kitap buluşmaları",
-] as const;
-
-export const ogretmenCalismalari = [
-  "Mesleki gelişim",
-  "Kişisel gelişim",
-  "Bireysel danışmanlık hizmeti",
-  "Seminerler ve sempozyumlar",
-] as const;
-
-export const veliAkademisi =
-  "Okul–veli arasında iletişim ve işbirliğini güçlendirmek, çocuğun eğitim ve gelişim süreçleriyle ilgili olarak velileri bilgilendirmek ve bilinçlendirmek amacıyla alanında uzman kişiler tarafından seminerler düzenliyor, sosyal etkinlikler ve ebeveyn kitap buluşmaları yapıyoruz.";
-
-export const veliAkademisiTakvimNotu =
-  "Seminer, sosyal etkinlik ve kitap buluşmalarının takvimi yakında eklenecektir.";
