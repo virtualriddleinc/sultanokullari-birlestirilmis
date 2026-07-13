@@ -53,29 +53,42 @@
   color: color-mix(in srgb, var(--sultan-charcoal) 55%, var(--sultan-honey));
 }
 
-/* Sidebar altı — Çıkış Yap (ikon + metin) */
+/* Sidebar altı — Çıkış Yap; yazı diğer nav başlıklarıyla sola hizalı */
 .template-default .nav__controls {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
   width: 100%;
 }
 
 .template-default .nav__log-out.sultan-nav-logout {
   display: inline-flex;
   align-items: center;
+  justify-content: flex-start;
   gap: 0.5rem;
-  width: auto;
+  width: fit-content;
   max-width: 100%;
-  padding: 0.45rem 0.65rem;
-  border-radius: var(--sultan-radius);
+  margin: 20px 0 0;
+  padding: 0.45rem 0;
+  border-radius: 0;
   color: color-mix(in srgb, var(--sultan-charcoal) 85%, transparent);
   text-decoration: none;
-  transition: background 0.15s ease;
+  text-align: left;
+  align-self: flex-start;
+  transition: color 0.15s ease;
 }
 
 .template-default .nav__log-out.sultan-nav-logout:hover {
-  background: color-mix(in srgb, var(--sultan-green) 10%, white);
+  background: transparent;
   color: var(--sultan-charcoal);
+}
+
+.template-default .nav__log-out.sultan-nav-logout .icon {
+  flex: 0 0 1rem;
+  width: 1rem;
+  height: 1rem;
+  margin-inline-start: calc(-1rem - 0.5rem);
 }
 
 .template-default .sultan-nav-logout__label {
