@@ -15,7 +15,7 @@ export const JourneyChapters: CollectionConfig = {
   defaultSort: "_order",
   labels: {
     singular: "Yolculuk Bölümü",
-    plural: "3 · Yolculuk Bölümleri",
+    plural: "Yolculuk Bölümleri",
   },
   admin: {
     useAsTitle: "title",
