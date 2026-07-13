@@ -259,81 +259,83 @@ export function IkHumanResourcesPage({
           aria-hidden
           className="absolute inset-0 -z-10 bg-[url('/desen.svg')] bg-cover bg-center opacity-[0.06] mix-blend-multiply"
         />
-        <div className="mx-auto grid min-h-[calc(100svh-5rem)] max-w-6xl items-center gap-12 px-4 py-16 sm:px-6 lg:grid-cols-[1.02fr_0.98fr] lg:py-24">
-          <div data-ik-reveal className="relative z-10">
-            <p className="text-xs font-semibold tracking-[0.32em] text-[var(--color-primary)] uppercase">
-              İnsan kaynakları · Sultan ailesi
-            </p>
-            <h1 className="mt-4 text-4xl leading-[1.02] font-semibold tracking-tight text-balance text-zinc-950 sm:text-5xl lg:text-7xl">
-              Öğrencinin yoluna ışık tutan ekip arkadaşları arıyoruz.
-            </h1>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-zinc-700 sm:text-lg">
-              {intro} Sultan Okulları’nda insan kaynakları; yalnızca pozisyon
-              doldurmak değil, aynı eğitim idealini paylaşan öğretmen ve çalışma
-              arkadaşlarını aynı sofrada buluşturmaktır.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="#basvuru"
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-3 text-sm font-semibold text-white shadow-xl shadow-emerald-900/15 hover:bg-[var(--color-primary-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
-              >
-                Başvuru formuna geç
-                <ArrowRight className="size-4" aria-hidden />
-              </Link>
-              <Link
-                href="#surec"
-                className="inline-flex items-center justify-center rounded-full border border-emerald-900/10 bg-white/70 px-5 py-3 text-sm font-semibold text-zinc-900 shadow-lg shadow-emerald-950/5 backdrop-blur hover:border-[var(--color-primary)]/30 hover:text-[var(--color-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
-              >
-                Süreci incele
-              </Link>
-            </div>
-            <div className="mt-10 grid gap-3 sm:grid-cols-2">
-              {highlights.map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-2 rounded-2xl border border-emerald-900/10 bg-white/70 px-4 py-3 text-sm font-medium text-zinc-800 shadow-sm backdrop-blur"
+        <div className="section-page-grid">
+          <div className="section-page-grid__content grid min-h-[calc(100svh-5rem)] items-center gap-fluid-12 py-fluid-8 sm:py-fluid-16 lg:grid-cols-[1.02fr_0.98fr]">
+            <div data-ik-reveal className="relative z-10">
+              <p className="text-[length:var(--text-xs)] font-semibold tracking-[0.32em] text-[var(--color-primary)] uppercase">
+                İnsan kaynakları · Sultan ailesi
+              </p>
+              <h1 className="mt-fluid-4 text-[length:var(--text-4xl)] leading-[1.02] font-semibold tracking-tight text-balance text-zinc-950">
+                Öğrencinin yoluna ışık tutan ekip arkadaşları arıyoruz.
+              </h1>
+              <p className="mt-fluid-6 max-w-2xl text-[length:var(--text-base)] leading-8 text-zinc-700 md:text-[length:var(--text-lg)]">
+                {intro} Sultan Okulları’nda insan kaynakları; yalnızca pozisyon
+                doldurmak değil, aynı eğitim idealini paylaşan öğretmen ve
+                çalışma arkadaşlarını aynı sofrada buluşturmaktır.
+              </p>
+              <div className="mt-fluid-8 flex flex-wrap gap-fluid-3">
+                <Link
+                  href="#basvuru"
+                  className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-3 text-[length:var(--text-sm)] font-semibold text-white shadow-xl shadow-emerald-900/15 hover:bg-[var(--color-primary-dark)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
                 >
-                  <CheckCircle2
-                    className="size-4 text-[var(--color-primary)]"
-                    aria-hidden
-                  />
-                  {item}
-                </div>
-              ))}
+                  Başvuru formuna geç
+                  <ArrowRight className="size-4" aria-hidden />
+                </Link>
+                <Link
+                  href="#surec"
+                  className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-emerald-900/10 bg-white/70 px-5 py-3 text-[length:var(--text-sm)] font-semibold text-zinc-900 shadow-lg shadow-emerald-950/5 backdrop-blur hover:border-[var(--color-primary)]/30 hover:text-[var(--color-primary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-primary)]"
+                >
+                  Süreci incele
+                </Link>
+              </div>
+              <div className="mt-fluid-8 grid gap-fluid-3 md:grid-cols-2">
+                {highlights.map((item) => (
+                  <div
+                    key={item}
+                    className="flex min-h-[44px] items-center gap-2 rounded-2xl border border-emerald-900/10 bg-white/70 px-4 py-3 text-[length:var(--text-sm)] font-medium text-zinc-800 shadow-sm backdrop-blur"
+                  >
+                    <CheckCircle2
+                      className="size-4 text-[var(--color-primary)]"
+                      aria-hidden
+                    />
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
 
-          <div
-            className="relative min-h-[34rem]"
-            aria-label="İnsan kaynakları görsel alanı"
-          >
             <div
-              data-ik-float
-              className="absolute top-0 right-2 z-10 w-28 bg-[var(--color-secondary)]/70 shadow-[0_24px_70px_rgba(180,83,9,0.18)] sm:right-10 sm:w-36"
-              style={{
-                aspectRatio: "2 / 1.7320508075688772",
-                clipPath: HEX_CLIP,
-              }}
-              aria-hidden
-            />
-            <MediaFrame
-              media={headerMedia.insanKaynaklari}
-              label="Ekip ruhu"
-              priority
-              className="absolute top-8 left-0 h-[24rem] w-[78%] rounded-[2rem] shadow-[0_40px_120px_rgba(6,78,59,0.20)] sm:h-[31rem]"
-            />
-            <MediaFrame
-              media={insanKaynaklariMedia[1]}
-              label="Kurum atmosferi"
-              className="absolute right-0 bottom-0 h-56 w-[58%] rounded-[1.75rem] border-4 border-white shadow-[0_30px_100px_rgba(6,78,59,0.22)] sm:h-72"
-            />
-            <div className="absolute bottom-8 left-6 max-w-xs rounded-3xl border border-white/40 bg-white/80 p-5 shadow-2xl shadow-emerald-950/10 backdrop-blur-xl">
-              <p className="text-xs font-semibold tracking-[0.24em] text-[var(--color-primary)] uppercase">
-                Çalışma ilkesi
-              </p>
-              <p className="mt-2 text-sm leading-6 text-zinc-700">
-                Güven, nezaket, emanet bilinci ve öğrencinin fıtratına saygı.
-              </p>
+              className="relative min-h-[34rem]"
+              aria-label="İnsan kaynakları görsel alanı"
+            >
+              <div
+                data-ik-float
+                className="absolute top-0 right-2 z-10 w-28 bg-[var(--color-secondary)]/70 shadow-[0_24px_70px_rgba(180,83,9,0.18)] md:right-10 md:w-36"
+                style={{
+                  aspectRatio: "2 / 1.7320508075688772",
+                  clipPath: HEX_CLIP,
+                }}
+                aria-hidden
+              />
+              <MediaFrame
+                media={headerMedia.insanKaynaklari}
+                label="Ekip ruhu"
+                priority
+                className="absolute top-8 left-0 h-[24rem] w-[78%] rounded-[2rem] shadow-[0_40px_120px_rgba(6,78,59,0.20)] md:h-[31rem]"
+              />
+              <MediaFrame
+                media={insanKaynaklariMedia[1]}
+                label="Kurum atmosferi"
+                className="absolute right-0 bottom-0 h-56 w-[58%] rounded-[1.75rem] border-4 border-white shadow-[0_30px_100px_rgba(6,78,59,0.22)] md:h-72"
+              />
+              <div className="absolute bottom-8 left-6 max-w-xs rounded-3xl border border-white/40 bg-white/80 p-5 shadow-2xl shadow-emerald-950/10 backdrop-blur-xl">
+                <p className="text-[length:var(--text-xs)] font-semibold tracking-[0.24em] text-[var(--color-primary)] uppercase">
+                  Çalışma ilkesi
+                </p>
+                <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-6 text-zinc-700">
+                  Güven, nezaket, emanet bilinci ve öğrencinin fıtratına saygı.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -341,182 +343,194 @@ export function IkHumanResourcesPage({
 
       <section
         data-ik-culture
-        className="relative mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24"
+        className="relative py-fluid-8 sm:py-fluid-16"
       >
-        <div data-ik-reveal className="max-w-3xl">
-          <p className="text-xs font-semibold tracking-[0.28em] text-[var(--color-primary)] uppercase">
-            Çalışma kültürü
-          </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">
-            Sultan Okulları’nda ekip olmak, aynı eğitim niyetini birlikte
-            taşımaktır.
-          </h2>
-          <p className="mt-4 text-sm leading-7 text-zinc-600 sm:text-base">
-            Öğretmen, idari ekip ve destek personeli için beklentimiz; mesleki
-            yetkinliği güçlü, iletişimi temiz, öğrenciyi merkeze alan ve
-            kurumsal değerleri sahiplenen bir duruştur.
-          </p>
-        </div>
+        <div className="section-page-grid">
+          <div className="section-page-grid__content">
+            <div data-ik-reveal className="max-w-3xl">
+              <p className="text-[length:var(--text-xs)] font-semibold tracking-[0.28em] text-[var(--color-primary)] uppercase">
+                Çalışma kültürü
+              </p>
+              <h2 className="mt-fluid-3 text-[length:var(--text-3xl)] font-semibold tracking-tight text-zinc-950">
+                Sultan Okulları’nda ekip olmak, aynı eğitim niyetini birlikte
+                taşımaktır.
+              </h2>
+              <p className="mt-fluid-4 text-[length:var(--text-sm)] leading-7 text-zinc-600 md:text-[length:var(--text-base)]">
+                Öğretmen, idari ekip ve destek personeli için beklentimiz;
+                mesleki yetkinliği güçlü, iletişimi temiz, öğrenciyi merkeze
+                alan ve kurumsal değerleri sahiplenen bir duruştur.
+              </p>
+            </div>
 
-        <div className="mt-10 grid gap-4 lg:grid-cols-3">
-          {talentPillars.map((pillar) => {
-            const Icon = pillar.icon;
-            return (
-              <article
-                key={pillar.title}
-                data-ik-card
-                className="rounded-[1.75rem] border border-zinc-200 bg-zinc-50/70 p-6 shadow-sm"
-              >
-                <div
-                  className="grid w-16 place-items-center bg-[var(--color-primary-light)] text-[var(--color-primary)]"
-                  style={{
-                    aspectRatio: "2 / 1.7320508075688772",
-                    clipPath: HEX_CLIP,
-                  }}
-                >
-                  <Icon className="size-7" aria-hidden />
-                </div>
-                <h3 className="mt-5 text-lg font-semibold text-zinc-950">
-                  {pillar.title}
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-zinc-600">
-                  {pillar.body}
-                </p>
-              </article>
-            );
-          })}
+            <div className="mt-fluid-8 grid gap-fluid-4 lg:grid-cols-3">
+              {talentPillars.map((pillar) => {
+                const Icon = pillar.icon;
+                return (
+                  <article
+                    key={pillar.title}
+                    data-ik-card
+                    className="rounded-[1.75rem] border border-zinc-200 bg-zinc-50/70 p-6 shadow-sm"
+                  >
+                    <div
+                      className="grid w-16 place-items-center bg-[var(--color-primary-light)] text-[var(--color-primary)]"
+                      style={{
+                        aspectRatio: "2 / 1.7320508075688772",
+                        clipPath: HEX_CLIP,
+                      }}
+                    >
+                      <Icon className="size-7" aria-hidden />
+                    </div>
+                    <h3 className="mt-fluid-4 text-[length:var(--text-lg)] font-semibold text-zinc-950">
+                      {pillar.title}
+                    </h3>
+                    <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-600">
+                      {pillar.body}
+                    </p>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="relative bg-[var(--color-primary)] py-20 text-white sm:py-24">
+      <section className="relative bg-[var(--color-primary)] py-fluid-8 text-white sm:py-fluid-16">
         <div
           className="absolute inset-0 bg-[radial-gradient(circle_at_76%_18%,rgba(226,162,26,0.32),transparent_30rem)]"
           aria-hidden
         />
-        <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
-          <div
-            data-ik-reveal
-            className="flex flex-wrap items-end justify-between gap-6"
-          >
-            <div>
-              <p className="text-xs font-semibold tracking-[0.28em] text-emerald-100 uppercase">
-                Kampüsten kareler
+        <div className="section-page-grid relative">
+          <div className="section-page-grid__content">
+            <div
+              data-ik-reveal
+              className="flex flex-wrap items-end justify-between gap-fluid-6"
+            >
+              <div>
+                <p className="text-[length:var(--text-xs)] font-semibold tracking-[0.28em] text-emerald-100 uppercase">
+                  Kampüsten kareler
+                </p>
+                <h2 className="mt-fluid-3 max-w-2xl text-[length:var(--text-3xl)] font-semibold tracking-tight">
+                  Başvurduğunuz yer, yaşayan bir okul iklimi.
+                </h2>
+              </div>
+              <p className="max-w-md text-[length:var(--text-sm)] leading-7 text-emerald-50/80">
+                Görseller ve kısa videolar; sınıf, etkinlik ve kurum
+                atmosferinden seçilen gerçek kesitlerle çalışma ortamını daha
+                yakından hissettirir.
               </p>
-              <h2 className="mt-3 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
-                Başvurduğunuz yer, yaşayan bir okul iklimi.
-              </h2>
             </div>
-            <p className="max-w-md text-sm leading-7 text-emerald-50/80">
-              Görseller ve kısa videolar; sınıf, etkinlik ve kurum atmosferinden
-              seçilen gerçek kesitlerle çalışma ortamını daha yakından
-              hissettirir.
-            </p>
-          </div>
 
-          <div data-ik-media-grid className="mt-10 grid gap-4 md:grid-cols-4">
-            {insanKaynaklariMedia.map((media, index) => (
-              <MediaFrame
-                key={media.src}
-                media={media}
-                label={
-                  index === 0
-                    ? "İK"
-                    : index === 1
-                      ? "Ekip"
-                      : index === 2
-                        ? "Etkinlik"
-                        : "Kurum"
-                }
-                animate
-                className={cn(
-                  "h-72 rounded-[1.75rem] border border-white/10 shadow-[0_24px_80px_rgba(0,0,0,0.18)]",
-                  index === 0 && "md:col-span-2 md:h-96",
-                  index === 3 && "md:col-span-2",
-                )}
-              />
-            ))}
+            <div data-ik-media-grid className="mt-fluid-8 grid gap-fluid-4 md:grid-cols-4">
+              {insanKaynaklariMedia.map((media, index) => (
+                <MediaFrame
+                  key={media.src}
+                  media={media}
+                  label={
+                    index === 0
+                      ? "İK"
+                      : index === 1
+                        ? "Ekip"
+                        : index === 2
+                          ? "Etkinlik"
+                          : "Kurum"
+                  }
+                  animate
+                  className={cn(
+                    "h-72 rounded-[1.75rem] border border-white/10 shadow-[0_24px_80px_rgba(0,0,0,0.18)]",
+                    index === 0 && "md:col-span-2 md:h-96",
+                    index === 3 && "md:col-span-2",
+                  )}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       <section
         id="surec"
-        className="mx-auto max-w-6xl scroll-mt-28 px-4 py-20 sm:px-6 sm:py-24"
+        className="scroll-mt-28 py-fluid-8 sm:py-fluid-16"
       >
-        <div data-ik-reveal className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-semibold tracking-[0.28em] text-[var(--color-primary)] uppercase">
-            Başvuru süreci
-          </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">
-            Kısa, anlaşılır ve insani bir değerlendirme akışı.
-          </h2>
-        </div>
-        <div className="mt-12 grid gap-4 lg:grid-cols-4">
-          {processSteps.map((step, index) => {
-            const Icon = step.icon;
-            return (
-              <article
-                key={step.title}
-                data-ik-reveal
-                className="relative rounded-[1.5rem] border border-zinc-200 bg-white p-5 shadow-sm"
-              >
-                <span className="text-xs font-semibold text-[var(--color-primary)]">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <Icon
-                  className="mt-5 size-8 text-[var(--color-primary)]"
-                  aria-hidden
-                />
-                <h3 className="mt-4 text-base font-semibold text-zinc-950">
-                  {step.title}
-                </h3>
-                <p className="mt-2 text-sm leading-6 text-zinc-600">
-                  {step.body}
-                </p>
-              </article>
-            );
-          })}
+        <div className="section-page-grid">
+          <div className="section-page-grid__content">
+            <div data-ik-reveal className="mx-auto max-w-3xl text-center">
+              <p className="text-[length:var(--text-xs)] font-semibold tracking-[0.28em] text-[var(--color-primary)] uppercase">
+                Başvuru süreci
+              </p>
+              <h2 className="mt-fluid-3 text-[length:var(--text-3xl)] font-semibold tracking-tight text-zinc-950">
+                Kısa, anlaşılır ve insani bir değerlendirme akışı.
+              </h2>
+            </div>
+            <div className="mt-fluid-12 grid gap-fluid-4 lg:grid-cols-4">
+              {processSteps.map((step, index) => {
+                const Icon = step.icon;
+                return (
+                  <article
+                    key={step.title}
+                    data-ik-reveal
+                    className="relative rounded-[1.5rem] border border-zinc-200 bg-white p-5 shadow-sm"
+                  >
+                    <span className="text-[length:var(--text-xs)] font-semibold text-[var(--color-primary)]">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <Icon
+                      className="mt-fluid-4 size-8 text-[var(--color-primary)]"
+                      aria-hidden
+                    />
+                    <h3 className="mt-fluid-4 text-[length:var(--text-base)] font-semibold text-zinc-950">
+                      {step.title}
+                    </h3>
+                    <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-6 text-zinc-600">
+                      {step.body}
+                    </p>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
 
       <section
         id="basvuru"
-        className="relative scroll-mt-28 bg-[linear-gradient(135deg,#f7fbf8,#fff8e6)] py-20 sm:py-24"
+        className="relative scroll-mt-28 bg-[linear-gradient(135deg,#f7fbf8,#fff8e6)] py-fluid-8 sm:py-fluid-16"
       >
         <div
           className="absolute inset-0 bg-[url('/desen.svg')] bg-cover bg-center opacity-[0.05] mix-blend-multiply"
           aria-hidden
         />
-        <div className="relative mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.82fr_1.18fr]">
-          <div data-ik-reveal className="lg:sticky lg:top-28 lg:self-start">
-            <p className="text-xs font-semibold tracking-[0.28em] text-[var(--color-primary)] uppercase">
-              Başvuru formu
-            </p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-950 sm:text-4xl">
-              Sizi tanımamız için ilk adımı buradan atın.
-            </h2>
-            <p className="mt-4 text-sm leading-7 text-zinc-600 sm:text-base">
-              Form üç kısa adımdan oluşur. Başvurunuz demo ortamında doğrulanır;
-              canlı kullanımda CV yükleme, e-posta bildirimi ve aday tâkib
-              süreci eklenebilir.
-            </p>
-            <div className="mt-6 rounded-3xl border border-emerald-900/10 bg-white/80 p-5 text-sm leading-7 text-zinc-700 shadow-sm backdrop-blur">
-              <div className="flex gap-3">
-                <Sparkles
-                  className="mt-1 size-5 shrink-0 text-[var(--color-secondary)]"
-                  aria-hidden
-                />
-                <p>
-                  Özellikle öğretmen, idari ekip ve destek personeli
-                  başvurularında; mesleki deneyim kadar iletişim dili ve eğitim
-                  niyeti de önemsenir.
-                </p>
+        <div className="section-page-grid relative">
+          <div className="section-page-grid__content grid gap-fluid-8 lg:grid-cols-[0.82fr_1.18fr]">
+            <div data-ik-reveal className="lg:sticky lg:top-28 lg:self-start">
+              <p className="text-[length:var(--text-xs)] font-semibold tracking-[0.28em] text-[var(--color-primary)] uppercase">
+                Başvuru formu
+              </p>
+              <h2 className="mt-fluid-3 text-[length:var(--text-3xl)] font-semibold tracking-tight text-zinc-950">
+                Sizi tanımamız için ilk adımı buradan atın.
+              </h2>
+              <p className="mt-fluid-4 text-[length:var(--text-sm)] leading-7 text-zinc-600 md:text-[length:var(--text-base)]">
+                Form üç kısa adımdan oluşur. Başvurunuz demo ortamında
+                doğrulanır; canlı kullanımda CV yükleme, e-posta bildirimi ve
+                aday tâkib süreci eklenebilir.
+              </p>
+              <div className="mt-fluid-6 rounded-3xl border border-emerald-900/10 bg-white/80 p-5 text-[length:var(--text-sm)] leading-7 text-zinc-700 shadow-sm backdrop-blur">
+                <div className="flex gap-3">
+                  <Sparkles
+                    className="mt-1 size-5 shrink-0 text-[var(--color-secondary)]"
+                    aria-hidden
+                  />
+                  <p>
+                    Özellikle öğretmen, idari ekip ve destek personeli
+                    başvurularında; mesleki deneyim kadar iletişim dili ve
+                    eğitim niyeti de önemsenir.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div data-ik-reveal>
-            <IkWizard branches={branches} />
+            <div data-ik-reveal>
+              <IkWizard branches={branches} />
+            </div>
           </div>
         </div>
       </section>

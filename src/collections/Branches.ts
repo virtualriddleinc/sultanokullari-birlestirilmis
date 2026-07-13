@@ -2,9 +2,13 @@ import type { CollectionConfig } from "payload";
 
 import { ADMIN_GROUPS } from "@/payload/admin-groups";
 import { buildPreviewUrl } from "@/lib/preview-url";
-import { contentCollectionAccess } from "@/payload/access";
+import { contentCollectionAccess, hasRole, type AppUser } from "@/payload/access";
 import { branchRevalidateHooks } from "@/payload/hooks/collection-hooks";
 import { trackLastEditedBy } from "@/payload/hooks/audit-hooks";
+import {
+  createAuditAfterChange,
+  createAuditAfterDelete,
+} from "@/payload/hooks/audit-log-hooks";
 import { siteMediaField } from "@/payload/fields/site-media-fields";
 import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
@@ -18,8 +22,8 @@ export const Branches: CollectionConfig = {
   },
   admin: {
     useAsTitle: "name",
-    group: ADMIN_GROUPS.site,
-    defaultColumns: ["name", "city", "district", "upcoming", "updatedAt"],
+    group: ADMIN_GROUPS.schools,
+    defaultColumns: ["name", "city", "district", "upcoming", "isPublished", "updatedAt"],
     description:
       "Kampüs sayfaları, iletişim formu, footer ve ana sayfa Okullarımız bölümü (#okullarimiz).",
     livePreview: {
@@ -37,16 +41,35 @@ export const Branches: CollectionConfig = {
   defaultSort: "city",
   hooks: {
     beforeChange: [trackLastEditedBy],
-    afterChange: branchRevalidateHooks.afterChange,
-    afterDelete: branchRevalidateHooks.afterDelete,
+    afterChange: [
+      ...branchRevalidateHooks.afterChange,
+      createAuditAfterChange("branches"),
+    ],
+    afterDelete: [
+      ...branchRevalidateHooks.afterDelete,
+      createAuditAfterDelete("branches"),
+    ],
   },
   access: contentCollectionAccess,
   fields: [
     adminHintField(
       "branchHint",
-      "Şube kartları #okullarimiz, footer, iletişim formu ve kampüs sayfalarını etkiler. Taslak şubeler sitede görünmez.",
+      "Şube kartları #okullarimiz, footer, iletişim formu ve kampüs sayfalarını etkiler. Yayında değil işaretli şubeler sitede görünmez.",
     ),
     siteLinkField("branchSiteLink", "/#okullarimiz", "Okullarımız bölümünü aç →"),
+    {
+      name: "isPublished",
+      type: "checkbox",
+      label: "Yayında",
+      defaultValue: true,
+      access: {
+        update: ({ req }) => hasRole(req.user as AppUser | null, "admin"),
+      },
+      admin: {
+        position: "sidebar",
+        description: "Yalnızca yönetici yayına alabilir / kaldırabilir.",
+      },
+    },
     {
       type: "tabs",
       tabs: [

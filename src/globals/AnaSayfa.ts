@@ -474,6 +474,33 @@ export const AnaSayfa: GlobalConfig = {
           ],
         },
         {
+          label: "Yemekhane",
+          description: "Ana sayfa #yemekhane bölümü — metin ve görseller. Sitede: ana sayfa yemekhane.",
+          fields: [
+            {
+              name: "yemekhaneSection",
+              type: "group",
+              label: "Yemekhane",
+              fields: [
+                {
+                  name: "paragraphs",
+                  type: "array",
+                  label: "Paragraflar",
+                  fields: [
+                    {
+                      name: "text",
+                      type: "textarea",
+                      label: "Paragraf",
+                      required: true,
+                    },
+                  ],
+                },
+                siteMediaField("media", "Yemekhane görseli"),
+              ],
+            },
+          ],
+        },
+        {
           label: "Sizi Arayalım Modal",
           description: "Açılış pop-up formu — gönderiler Gelen Kutusu → İletişim Mesajları'nda listelenir.",
           fields: [

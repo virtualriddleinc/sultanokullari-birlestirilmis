@@ -425,6 +425,8 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
                       poster: slide.posterUrl,
                     }}
                     focalPoint={slide.focalPoint}
+                    mediaScale={slide.mediaScale}
+                    mediaAspect={slide.mediaAspect}
                     priority={slide.id === slides[0].id}
                     interactive
                     onActivate={() => openSlideModal(slide)}

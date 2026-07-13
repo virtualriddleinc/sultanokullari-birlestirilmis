@@ -20,6 +20,9 @@ async function main() {
     {
       title: "Hakkımızda",
       slug: "hakkimizda",
+      pathPrefix: "kurumsal" as const,
+      template: "kurumsal-blok" as const,
+      _status: "published" as const,
       intro: "Köklerine bağlı, âtiye yürüyen nesiller için eğitim yolculuğumuz.",
       sections: [
         {
@@ -48,6 +51,9 @@ async function main() {
     {
       title: "Burs olanakları",
       slug: "burs-olanaklari",
+      pathPrefix: "kurumsal" as const,
+      template: "kurumsal-blok" as const,
+      _status: "published" as const,
       intro:
         "Hem akademik başarı hem de yönetim kurulunun onayladığı ihtiyaç durumlarında burs imkânları.",
       sections: [
@@ -69,6 +75,9 @@ async function main() {
     {
       title: "Nesil Tasavvurumuz",
       slug: "nesil-tasavvurumuz",
+      pathPrefix: "kurumsal" as const,
+      template: "kurumsal-blok" as const,
+      _status: "published" as const,
       intro: "Yetişmesini hedeflediğimiz neslin tasavvuru ve ufku.",
       sections: [
         {
@@ -80,6 +89,9 @@ async function main() {
     {
       title: "Kurumsal Kimliğimiz",
       slug: "kurumsal-kimligimiz",
+      pathPrefix: "kurumsal" as const,
+      template: "kurumsal-blok" as const,
+      _status: "published" as const,
       intro:
         "İlimde âlim, ibâdette âbid, gayrette mücahit bir neslin yetiştiği çift kanatlı eğitim modeli.",
       sections: [
@@ -92,6 +104,9 @@ async function main() {
     {
       title: "Kurumsal Değerlerimiz",
       slug: "kurumsal-degerlerimiz",
+      pathPrefix: "kurumsal" as const,
+      template: "kurumsal-blok" as const,
+      _status: "published" as const,
       intro: "Sultan Okulları'nın temel değerleri ve eğitim anlayışı.",
       sections: [
         {
@@ -103,6 +118,9 @@ async function main() {
     {
       title: "Niyetimiz ve İstikametimiz",
       slug: "niyetimiz-istikametimiz",
+      pathPrefix: "kurumsal" as const,
+      template: "kurumsal-blok" as const,
+      _status: "published" as const,
       intro: "Kurum niyeti ve eğitim istikametimiz.",
       sections: [
         {
@@ -125,12 +143,14 @@ async function main() {
         collection: "pages",
         id: existing.docs[0].id,
         data: page,
+        draft: false,
       });
       console.log(`Sayfa güncellendi: ${page.slug}`);
     } else {
       await payload.create({
         collection: "pages",
         data: page,
+        draft: false,
       });
       console.log(`Sayfa oluşturuldu: ${page.slug}`);
     }

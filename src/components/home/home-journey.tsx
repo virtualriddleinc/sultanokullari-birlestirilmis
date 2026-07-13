@@ -235,19 +235,19 @@ export function HomeJourney({
               aria-hidden={i !== 0 ? "true" : undefined}
             >
               <div className="hero-section-grid journey-stage-grid h-full w-full items-center">
-                <div className="col-span-full flex h-full flex-col justify-center gap-6 md:col-start-2 md:col-end-3 md:row-start-1">
-                  <p className="text-xs font-semibold tracking-[0.32em] text-black/70 uppercase">
+                <div className="col-span-full flex h-full flex-col justify-center gap-fluid-6 md:col-start-2 md:col-end-3 md:row-start-1">
+                  <p className="section-eyebrow text-black/70">
                     {chapter.eyebrow}
                   </p>
-                  <h3 className="text-5xl leading-[1.05] font-semibold tracking-tight text-black">
+                  <h3 className="section-title text-[length:var(--text-4xl)] text-black">
                     {chapter.title}
                   </h3>
-                  <p className="max-w-md text-base leading-7 text-black/75">
+                  <p className="section-body max-w-md text-black/75">
                     {chapter.body}
                   </p>
                   <Link
                     href={chapter.cta.href}
-                    className="inline-flex w-fit items-center gap-2 rounded-full border border-black/15 bg-white/45 px-5 py-2.5 text-sm font-semibold text-black backdrop-blur transition hover:bg-white/70"
+                    className="inline-flex min-h-[44px] w-fit items-center gap-fluid-2 rounded-full border border-black/15 bg-white/45 px-5 py-2.5 text-[length:var(--text-sm)] font-semibold text-black backdrop-blur transition hover:bg-white/70"
                   >
                     {chapter.cta.label}
                     <span aria-hidden>→</span>
@@ -299,55 +299,57 @@ export function HomeJourney({
         })}
       </div>
 
-      <div className="mx-auto grid max-w-6xl gap-4 bg-white px-4 pt-12 pb-16 sm:px-6 lg:hidden lg:pb-24">
-        {chapters.map((chapter) => {
-          const style =
-            CHAPTER_STYLES[
-              chapters.indexOf(chapter) % CHAPTER_STYLES.length
-            ] ?? CHAPTER_STYLES[0];
-          return (
-            <article
-              key={chapter.title}
-              className="relative overflow-hidden rounded-3xl border border-black/10 bg-brand-honey p-5 sm:p-6"
-            >
-              <span
-                className={cn(
-                  "pointer-events-none absolute inset-0 opacity-70",
-                  style.wash,
-                )}
-              />
-              <div className="relative flex items-center gap-4 sm:gap-5">
-                <div className="journey-hex-lead shrink-0">
-                  <HeroFramedHexMedia
-                    media={chapter.media}
-                    sizes="(max-width: 640px) 38vw, 12rem"
-                    interactive
-                    onActivate={() => openChapterModal(chapter)}
-                    activateLabel={`${chapter.eyebrow} — detayları görüntüle`}
-                  />
+      <div className="section-page-grid bg-white pt-fluid-8 pb-fluid-12 lg:hidden">
+        <div className="section-page-grid__content grid gap-fluid-4">
+          {chapters.map((chapter) => {
+            const style =
+              CHAPTER_STYLES[
+                chapters.indexOf(chapter) % CHAPTER_STYLES.length
+              ] ?? CHAPTER_STYLES[0];
+            return (
+              <article
+                key={chapter.title}
+                className="relative overflow-hidden rounded-3xl border border-black/10 bg-brand-honey p-fluid-4"
+              >
+                <span
+                  className={cn(
+                    "pointer-events-none absolute inset-0 opacity-70",
+                    style.wash,
+                  )}
+                />
+                <div className="relative flex items-center gap-fluid-4">
+                  <div className="journey-hex-lead shrink-0">
+                    <HeroFramedHexMedia
+                      media={chapter.media}
+                      sizes="(max-width: 768px) 38vw, 12rem"
+                      interactive
+                      onActivate={() => openChapterModal(chapter)}
+                      activateLabel={`${chapter.eyebrow} — detayları görüntüle`}
+                    />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="section-eyebrow text-black/70">
+                      {chapter.eyebrow}
+                    </p>
+                    <h3 className="section-title mt-fluid-2 text-[length:var(--text-xl)] text-black">
+                      {chapter.title}
+                    </h3>
+                    <p className="section-body mt-fluid-2 text-black/75">
+                      {chapter.body}
+                    </p>
+                    <Link
+                      href={chapter.cta.href}
+                      className="mt-fluid-4 inline-flex min-h-[44px] items-center gap-fluid-2 text-[length:var(--text-sm)] font-semibold text-black underline-offset-4 hover:underline"
+                    >
+                      {chapter.cta.label}
+                      <span aria-hidden>→</span>
+                    </Link>
+                  </div>
                 </div>
-                <div className="min-w-0 flex-1">
-                  <p className="text-xs font-semibold tracking-[0.28em] text-black/70 uppercase">
-                    {chapter.eyebrow}
-                  </p>
-                  <h3 className="mt-2 text-xl font-semibold tracking-tight text-black">
-                    {chapter.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-6 text-black/75">
-                    {chapter.body}
-                  </p>
-                  <Link
-                    href={chapter.cta.href}
-                    className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-black underline-offset-4 hover:underline"
-                  >
-                    {chapter.cta.label}
-                    <span aria-hidden>→</span>
-                  </Link>
-                </div>
-              </div>
-            </article>
-          );
-        })}
+              </article>
+            );
+          })}
+        </div>
       </div>
 
       <HexLandingModal

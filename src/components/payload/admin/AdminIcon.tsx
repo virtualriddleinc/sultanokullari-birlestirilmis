@@ -4,12 +4,13 @@ import React from "react";
 export default function AdminIcon() {
   return (
     <img
-      src="/logo.svg"
+      src="/admin-login-logo.svg"
       alt=""
       width={28}
       height={28}
       aria-hidden
-      style={{ display: "block" }}
+      decoding="async"
+      style={{ display: "block", width: "1.75rem", height: "auto" }}
     />
   );
 }

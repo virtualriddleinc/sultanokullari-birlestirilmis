@@ -4,12 +4,18 @@ import { AmbientSiteVideo } from "@/components/media/ambient-site-video";
 import type { SiteMedia } from "@/content/site-media";
 import { cn } from "@/lib/cn";
 import { HEX_CLIP_PATH, HEX_MEDIA_COVER_SCALE } from "./geometry";
+import {
+  computeMediaPlacement,
+  type FocalPoint,
+} from "./media-placement";
 
 export type HeroFramedHexMediaProps = {
   media: SiteMedia;
   priority?: boolean;
   sizes?: string;
-  focalPoint?: { x: number; y: number };
+  focalPoint?: FocalPoint;
+  mediaScale?: number;
+  mediaAspect?: number;
   interactive?: boolean;
   onActivate?: () => void;
   activateLabel?: string;
@@ -20,13 +26,17 @@ function FramedHexMediaInner({
   priority,
   sizes = "(max-width: 1024px) 60vw, 35vw",
   focalPoint,
+  mediaScale,
+  mediaAspect,
   interactive = false,
   onActivate,
   activateLabel,
 }: HeroFramedHexMediaProps) {
-  const objectPosition = focalPoint
-    ? `${focalPoint.x}% ${focalPoint.y}%`
-    : undefined;
+  const { wrapperStyle } = computeMediaPlacement({
+    mediaAspect,
+    mediaScale,
+    focalPoint,
+  });
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!interactive || !onActivate) return;
@@ -41,7 +51,7 @@ function FramedHexMediaInner({
       className={cn(
         "relative h-full w-full",
         interactive &&
-          "cursor-pointer touch-manipulation transition-transform duration-300 hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1a1c18]",
+          "cursor-pointer touch-manipulation transition-transform duration-300 hover:z-10 hover:scale-[1.02] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#1a1c18]",
       )}
       role={interactive ? "button" : undefined}
       tabIndex={interactive ? 0 : undefined}
@@ -54,29 +64,29 @@ function FramedHexMediaInner({
         style={{ clipPath: HEX_CLIP_PATH }}
       >
         <div
-          className="relative h-full w-full origin-center"
+          className="relative h-full w-full origin-center overflow-hidden"
           style={{ transform: `scale(${HEX_MEDIA_COVER_SCALE})` }}
         >
-          {media.kind === "video" ? (
-            <AmbientSiteVideo
-              src={media.src}
-              poster={media.poster}
-              title={media.alt}
-              preload="metadata"
-              className="absolute inset-0 h-full w-full object-cover"
-              style={objectPosition ? { objectPosition } : undefined}
-            />
-          ) : (
-            <Image
-              src={media.src}
-              alt={media.alt}
-              fill
-              sizes={sizes}
-              priority={priority}
-              className="object-cover"
-              style={objectPosition ? { objectPosition } : undefined}
-            />
-          )}
+          <div style={wrapperStyle}>
+            {media.kind === "video" ? (
+              <AmbientSiteVideo
+                src={media.src}
+                poster={media.poster}
+                title={media.alt}
+                preload="metadata"
+                className="absolute inset-0 h-full w-full object-fill"
+              />
+            ) : (
+              <Image
+                src={media.src}
+                alt={media.alt}
+                fill
+                sizes={sizes}
+                priority={priority}
+                className="object-fill"
+              />
+            )}
+          </div>
         </div>
       </div>
 

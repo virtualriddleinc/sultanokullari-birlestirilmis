@@ -35,17 +35,17 @@ export function PageShellMotion({
   const overlayMedia = mediaLayout === "overlay" && media;
 
   const headingClass = cn(
-    "font-cinzel text-3xl font-bold tracking-tight text-charcoal sm:text-4xl",
-    hero && "text-balance text-center text-4xl sm:text-5xl",
+    "font-cinzel font-bold tracking-tight text-charcoal text-[length:var(--text-3xl)]",
+    hero && "text-balance text-center text-[length:var(--text-4xl)]",
     overlayMedia &&
-      "text-balance text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)] text-4xl sm:text-5xl lg:text-6xl",
+      "text-balance text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)] text-[length:var(--text-4xl)]",
   );
 
   const introClass = cn(
-    "section-body mt-4 text-base sm:text-lg",
+    "section-body mt-fluid-4 text-[length:var(--text-base)]",
     hero && "mx-auto max-w-2xl text-center",
     overlayMedia &&
-      "text-white/90 max-w-2xl text-base sm:text-lg lg:text-xl drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]",
+      "text-white/90 max-w-2xl text-[length:var(--text-base)] drop-shadow-[0_2px_12px_rgba(0,0,0,0.4)]",
   );
 
   const sectionClass = cn(
@@ -53,7 +53,7 @@ export function PageShellMotion({
     (underHeaderMedia || overlayMedia) && "pt-fluid-4 sm:pt-fluid-8",
   );
 
-  const bodyClassName = "text-charcoal/85 mt-10 space-y-6";
+  const bodyClassName = "text-charcoal/85 mt-fluid-8 space-y-fluid-6";
   const bodyContent = (
     <div className={bodyClassName}>{children}</div>
   );

@@ -33,7 +33,7 @@ const sections = [
     content: (
       <>
         <p>Kişisel verileriniz;</p>
-        <ul className="mt-3 list-inside list-disc space-y-1.5 pl-2">
+        <ul className="mt-fluid-3 list-inside list-disc space-y-fluid-1 pl-fluid-2">
           <li>
             İlgili her türlü mevzuata uygun olarak kayıt ve ön kayıt işlemlerini
             gerçekleştirmek,
@@ -115,7 +115,7 @@ const sections = [
           KVKK&#39;nın 5. maddesi uyarınca aşağıdaki hallerde Sultan Okulları,
           açık rızanız aranmaksızın kişisel verilerinizi işleyebilir:
         </p>
-        <ul className="mt-3 list-inside list-disc space-y-1.5 pl-2">
+        <ul className="mt-fluid-3 list-inside list-disc space-y-fluid-1 pl-fluid-2">
           <li>Kanunlarda açıkça öngörüldüğü hallerde,</li>
           <li>
             Fiili imkânsızlık nedeniyle rızanızı açıklayamayacak durumda olmanız
@@ -153,7 +153,7 @@ const sections = [
     content: (
       <>
         <p>Kişisel veri sahibi olarak;</p>
-        <ul className="mt-3 list-inside list-disc space-y-1.5 pl-2">
+        <ul className="mt-fluid-3 list-inside list-disc space-y-fluid-1 pl-fluid-2">
           <li>Kişisel verilerinizin işlenip işlenmediğini öğrenme,</li>
           <li>Kişisel verileriniz işlenmişse buna ilişkin bilgi talep etme,</li>
           <li>
@@ -257,26 +257,26 @@ export default function Page() {
       title="Kişisel Verilerin Korunması ve İşlenmesine İlişkin Aydınlatma Metni"
       intro="Sultan Okulları olarak 6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) uyarınca veri sorumlusu sıfatıyla kişisel verilerinizi hangi kapsamda işlediğimizi aşağıda açıklamaktayız."
     >
-      <div className="mt-2 space-y-10">
+      <div className="mt-fluid-2 space-y-fluid-8">
         {sections.map((section) => (
           <section key={section.id} id={`bolum-${section.id.toLowerCase()}`}>
-            <h2 className="flex items-baseline gap-2 text-base font-semibold text-zinc-900 sm:text-lg">
-              <span className="shrink-0 text-xs font-bold tracking-widest text-[var(--color-primary)] uppercase">
+            <h2 className="flex items-baseline gap-fluid-2 text-[length:var(--text-base)] font-semibold text-zinc-900 md:text-[length:var(--text-lg)]">
+              <span className="shrink-0 text-[length:var(--text-xs)] font-bold tracking-widest text-[var(--color-primary)] uppercase">
                 {section.id}.
               </span>
               {section.title}
             </h2>
-            <div className="mt-3 text-sm leading-7 text-zinc-700 sm:text-base">
+            <div className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700 md:text-[length:var(--text-base)]">
               {section.content}
             </div>
           </section>
         ))}
 
-        <div className="rounded-2xl border border-[var(--color-primary)]/20 bg-[var(--color-primary-light)]/40 p-5">
-          <p className="text-xs font-semibold tracking-widest text-[var(--color-primary)] uppercase">
+        <div className="rounded-2xl border border-[var(--color-primary)]/20 bg-[var(--color-primary-light)]/40 p-fluid-4 md:p-fluid-6">
+          <p className="text-[length:var(--text-xs)] font-semibold tracking-widest text-[var(--color-primary)] uppercase">
             Veri Sorumlusu
           </p>
-          <p className="mt-2 text-sm leading-6 text-zinc-800">
+          <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-6 text-zinc-800">
             <strong>Sultan Okulları</strong> — Sorularınız veya başvurularınız
             için{" "}
             <Link

@@ -69,7 +69,11 @@ function InteractiveVideoEffects({
     if (shouldPlay === undefined) return;
 
     if (!shouldPlay) {
-      remote.pause();
+      try {
+        remote.pause();
+      } catch {
+        /* player may be destroyed */
+      }
       return;
     }
 
@@ -77,17 +81,25 @@ function InteractiveVideoEffects({
     if (!player) return;
 
     const startPlayback = () => {
-      remote.seek(0);
-      if (muted) {
-        remote.mute();
-      } else {
-        remote.unmute();
+      try {
+        remote.seek(0);
+        if (muted) {
+          remote.mute();
+        } else {
+          remote.unmute();
+        }
+        void Promise.resolve(remote.play()).catch(() => {});
+      } catch {
+        /* destroyed mid-play */
       }
-      remote.play();
     };
 
-    if (player.state.canPlay) {
-      startPlayback();
+    try {
+      if (player.state.canPlay) {
+        startPlayback();
+        return;
+      }
+    } catch {
       return;
     }
 
@@ -119,18 +131,22 @@ export function InteractiveSiteVideo({
   onEnded,
 }: InteractiveSiteVideoProps) {
   const playerRef = useRef<MediaPlayerInstance>(null);
+  const safeSrc = src?.trim() || "";
+  if (!safeSrc) return null;
 
   return (
     <MediaPlayer
       ref={playerRef}
       className={cn("site-vidstack-interactive", className)}
-      src={src}
+      src={safeSrc}
       title={title}
       poster={poster}
       autoPlay={autoPlay}
       loop={loop}
       muted={muted}
       playsInline
+      // Next DevTools, Vidstack GroupedLog içindeki Proxy state'i stringify edemez
+      logLevel="silent"
       load="visible"
     >
       <MediaProvider mediaProps={{ "aria-label": title }} />

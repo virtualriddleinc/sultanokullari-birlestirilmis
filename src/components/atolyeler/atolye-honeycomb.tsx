@@ -418,7 +418,7 @@ function Honeycomb({
 
   return (
     <div
-      className="relative mx-auto w-full max-w-5xl"
+      className="relative w-full"
       style={{ paddingTop: `${containerAspectH * 100}%` }}
       role="list"
       aria-label="Atölye ve kulüp peteği"
@@ -491,9 +491,9 @@ export function AtolyeHoneycomb() {
   }, [introDemoDone, reduce, list.length]);
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-fluid-8">
       {/* ── Filtre çubuğu ── */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-fluid-2">
         {filters.map((f) => {
           const Icon = f.Icon;
           const isActive = cat === f.id;
@@ -503,7 +503,7 @@ export function AtolyeHoneycomb() {
               type="button"
               onClick={() => setCat(f.id)}
               className={cn(
-                "inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-sm font-medium transition",
+                "inline-flex min-h-[44px] items-center gap-2 rounded-full border px-3.5 py-1.5 text-[length:var(--text-sm)] font-medium transition",
                 isActive
                   ? "border-[var(--color-primary)] bg-[var(--color-primary)] text-white shadow-[0_8px_24px_rgba(18,138,54,0.25)]"
                   : "border-zinc-200 bg-white text-zinc-700 hover:border-[var(--color-primary)]/30 hover:text-[var(--color-primary)]",
@@ -548,21 +548,29 @@ export function AtolyeHoneycomb() {
       </AnimatePresence>
 
       {/* ── Keşf-i bilim & Sanat-spor metinleri ── */}
-      <div className="grid gap-4 sm:grid-cols-2">
-        <section className="rounded-2xl border border-cyan-200/60 bg-cyan-50/60 p-5 sm:p-6">
+      <div className="grid gap-fluid-4 md:grid-cols-2">
+        <section className="rounded-2xl border border-cyan-200/60 bg-cyan-50/60 p-5 md:p-6">
           <div className="flex items-center gap-2 text-cyan-800">
             <FlaskConical className="size-4" aria-hidden />
-            <h2 className="text-base font-semibold">Keşf-i bilim</h2>
+            <h2 className="text-[length:var(--text-base)] font-semibold">
+              Keşf-i bilim
+            </h2>
           </div>
-          <p className="mt-3 text-sm leading-7 text-zinc-700">{kesfBilim}</p>
+          <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
+            {kesfBilim}
+          </p>
         </section>
 
-        <section className="rounded-2xl border border-amber-200/60 bg-amber-50/70 p-5 sm:p-6">
+        <section className="rounded-2xl border border-amber-200/60 bg-amber-50/70 p-5 md:p-6">
           <div className="flex items-center gap-2 text-amber-800">
             <Palette className="size-4" aria-hidden />
-            <h2 className="text-base font-semibold">Sanat ve spor</h2>
+            <h2 className="text-[length:var(--text-base)] font-semibold">
+              Sanat ve spor
+            </h2>
           </div>
-          <p className="mt-3 text-sm leading-7 text-zinc-700">{sanatVeSpor}</p>
+          <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
+            {sanatVeSpor}
+          </p>
         </section>
       </div>
     </div>

@@ -2,6 +2,7 @@
 
 import NextLink from 'next/link';
 import React, { useRef } from 'react';
+import { waitForRoute } from '@/lib/route-ready';
 
 interface EbruLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string;
@@ -10,6 +11,9 @@ interface EbruLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
 }
 
 type Action = { type: number; geom: number[]; color: number[]; timing: number[] };
+
+/** Upper bound while holding the filled ebru frame until the new route commits. */
+const MAX_ROUTE_WAIT_MS = 2500;
 
 function isSameRoute(href: string): boolean {
   try {
@@ -22,6 +26,22 @@ function isSameRoute(href: string): boolean {
   } catch {
     return false;
   }
+}
+
+function resolvePathname(href: string): string {
+  try {
+    return new URL(href, window.location.origin).pathname;
+  } catch {
+    return href;
+  }
+}
+
+function waitTwoFrames(): Promise<void> {
+  return new Promise((resolve) => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => resolve());
+    });
+  });
 }
 
 function uploadActions(
@@ -83,6 +103,12 @@ export function EbruLink({
 
     isTransitioning.current = true;
 
+    // Kick off navigation as early as possible so the RSC payload can load
+    // while the ebru fill phase plays (and while WebGL is being set up).
+    const targetPathname = resolvePathname(href);
+    navigate();
+    const routeReadyPromise = waitForRoute(targetPathname, MAX_ROUTE_WAIT_MS);
+
     const canvas = document.createElement('canvas');
     canvas.style.position = 'fixed';
     canvas.style.top = '0';
@@ -111,7 +137,6 @@ export function EbruLink({
 
     const gl = canvas.getContext('webgl', { premultipliedAlpha: false, alpha: true });
     if (!gl) {
-      navigate();
       finishTransition();
       return;
     }
@@ -214,7 +239,6 @@ export function EbruLink({
     const fragShader = compileShader(gl.FRAGMENT_SHADER, fsSource);
     const program = gl.createProgram();
     if (!program || !vertShader || !fragShader) {
-      navigate();
       finishTransition();
       return;
     }
@@ -325,6 +349,10 @@ export function EbruLink({
 
     t += 200;
 
+    // End of ink-fill phase — hold here until the new route has committed so
+    // the eraser phase never reveals the previous page.
+    const fillEndMs = t;
+
     for (let i = 0; i < 60; i++) {
       const x = Math.random() * width;
       const y = Math.random() * height;
@@ -333,29 +361,51 @@ export function EbruLink({
     }
 
     t += 500;
+    const totalMs = t;
 
     uploadActions(gl, actions, locActionCount, locActionGeom, locActionColor, locActionTiming);
 
-    navigate();
+    let routeReady = false;
+    void routeReadyPromise.then(async () => {
+      await waitTwoFrames();
+      routeReady = true;
+    });
 
     const startTime = performance.now();
     let canvasFadeOutStarted = false;
+    let holdStart: number | null = null;
+    let holdDurationMs = 0;
+    let wasHolding = false;
 
     const render = (now: number) => {
-      const elapsed = (now - startTime) / 1000;
+      const realElapsedMs = now - startTime;
 
-      gl.uniform1f(locTime, elapsed);
+      if (realElapsedMs >= fillEndMs && !routeReady) {
+        if (holdStart === null) holdStart = now;
+        wasHolding = true;
+      } else if (wasHolding && holdStart !== null) {
+        holdDurationMs += now - holdStart;
+        holdStart = null;
+        wasHolding = false;
+      }
+
+      const effectMs =
+        realElapsedMs >= fillEndMs && !routeReady
+          ? fillEndMs
+          : realElapsedMs - holdDurationMs;
+
+      gl.uniform1f(locTime, effectMs / 1000);
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.drawArrays(gl.TRIANGLES, 0, 6);
 
-      if (elapsed * 1000 > t + 200 && !canvasFadeOutStarted) {
+      if (effectMs > totalMs + 200 && !canvasFadeOutStarted) {
         canvasFadeOutStarted = true;
         canvas.style.transition = 'opacity 0.6s ease-out';
         canvas.style.opacity = '0';
         setTimeout(finishTransition, 600);
       }
 
-      if (elapsed * 1000 < t + 1000) {
+      if (effectMs < totalMs + 1000 || !routeReady) {
         requestAnimationFrame(render);
       }
     };

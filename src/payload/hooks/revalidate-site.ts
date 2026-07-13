@@ -3,13 +3,21 @@ import { revalidatePath } from "next/cache";
 /** Next.js önbelleğini anında temizler — CMS kayıtları sitede hemen yansır */
 export function revalidateSitePaths(...paths: string[]) {
   for (const path of paths) {
-    revalidatePath(path);
+    try {
+      revalidatePath(path);
+    } catch {
+      // Seed / CLI ortamında Next.js static generation store yok — yoksay
+    }
   }
 }
 
 /** Footer şube listesi layout.tsx içinde; layout önbelleğini de temizler */
 export function revalidateSiteLayout() {
-  revalidatePath("/", "layout");
+  try {
+    revalidatePath("/", "layout");
+  } catch {
+    // Seed / CLI ortamında yoksay
+  }
 }
 
 export const HOME_PATHS = ["/"] as const;
@@ -20,6 +28,7 @@ export const GUNCEL_PATHS = [
   "/",
   "/guncel/haberler",
   "/guncel/etkinlikler",
+  "/guncel/medya",
 ] as const;
 
 export const BRANCH_PATHS = [
@@ -37,7 +46,10 @@ export const BRANCH_PATHS = [
   "/okullarimiz/konya/mevlana",
 ] as const;
 
-export function revalidatePageSlug(slug: string) {
+export function revalidatePageSlug(
+  slug: string,
+  pathPrefix?: string | null,
+) {
   if (slug === "hakkimizda") {
     revalidateSitePaths("/kurumsal/hakkimizda");
     return;
@@ -46,7 +58,9 @@ export function revalidatePageSlug(slug: string) {
     revalidateSitePaths("/kurumsal/burs-olanaklari");
     return;
   }
-  revalidateSitePaths(`/kurumsal/${slug}`);
+  const prefix = pathPrefix || "kurumsal";
+  const path = prefix === "root" ? `/${slug}` : `/${prefix}/${slug}`;
+  revalidateSitePaths(path);
 }
 
 export function revalidateBranchSlugs(

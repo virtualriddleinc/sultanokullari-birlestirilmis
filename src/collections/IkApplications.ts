@@ -88,6 +88,15 @@ export const IkApplications: CollectionConfig = {
       required: true,
     },
     {
+      name: "cv",
+      type: "upload",
+      relationTo: "application-files",
+      label: "CV dosyası",
+      admin: {
+        description: "PDF veya Word, en fazla 5 MB.",
+      },
+    },
+    {
       name: "status",
       type: "select",
       label: "Durum",

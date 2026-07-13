@@ -33,7 +33,7 @@ export const SSS_CATEGORIES: SssCategory[] = [
       {
         question: "Sultan Okulları yabancı dil eğitimi var mı?",
         answer:
-          "Evet. Çift yabancı dil programımız İngilizce ve Arapça odaklıdır. Detaylar için /egitim/cift-yabanci-dil sayfasını ziyaret edebilirsiniz.",
+          "Evet. Çift yabancı dil programımız İngilizce ve Arapça odaklıdır. Detaylar için /akademik/yabanci-dil sayfasını ziyaret edebilirsiniz.",
       },
       {
         question: "Değerler eğitimi nasıl uygulanıyor?",

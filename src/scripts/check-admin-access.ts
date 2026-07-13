@@ -22,11 +22,11 @@ async function main() {
       await payload.update({
         collection: "users",
         id: user.id,
-        data: { roles: ["admin"] },
+        data: { roles: ["editor"] },
         overrideAccess: true,
       });
-      roles = ["admin"];
-      console.log(`${user.email}: roles düzeltildi → ["admin"]`);
+      roles = ["editor"];
+      console.log(`${user.email}: roles düzeltildi → ["editor"] (boş rol asla admin yapılmaz)`);
     }
     const canEditUser = { ...user, roles };
     const canEdit = await isAdminOrEditor({

@@ -4,12 +4,20 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 
 import { ADMIN_GROUPS } from "@/payload/admin-groups";
 import { buildPreviewUrl } from "@/lib/preview-url";
-import { contentCollectionAccess } from "@/payload/access";
+import { draftContentCollectionAccess } from "@/payload/access";
 import { guncelRevalidateHooks } from "@/payload/hooks/collection-hooks";
 import { trackLastEditedBy } from "@/payload/hooks/audit-hooks";
-import { restrictEditorPublish } from "@/payload/hooks/publish-access";
+import {
+  createAuditAfterChange,
+  createAuditAfterDelete,
+} from "@/payload/hooks/audit-log-hooks";
+import {
+  applyScheduledPublish,
+  restrictEditorPublish,
+} from "@/payload/hooks/publish-access";
 import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
+import { publishAtField } from "@/payload/fields/publish-at-field";
 import { seoFields } from "@/payload/fields/seo-fields";
 
 export const Events: CollectionConfig = {
@@ -20,7 +28,7 @@ export const Events: CollectionConfig = {
   },
   admin: {
     useAsTitle: "title",
-    group: ADMIN_GROUPS.site,
+    group: ADMIN_GROUPS.content,
     defaultColumns: ["title", "date", "branch", "featuredImage", "_status", "updatedAt"],
     description: "Ana sayfa Güncel bölümü (#guncel) ve /guncel/etkinlikler sayfası.",
     livePreview: {
@@ -34,12 +42,20 @@ export const Events: CollectionConfig = {
   },
   defaultSort: "-date",
   hooks: {
-    ...guncelRevalidateHooks,
-    beforeChange: [trackLastEditedBy, restrictEditorPublish],
+    beforeChange: [trackLastEditedBy, applyScheduledPublish, restrictEditorPublish],
+    afterChange: [
+      ...guncelRevalidateHooks.afterChange,
+      createAuditAfterChange("events"),
+    ],
+    afterDelete: [
+      ...guncelRevalidateHooks.afterDelete,
+      createAuditAfterDelete("events"),
+    ],
   },
-  access: contentCollectionAccess,
+  access: draftContentCollectionAccess,
   versions: {
     drafts: true,
+    maxPerDoc: 25,
   },
   fields: [
     adminHintField(
@@ -47,6 +63,7 @@ export const Events: CollectionConfig = {
       "Yayınlanan etkinlikler #guncel ve /guncel/etkinlikler sayfasında listelenir. Slug ile detay sayfası oluşur.",
     ),
     siteLinkField("eventsSiteLink", "/guncel/etkinlikler", "Etkinlikler listesini aç →"),
+    publishAtField,
     {
       type: "tabs",
       tabs: [

@@ -25,17 +25,22 @@ export function AmbientSiteVideo({
   preload = "metadata",
   playerKey,
 }: AmbientSiteVideoProps) {
+  const safeSrc = src?.trim() || "";
+  if (!safeSrc) return null;
+
   return (
     <MediaPlayer
-      key={playerKey ?? src}
+      key={playerKey ?? safeSrc}
       className={cn("site-vidstack-ambient", className)}
-      src={src}
+      src={safeSrc}
       title={title}
       poster={poster}
       autoPlay={autoPlay}
       muted
       loop
       playsInline
+      // Next DevTools, Vidstack GroupedLog içindeki Proxy state'i stringify edemez
+      logLevel="silent"
       load={preload === "none" ? "idle" : "visible"}
     >
       <MediaProvider

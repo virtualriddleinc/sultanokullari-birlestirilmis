@@ -58,7 +58,7 @@ export function HakkimizdaNav() {
   return (
     <nav
       aria-label="Hakkımızda bölüm gezinmesi"
-      className="mb-10 w-fit max-w-full rounded-full border border-zinc-200 bg-white/85 p-1.5 shadow-[0_18px_60px_rgba(15,23,42,0.10)] backdrop-blur-md"
+      className="mb-fluid-8 w-fit max-w-full rounded-full border border-zinc-200 bg-white/85 p-1.5 shadow-[0_18px_60px_rgba(15,23,42,0.10)] backdrop-blur-md"
     >
       <ul className="flex items-center gap-1">
         {sections.map((s) => {
@@ -70,7 +70,7 @@ export function HakkimizdaNav() {
                 onClick={() => scrollTo(s.id)}
                 aria-current={isActive ? "true" : undefined}
                 className={cn(
-                  "inline-flex items-center rounded-full px-3.5 py-1.5 text-[0.7rem] font-semibold tracking-[0.18em] uppercase transition sm:px-4 sm:text-xs",
+                  "inline-flex min-h-[44px] items-center rounded-full px-fluid-4 py-2 text-[length:var(--text-xs)] font-semibold tracking-[0.18em] uppercase transition",
                   isActive
                     ? "bg-[var(--color-primary)] text-white shadow-sm"
                     : "text-zinc-700 hover:text-[var(--color-primary)]",

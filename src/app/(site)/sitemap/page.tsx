@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 
 import { SiteMapContent } from "@/components/sitemap/site-map-content";
 import { PageShell } from "@/components/page-shell";
+import { getNavigationExtraLinks } from "@/lib/navigation-data";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Site Haritası",
@@ -11,14 +14,16 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/sitemap",
 });
 
-export default function SitemapPage() {
+export default async function SitemapPage() {
+  const extraLinks = await getNavigationExtraLinks();
+
   return (
     <PageShell
       title="Site Haritası"
       intro="Sultan Okulları web sitesindeki tüm bölümlere kolayca erişin. Sayfalarımızın kategorik ve düzenli listesi."
       bodyMotion="immediate"
     >
-      <SiteMapContent />
+      <SiteMapContent extraLinks={extraLinks} />
     </PageShell>
   );
 }

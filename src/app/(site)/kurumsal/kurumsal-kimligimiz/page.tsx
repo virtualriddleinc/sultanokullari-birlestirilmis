@@ -1,18 +1,34 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { kurumsalTimeline } from "@/content/kurumsal";
 import { kurumsalKimlikGalleryMedia } from "@/content/site-media";
+import { CmsPageSections } from "@/components/cms/cms-page-sections";
 import { PageShell } from "@/components/page-shell";
 import { KurumsalKurulusHikayesi } from "@/components/kurumsal/kurumsal-kurulus-hikayesi";
 import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-galeri";
 import { KurumsalTimelineSection } from "@/components/kurumsal/kurumsal-timeline-section";
+import { getPageBySlug } from "@/lib/pages-data";
 import { PAGE_MEDIA } from "@/lib/menu-images";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Kurumsal Kimliğimiz",
   description: "Sultan Okulları kuruluş ve kurumsal kimlik.",
 };
 
-export default function Page() {
+export default async function Page() {
+  const { isEnabled: isDraft } = await draftMode();
+  const cmsPage = await getPageBySlug("kurumsal-kimligimiz", { draft: isDraft });
+
+  if (cmsPage?.sections?.length) {
+    return (
+      <PageShell title={cmsPage.title} intro={cmsPage.intro ?? undefined}>
+        <CmsPageSections sections={cmsPage.sections} />
+      </PageShell>
+    );
+  }
+
   return (
     <PageShell
       title="Kurumsal Kimliğimiz"

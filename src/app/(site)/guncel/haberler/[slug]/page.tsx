@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "@/components/navigation/site-link";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 import { CmsRichText } from "@/components/cms/cms-rich-text";
+import { GeoCitationBlock } from "@/components/geo/geo-citation-block";
+import { PageFaqSection } from "@/components/geo/page-faq-section";
 import { PageShell } from "@/components/page-shell";
 import { getNewsBySlug } from "@/lib/guncel-data";
 import { buildCmsPageMetadata } from "@/lib/seo/cms-seo";
@@ -29,7 +32,8 @@ function formatDate(iso: string) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const news = await getNewsBySlug(slug);
+  const { isEnabled: isDraft } = await draftMode();
+  const news = await getNewsBySlug(slug, { draft: isDraft });
   if (!news) return { title: "Haber bulunamadı" };
   return buildCmsPageMetadata({
     seoTitle: news.seoTitle,
@@ -47,7 +51,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
-  const news = await getNewsBySlug(slug);
+  const { isEnabled: isDraft } = await draftMode();
+  const news = await getNewsBySlug(slug, { draft: isDraft });
   if (!news) notFound();
 
   const structuredData = [
@@ -63,38 +68,47 @@ export default async function Page({ params }: Props) {
     <>
       <JsonLd data={structuredData} />
       <PageShell title={news.title} intro={news.excerpt}>
-      <p className="text-sm text-zinc-500">{formatDate(news.date)}</p>
+        <p className="text-[length:var(--text-sm)] text-zinc-500">
+          {formatDate(news.date)}
+        </p>
 
-      {news.featuredImageUrl ? (
-        <div className="relative mt-6 aspect-[16/9] max-w-3xl overflow-hidden rounded-lg">
-          <Image
-            src={news.featuredImageUrl}
-            alt={news.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 768px"
-            priority
-          />
-        </div>
-      ) : null}
+        {news.featuredImageUrl ? (
+          <div className="relative mt-fluid-6 aspect-[16/9] w-full max-w-3xl overflow-hidden rounded-lg">
+            <Image
+              src={news.featuredImageUrl}
+              alt={news.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 768px"
+              priority
+            />
+          </div>
+        ) : null}
 
-      {news.body ? (
-        <div className="prose prose-zinc mt-8 max-w-3xl">
-          <CmsRichText data={news.body as Record<string, unknown>} />
-        </div>
-      ) : (
-        <p className="mt-6 text-zinc-700">{news.excerpt}</p>
-      )}
+        {news.body ? (
+          <div className="prose prose-zinc mt-fluid-8 max-w-3xl">
+            <CmsRichText data={news.body as Record<string, unknown>} />
+          </div>
+        ) : (
+          <p className="mt-fluid-6 text-zinc-700">{news.excerpt}</p>
+        )}
 
-      <p className="mt-10">
-        <Link
-          href="/guncel/haberler"
-          className="text-sm font-medium text-[var(--color-primary)] hover:underline"
-        >
-          ← Tüm haberler
-        </Link>
-      </p>
-    </PageShell>
+        {news.geoCitationSummary ? (
+          <GeoCitationBlock>{news.geoCitationSummary}</GeoCitationBlock>
+        ) : null}
+        {news.faqItems?.length ? (
+          <PageFaqSection items={news.faqItems} />
+        ) : null}
+
+        <p className="mt-fluid-8">
+          <Link
+            href="/guncel/haberler"
+            className="inline-flex min-h-[44px] items-center text-[length:var(--text-sm)] font-medium text-[var(--color-primary)] hover:underline"
+          >
+            ← Tüm haberler
+          </Link>
+        </p>
+      </PageShell>
     </>
   );
 }

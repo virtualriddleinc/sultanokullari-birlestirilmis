@@ -237,18 +237,18 @@ export function HomeInstagramHorizontal({
 
       <div className="section-page-grid pt-fluid-8 pb-0 sm:pt-fluid-16">
         <div className="section-page-grid__content">
-          <div className="flex flex-wrap items-end justify-between gap-6">
+          <div className="flex flex-wrap items-end justify-between gap-fluid-6">
             <div className="max-w-2xl">
               <p className="section-eyebrow">{eyebrow}</p>
-              <h2 className="section-title mt-4">{title}</h2>
-              <p className="section-body mt-4 max-w-xl">{description}</p>
+              <h2 className="section-title mt-fluid-3">{title}</h2>
+              <p className="section-body mt-fluid-3 max-w-xl">{description}</p>
             </div>
             <Link
               href={profileUrl}
               target="_blank"
               rel="noreferrer"
               aria-label={`Instagram'da ${handle}`}
-              className="group border-charcoal/10 text-charcoal hover:border-brand-green/30 inline-flex items-center gap-2.5 rounded-full border bg-white px-4 py-2 text-sm font-semibold shadow-sm transition hover:shadow-md"
+              className="group border-charcoal/10 text-charcoal hover:border-brand-green/30 inline-flex min-h-[44px] items-center gap-fluid-2 rounded-full border bg-white px-4 py-2 text-[length:var(--text-sm)] font-semibold shadow-sm transition hover:shadow-md"
             >
               <InstagramGlyph className="size-5 transition-transform group-hover:scale-110" />
               <span>{handle}</span>
@@ -257,15 +257,16 @@ export function HomeInstagramHorizontal({
         </div>
       </div>
 
-      <div className="horiz-gallery-wrapper relative mt-5 w-full overflow-hidden sm:mt-6">
+      <div className="horiz-gallery-wrapper relative mt-fluid-4 w-full overflow-x-clip overflow-y-hidden">
         <div
           ref={stripRef}
           className={cn(
             "horiz-gallery-strip flex flex-nowrap will-change-transform",
             // Mobile / reduced-motion fallback: native horizontal scroll-snap.
-            "snap-x snap-mandatory overflow-x-auto scroll-smooth px-4 pb-6 [-ms-overflow-style:none] [scrollbar-width:none] sm:px-6 [&::-webkit-scrollbar]:hidden",
+            "snap-x snap-mandatory overflow-x-auto scroll-smooth pb-fluid-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+            "px-[var(--mobile-chrome-gutter)] md:px-[calc(var(--layout-margin)+clamp(1rem,2.5vw,2.5rem))]",
             // Desktop with motion: GSAP auto-scroll; disable native overflow.
-            "lg:motion-safe:overflow-visible lg:motion-safe:px-[6vw]",
+            "lg:motion-safe:overflow-visible",
           )}
         >
           {posts.map((post, index) => (
@@ -285,7 +286,7 @@ export function HomeInstagramHorizontal({
                   handleReelOpen(index);
                 }
               }}
-              className="project-wrap relative box-border flex w-[min(82vw,18rem)] shrink-0 cursor-pointer snap-start px-2 transition-transform duration-300 hover:z-10 hover:scale-[1.02] sm:w-[20rem] md:w-[22rem] lg:w-[23rem] lg:px-3"
+              className="project-wrap relative box-border flex w-[min(82vw,18rem)] shrink-0 cursor-pointer snap-start px-fluid-2 transition-transform duration-300 hover:z-10 hover:scale-[1.02] md:w-[22rem] lg:w-[23rem] lg:px-fluid-3"
             >
               <InstagramEmbed
                 post={post}
@@ -303,7 +304,7 @@ export function HomeInstagramHorizontal({
         {modalPost?.videoSrc ? (
           <motion.div
             key="instagram-reel-lightbox"
-            className="fixed inset-0 z-[100] flex items-center justify-center p-2 sm:p-4"
+            className="fixed inset-0 z-[100] flex items-center justify-center p-fluid-2 md:p-fluid-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

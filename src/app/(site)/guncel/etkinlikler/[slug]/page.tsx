@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "@/components/navigation/site-link";
+import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 import { CmsRichText } from "@/components/cms/cms-rich-text";
+import { GeoCitationBlock } from "@/components/geo/geo-citation-block";
+import { PageFaqSection } from "@/components/geo/page-faq-section";
 import { PageShell } from "@/components/page-shell";
 import { getEventBySlug } from "@/lib/guncel-data";
 import { buildCmsPageMetadata } from "@/lib/seo/cms-seo";
@@ -29,7 +32,8 @@ function formatDate(iso: string) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const event = await getEventBySlug(slug);
+  const { isEnabled: isDraft } = await draftMode();
+  const event = await getEventBySlug(slug, { draft: isDraft });
   if (!event) return { title: "Etkinlik bulunamadı" };
   return buildCmsPageMetadata({
     seoTitle: event.seoTitle,
@@ -47,7 +51,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
-  const event = await getEventBySlug(slug);
+  const { isEnabled: isDraft } = await draftMode();
+  const event = await getEventBySlug(slug, { draft: isDraft });
   if (!event) notFound();
 
   const structuredData = [
@@ -63,38 +68,47 @@ export default async function Page({ params }: Props) {
     <>
       <JsonLd data={structuredData} />
       <PageShell title={event.title} intro={event.excerpt}>
-      <p className="text-sm text-zinc-500">{formatDate(event.date)}</p>
+        <p className="text-[length:var(--text-sm)] text-zinc-500">
+          {formatDate(event.date)}
+        </p>
 
-      {event.featuredImageUrl ? (
-        <div className="relative mt-6 aspect-[16/9] max-w-3xl overflow-hidden rounded-lg">
-          <Image
-            src={event.featuredImageUrl}
-            alt={event.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 768px"
-            priority
-          />
-        </div>
-      ) : null}
+        {event.featuredImageUrl ? (
+          <div className="relative mt-fluid-6 aspect-[16/9] w-full max-w-3xl overflow-hidden rounded-lg">
+            <Image
+              src={event.featuredImageUrl}
+              alt={event.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 768px"
+              priority
+            />
+          </div>
+        ) : null}
 
-      {event.body ? (
-        <div className="prose prose-zinc mt-8 max-w-3xl">
-          <CmsRichText data={event.body as Record<string, unknown>} />
-        </div>
-      ) : (
-        <p className="mt-6 text-zinc-700">{event.excerpt}</p>
-      )}
+        {event.body ? (
+          <div className="prose prose-zinc mt-fluid-8 max-w-3xl">
+            <CmsRichText data={event.body as Record<string, unknown>} />
+          </div>
+        ) : (
+          <p className="mt-fluid-6 text-zinc-700">{event.excerpt}</p>
+        )}
 
-      <p className="mt-10">
-        <Link
-          href="/guncel/etkinlikler"
-          className="text-sm font-medium text-[var(--color-primary)] hover:underline"
-        >
-          ← Tüm etkinlikler
-        </Link>
-      </p>
-    </PageShell>
+        {event.geoCitationSummary ? (
+          <GeoCitationBlock>{event.geoCitationSummary}</GeoCitationBlock>
+        ) : null}
+        {event.faqItems?.length ? (
+          <PageFaqSection items={event.faqItems} />
+        ) : null}
+
+        <p className="mt-fluid-8">
+          <Link
+            href="/guncel/etkinlikler"
+            className="inline-flex min-h-[44px] items-center text-[length:var(--text-sm)] font-medium text-[var(--color-primary)] hover:underline"
+          >
+            ← Tüm etkinlikler
+          </Link>
+        </p>
+      </PageShell>
     </>
   );
 }

@@ -90,7 +90,7 @@ Bu projede aşağıdaki yığın ve sürümler sabitlenmiştir:
 
 Çatı (Framework): Next.js (App Router) + TypeScript + React 19.
 
-Stil: Tailwind CSS v4 (CSS-first @theme yapılandırması; tasarım token'ları src/app/globals.css içinde).
+Stil: Tailwind CSS v4 (CSS-first @theme yapılandırması; tasarım token'ları src/app/(site)/globals.css içinde).
 
 Bileşen Kiti (Hibrit Strateji): Bileşen ihtiyaçlarında aşağıdaki öncelik sırası uygulanır:
 
@@ -106,7 +106,7 @@ Ek Kütüphaneler:
 
 Backend: Supabase şimdilik kurulmamıştır; ihtiyaç doğduğunda integrations/supabase altında eklenecektir.
 
-Stil yardımcısı: Sınıf birleştirme için src/lib/utils.ts içindeki cn() (clsx + tailwind-merge) kullanılacaktır.
+Stil yardımcısı: Sınıf birleştirme için src/lib/cn.ts içindeki cn() (clsx + tailwind-merge) kullanılacaktır.
 
 Komutlar: npm run dev | build | start | lint | typecheck | format.
 
@@ -379,11 +379,12 @@ butonun iç flex/grid yapısıyla sağlanır.
 7.7 Responsive Grid Kuralları
 ─────────────────────────────────────────────────────────────────────────────
 
-A) Grid kırılım noktaları yalnızca Tailwind CSS breakpoint prefixleriyle yönetilir:
-sm (640px), md (768px), lg (1024px), xl (1280px), 2xl (1536px)
+A) Grid kırılım noktaları yalnızca Tailwind CSS breakpoint prefixleriyle yönetilir.
+Yapısal layout: md (768px), lg (1024px). İnce tipografi/spacing: sm (~640px).
+Ayrıntılı sözlük: §8.3.
 
-B) Mobil varsayılan (320-1023px): tek sütun veya 2 sütunlu basitleştirilmiş grid.
-Desktop (1024px+): 8 kolonlu tam grid.
+B) Mobil varsayılan (<768px): tek sütun veya 2 sütunlu basitleştirilmiş grid.
+Tablet (768–1023px): orta grid. Desktop (1024px+): tam nav-hizalı grid.
 
 C) Fluid değerler (clamp, vw) sütun genişliklerinde breakpoint sayısını azaltır.
 Bir değer iki breakpoint arasında düzgün geçiş yapıyorsa sabit breakpoint eklenmez.
@@ -457,7 +458,128 @@ teyit edilir; onaylanmayan section PR'a alınmaz:
 [ ] Her grid öğesi explicit col/row ile yerleştirilmiş
 [ ] 360px, 768px, 1024px, 1440px genişliklerinde görsel bozukluk yok
 
-8. AI (Cursor) İçin Talimatlar
+8. Responsive ve Site Geneli Layout Matrisi
+
+Bu bölüm, §6–§7 grid disiplinini tüm public sayfalara yaymak için layout tipi,
+gutter, breakpoint, tipografi/spacing ve test kapısı kurallarını sabitler.
+Stil kaynağı: `src/app/(site)/globals.css` (eski yollardaki `src/app/globals.css` referansları buna işaret eder).
+Kapsam: yalnızca public site; `/admin` (Payload) dışıdır.
+
+─────────────────────────────────────────────────────────────────────────────
+8.1 Layout tipi matrisi
+─────────────────────────────────────────────────────────────────────────────
+
+Her sayfa / section oluşturulmadan önce tipi belirlenir; karışık kullanım yasaktır.
+
+Tip A — Pazarlama / full-bleed (nav-hizalı):
+- Kullanım: ana sayfa hero, mission, kampüs showcase, nav ile sıfır hiza gereken section'lar
+- Kabuk: `SectionGrid` + `.section-page-grid` veya explicit nav-hizalı grid
+  (`.hero-section-grid`, `.mission-section-grid`, `.nav-header-grid`)
+- YASAK: `max-w-* mx-auto` ile içerik daraltmak (nav hizasını bozar)
+- Outer gutter: explicit kolon veya `.section-page-grid` kuralları; ad-hoc `px-4` yasak
+
+Tip B — İçerik sayfası (PageShell):
+- Kullanım: kurumsal/eğitim/akademik/rehberlik/kampüs içerik sayfaları, güncel list/detay, yasal
+- Kabuk: `PageShell` / `QuoteOverlayPageShell` / `EgitimSegmentShell` + `.section-page-grid`
+- İçerik genişliği: `.page-shell-content` (max-width: 72rem) **yalnızca Tip B'de**
+- Section dikey: `py-fluid-8 sm:py-fluid-16` (SectionGrid varsayılanı)
+
+Tip C — Özel kompozisyon:
+- Kullanım: iletişim, insan kaynakları, idari kadro, atölyeler, rehberlik landing
+- Outer gutter yine nav token'larıyla hizalanır
+- YASAK: serbest `px-4` / `max-w-6xl mx-auto` ile “yaklaşık” container
+- Doğru: `--layout-margin` + buffer + `--grid-gutter` veya `.section-page-grid` / Tip A outer gutter formülü
+
+─────────────────────────────────────────────────────────────────────────────
+8.2 Gutter matrisi
+─────────────────────────────────────────────────────────────────────────────
+
+| Bağlam | Token / formül | Ne zaman |
+|--------|----------------|----------|
+| Desktop outer (`lg+`) | `--layout-margin` (5px) + `clamp(1rem, 2.5vw, 2.5rem)` buffer + `--grid-gutter` (20px) | Nav-hizalı Tip A/C section'lar |
+| Mobil chrome | `--mobile-chrome-gutter` (1rem / 16px) | Header hamburger, mobil drawer, mobil CTA hizası |
+| İçerik section (mobil) | `.section-page-grid` padding/kolon kuralları | Tip A/B section içerikleri |
+| Kolon arası | `--grid-gutter` (20px) | Explicit inner gutter veya eşit gap'li simetrik grid |
+
+YASAK — içerik section'larda negatif margin (`-mx-*`) ile full-bleed zorlamak
+(hero telefon kuralı ile uyumlu; bkz. proje-kararlari §7).
+
+YASAK — Tip A'da `--mobile-chrome-gutter` ile desktop outer gutter'ı karıştırmak.
+
+─────────────────────────────────────────────────────────────────────────────
+8.3 Breakpoint sözlüğü (tek gerçek)
+─────────────────────────────────────────────────────────────────────────────
+
+Yapısal layout kırılımları (kolon sayısı, nav ↔ hamburger, hero grid ↔ stack):
+
+| Ad | Genişlik | Kullanım |
+|----|----------|----------|
+| Telefon | `< 768px` (`md` altı) | Tek sütun / basitleştirilmiş stack |
+| Tablet | `768px – 1023px` | Orta grid; gerekirse 2 kolon |
+| Desktop | `≥ 1024px` (`lg+`) | Tam nav, 8 kolon / hero 4 kolon grid |
+
+Tailwind prefix kuralları:
+- `md` / `lg`: yapısal layout kırılımı (zorunlu tercih)
+- `sm` (~640px): yalnızca ince tipografi / spacing ayarı; kolon yapısı değiştirmez
+- `xl` / `2xl`: isteğe bağlı ince ayar
+
+`@theme` içindeki `--breakpoint-sm: 480px` özel token'dır; Tailwind'in `sm:` prefix'i (~640px)
+ile aynı değildir. Yapısal kararlarda `@theme --breakpoint-sm` kullanılmaz; `md`/`lg` kullanılır.
+`--breakpoint-xs` (360px) minimum desteklenen genişlik referansıdır.
+
+─────────────────────────────────────────────────────────────────────────────
+8.4 Tipografi ve spacing zorunlulukları
+─────────────────────────────────────────────────────────────────────────────
+
+Tipografi:
+- Section başlıkları: `.section-eyebrow` / `.section-title` / `.section-body`
+  veya fluid `text-[length:var(--text-*)]`
+- Sabit `text-2xl` / `text-[0.88rem]` gibi ad-hoc boyutlar yeni kodda yasak;
+  mevcut kod responsive turlarında fluid/semantik sınıflara taşınır
+- Marka başlık/nav: Cinzel (`.font-cinzel`); gövde: Geist Sans
+- İSTİSNA — petek/altıgen hücre metni: Hücre geometrisine özel rem skalası korunur
+  (örn. `HomeNedenPreview` HexCell: `text-[1.32rem] … xl:text-[1.35rem]`).
+  Fluid viewport token'ları dar hex hücrede yerleşimi bozar; bu bağlamda kullanılmaz.
+
+Spacing:
+- Section dikey: `py-fluid-8 sm:py-fluid-16`
+- Fluid skala (globals.css `@theme`): `fluid-1`, `fluid-2`, `fluid-3`, `fluid-4`,
+  `fluid-6`, `fluid-8`, `fluid-12`, `fluid-16`
+- Dokunma hedefi: min 44px (`min-h-[44px]` / nav-link-header)
+
+─────────────────────────────────────────────────────────────────────────────
+8.5 Hizalama test kapısı (her bölüm)
+─────────────────────────────────────────────────────────────────────────────
+
+Bir section tamamlandığında şu genişliklerde doğrulanır; onaylanmadan sonraki bölüme geçilmez:
+
+Genişlikler: 360 / 390 / 768 / 1024 / 1280 / 1536
+
+Kontrol listesi:
+[ ] Yatay taşma yok (`overflow-x` clip dışında içerik taşmıyor)
+[ ] Tip A/C: sol/sağ içerik kenarı nav buton kenarıyla örtüşüyor (sıfıra sıfır)
+[ ] Tip B: `.page-shell-content` içinde okunabilir satır uzunluğu; kenar padding tutarlı
+[ ] Metin okunur; fluid tipografi aşırı küçülmüyor / taşmıyor
+[ ] Dokunma hedefleri ≥ 44px
+[ ] Görseller en-boy oranını bozmuyor; absolute öğeler komşu içeriği ezmiyor
+[ ] Desktop (`lg+`) laptop referans layout bozulmamış
+
+─────────────────────────────────────────────────────────────────────────────
+8.6 Paylaşılan bileşen tercihi
+─────────────────────────────────────────────────────────────────────────────
+
+Yeni section yazarken önce şu sarmalayıcılar denenir; özel grid son çaredir:
+
+1. `SectionGrid` — Tip A/B section kabuğu
+2. `PageShell` / `PageShellMotion` — Tip B sayfa kabuğu
+3. `PageStorySection` / `PageDividerSection` / `PageListSection` — içerik blokları
+4. `SectionHeading` — eyebrow + title + description (`align: left | center`)
+5. `ContentCard` — bal köpüğü yüzey
+
+`.layout-grid` (8 kolon yardımcı sınıf) kullanılmaz; Tip A için `.section-page-grid`
+veya explicit nav-hizalı grid tercih edilir.
+
+9. AI (Cursor) İçin Talimatlar
 
 Sevgili AI Asistanı, bu projede kod yazarken şu kurallara dikkat et:
 
@@ -465,6 +587,7 @@ Bir bileşen oluşturmadan önce daima docs/content/site-metin-icerigi.pdf dosya
 
 "Lorem Ipsum" kullanmaktan kaçın; bağlam yoksa kullanıcıdan bilgi iste.
 
-UI kodlarken gap, padding ve hizalama konularında mükemmelliyetçi ol. flex ve grid yapılarını rastgele değil, bilinçli bir matris mantığıyla kur.
+UI kodlarken gap, padding ve hizalama konularında mükemmelliyetçi ol. flex ve grid yapılarını rastgele değil, bilinçli bir matris mantığıyla kur. §8 layout tipi / gutter / breakpoint matrisine uy.
 
 Bileşen isimlerinde PascalCase, dosya isimlerinde kebab-case kullan (örn: MegaMenu.tsx yerine mega-menu.tsx veya tercih edilen yapıya göre).
+`)

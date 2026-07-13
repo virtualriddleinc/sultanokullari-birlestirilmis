@@ -60,9 +60,8 @@
   border-bottom: 1px solid var(--sultan-border);
 }
 
-/* Butonlar */
-.template-default .btn--style-primary,
-.template-minimal .btn--style-primary {
+/* Butonlar — panel içi */
+.template-default .btn--style-primary {
   background-color: var(--sultan-charcoal);
   border-color: var(--sultan-charcoal);
   color: #fff;
@@ -70,8 +69,7 @@
   font-weight: 600;
 }
 
-.template-default .btn--style-primary:hover,
-.template-minimal .btn--style-primary:hover {
+.template-default .btn--style-primary:hover {
   background-color: color-mix(in srgb, var(--sultan-charcoal) 82%, var(--sultan-green));
   border-color: color-mix(in srgb, var(--sultan-charcoal) 82%, var(--sultan-green));
 }
@@ -92,19 +90,144 @@
   outline-offset: 2px;
 }
 
-/* Login */
-.template-minimal .login__brand {
+/* ─── Login: bal köpüğü + yeşil marka ─── */
+.template-minimal.login {
   position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.25rem, 3vw, 2.75rem);
+  overflow: hidden;
+  background:
+    radial-gradient(
+      110% 80% at 12% 10%,
+      color-mix(in srgb, var(--sultan-honey) 85%, white) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      90% 70% at 90% 90%,
+      color-mix(in srgb, var(--sultan-honey) 55%, var(--sultan-green)) 0%,
+      transparent 50%
+    ),
+    linear-gradient(
+      160deg,
+      #fffce8 0%,
+      var(--sultan-honey) 38%,
+      color-mix(in srgb, var(--sultan-honey) 70%, white) 100%
+    );
 }
 
-.template-minimal .login__brand::after {
+.template-minimal.login::before {
   content: "";
-  display: block;
-  height: 3px;
-  width: 4rem;
-  margin: 0.75rem auto 0;
-  border-radius: 999px;
-  background: var(--sultan-gradient-brand);
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: url("/desen.svg") center / cover no-repeat;
+  opacity: 0.08;
+  mix-blend-mode: multiply;
+}
+
+/* Payload max-width:480px kısıtını aş */
+.template-minimal.login.template-minimal--width-normal .template-minimal__wrap,
+.template-minimal.login .template-minimal__wrap {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 480px);
+  max-width: min(100%, 480px);
+  margin: 0 auto;
+  padding: 0;
+  border-radius: calc(var(--sultan-radius-lg) + 6px);
+  background: var(--sultan-surface);
+  border: 1px solid color-mix(in srgb, var(--sultan-charcoal) 10%, transparent);
+  box-shadow: var(--sultan-shadow-soft);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.template-minimal.login .template-minimal__wrap::before {
+  content: none;
+}
+
+/* Payload Logo bileşeni girişte gizlenir — marka sol panelde */
+.template-minimal.login .login__brand {
+  display: none !important;
+}
+
+.template-minimal.login .login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.05rem;
+  padding: 1.6rem 1.55rem 1.85rem;
+}
+
+.template-minimal.login .login__form__inputWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.template-minimal.login .field-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: color-mix(in srgb, var(--sultan-charcoal) 78%, transparent);
+}
+
+.template-minimal.login .field-type input,
+.template-minimal.login .field-type__wrap input {
+  border-radius: var(--sultan-radius);
+  border-color: color-mix(in srgb, var(--sultan-charcoal) 14%, transparent);
+  background: var(--sultan-surface);
+  min-height: 2.7rem;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.template-minimal.login .field-type input:focus,
+.template-minimal.login .field-type__wrap input:focus {
+  border-color: color-mix(in srgb, var(--sultan-green) 55%, var(--sultan-charcoal));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--sultan-green) 28%, transparent);
+}
+
+.template-minimal.login a {
+  color: color-mix(in srgb, var(--sultan-charcoal) 68%, #15803d);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+
+.template-minimal.login a:hover {
+  color: var(--sultan-charcoal);
+}
+
+/* Site CTA: yeşil zemin + charcoal yazı */
+.template-minimal .btn--style-primary {
+  width: 100%;
+  background-color: var(--sultan-green);
+  border-color: var(--sultan-green);
+  color: var(--sultan-charcoal);
+  border-radius: var(--sultan-radius);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  min-height: 2.8rem;
+  box-shadow: 0 8px 22px color-mix(in srgb, var(--sultan-green) 35%, transparent);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.template-minimal .btn--style-primary:hover {
+  background-color: color-mix(in srgb, var(--sultan-green) 78%, var(--sultan-honey));
+  border-color: color-mix(in srgb, var(--sultan-green) 78%, var(--sultan-honey));
+  color: var(--sultan-charcoal);
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px color-mix(in srgb, var(--sultan-green) 42%, transparent);
 }
 
 .template-minimal .form-submit button {
@@ -116,20 +239,137 @@
   color: var(--sultan-charcoal);
 }
 
-.sultan-login-intro {
-  margin: 0 0 1.25rem;
+/* Sol / üst yeşil marka paneli */
+.sultan-login-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.15rem;
+  padding: 1.75rem 1.4rem 1.6rem;
   text-align: center;
-  color: color-mix(in srgb, var(--sultan-charcoal) 70%, transparent);
-  font-size: 0.875rem;
-  line-height: 1.5;
-  max-width: 22rem;
+  color: var(--sultan-charcoal);
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in srgb, var(--sultan-green) 88%, var(--sultan-honey)) 0%,
+      var(--sultan-green) 45%,
+      color-mix(in srgb, var(--sultan-green) 82%, #2a8a00) 100%
+    );
+  overflow: hidden;
 }
 
-.sultan-login-intro__title {
-  margin: 0 0 0.35rem;
-  font-size: 1rem;
-  font-weight: 600;
+.sultan-login-panel__pattern {
+  position: absolute;
+  inset: 0;
+  background: url("/desen.svg") center / cover no-repeat;
+  opacity: 0.14;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.sultan-login-panel__brand {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 20rem;
+}
+
+.sultan-login-panel__logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 132px;
+  height: 132px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow:
+    0 10px 28px color-mix(in srgb, var(--sultan-charcoal) 12%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--sultan-honey) 70%, white);
+}
+
+.sultan-login-panel__logo {
+  display: block;
+  width: 100px;
+  height: auto;
+  object-fit: contain;
+}
+
+.sultan-login-panel__title {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   color: var(--sultan-charcoal);
+}
+
+.sultan-login-panel__title-line {
+  display: block;
+}
+
+@media (min-width: 960px) {
+  .template-minimal.login.template-minimal--width-normal .template-minimal__wrap,
+  .template-minimal.login .template-minimal__wrap {
+    width: min(100%, 1040px);
+    max-width: min(100%, 1040px);
+    display: grid;
+    grid-template-columns: minmax(320px, 1fr) minmax(380px, 1.05fr);
+    align-items: stretch;
+    flex-direction: unset;
+  }
+
+  .sultan-login-panel {
+    grid-column: 1;
+    grid-row: 1 / span 3;
+    justify-content: center;
+    min-height: 100%;
+    padding: clamp(2.25rem, 4vw, 3.25rem) 2rem;
+  }
+
+  .sultan-login-panel__brand {
+    max-width: 20rem;
+    gap: 1.35rem;
+  }
+
+  .sultan-login-panel__logo-wrap {
+    width: 176px;
+    height: 176px;
+  }
+
+  .sultan-login-panel__logo {
+    width: 132px;
+  }
+
+  .sultan-login-panel__title {
+    font-size: clamp(1.35rem, 1.7vw, 1.65rem);
+    gap: 0.3rem;
+  }
+
+  .template-minimal.login .login__form {
+    grid-column: 2;
+    align-self: center;
+    gap: 1.15rem;
+    padding: 2.75rem 2.5rem;
+  }
+
+  .template-minimal.login .field-type input,
+  .template-minimal.login .field-type__wrap input {
+    min-height: 3rem;
+  }
+
+  .template-minimal .btn--style-primary {
+    min-height: 3.1rem;
+    font-size: 1rem;
+  }
 }
 
 /* Varsayılan koleksiyon kartları gizli */

@@ -1,17 +1,32 @@
 import type { GlobalConfig } from "payload";
 
 import { ADMIN_GROUPS } from "@/payload/admin-groups";
-import { globalReadAccess } from "@/payload/access";
+import { adminOnlyGlobalAccess } from "@/payload/access";
 import { adminHintField } from "@/payload/fields/admin-hint-field";
+import { createGlobalAuditAfterChange } from "@/payload/hooks/audit-log-hooks";
+import {
+  revalidateSiteLayout,
+  revalidateSitePaths,
+} from "@/payload/hooks/revalidate-site";
 
 export const SiteAyarlari: GlobalConfig = {
   slug: "site-ayarlari",
   label: "Site Ayarları",
   admin: {
     group: ADMIN_GROUPS.system,
-    description: "Footer, sosyal medya ve genel iletişim bilgileri.",
+    description:
+      "Footer, sosyal medya ve genel iletişim bilgileri — footer ve /iletisim sayfasını etkiler. Yalnızca yönetici güncelleyebilir.",
   },
-  access: globalReadAccess,
+  access: adminOnlyGlobalAccess,
+  hooks: {
+    afterChange: [
+      () => {
+        revalidateSiteLayout();
+        revalidateSitePaths("/", "/iletisim");
+      },
+      createGlobalAuditAfterChange("site-ayarlari"),
+    ],
+  },
   fields: [
     adminHintField(
       "siteHint",

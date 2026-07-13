@@ -48,9 +48,10 @@ export function HomeSectionIndicator() {
     if (typeof window === "undefined") return;
     const el = document.getElementById(id);
     if (!el) return;
-    el.scrollIntoView({
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    window.scrollTo({
+      top: Math.max(0, Math.round(top)),
       behavior: reduce ? "auto" : "smooth",
-      block: "start",
     });
   }
 

@@ -85,6 +85,9 @@ export async function getPublishedBranches(
       sort: "name",
       depth: 2,
       draft: options.draft,
+      where: options.draft
+        ? undefined
+        : { isPublished: { equals: true } },
     });
 
     if (result.docs.length === 0) {
@@ -118,7 +121,12 @@ export async function getBranchBySlugFromCms(
     const payload = await getPayloadClient();
     const result = await payload.find({
       collection: "branches",
-      where: { slug: { equals: slug } },
+      where: {
+        and: [
+          { slug: { equals: slug } },
+          ...(options.draft ? [] : [{ isPublished: { equals: true } }]),
+        ],
+      },
       limit: 1,
       depth: 2,
       draft: options.draft,

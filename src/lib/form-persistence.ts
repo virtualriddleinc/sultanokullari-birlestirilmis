@@ -21,6 +21,7 @@ type IkPayload = {
   experienceYears: number;
   education: string;
   coverLetter: string;
+  cv?: number;
 };
 
 export async function persistContactMessage(data: ContactPayload): Promise<void> {
@@ -45,7 +46,15 @@ export async function persistIkApplication(data: IkPayload): Promise<void> {
     await payload.create({
       collection: "ik-applications",
       data: {
-        ...data,
+        fullName: data.fullName,
+        email: data.email,
+        phone: data.phone,
+        branchSlug: data.branchSlug,
+        position: data.position,
+        experienceYears: data.experienceYears,
+        education: data.education,
+        coverLetter: data.coverLetter,
+        ...(data.cv ? { cv: data.cv } : {}),
         status: "new",
       },
       overrideAccess: true,

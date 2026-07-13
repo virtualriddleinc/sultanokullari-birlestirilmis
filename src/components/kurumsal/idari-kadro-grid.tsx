@@ -17,21 +17,30 @@ function SectionTitle({
   eyebrow,
   title,
   description,
+  as: Heading = "h2",
+  id,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   description?: string;
+  as?: "h1" | "h2";
+  id?: string;
 }) {
   return (
-    <div className="flex flex-col gap-2">
-      <span className="text-charcoal/70 text-[11px] font-semibold tracking-[0.22em] uppercase">
-        {eyebrow}
-      </span>
-      <h2 className="text-charcoal text-2xl font-semibold tracking-tight sm:text-3xl">
+    <div className="flex flex-col gap-fluid-2">
+      {eyebrow ? (
+        <span className="text-charcoal/70 text-[length:var(--text-xs)] font-semibold tracking-[0.22em] uppercase">
+          {eyebrow}
+        </span>
+      ) : null}
+      <Heading
+        id={id}
+        className="text-charcoal text-[length:var(--text-2xl)] font-semibold tracking-tight md:text-[length:var(--text-3xl)]"
+      >
         {title}
-      </h2>
+      </Heading>
       {description ? (
-        <p className="text-charcoal/75 max-w-2xl text-sm leading-6">
+        <p className="text-charcoal/75 max-w-2xl text-[length:var(--text-sm)] leading-6">
           {description}
         </p>
       ) : null}
@@ -61,12 +70,15 @@ function StaffGrid({
       as="ul"
       className={
         singleRow
-          ? "grid grid-cols-1 place-items-center gap-y-10 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-12"
-          : "grid grid-cols-1 place-items-center gap-y-10 lg:grid-cols-2 lg:gap-x-8 lg:gap-y-12 xl:grid-cols-3"
+          ? "grid grid-cols-1 place-items-center gap-y-10 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-3 lg:gap-x-6 lg:gap-y-12 xl:gap-x-8"
+          : "grid grid-cols-1 place-items-center gap-y-10 sm:grid-cols-2 sm:gap-x-6 lg:gap-x-6 lg:gap-y-12 xl:grid-cols-3 xl:gap-x-8"
       }
     >
       {members.map((member) => (
-        <StaggerItem key={member.id} className="list-none">
+        <StaggerItem
+          key={member.id}
+          className="list-none w-full min-w-0 max-w-[min(100%,24rem)]"
+        >
           <StaffCard member={member} featured={featured} />
         </StaggerItem>
       ))}
@@ -110,7 +122,7 @@ function BranchTitleSelector({
     <div ref={rootRef} className="relative inline-block">
       <h2
         id="sube-baslik"
-        className="text-charcoal flex flex-wrap items-center gap-x-2 gap-y-1 text-2xl font-semibold tracking-tight sm:text-3xl"
+        className="text-charcoal flex flex-wrap items-center gap-x-2 gap-y-1 text-[length:var(--text-2xl)] font-semibold tracking-tight md:text-[length:var(--text-3xl)]"
       >
         <button
           type="button"
@@ -118,7 +130,7 @@ function BranchTitleSelector({
           aria-expanded={open}
           aria-label={`Şube seç: ${current?.name ?? "Şube"}`}
           onClick={() => setOpen((prev) => !prev)}
-          className="bg-brand-honey text-charcoal hover:ring-charcoal/20 inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.12)] ring-1 ring-black/5 transition hover:ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal"
+          className="bg-brand-honey text-charcoal hover:ring-charcoal/20 inline-flex min-h-[44px] items-center gap-1.5 rounded-full px-4 py-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.12)] ring-1 ring-black/5 transition hover:ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal"
         >
           <span>{current?.name ?? "Şube"}</span>
           <ChevronDown
@@ -156,7 +168,7 @@ function BranchTitleSelector({
                       setOpen(false);
                     }}
                     className={cn(
-                      "text-charcoal flex w-full items-baseline justify-between gap-3 px-4 py-2.5 text-left text-sm transition",
+                      "text-charcoal flex min-h-[44px] w-full items-baseline justify-between gap-3 px-4 py-2.5 text-left text-[length:var(--text-sm)] transition",
                       active
                         ? "bg-black/8 font-semibold"
                         : "hover:bg-black/5",
@@ -183,12 +195,12 @@ function BranchSectionHeader({
   onChange: (slug: BranchSlug) => void;
 }) {
   return (
-    <div className="flex flex-col gap-2">
-      <span className="text-charcoal/70 text-[11px] font-semibold tracking-[0.22em] uppercase">
+    <div className="flex flex-col gap-fluid-2">
+      <span className="text-charcoal/70 text-[length:var(--text-xs)] font-semibold tracking-[0.22em] uppercase">
         Şube Kadroları
       </span>
       <BranchTitleSelector value={value} onChange={onChange} />
-      <p className="text-charcoal/75 max-w-2xl text-sm leading-6">
+      <p className="text-charcoal/75 max-w-2xl text-[length:var(--text-sm)] leading-6">
         Her şube kendi idari ve eğitim kadrosuyla hizmet verir. Başlıktaki şube
         adına tıklayarak görüntülemek istediğiniz okulu seçin.
       </p>
@@ -222,7 +234,8 @@ export function IdariKadroGrid({ members = idariKadro }: { members?: StaffMember
       {/* Yönetim Kadrosu */}
       <section aria-labelledby="yonetim-baslik" className="space-y-8">
         <SectionTitle
-          eyebrow="Merkez"
+          as="h1"
+          id="yonetim-baslik"
           title="Yönetim Kadrosu"
           description="Sultan Okulları'nın stratejik yönlendirmesini yapan merkez yönetim ekibi."
         />
@@ -232,6 +245,7 @@ export function IdariKadroGrid({ members = idariKadro }: { members?: StaffMember
       {/* Eğitim Danışma Kurulu */}
       <section aria-labelledby="danisma-baslik" className="space-y-8">
         <SectionTitle
+          id="danisma-baslik"
           eyebrow="Merkez"
           title="Eğitim Danışma Kurulumuz"
           description="Kurumun eğitim politikalarına akademik ve mesleki danışmanlık sağlayan uzman kadro."

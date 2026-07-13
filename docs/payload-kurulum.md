@@ -31,7 +31,7 @@ docker compose up -d postgres   # Docker varsa
 cp .env.example .env.local
 ```
 
-`.env.local` içinde `PAYLOAD_SECRET`, `PREVIEW_SECRET` ve `NEXT_PUBLIC_SERVER_URL=http://localhost:5001` tanımlı olmalıdır.
+`.env.local` içinde `PAYLOAD_SECRET` (≥16 karakter; üretimde ≥32), `DATABASE_URL` ve (üretimde) `PREVIEW_SECRET` tanımlı olmalıdır. İsteğe bağlı: `SMTP_*`, `S3_*`, `CRON_SECRET`, `RECAPTCHA_*`, `INBOX_NOTIFY_EMAIL`.
 
 3. Veritabanı migration'larını uygulayın:
 
@@ -55,9 +55,13 @@ Site: `http://localhost:5001` — Admin: `http://localhost:5001/admin`
 
 ```bash
 npm run seed:homepage   # Ana sayfa
-npm run seed:pages      # Hakkımızda, burs sayfaları
+npm run seed:pages      # Kurumsal sayfalar
+npm run seed:overlay    # Eğitim / rehberlik / akademik overlay sayfalar
 npm run seed:events     # (isteğe bağlı) örnek etkinlik
+npm run seed:all        # Hepsi
 ```
+
+Şema değişikliğinden sonra yerel DB'yi güncellemek için `npm run payload migrate:create` (etkileşimli) veya geliştirme ortamında geçici `push: true` kullanılabilir.
 
 ## Admin paneli yapısı
 
@@ -67,20 +71,28 @@ Girişte **özel dashboard** görünür: taslak sayıları, okunmamış form mes
 
 | Admin girişi | Site bölümü |
 |---|---|
-| Ana Sayfa Düzeni | Sekmeli: Gâyemiz, Yolculuk başlığı, Neden Sultan, Tanıtım, Okullarımız, Güncel, Instagram, Kısa Yollar, Sizi Arayalım modal |
+| Ana Sayfa Düzeni | Gâyemiz, Yolculuk, Neden Sultan, Tanıtım, Okullarımız, Güncel, Instagram, Kısa Yollar, Yemekhane, Sizi Arayalım modal |
 | 1 · Hero Slaytları | Hero slider |
 | 3 · Yolculuk Bölümleri | `#yolculuk` |
 | 4 · Neden Sultan Maddeleri | `#neden` + kurumsal sayfa |
 | 8 · Instagram Gönderileri | `#instagram` |
 
-### Site İçeriği
+### İçerik
 
 | Admin girişi | Kullanım |
 |---|---|
-| Şubeler | `#okullarimiz`, kampüs sayfaları, iletişim, footer |
-| Kurumsal Sayfalar | `/kurumsal/hakkimizda`, `/kurumsal/burs-olanaklari` vb. |
+| Haberler (Haber / Duyuru) | `#guncel`, `/guncel/haberler` |
 | Etkinlikler | `#guncel`, `/guncel/etkinlikler` |
-| Haberler | `#guncel`, `/guncel/haberler` |
+| Sayfalar | `/{pathPrefix}/{slug}` — kurumsal, eğitim, rehberlik… |
+| Medya Arşivi | `/guncel/medya` |
+| Medya Kütüphanesi | Yüklenen dosyalar |
+
+### Okullar
+
+| Admin girişi | Kullanım |
+|---|---|
+| Şubeler | `#okullarimiz`, kampüs sayfaları, `/subeler/...`, iletişim, footer |
+| İdari Kadro | `/kurumsal/idari-kadro` |
 
 ### Gelen Kutusu
 
@@ -91,39 +103,52 @@ Girişte **özel dashboard** görünür: taslak sayıları, okunmamış form mes
 
 Durum alanı: **Yeni → Okundu / İncelendi → Arşiv**
 
-### Sistem
+### Ayarlar
 
 | Admin girişi | Kullanım |
 |---|---|
-| Medya Kütüphanesi | Görsel/video yüklemeleri |
+| Site Ayarları | Footer e-posta/telefon, Instagram, OG görseli |
+| Navigasyon | Üst menü ek linkleri + site haritası |
 | Kullanıcılar | Panel girişi ve roller |
 
 ## Kullanıcı rolleri
 
 | Rol | Yetki |
 |---|---|
-| **Yönetici** | Tam erişim; kullanıcı yönetimi dahil |
-| **Editör** | İçerik, medya, globals, form gelen kutusu; kullanıcı yönetimi yok |
+| **Yönetici** | Tam erişim; yayınlama, kullanıcı yönetimi, Site Ayarları / Navigasyon, denetim kayıtları |
+| **Editör** | İçerik ve medya; haber/etkinlik/sayfa/medya arşivinde yalnızca taslak; gelen kutusu; kullanıcı yönetimi yok |
+| **Gelen Kutusu** | Yalnızca iletişim mesajları ve İK başvuruları |
 
 Yeni kullanıcılar varsayılan olarak **Editör** rolü alır. İlk kurulumda en az bir **Yönetici** atayın.
 
-Yalnızca **yayınlanmış** (`published`) haber ve etkinlik kayıtları sitede görünür.
+Yalnızca **yayınlanmış** (`published`) haber, etkinlik, sayfa ve medya arşivi kayıtları sitede görünür. Hero / Yolculuk / Neden / Instagram kayıtları taslaksızdır — kaydedilince anında canlıya geçer. Şube ve kadro için **Yayında** bayrağını yalnızca yönetici değiştirir.
+
+### Güvenlik notları
+
+- `PAYLOAD_SECRET` / `DATABASE_URL` eksikse süreç başlamaz (`src/lib/env.ts`).
+- Login: 5 başarısız denemede hesap kilidi + proxy rate limit.
+- Formlar: reCAPTCHA (üretimde zorunlu) + IP rate limit.
+- GraphQL varsayılan kapalı (`PAYLOAD_GRAPHQL_ENABLED=true` ile açılır).
+- Zamanlanmış yayın: `CRON_SECRET` ile `/api/cron/publish-scheduled`.
+- Opsiyonel SMTP (`SMTP_HOST`) ve S3/R2 (`S3_BUCKET`).
 
 ## Değişiklikler sitede ne zaman görünür?
 
 Kayıt sonrası **anında** yansır. Payload `afterChange` hook'ları `revalidatePath` çağırır; CMS tüketen sayfalar `force-dynamic` ile cache'lenmez.
 
-Haber/etkinlik için **Taslak** durumundaki kayıtlar normal sitede görünmez; **Canlı Önizleme** ile görülebilir.
+Taslak kayıtlar normal sitede görünmez; **Canlı Önizleme** ile görülebilir.
 
 ## Ana sayfa test checklist
 
 | Panel | Beklenen |
 |---|---|
-| Ana Sayfa Düzeni → Gâyemiz başlığı | Ana sayfa metin güncellemesi |
+| Ana Sayfa Düzeni → Gâyemiz / Yemekhane | Ana sayfa metin güncellemesi |
 | Hero Slaytları | Slider içeriği |
 | Yolculuk / Neden / Instagram listeleri | Sürükle-bırak sıra + ilgili bölüm |
 | Haber/Etkinlik (Yayınlandı) | `#guncel` bölümü |
 | Şubeler | `#okullarimiz`, footer, iletişim |
+| Site Ayarları | Footer e-posta/telefon |
+| Medya Arşivi | `/guncel/medya` |
 
 ## Canlı önizleme
 
@@ -133,7 +158,7 @@ Haber/etkinlik için **Taslak** durumundaki kayıtlar normal sitede görünmez; 
 
 **Önizleme çalışmıyorsa:** `.env.local` içinde `PREVIEW_SECRET` ve `NEXT_PUBLIC_SERVER_URL=http://localhost:5001` olduğundan emin olun; dev sunucusunu yeniden başlatın.
 
-## Admin regression checklist (v3)
+## Admin regression checklist (v4 — CMS senkron)
 
 | Test | Beklenen |
 |---|---|
@@ -143,7 +168,12 @@ Haber/etkinlik için **Taslak** durumundaki kayıtlar normal sitede görünmez; 
 | Toplu arşiv (liste seçimi) | Seçili kayıtlar güncellenir |
 | Sidebar gelen kutusu badge | Yeni mesaj/İK sayısı görünür |
 | Haber taslak | Sitede görünmez; önizleme çalışır |
-| Kurumsal sayfa taslak | `/kurumsal/[slug]` yayınlanmamış içerik göstermez |
+| Sayfa taslak | Yayınlanmamış içerik sitede görünmez |
+| Kurumsal CMS sayfa düzenleme | `/kurumsal/kurumsal-kimligimiz` vb. yansır |
+| Site Ayarları → footer | E-posta/telefon güncellenir |
+| Medya Arşivi yayın | `/guncel/medya` listelenir |
+| Eğitim sayfa CMS | Overlay metinler panelden güncellenir |
+| Navigasyon ek link | Menü / sitemap'te görünür |
 | `npm run check:importmap` | Eksik bileşen yok |
 | `npm run cms:health` | DB bağlantısı ve seed uyarıları |
 

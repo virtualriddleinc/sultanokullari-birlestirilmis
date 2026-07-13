@@ -18,7 +18,7 @@ function SectionHeading({
   return (
     <h2
       id={id}
-      className="mt-10 scroll-mt-24 text-lg font-semibold text-zinc-900"
+      className="mt-fluid-8 scroll-mt-24 text-[length:var(--text-lg)] font-semibold text-zinc-900 md:text-[length:var(--text-xl)]"
     >
       {children}
     </h2>
@@ -27,7 +27,7 @@ function SectionHeading({
 
 function SubHeading({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="mt-6 text-sm font-semibold tracking-wide text-[var(--color-primary)] uppercase">
+    <h3 className="mt-fluid-6 text-[length:var(--text-sm)] font-semibold tracking-wide text-[var(--color-primary)] uppercase">
       {children}
     </h3>
   );
@@ -35,7 +35,7 @@ function SubHeading({ children }: { children: React.ReactNode }) {
 
 function InfoBox({ children }: { children: React.ReactNode }) {
   return (
-    <div className="my-4 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm leading-6 text-amber-900">
+    <div className="my-fluid-4 rounded-xl border border-amber-200 bg-amber-50 px-fluid-4 py-fluid-4 text-[length:var(--text-sm)] leading-6 text-amber-900">
       {children}
     </div>
   );
@@ -58,17 +58,17 @@ export default function Page() {
     >
       {/* İçindekiler */}
       <nav aria-label="Sayfa içeriği" className="not-prose">
-        <p className="mb-3 text-xs font-semibold tracking-widest text-zinc-500 uppercase">
+        <p className="mb-fluid-3 text-[length:var(--text-xs)] font-semibold tracking-widest text-zinc-500 uppercase">
           İçerik
         </p>
-        <ol className="flex flex-wrap gap-2">
+        <ol className="flex flex-wrap gap-fluid-2">
           {tocItems.map((item, i) => (
             <li key={item.href}>
               <a
                 href={item.href}
-                className="inline-flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white px-3 py-1 text-xs font-medium text-zinc-700 transition hover:border-[var(--color-primary)]/40 hover:text-[var(--color-primary)]"
+                className="inline-flex min-h-[44px] items-center gap-fluid-2 rounded-full border border-zinc-200 bg-white px-fluid-3 text-[length:var(--text-xs)] font-medium text-zinc-700 transition hover:border-[var(--color-primary)]/40 hover:text-[var(--color-primary)]"
               >
-                <span className="text-[0.65rem] font-bold text-[var(--color-primary)]">
+                <span className="text-[length:var(--text-xs)] font-bold text-[var(--color-primary)]">
                   {i + 1}
                 </span>
                 {item.label}
@@ -80,7 +80,7 @@ export default function Page() {
 
       {/* ── 1. Kişisel Veriler ── */}
       <SectionHeading id="kisisel-veriler">Kişisel Veriler</SectionHeading>
-      <p className="mt-3 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Sultan Okulları olarak, size daha iyi eğitim ve destek hizmeti
         sunabilmek için bazı kişisel bilgilerinizi toplamaktayız. Bu bilgilerin
         kullanımına ilişkin her türlü işlem, 6698 sayılı Kişisel Verilerin
@@ -89,7 +89,7 @@ export default function Page() {
       </p>
 
       <SubHeading>Topladığımız Kişisel Veriler</SubHeading>
-      <div className="mt-3 grid gap-3 sm:grid-cols-2">
+      <div className="mt-fluid-3 grid gap-fluid-3 md:grid-cols-2">
         {[
           {
             title: "Kimlik Bilgileri",
@@ -118,20 +118,24 @@ export default function Page() {
         ].map((item) => (
           <div
             key={item.title}
-            className="rounded-xl border border-zinc-100 bg-zinc-50 px-4 py-3"
+            className="rounded-xl border border-zinc-100 bg-zinc-50 px-fluid-4 py-fluid-3"
           >
-            <p className="text-xs font-semibold text-zinc-900">{item.title}</p>
-            <p className="mt-1 text-xs leading-5 text-zinc-600">{item.desc}</p>
+            <p className="text-[length:var(--text-xs)] font-semibold text-zinc-900">
+              {item.title}
+            </p>
+            <p className="mt-fluid-1 text-[length:var(--text-xs)] leading-5 text-zinc-600">
+              {item.desc}
+            </p>
           </div>
         ))}
       </div>
 
       <SubHeading>Veri Toplama Amacı</SubHeading>
-      <p className="mt-2 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Sultan Okulları, kişisel verilerinizi aşağıdaki amaçlar doğrultusunda
         toplar, saklar ve işler:
       </p>
-      <ul className="mt-2 list-inside list-disc space-y-1.5 pl-2 text-sm leading-7 text-zinc-700">
+      <ul className="mt-fluid-2 list-inside list-disc space-y-fluid-1 pl-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         <li>Kayıt, ön kayıt ve eğitim-öğretim süreçlerini yürütmek</li>
         <li>
           Öğrenci ve velilere yönelik bilgilendirme, duyuru ve etkinlik
@@ -147,7 +151,7 @@ export default function Page() {
         </li>
         <li>Web sitesi güvenliği ve teknik işleyişi sağlamak</li>
       </ul>
-      <p className="mt-3 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Kişisel verileriniz, kullanım amacı gerektirdiği sürece ve yasal saklama
         süreleri boyunca sistemlerimizde muhafaza edilmektedir. Bu süreler
         dolduğunda verileriniz uygun yöntemlerle imha edilmektedir. Ayrıntılı
@@ -163,7 +167,7 @@ export default function Page() {
 
       {/* ── 2. Veri Güvenliği ── */}
       <SectionHeading id="veri-guvenligi">Veri Güvenliği</SectionHeading>
-      <p className="mt-3 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Sultan Okulları olarak kişisel verilerinizin güvenliği en büyük
         önceliklerimizden biridir. Verilerinizi korumak için endüstri standardı
         güvenlik önlemlerini uyguluyoruz.
@@ -175,7 +179,7 @@ export default function Page() {
       </InfoBox>
 
       <SubHeading>Uygulanan Güvenlik Önlemleri</SubHeading>
-      <div className="mt-3 space-y-3 text-sm leading-7 text-zinc-700">
+      <div className="mt-fluid-3 space-y-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         {[
           {
             title: "SSL/TLS Şifreleme",
@@ -206,7 +210,7 @@ export default function Page() {
       </div>
 
       <SubHeading>Veri Saklama ve İmha Politikası</SubHeading>
-      <ul className="mt-2 list-inside list-disc space-y-1.5 pl-2 text-sm leading-7 text-zinc-700">
+      <ul className="mt-fluid-2 list-inside list-disc space-y-fluid-1 pl-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         <li>
           Verileriniz, ilgili yasal düzenlemelerde belirtilen süreler boyunca
           saklanır.
@@ -228,14 +232,14 @@ export default function Page() {
 
       {/* ── 3. Çerezler ── */}
       <SectionHeading id="cerezler">Çerezler ve İzleme</SectionHeading>
-      <p className="mt-3 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Web sitemizde deneyiminizi en iyi hale getirmek, site performansını
         analiz etmek ve daha kişiselleştirilmiş bir hizmet sunmak için çerez ve
         benzer teknolojileri kullanmaktayız.
       </p>
 
       <SubHeading>Çerez Nedir?</SubHeading>
-      <p className="mt-2 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Çerezler, web sitemizi ziyaret ettiğinizde tarayıcınız tarafından
         cihazınıza kaydedilen küçük metin dosyalarıdır. Siteyi nasıl
         kullandığınız, hangi sayfaları ziyaret ettiğiniz hakkında bilgi toplar
@@ -244,7 +248,7 @@ export default function Page() {
       </p>
 
       <SubHeading>Kullandığımız Çerez Türleri</SubHeading>
-      <div className="mt-3 space-y-3">
+      <div className="mt-fluid-3 space-y-fluid-3">
         {[
           {
             name: "Zorunlu Çerezler",
@@ -265,19 +269,19 @@ export default function Page() {
         ].map((c) => (
           <div
             key={c.name}
-            className="rounded-xl border border-zinc-100 bg-zinc-50 px-4 py-3"
+            className="rounded-xl border border-zinc-100 bg-zinc-50 px-fluid-4 py-fluid-3"
           >
-            <p className="text-xs font-semibold text-zinc-900">{c.name}</p>
-            <p className="mt-1 text-xs leading-5 text-zinc-600">{c.desc}</p>
+            <p className="text-[length:var(--text-xs)] font-semibold text-zinc-900">{c.name}</p>
+            <p className="mt-fluid-1 text-[length:var(--text-xs)] leading-5 text-zinc-600">{c.desc}</p>
           </div>
         ))}
       </div>
 
       <SubHeading>Çerez Tercihlerinizi Yönetme</SubHeading>
-      <p className="mt-2 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Tarayıcı ayarlarınızdan çerez tercihlerinizi yönetebilirsiniz:
       </p>
-      <div className="mt-3 grid gap-2 text-xs sm:grid-cols-2">
+      <div className="mt-fluid-3 grid gap-fluid-2 text-[length:var(--text-xs)] md:grid-cols-2">
         {[
           {
             name: "Google Chrome",
@@ -298,26 +302,26 @@ export default function Page() {
         ].map((b) => (
           <div
             key={b.name}
-            className="rounded-lg border border-zinc-100 px-3 py-2"
+            className="rounded-lg border border-zinc-100 px-fluid-3 py-fluid-2"
           >
             <p className="font-semibold text-zinc-800">{b.name}</p>
             <p className="mt-0.5 text-zinc-500">{b.path}</p>
           </div>
         ))}
       </div>
-      <p className="mt-3 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Zorunlu çerezlerin devre dışı bırakılması sitemizin temel işlevlerini
         olumsuz etkileyebilir.
       </p>
 
       {/* ── 4. Gizlilik Hakları ── */}
       <SectionHeading id="gizlilik-haklari">Gizlilik Hakları</SectionHeading>
-      <p className="mt-3 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamında
         aşağıdaki haklara sahipsiniz:
       </p>
 
-      <div className="mt-4 space-y-3 text-sm leading-7 text-zinc-700">
+      <div className="mt-fluid-4 space-y-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         {[
           {
             title: "Bilgi Edinme Hakkı",
@@ -356,13 +360,13 @@ export default function Page() {
       </div>
 
       <SubHeading>Haklarınızı Nasıl Kullanabilirsiniz?</SubHeading>
-      <p className="mt-2 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Yukarıdaki haklarınızı kullanmak için aşağıdaki kanallardan bize
         başvurabilirsiniz:
       </p>
-      <div className="mt-3 flex flex-col gap-2 text-sm">
+      <div className="mt-fluid-3 flex flex-col gap-fluid-2 text-[length:var(--text-sm)]">
         <div className="flex flex-wrap items-baseline gap-2">
-          <span className="text-xs font-semibold tracking-wide text-zinc-500 uppercase">
+          <span className="text-[length:var(--text-xs)] font-semibold tracking-wide text-zinc-500 uppercase">
             E-posta
           </span>
           <a
@@ -373,7 +377,7 @@ export default function Page() {
           </a>
         </div>
         <div className="flex flex-wrap items-baseline gap-2">
-          <span className="text-xs font-semibold tracking-wide text-zinc-500 uppercase">
+          <span className="text-[length:var(--text-xs)] font-semibold tracking-wide text-zinc-500 uppercase">
             İletişim formu
           </span>
           <Link
@@ -384,7 +388,7 @@ export default function Page() {
           </Link>
         </div>
         <div className="flex flex-wrap items-baseline gap-2">
-          <span className="text-xs font-semibold tracking-wide text-zinc-500 uppercase">
+          <span className="text-[length:var(--text-xs)] font-semibold tracking-wide text-zinc-500 uppercase">
             KVKK detayları
           </span>
           <Link
@@ -395,7 +399,7 @@ export default function Page() {
           </Link>
         </div>
       </div>
-      <p className="mt-3 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Başvurunuzu aldıktan sonra talebinizi{" "}
         <strong className="font-semibold text-zinc-900">
           en geç 30 gün içinde
@@ -407,14 +411,14 @@ export default function Page() {
 
       {/* ── 5. Veri İhlali ── */}
       <SectionHeading id="veri-ihlali">Veri İhlali Bildirimi</SectionHeading>
-      <p className="mt-3 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Olası bir veri ihlali durumunda şeffaflık ilkemiz doğrultusunda sizleri
         bilgilendirmek ve gerekli önlemleri almak için aşağıdaki süreci tâkib
         etmekteyiz.
       </p>
 
       <SubHeading>Veri İhlali Nedir?</SubHeading>
-      <p className="mt-2 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Veri ihlali; kişisel verilerin kazara veya yasadışı yollarla imha
         edilmesi, kaybolması, değiştirilmesi, yetkisiz şekilde ifşa edilmesi
         veya bunlara erişim sağlanması durumudur. Siber saldırılar, fiziksel
@@ -423,7 +427,7 @@ export default function Page() {
       </p>
 
       <SubHeading>Yönetim Süreci</SubHeading>
-      <ol className="mt-3 space-y-4 text-sm leading-7 text-zinc-700">
+      <ol className="mt-fluid-3 space-y-fluid-4 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         {[
           {
             n: "1",
@@ -447,7 +451,7 @@ export default function Page() {
           },
         ].map((step) => (
           <li key={step.n} className="flex gap-4">
-            <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-full bg-[var(--color-primary-light)] text-xs font-bold text-[var(--color-primary)]">
+            <span className="mt-fluid-1 grid size-6 shrink-0 place-items-center rounded-full bg-[var(--color-primary-light)] text-[length:var(--text-xs)] font-bold text-[var(--color-primary)]">
               {step.n}
             </span>
             <div>
@@ -458,7 +462,7 @@ export default function Page() {
         ))}
       </ol>
 
-      <p className="mt-4 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-4 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Kişisel verilerinizle ilgili olası bir ihlalden şüpheleniyorsanız lütfen{" "}
         <a
           href="mailto:info@sultanokullari.com"
@@ -478,14 +482,14 @@ export default function Page() {
 
       {/* ── 6. Üçüncü Taraf ── */}
       <SectionHeading id="ucuncu-taraf">Üçüncü Taraf Hizmetler</SectionHeading>
-      <p className="mt-3 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Web sitemizde kullandığımız bazı analitik teknolojiler dış hizmet
         sağlayıcıları tarafından sunulmaktadır. Bu teknolojiler yalnızca çerez
         tercihleri üzerinden verdiğiniz rıza doğrultusunda devreye alınır.
       </p>
 
       <SubHeading>Google Analytics</SubHeading>
-      <p className="mt-2 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Ziyaretçi davranışlarını anonim biçimde analiz etmek için{" "}
         <a
           href="https://analytics.google.com/"
@@ -509,7 +513,7 @@ export default function Page() {
       </p>
 
       <SubHeading>Google Tag Manager</SubHeading>
-      <p className="mt-2 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Ölçümleme etiketlerini yönetmek için{" "}
         <a
           href="https://tagmanager.google.com/"
@@ -524,13 +528,13 @@ export default function Page() {
       </p>
 
       <SubHeading>reCAPTCHA</SubHeading>
-      <p className="mt-2 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         İletişim ve ön kayıt formlarında spam ve bot koruması amacıyla Google
         reCAPTCHA kullanılmaktadır. Bu hizmet kapsamında toplanan veriler
         Google&#39;ın gizlilik şartlarına tabidir.
       </p>
 
-      <p className="mt-4 text-sm leading-7 text-zinc-700">
+      <p className="mt-fluid-4 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         Üçüncü taraf hizmet sağlayıcıları, veri işleme faaliyetlerinde kendi
         gizlilik politikalarına tabidir. Sorularınız için{" "}
         <Link
@@ -543,7 +547,7 @@ export default function Page() {
       </p>
 
       {/* Son güncelleme notu */}
-      <p className="mt-10 text-xs text-zinc-400">
+      <p className="mt-fluid-8 text-[length:var(--text-xs)] text-zinc-400">
         Son güncelleme: Mayıs 2026 · Sultan Okulları, bu politikayı önceden
         haber vermeksizin güncelleyebilir. Değişiklikler web sitesinde
         yayımlandığı andan itibaren geçerlidir.

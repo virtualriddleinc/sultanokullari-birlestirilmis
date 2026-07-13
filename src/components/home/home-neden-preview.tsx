@@ -183,11 +183,11 @@ export function HomeNedenPreview({
       />
 
       <div className="border-charcoal/10 relative z-[1] border-y bg-white">
-        <Marquee speed={48} className="py-4">
+        <Marquee speed={48} className="py-fluid-2">
           {marqueeValues.map((v) => (
             <span
               key={v}
-              className="text-charcoal/70 flex items-center gap-3 text-xs font-semibold tracking-[0.32em] uppercase"
+              className="text-charcoal/70 flex items-center gap-fluid-3 text-[length:var(--text-xs)] font-semibold tracking-[0.32em] uppercase"
             >
               {v}
               <span
@@ -206,7 +206,7 @@ export function HomeNedenPreview({
 
       <div className="section-page-grid relative z-[1] py-fluid-8 sm:py-fluid-16">
         <div className="section-page-grid__content">
-          <div className="bg-brand-honey rounded-3xl px-6 py-8 sm:px-8 sm:py-10">
+          <div className="bg-brand-honey rounded-3xl px-fluid-6 py-fluid-6 md:px-fluid-8 md:py-fluid-8">
             <SectionHeading
               eyebrow={eyebrow}
               className="[&_.section-title]:text-black"
@@ -220,7 +220,7 @@ export function HomeNedenPreview({
             />
           </div>
 
-          <div className="relative mt-10 sm:mt-12 lg:mt-16">
+          <div className="relative mt-fluid-8 lg:mt-fluid-12">
             <motion.div initial={false} animate="visible" variants={honeycombStaggerVariants}>
               <Honeycomb
                 shape={shape}
@@ -480,6 +480,7 @@ function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
             <div className="relative flex h-full flex-col items-center justify-center px-[10%] text-center">
               <h3
                 className={cn(
+                  /* Hücre geometrisine özel rem skalası — fluid token petekte bozar */
                   "line-clamp-3 text-[1.32rem] leading-snug font-semibold tracking-tight text-balance sm:text-[1.14rem] md:text-[1.05rem] lg:text-[1.2rem] xl:text-[1.35rem]",
                   isPrimary ? "text-charcoal" : "text-charcoal",
                 )}

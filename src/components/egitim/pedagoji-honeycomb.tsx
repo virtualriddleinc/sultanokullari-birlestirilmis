@@ -59,7 +59,7 @@ export function PedagojiHoneycombInfoCard({
   if (!eyebrow && !title && !description) return null;
 
   return (
-    <div className="relative overflow-hidden rounded-[2rem] border border-emerald-950/25 bg-[#128a36] p-6 shadow-[0_28px_80px_rgba(7,32,17,0.30)] sm:p-8 lg:p-9">
+    <div className="relative overflow-hidden rounded-[2rem] border border-emerald-950/25 bg-[#128a36] p-fluid-6 shadow-[0_28px_80px_rgba(7,32,17,0.30)] md:p-fluid-8">
       <span
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[url('/desen.svg')] bg-cover bg-center bg-no-repeat opacity-[0.10] mix-blend-screen"
@@ -70,17 +70,17 @@ export function PedagojiHoneycombInfoCard({
       />
       <div className="relative z-10">
         {eyebrow ? (
-          <p className="inline-flex rounded-full border border-black/5 bg-white px-3 py-1.5 text-[0.6875rem] font-bold tracking-widest text-[#1a1c18] uppercase shadow-sm">
+          <p className="inline-flex min-h-[44px] items-center rounded-full border border-black/5 bg-white px-3 py-1.5 text-[length:var(--text-xs)] font-bold tracking-widest text-[#1a1c18] uppercase shadow-sm">
             {eyebrow}
           </p>
         ) : null}
         {title ? (
-          <h2 className="font-cinzel mt-4 text-2xl leading-tight font-bold tracking-tight text-balance text-white sm:text-3xl">
+          <h2 className="font-cinzel mt-fluid-4 text-[length:var(--text-2xl)] leading-tight font-bold tracking-tight text-balance text-white md:text-[length:var(--text-3xl)]">
             {title}
           </h2>
         ) : null}
         {description ? (
-          <p className="mt-3 text-sm leading-relaxed text-pretty text-white/85 sm:text-base">
+          <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-relaxed text-pretty text-white/85 md:text-[length:var(--text-base)]">
             {description}
           </p>
         ) : null}
@@ -101,11 +101,11 @@ export type PedagojiHoneycombProps = {
 
 function HoneyCellContent({ item }: { item: { title: string; text: string } }) {
   return (
-    <div className="flex h-full max-h-full min-h-0 flex-col items-center justify-center gap-1.5 px-[8%] pt-3 pb-3 text-center sm:gap-2 sm:px-[10%] sm:pt-4 sm:pb-4">
-      <h3 className="line-clamp-2 text-[0.875rem] leading-tight font-bold tracking-tight text-white sm:text-[0.95rem] lg:text-[1.02rem]">
+    <div className="flex h-full max-h-full min-h-0 flex-col items-center justify-center gap-1 px-[10%] py-2 text-center sm:gap-1.5 sm:px-[11%] sm:py-2.5 md:px-[12%]">
+      <h3 className="line-clamp-2 text-[0.68rem] leading-tight font-bold tracking-tight text-balance text-white sm:text-[0.72rem] md:text-[0.78rem] lg:text-[0.82rem]">
         {item.title}
       </h3>
-      <p className="line-clamp-4 text-[0.72rem] leading-snug font-medium text-white/90 sm:text-[0.8rem] lg:text-[0.84rem]">
+      <p className="line-clamp-5 text-[0.58rem] leading-snug font-medium text-pretty text-white/90 sm:text-[0.62rem] md:text-[0.66rem] lg:text-[0.7rem]">
         {item.text}
       </p>
     </div>
@@ -127,7 +127,7 @@ export function PedagojiHoneycomb({
   }
 
   return (
-    <div className="mx-auto mt-12 grid max-w-6xl grid-cols-1 items-center gap-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.9fr)] lg:gap-10 xl:gap-14">
+    <div className="mt-fluid-12 grid w-full grid-cols-1 items-center gap-fluid-8 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,0.9fr)] lg:gap-fluid-12">
       {/* ── Bilgi kartı — ana sayfa Gâyemiz peteğiyle aynı düzen; mobil/tablette petek üstünde ── */}
       <div className="order-1 lg:order-2">
         <PedagojiHoneycombInfoCard
@@ -140,7 +140,7 @@ export function PedagojiHoneycomb({
       {/* ── Petek — mobil/tablette bilgi kartı altında ── */}
       <div className="order-2 lg:order-1">
         <ul
-          className="relative mx-auto hidden w-[27.5rem] max-w-full list-none sm:block sm:w-[32.5rem] lg:mx-0 lg:w-full"
+          className="relative mx-auto hidden w-full max-w-md list-none md:block lg:mx-0 lg:max-w-none"
           style={{ aspectRatio: CONTAINER_ASPECT }}
           aria-label={sectionLabel}
         >
@@ -202,7 +202,7 @@ export function PedagojiHoneycomb({
         </ul>
 
         <ul
-          className="relative mx-auto flex max-w-md flex-col items-center gap-5 sm:hidden"
+          className="relative mx-auto flex max-w-md flex-col items-center gap-fluid-4 md:hidden"
           aria-label={sectionLabel}
         >
           {items.map((item, index) => {

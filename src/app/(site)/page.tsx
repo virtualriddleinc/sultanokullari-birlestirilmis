@@ -33,7 +33,7 @@ export default async function HomePage() {
       <HomeJourney headline={home.journey.headline} chapters={home.journey.chapters} />
       <HomeNedenPreview {...home.neden} />
       <HomeVideo {...home.videoSection} />
-      <HomeYemekhane />
+      <HomeYemekhane {...home.yemekhaneSection} />
       <HomeBranchesShowcase {...home.branchesSection} />
       <HomeGuncel {...home.guncelSection} />
       <HomeInstagramHorizontal {...home.instagramSection} />

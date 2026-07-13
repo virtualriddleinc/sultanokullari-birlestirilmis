@@ -12,13 +12,17 @@ export function PageFaqSection({
   if (!items.length) return null;
 
   return (
-    <section className="mt-12 border-t border-zinc-200 pt-10">
-      <h2 className="text-lg font-semibold text-[var(--color-primary)]">{title}</h2>
-      <div className="mt-6 space-y-6">
+    <section className="mt-fluid-12 border-t border-zinc-200 pt-fluid-8">
+      <h2 className="text-[length:var(--text-lg)] font-semibold text-[var(--color-primary)] md:text-[length:var(--text-xl)]">
+        {title}
+      </h2>
+      <div className="mt-fluid-6 space-y-fluid-6">
         {items.map((item) => (
           <article key={item.question}>
-            <h3 className="text-base font-semibold text-zinc-900">{item.question}</h3>
-            <p className="snippet-lead mt-2 text-sm leading-relaxed text-zinc-700">
+            <h3 className="text-[length:var(--text-base)] font-semibold text-zinc-900">
+              {item.question}
+            </h3>
+            <p className="snippet-lead mt-fluid-2 text-[length:var(--text-sm)] leading-relaxed text-zinc-700">
               {item.answer}
             </p>
           </article>

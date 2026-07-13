@@ -14,6 +14,7 @@ export async function getStaffMembers(): Promise<StaticStaffMember[]> {
       sort: "_order",
       limit: 200,
       depth: 1,
+      where: { isPublished: { equals: true } },
     });
 
     if (result.docs.length === 0) {

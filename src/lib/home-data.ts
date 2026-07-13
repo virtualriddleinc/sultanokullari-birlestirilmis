@@ -9,7 +9,8 @@ import type { HeroSlide } from "@/features/hero/slides";
 import type { Branch } from "@/content/branches";
 
 import { HERO_SLIDES } from "@/features/hero/slides";
-import { hexGalleryMedia, featuredVideo, mediaPageItems } from "@/content/site-media";
+import { hexGalleryMedia, featuredVideo, mediaPageItems, yemekhaneMedia } from "@/content/site-media";
+import { yemekhaneParagraphs } from "@/content/yemekhane";
 import { nedenSultanItems } from "@/content/neden-sultan";
 import {
   instagramHandle,
@@ -105,6 +106,10 @@ export type HomePageData = {
     submitLabel: string;
     dismissLabel: string;
     kvkkText: string;
+  };
+  yemekhaneSection: {
+    paragraphs: string[];
+    media?: SiteMedia;
   };
 };
 
@@ -215,6 +220,11 @@ const DEFAULT_INFO_MODAL = {
     "KVKK aydınlatma metnini okudum, kişisel verilerimin işlenmesini, tarafıma arama yapılmasını ve SMS gönderilmesini kabul ediyorum.",
 };
 
+const DEFAULT_YEMEKHANE = {
+  paragraphs: [...yemekhaneParagraphs],
+  media: yemekhaneMedia as SiteMedia,
+};
+
 function mapInfoModal(
   infoRaw?: Record<string, unknown>,
 ): HomePageData["infoModal"] {
@@ -239,7 +249,7 @@ export async function getInfoModalData(
       depth: 0,
       draft: options.draft,
     });
-    const infoRaw = (global as Record<string, unknown>).infoModal as
+    const infoRaw = (global as unknown as Record<string, unknown>).infoModal as
       | Record<string, unknown>
       | undefined;
     return mapInfoModal(infoRaw);
@@ -257,6 +267,8 @@ function mapHeroSlide(doc: Record<string, unknown>, index: number): HeroSlide {
       : undefined,
   );
 
+  const focalRaw = doc.focalPoint as { x?: number; y?: number } | null | undefined;
+
   return normalizeHeroSlide({
     id: String(doc.id ?? index),
     tagline: (doc.tagline as string) || fallback?.tagline || "",
@@ -271,6 +283,18 @@ function mapHeroSlide(doc: Record<string, unknown>, index: number): HeroSlide {
     mediaUrl: media?.src || fallback?.mediaUrl || "",
     mediaType: media?.kind || fallback?.mediaType || "image",
     posterUrl: media?.poster || fallback?.posterUrl,
+    focalPoint:
+      focalRaw && typeof focalRaw.x === "number" && typeof focalRaw.y === "number"
+        ? { x: focalRaw.x, y: focalRaw.y }
+        : fallback?.focalPoint,
+    mediaScale:
+      typeof doc.mediaScale === "number"
+        ? doc.mediaScale
+        : fallback?.mediaScale,
+    mediaAspect:
+      typeof doc.mediaAspect === "number"
+        ? doc.mediaAspect
+        : fallback?.mediaAspect,
     displayDuration: (doc.displayDuration as number) || fallback?.displayDuration || 6,
   });
 }
@@ -427,6 +451,9 @@ export async function getHomePageData(
   const instagramRaw = globalData.instagramSection as Record<string, unknown> | undefined;
   const quickRaw = globalData.quickLinksSection as Record<string, unknown> | undefined;
   const infoRaw = globalData.infoModal as Record<string, unknown> | undefined;
+  const yemekhaneRaw = globalData.yemekhaneSection as
+    | Record<string, unknown>
+    | undefined;
 
   const heroSlides =
     heroDocs.length > 0
@@ -480,6 +507,14 @@ export async function getHomePageData(
   const quickLinksRaw = quickRaw?.links as
     | Array<{ href?: string; label?: string; description?: string; iconKey?: string }>
     | undefined;
+
+  const yemekhaneParagraphsRaw = yemekhaneRaw?.paragraphs as
+    | Array<{ text?: string }>
+    | undefined;
+  const yemekhaneParagraphsMapped =
+    yemekhaneParagraphsRaw
+      ?.map((p) => p.text?.trim())
+      .filter((text): text is string => Boolean(text)) ?? [];
 
   return {
     heroSlides,
@@ -583,6 +618,17 @@ export async function getHomePageData(
           : DEFAULT_QUICK_LINKS.links,
     },
     infoModal: mapInfoModal(infoRaw),
+    yemekhaneSection: {
+      paragraphs:
+        yemekhaneParagraphsMapped.length > 0
+          ? yemekhaneParagraphsMapped
+          : DEFAULT_YEMEKHANE.paragraphs,
+      media:
+        mapPayloadMediaGroup(
+          yemekhaneRaw?.media as Parameters<typeof mapPayloadMediaGroup>[0],
+          DEFAULT_YEMEKHANE.media,
+        ) || DEFAULT_YEMEKHANE.media,
+    },
   };
 }
 

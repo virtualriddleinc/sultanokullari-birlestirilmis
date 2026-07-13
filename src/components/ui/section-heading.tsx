@@ -19,18 +19,18 @@ export function SectionHeading({
   return (
     <div
       className={cn(
-        "flex flex-wrap items-end justify-between gap-5",
+        "flex flex-wrap items-end justify-between gap-fluid-4",
         align === "center" && "justify-center text-center",
         className,
       )}
     >
       <div className={cn(align === "center" && "mx-auto max-w-3xl")}>
         {eyebrow ? <p className="section-eyebrow">{eyebrow}</p> : null}
-        <h2 className={cn("section-title", eyebrow && "mt-3")}>{title}</h2>
+        <h2 className={cn("section-title", eyebrow && "mt-fluid-3")}>{title}</h2>
         {description ? (
           <p
             className={cn(
-              "section-body mt-4 max-w-2xl",
+              "section-body mt-fluid-4 max-w-2xl",
               align === "center" && "mx-auto",
             )}
           >

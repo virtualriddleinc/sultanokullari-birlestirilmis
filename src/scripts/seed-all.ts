@@ -22,6 +22,7 @@ async function main() {
   console.log("=== seed:all — tüm seed komutları ===\n");
   await run("src/scripts/seed-homepage.ts");
   await run("src/scripts/seed-pages.ts");
+  await run("src/scripts/seed-overlay-pages.ts");
   await run("src/scripts/seed-events.ts");
   console.log("\nseed:all tamamlandı.");
 }

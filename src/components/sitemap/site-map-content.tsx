@@ -21,6 +21,40 @@ import {
 import { cn } from "@/lib/cn";
 import { matchesSearchQuery } from "@/lib/search-text";
 
+type ExtraLink = {
+  label: string;
+  href: string;
+  group?: string | null;
+};
+
+function mergeExtraLinks(
+  categories: SitemapCategory[],
+  extraLinks: ExtraLink[],
+): SitemapCategory[] {
+  if (!extraLinks.length) return categories;
+
+  const knownKeys = new Set(categories.map((c) => c.key));
+
+  return categories.map((category) => {
+    const extras = extraLinks.filter((link) => {
+      const group = link.group || "kurumsal";
+      if (group === category.key) return true;
+      // Bilinmeyen gruplar (örn. guncel) kurumsal kartına düşer
+      if (category.key === "kurumsal" && !knownKeys.has(group)) return true;
+      return false;
+    });
+    if (!extras.length) return category;
+
+    const existing = new Set(category.links.map((l) => l.path));
+    const added = extras
+      .filter((link) => !existing.has(link.href))
+      .map((link) => ({ title: link.label, path: link.href }));
+
+    if (!added.length) return category;
+    return { ...category, links: [...category.links, ...added] };
+  });
+}
+
 function SitemapLinkRow({
   link,
   showPath = false,
@@ -33,7 +67,7 @@ function SitemapLinkRow({
   return (
     <Link
       href={link.path}
-      className="group border-charcoal/8 hover:border-brand-green/35 hover:bg-brand-honey/45 flex items-center gap-3 rounded-xl border bg-white/80 p-3 transition-colors"
+      className="group border-charcoal/8 hover:border-brand-green/35 hover:bg-brand-honey/45 flex min-h-[44px] items-center gap-fluid-3 rounded-xl border bg-white/80 p-fluid-3 transition-colors"
     >
       <span className="bg-brand-green/25 text-charcoal grid size-8 shrink-0 place-items-center rounded-lg">
         {Icon ? (
@@ -43,9 +77,13 @@ function SitemapLinkRow({
         )}
       </span>
       <span className="min-w-0 flex-1">
-        <span className="text-charcoal block text-sm font-semibold">{link.title}</span>
+        <span className="text-charcoal block text-[length:var(--text-sm)] font-semibold">
+          {link.title}
+        </span>
         {showPath ? (
-          <span className="text-charcoal/55 mt-0.5 block truncate text-xs">{link.path}</span>
+          <span className="text-charcoal/55 mt-fluid-1 block truncate text-[length:var(--text-xs)]">
+            {link.path}
+          </span>
         ) : null}
       </span>
       <ArrowUpRight
@@ -61,16 +99,16 @@ function CategorySection({ category }: { category: SitemapCategory }) {
 
   return (
     <ContentCard>
-      <div className="mb-6 flex items-center gap-3">
+      <div className="mb-fluid-6 flex items-center gap-fluid-3">
         <span className="bg-brand-honey text-charcoal grid size-10 place-items-center rounded-xl">
           <Icon className="size-5" aria-hidden />
         </span>
-        <h2 className="font-cinzel text-charcoal text-xl font-bold tracking-tight">
+        <h2 className="font-cinzel text-charcoal text-[length:var(--text-xl)] font-bold tracking-tight md:text-[length:var(--text-2xl)]">
           {category.label}
         </h2>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-fluid-3 md:grid-cols-2 lg:grid-cols-3">
         {category.links.map((link) => (
           <SitemapLinkRow key={link.path} link={link} />
         ))}
@@ -79,22 +117,44 @@ function CategorySection({ category }: { category: SitemapCategory }) {
   );
 }
 
-export function SiteMapContent() {
+export function SiteMapContent({
+  extraLinks = [],
+}: {
+  extraLinks?: ExtraLink[];
+}) {
   const [searchTerm, setSearchTerm] = useState("");
   const resultsRef = useRef<HTMLDivElement>(null);
-  const allLinks = useMemo(() => getAllSitemapLinks(), []);
+
+  const categories = useMemo(
+    () => mergeExtraLinks(SITEMAP_CATEGORIES, extraLinks),
+    [extraLinks],
+  );
+
+  const allLinks = useMemo(() => {
+    const base = getAllSitemapLinks();
+    if (!extraLinks.length) return base;
+
+    const seen = new Set(base.map((l) => l.path));
+    const merged = [...base];
+    for (const link of extraLinks) {
+      if (seen.has(link.href)) continue;
+      seen.add(link.href);
+      merged.push({ title: link.label, path: link.href });
+    }
+    return merged.sort((a, b) => a.title.localeCompare(b.title, "tr"));
+  }, [extraLinks]);
 
   const linkCategoryMap = useMemo(() => {
     const map = new Map<string, string>();
 
-    for (const category of SITEMAP_CATEGORIES) {
+    for (const category of categories) {
       for (const link of category.links) {
         map.set(link.path, category.label);
       }
     }
 
     return map;
-  }, []);
+  }, [categories]);
 
   const filteredLinks = useMemo(() => {
     const query = searchTerm.trim();
@@ -139,7 +199,7 @@ export function SiteMapContent() {
           aria-controls="sitemap-search-results"
           aria-expanded={hasSearch}
           className={cn(
-            "border-charcoal/12 text-charcoal placeholder:text-charcoal/45 w-full rounded-2xl border bg-white/90 py-3.5 pr-12 pl-12 text-sm shadow-sm transition",
+            "border-charcoal/12 text-charcoal placeholder:text-charcoal/45 min-h-[44px] w-full rounded-2xl border bg-white/90 py-fluid-3 pr-12 pl-12 text-[length:var(--text-sm)] shadow-sm transition",
             "focus:border-brand-green/60 focus:ring-brand-green/25 focus:ring-2 focus:outline-none",
           )}
         />
@@ -147,7 +207,7 @@ export function SiteMapContent() {
           <button
             type="button"
             onClick={() => setSearchTerm("")}
-            className="text-charcoal/50 hover:text-charcoal absolute top-1/2 right-4 -translate-y-1/2 transition-colors"
+            className="text-charcoal/50 hover:text-charcoal absolute top-1/2 right-3 grid size-11 -translate-y-1/2 place-items-center transition-colors"
             aria-label="Aramayı temizle"
           >
             <X className="size-5" aria-hidden />
@@ -158,14 +218,14 @@ export function SiteMapContent() {
       {hasSearch ? (
         <div ref={resultsRef} id="sitemap-search-results">
           <ContentCard>
-          <h2 className="font-cinzel text-charcoal mb-5 text-lg font-bold">
+          <h2 className="font-cinzel text-charcoal mb-fluid-4 text-[length:var(--text-lg)] font-bold md:text-[length:var(--text-xl)]">
             {filteredLinks.length > 0
               ? `"${searchTerm}" için ${filteredLinks.length} sonuç`
               : `"${searchTerm}" için sonuç bulunamadı`}
           </h2>
 
           {filteredLinks.length > 0 ? (
-            <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="grid gap-fluid-3 md:grid-cols-2 lg:grid-cols-3">
               {filteredLinks.map((link) => (
                 <li key={link.path}>
                   <SitemapLinkRow link={link} showPath />
@@ -173,7 +233,7 @@ export function SiteMapContent() {
               ))}
             </ul>
           ) : (
-            <p className="text-charcoal/70 text-sm">
+            <p className="text-charcoal/70 text-[length:var(--text-sm)]">
               Farklı bir anahtar kelime deneyin veya aşağıdaki kategorilere göz
               atın.
             </p>
@@ -183,19 +243,19 @@ export function SiteMapContent() {
       ) : (
         <>
           <section aria-labelledby="sitemap-quick-access">
-            <div className="mb-5 flex items-center gap-3">
+            <div className="mb-fluid-4 flex items-center gap-fluid-3">
               <span className="bg-brand-green/30 text-charcoal grid size-9 place-items-center rounded-lg">
                 <Zap className="size-4" aria-hidden />
               </span>
               <h2
                 id="sitemap-quick-access"
-                className="font-cinzel text-charcoal text-lg font-bold tracking-tight"
+                className="font-cinzel text-charcoal text-[length:var(--text-lg)] font-bold tracking-tight md:text-[length:var(--text-xl)]"
               >
                 Hızlı Erişim
               </h2>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-7">
+            <div className="grid grid-cols-2 gap-fluid-3 md:grid-cols-3 lg:grid-cols-7">
               {SITEMAP_QUICK_LINKS.map((item) => {
                 const Icon = item.icon;
 
@@ -203,12 +263,12 @@ export function SiteMapContent() {
                   <Link
                     key={item.path}
                     href={item.path}
-                    className="border-charcoal/10 hover:border-brand-green/40 hover:bg-brand-honey/50 group flex flex-col items-center rounded-2xl border bg-white/90 p-4 text-center shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+                    className="border-charcoal/10 hover:border-brand-green/40 hover:bg-brand-honey/50 group flex min-h-[44px] flex-col items-center rounded-2xl border bg-white/90 p-fluid-4 text-center shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
                   >
                     <span className="bg-brand-green/25 text-charcoal grid size-12 place-items-center rounded-full transition group-hover:scale-105">
                       <Icon className="size-5" aria-hidden />
                     </span>
-                    <span className="text-charcoal mt-3 text-sm font-semibold text-balance">
+                    <span className="text-charcoal mt-fluid-3 text-[length:var(--text-sm)] font-semibold text-balance">
                       {item.title}
                     </span>
                   </Link>
@@ -218,7 +278,7 @@ export function SiteMapContent() {
           </section>
 
           <div className="space-y-fluid-4">
-            {SITEMAP_CATEGORIES.map((category) => (
+            {categories.map((category) => (
               <CategorySection key={category.key} category={category} />
             ))}
           </div>

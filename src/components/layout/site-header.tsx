@@ -26,6 +26,8 @@ import {
   Landmark,
   BookOpen,
   School,
+  Briefcase,
+  Sprout,
   ChevronDown,
   Menu,
   X,
@@ -61,6 +63,8 @@ const ICON_MAP: Record<string, React.ElementType> = {
   Landmark,
   BookOpen,
   School,
+  Briefcase,
+  Sprout,
 };
 
 function NavIcon({ name, className }: { name: string; className?: string }) {
@@ -326,12 +330,14 @@ function MegaPanel({
 function MobileDrawer({
   open,
   onClose,
+  sections,
 }: {
   open: boolean;
   onClose: () => void;
+  sections: NavSection[];
 }) {
   const shouldReduceMotion = useReducedMotion();
-  const [openSection, setOpenSection] = useState<string>(NAV_SECTIONS[0].key);
+  const [openSection, setOpenSection] = useState<string>(sections[0]?.key ?? "");
 
   const toggleSection = useCallback((key: string) => {
     setOpenSection((prev) => (prev === key ? "" : key));
@@ -369,7 +375,7 @@ function MobileDrawer({
 
             {/* Accordion navigation */}
             <nav className="flex flex-1 flex-col px-4 py-4">
-              {NAV_SECTIONS.map((section) => {
+              {sections.map((section) => {
                 /* Öncelik: item'daki img → yoksa item'daki video */
                 const sectionImg =
                   section.items.find((it) => it.img)?.img ?? null;
@@ -478,7 +484,11 @@ function MobileDrawer({
 /* -------------------------------------------------------------------------
    SiteHeader — ana bileşen
    ------------------------------------------------------------------------- */
-export function SiteHeader() {
+export function SiteHeader({
+  sections = NAV_SECTIONS,
+}: {
+  sections?: NavSection[];
+}) {
   const shouldReduceMotion = useReducedMotion();
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -496,10 +506,10 @@ export function SiteHeader() {
     setMobileOpen(false);
   }, []);
 
-  const leftSections = NAV_SECTIONS.slice(0, 3);
-  const rightSections = NAV_SECTIONS.slice(3);
+  const leftSections = sections.slice(0, 3);
+  const rightSections = sections.slice(3);
 
-  const activeSection = NAV_SECTIONS.find((s) => s.key === activeMenu) ?? null;
+  const activeSection = sections.find((s) => s.key === activeMenu) ?? null;
 
   return (
     <>
@@ -508,6 +518,7 @@ export function SiteHeader() {
           <MobileDrawer
             open={mobileOpen}
             onClose={closeAllMenus}
+            sections={sections}
           />
         )}
       </AnimatePresence>

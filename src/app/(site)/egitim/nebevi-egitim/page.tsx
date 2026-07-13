@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { nebevi } from "@/content/egitim";
 import { nebeviEgitimSayfasi } from "@/content/page-templates";
 import { educationGalleryMedia } from "@/content/site-media";
@@ -6,7 +7,11 @@ import { PedagojiSection } from "@/components/egitim/pedagoji-section";
 import { QuoteOverlayPageShell } from "@/components/layout/quote-overlay-page-shell";
 import { PageStorySection } from "@/components/layout/page-story-section";
 import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-galeri";
+import { mapCmsOverlayContent, toPageMedia } from "@/lib/cms-overlay";
 import { PAGE_MEDIA } from "@/lib/menu-images";
+import { getPageByPath } from "@/lib/pages-data";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Nebevî Eğitim",
@@ -14,21 +19,34 @@ export const metadata: Metadata = {
     "Üsve-i hasene Efendimizi rehber alan, siyer ve Peygamber (s.a.s) Ahlâkı dersleriyle bütünleşik nebevî eğitim programı.",
 };
 
-export default function Page() {
-  const { story, gallery } = nebeviEgitimSayfasi;
+export default async function Page() {
+  const { isEnabled: isDraft } = await draftMode();
+  const cmsPage = await getPageByPath("egitim", "nebevi-egitim", {
+    draft: isDraft,
+  });
+  const content = mapCmsOverlayContent(cmsPage, {
+    title: "Nebevî Eğitim",
+    intro: nebeviEgitimSayfasi.intro,
+    story: nebeviEgitimSayfasi.story,
+    gallery: {
+      ...nebeviEgitimSayfasi.gallery,
+      items: educationGalleryMedia.nebevi,
+    },
+    heroMedia: PAGE_MEDIA.nebeviEgitim,
+  });
 
   return (
     <QuoteOverlayPageShell
-      title="Nebevî Eğitim"
-      intro={nebeviEgitimSayfasi.intro}
-      media={PAGE_MEDIA.nebeviEgitim}
+      title={content.title}
+      intro={content.intro ?? nebeviEgitimSayfasi.intro}
+      media={toPageMedia(content.heroMedia) ?? PAGE_MEDIA.nebeviEgitim}
       quote={nebevi.quote}
       quoteFullWidth
     >
       <PageStorySection
-        eyebrow={story.eyebrow}
-        motto={story.motto}
-        rows={story.rows}
+        eyebrow={content.story.eyebrow}
+        motto={content.story.motto}
+        rows={content.story.rows}
       />
       <PedagojiSection
         eyebrow="Pedagojik yaklaşımımız"
@@ -40,9 +58,9 @@ export default function Page() {
       />
       <p className="section-body mt-6 text-sm text-zinc-500">{nebevi.not}</p>
       <KurumsalKimlikGalerisi
-        title={gallery.title}
-        description={gallery.description}
-        items={educationGalleryMedia.nebevi}
+        title={content.gallery.title}
+        description={content.gallery.description}
+        items={content.gallery.items}
       />
     </QuoteOverlayPageShell>
   );

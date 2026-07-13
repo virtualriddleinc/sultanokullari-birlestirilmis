@@ -45,19 +45,19 @@ export function KurumsalKimlikGalerisi({
   const close = useCallback(() => setLightbox(null), []);
 
   return (
-    <section aria-labelledby="galeri-baslik" className="mt-16">
-      <div className="flex items-center gap-4">
+    <section aria-labelledby="galeri-baslik" className="mt-fluid-12">
+      <div className="flex items-center gap-fluid-4">
         <h2
           id="galeri-baslik"
-          className="font-cinzel text-charcoal shrink-0 text-2xl font-bold sm:text-3xl"
+          className="font-cinzel text-charcoal shrink-0 text-[length:var(--text-2xl)] font-bold md:text-[length:var(--text-3xl)]"
         >
           {title}
         </h2>
         <div className="from-brand-green/60 h-px flex-1 bg-gradient-to-r to-transparent" />
       </div>
-      <p className="section-body mt-3 max-w-2xl text-base">{description}</p>
+      <p className="section-body mt-fluid-3 max-w-2xl">{description}</p>
 
-      <div className="mt-8 space-y-4 sm:space-y-5">
+      <div className="mt-fluid-8 space-y-fluid-4">
         {items.map((item, index) =>
           index === 0 ? (
             <GalleryTile
@@ -71,7 +71,7 @@ export function KurumsalKimlikGalerisi({
         )}
 
         {items.length > 1 ? (
-          <ul className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-3">
+          <ul className="grid grid-cols-2 gap-fluid-3 md:gap-fluid-4 lg:grid-cols-3">
             {items.slice(1).map((item, i) => {
               const index = i + 1;
               return (
@@ -154,8 +154,8 @@ function GalleryTile({
       data-gallery-src={item.src}
       onClick={() => onOpen(index)}
       className={cn(
-        "group focus-visible:ring-brand-green relative block w-full overflow-hidden rounded-2xl border border-black/5 bg-zinc-100 shadow-sm ring-0 transition duration-300 hover:shadow-md focus-visible:ring-2 focus-visible:outline-none sm:rounded-3xl",
-        isFeatured ? "aspect-[16/9] sm:aspect-[21/9]" : "aspect-[4/3]",
+        "group focus-visible:ring-brand-green relative block min-h-[44px] w-full overflow-hidden rounded-2xl border border-black/5 bg-zinc-100 shadow-sm ring-0 transition duration-300 hover:shadow-md focus-visible:ring-2 focus-visible:outline-none md:rounded-3xl",
+        isFeatured ? "aspect-[16/9] md:aspect-[21/9]" : "aspect-[4/3]",
       )}
       aria-label={item.kind === "video" ? "Videoyu büyüt" : "Görseli büyüt"}
     >
@@ -172,14 +172,14 @@ function GalleryTile({
           sizes={
             isFeatured
               ? "100vw"
-              : "(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 320px"
+              : "(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 320px"
           }
           className="object-cover transition duration-500 ease-out group-hover:scale-[1.03]"
         />
       )}
 
       {item.kind === "video" ? (
-        <span className="bg-charcoal/55 border-brand-honey/60 pointer-events-none absolute top-3 right-3 grid size-9 place-items-center rounded-full border text-white backdrop-blur-sm sm:top-4 sm:right-4 sm:size-10">
+        <span className="bg-charcoal/55 border-brand-honey/60 pointer-events-none absolute top-3 right-3 grid size-11 place-items-center rounded-full border text-white backdrop-blur-sm md:top-4 md:right-4">
           <Play className="size-4 translate-x-px fill-white" />
         </span>
       ) : null}
@@ -336,7 +336,7 @@ function KurumsalKimlikLightbox({
       {isOpen && activeItem && activeIndex !== null ? (
         <motion.div
           key="kurumsal-kimlik-lightbox"
-          className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-6"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-fluid-3 md:p-fluid-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -363,7 +363,7 @@ function KurumsalKimlikLightbox({
               type="button"
               onClick={onClose}
               aria-label="Kapat"
-              className="border-brand-honey/40 text-charcoal bg-brand-honey hover:bg-brand-green absolute top-0 right-0 z-10 grid size-10 place-items-center rounded-full border shadow-lg transition sm:size-11"
+              className="border-brand-honey/40 text-charcoal bg-brand-honey hover:bg-brand-green absolute top-0 right-0 z-10 grid size-11 place-items-center rounded-full border shadow-lg transition"
             >
               <X className="size-5" />
             </button>
@@ -372,33 +372,33 @@ function KurumsalKimlikLightbox({
               type="button"
               onClick={goPrev}
               aria-label="Önceki görsel"
-              className="border-brand-honey/30 text-charcoal bg-brand-honey/95 hover:bg-brand-green absolute top-1/2 left-0 z-10 hidden size-10 -translate-y-1/2 place-items-center rounded-full border shadow-lg transition sm:grid sm:size-12"
+              className="border-brand-honey/30 text-charcoal bg-brand-honey/95 hover:bg-brand-green absolute top-1/2 left-0 z-10 hidden size-12 -translate-y-1/2 place-items-center rounded-full border shadow-lg transition md:grid"
             >
-              <ChevronLeft className="size-5 sm:size-6" />
+              <ChevronLeft className="size-6" />
             </button>
             <button
               type="button"
               onClick={goNext}
               aria-label="Sonraki görsel"
-              className="border-brand-honey/30 text-charcoal bg-brand-honey/95 hover:bg-brand-green absolute top-1/2 right-0 z-10 hidden size-10 -translate-y-1/2 place-items-center rounded-full border shadow-lg transition sm:grid sm:size-12"
+              className="border-brand-honey/30 text-charcoal bg-brand-honey/95 hover:bg-brand-green absolute top-1/2 right-0 z-10 hidden size-12 -translate-y-1/2 place-items-center rounded-full border shadow-lg transition md:grid"
             >
-              <ChevronRight className="size-5 sm:size-6" />
+              <ChevronRight className="size-6" />
             </button>
 
             <button
               type="button"
               aria-label="Önceki görsel"
-              className="absolute top-1/2 left-0 z-[5] h-2/3 w-1/4 -translate-y-1/2 sm:hidden"
+              className="absolute top-1/2 left-0 z-[5] h-2/3 w-1/4 -translate-y-1/2 md:hidden"
               onClick={goPrev}
             />
             <button
               type="button"
               aria-label="Sonraki görsel"
-              className="absolute top-1/2 right-0 z-[5] h-2/3 w-1/4 -translate-y-1/2 sm:hidden"
+              className="absolute top-1/2 right-0 z-[5] h-2/3 w-1/4 -translate-y-1/2 md:hidden"
               onClick={goNext}
             />
 
-            <div className="relative flex h-[70vh] w-full max-w-4xl items-center justify-center overflow-hidden px-4 sm:px-16">
+            <div className="relative flex h-[70vh] w-full max-w-4xl items-center justify-center overflow-hidden px-fluid-4 md:px-fluid-12">
               <AnimatePresence mode="wait" custom={direction} initial={false}>
                 <motion.div
                   key={`slide-${activeIndex}-${activeItem.src}`}
@@ -438,7 +438,7 @@ function KurumsalKimlikLightbox({
               </AnimatePresence>
             </div>
 
-            <p className="text-brand-honey mt-4 text-xs font-bold tracking-[0.2em] uppercase">
+            <p className="text-brand-honey mt-fluid-4 text-[length:var(--text-xs)] font-bold tracking-[0.2em] uppercase">
               {activeIndex + 1} / {items.length}
             </p>
           </div>

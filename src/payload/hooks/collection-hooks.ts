@@ -63,12 +63,16 @@ export const revalidateBranchAfterDelete: CollectionAfterDeleteHook = () => {
 
 export const revalidatePageAfterChange: CollectionAfterChangeHook = ({ doc }) => {
   const slug = doc.slug as string | undefined;
-  if (slug) revalidatePageSlug(slug);
+  if (slug) {
+    revalidatePageSlug(slug, doc.pathPrefix as string | undefined);
+  }
 };
 
 export const revalidatePageAfterDelete: CollectionAfterDeleteHook = ({ doc }) => {
   const slug = doc.slug as string | undefined;
-  if (slug) revalidatePageSlug(slug);
+  if (slug) {
+    revalidatePageSlug(slug, doc.pathPrefix as string | undefined);
+  }
 };
 
 export const revalidateAnaSayfaAfterChange: GlobalAfterChangeHook = () => {

@@ -43,13 +43,13 @@ export function ContactForm({
   }
 
   const inputClass =
-    "mt-1.5 w-full rounded-xl border border-zinc-200 bg-white/80 px-3.5 py-2.5 text-sm text-zinc-900 shadow-sm transition focus:border-[var(--color-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)]/30";
+    "mt-1.5 w-full rounded-xl border border-zinc-200 bg-white/80 px-3.5 py-2.5 text-sm text-zinc-900 shadow-sm transition focus:border-brand-green focus:outline-none focus:ring-2 focus:ring-brand-green/30";
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-emerald-900/10 bg-white/85 p-6 shadow-[0_30px_120px_rgba(13,107,42,0.10)] backdrop-blur-md sm:p-8">
+    <div className="relative overflow-hidden rounded-3xl border border-brand-green/15 bg-white/85 p-6 shadow-[0_30px_120px_rgba(76,255,0,0.12)] backdrop-blur-md sm:p-8">
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-emerald-200/40 blur-3xl"
+        className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-brand-green/25 blur-3xl"
       />
       <div
         aria-hidden
@@ -58,7 +58,7 @@ export function ContactForm({
 
       {state.message ? (
         <p
-          className={`relative mb-5 rounded-2xl px-4 py-3 text-sm ${state.ok ? "bg-emerald-50 text-emerald-900" : "bg-red-50 text-red-900"}`}
+          className={`relative mb-5 rounded-2xl px-4 py-3 text-sm ${state.ok ? "bg-brand-green/20 text-charcoal" : "bg-red-50 text-red-900"}`}
           role="status"
         >
           {state.message}
@@ -133,12 +133,12 @@ export function ContactForm({
             type="checkbox"
             value="on"
             required
-            className="mt-0.5 h-4 w-4 rounded border-zinc-300 text-[var(--color-primary)]"
+            className="text-brand-green mt-0.5 h-4 w-4 rounded border-zinc-300"
           />
           <span className="leading-6">
             <a
               href="/kvkk"
-              className="font-semibold text-[var(--color-primary)] hover:underline"
+              className="text-brand-green font-semibold hover:underline"
             >
               KVKK aydınlatma metnini
             </a>{" "}
@@ -169,7 +169,7 @@ export function ContactForm({
         <button
           type="submit"
           disabled={pending}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--color-primary)] px-5 py-3 text-sm font-semibold text-white shadow-[0_18px_50px_rgba(13,107,42,0.25)] transition hover:bg-[var(--color-primary-dark)] hover:shadow-[0_22px_60px_rgba(13,107,42,0.3)] disabled:opacity-60 sm:w-auto"
+          className="bg-brand-green text-charcoal hover:bg-charcoal hover:text-white inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold shadow-[0_18px_50px_rgba(76,255,0,0.28)] transition hover:shadow-[0_22px_60px_rgba(26,28,24,0.25)] disabled:opacity-60 sm:w-auto"
         >
           {pending ? "Gönderiliyor…" : "Mesajı gönder"}
         </button>

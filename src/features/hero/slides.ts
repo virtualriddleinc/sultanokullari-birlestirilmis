@@ -27,6 +27,10 @@ export interface HeroSlide {
   posterUrl?: string;
   /** Medya odak noktası (yüzde); varsayılan merkez */
   focalPoint?: { x: number; y: number };
+  /** Görsel yakınlaştırma (1–3); varsayılan 1 */
+  mediaScale?: number;
+  /** naturalWidth / naturalHeight; yoksa konteyner oranı kullanılır */
+  mediaAspect?: number;
   /** Slayt görüntülenme süresi (saniye) */
   displayDuration?: number;
 }

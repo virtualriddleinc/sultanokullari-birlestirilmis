@@ -7,6 +7,8 @@ import * as migration_20260628_191000_staff_locked_docs_rels from './20260628_19
 import * as migration_20260628_200000_fix_user_roles from './20260628_200000_fix_user_roles';
 import * as migration_20260701_000000_staff_education_fields from './20260701_000000_staff_education_fields';
 import * as migration_20260701_010000_staff_egitim_danisma_department from './20260701_010000_staff_egitim_danisma_department';
+import * as migration_20260711_000000_hero_slide_focal_point from './20260711_000000_hero_slide_focal_point';
+import * as migration_20260711_010000_cms_security_maturity from './20260711_010000_cms_security_maturity';
 
 export const migrations = [
   {
@@ -53,5 +55,15 @@ export const migrations = [
     up: migration_20260701_010000_staff_egitim_danisma_department.up,
     down: migration_20260701_010000_staff_egitim_danisma_department.down,
     name: '20260701_010000_staff_egitim_danisma_department',
+  },
+  {
+    up: migration_20260711_000000_hero_slide_focal_point.up,
+    down: migration_20260711_000000_hero_slide_focal_point.down,
+    name: '20260711_000000_hero_slide_focal_point',
+  },
+  {
+    up: migration_20260711_010000_cms_security_maturity.up,
+    down: migration_20260711_010000_cms_security_maturity.down,
+    name: '20260711_010000_cms_security_maturity',
   },
 ];

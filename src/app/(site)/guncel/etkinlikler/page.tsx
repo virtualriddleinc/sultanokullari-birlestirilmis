@@ -48,47 +48,50 @@ export default async function Page() {
           sayfasına bakın.
         </p>
       ) : (
-        <StaggerList className="space-y-4">
+        <StaggerList className="space-y-fluid-4">
           {sorted.map((e) => (
             <StaggerItem
               key={e.id}
-              className="flex flex-col gap-1 rounded-lg border border-zinc-200 bg-white p-4 sm:flex-row sm:items-start sm:justify-between"
+              className="flex flex-col gap-fluid-1 rounded-lg border border-zinc-200 bg-white p-fluid-4 md:flex-row md:items-start md:justify-between"
             >
               <div>
-                <p className="text-xs font-medium tracking-wide text-[var(--color-primary)] uppercase">
+                <p className="text-[length:var(--text-xs)] font-medium tracking-wide text-[var(--color-primary)] uppercase">
                   {formatDate(e.date)}
                 </p>
                 {e.slug ? (
-                  <Link href={`/guncel/etkinlikler/${e.slug}`}>
-                    <h2 className="mt-1 text-lg font-semibold text-zinc-900 hover:text-[var(--color-primary)]">
+                  <Link
+                    href={`/guncel/etkinlikler/${e.slug}`}
+                    className="inline-flex min-h-[44px] items-center"
+                  >
+                    <h2 className="mt-fluid-1 text-[length:var(--text-lg)] font-semibold text-zinc-900 hover:text-[var(--color-primary)]">
                       {e.title}
                     </h2>
                   </Link>
                 ) : (
-                  <h2 className="mt-1 text-lg font-semibold text-zinc-900">
+                  <h2 className="mt-fluid-1 text-[length:var(--text-lg)] font-semibold text-zinc-900">
                     {e.title}
                   </h2>
                 )}
-                <p className="mt-2 max-w-2xl text-sm text-zinc-600">
+                <p className="mt-fluid-2 max-w-2xl text-[length:var(--text-sm)] text-zinc-600">
                   {e.excerpt}
                 </p>
                 {e.slug ? (
                   <Link
                     href={`/guncel/etkinlikler/${e.slug}`}
-                    className="mt-2 inline-block text-sm font-medium text-[var(--color-primary)] hover:underline"
+                    className="mt-fluid-2 inline-flex min-h-[44px] items-center text-[length:var(--text-sm)] font-medium text-[var(--color-primary)] hover:underline"
                   >
                     Detay →
                   </Link>
                 ) : null}
               </div>
-              <p className="shrink-0 text-sm text-zinc-500">
+              <p className="shrink-0 text-[length:var(--text-sm)] text-zinc-500">
                 {branchName(e.branchSlug)}
               </p>
             </StaggerItem>
           ))}
         </StaggerList>
       )}
-      <p className="mt-8 text-sm text-zinc-500">
+      <p className="mt-fluid-8 text-[length:var(--text-sm)] text-zinc-500">
         Medya arşivi:{" "}
         <Link
           href="/guncel/medya"

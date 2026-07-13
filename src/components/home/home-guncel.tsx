@@ -83,13 +83,13 @@ export function HomeGuncel({
       className="!bg-brand-honey border-charcoal/10 border-y !py-0"
       innerClassName="!py-fluid-8 sm:!py-fluid-16"
     >
-      <div className="border-charcoal/10 -mx-[var(--layout-margin)] border-y bg-white/50 sm:-mx-0">
+      <div className="border-charcoal/10 border-y bg-white/50">
         <Marquee
           speed={55}
-          className="text-charcoal/80 py-3 text-xs font-semibold tracking-[0.28em] uppercase"
+          className="text-charcoal/80 py-fluid-2 text-[length:var(--text-xs)] font-semibold tracking-[0.28em] uppercase"
         >
           {marqueeItems.map((item, i) => (
-            <span key={`${item.id}-${i}`} className="flex items-center gap-3">
+            <span key={`${item.id}-${i}`} className="flex items-center gap-fluid-3">
               <span
                 aria-hidden
                 className="bg-brand-green/60 inline-block w-2"
@@ -109,7 +109,7 @@ export function HomeGuncel({
       </div>
 
       <SectionHeading
-        className="mt-10"
+        className="mt-fluid-8"
         eyebrow={eyebrow}
         title={title}
         description={description}
@@ -120,11 +120,11 @@ export function HomeGuncel({
         }
       />
 
-      <div className="mt-12 grid gap-6 lg:grid-cols-12">
+      <div className="mt-fluid-8 grid gap-fluid-6 lg:grid-cols-12">
         {featured ? (
           <Link
             href={featuredHref}
-            className="group border-charcoal/15 relative col-span-1 overflow-hidden rounded-[2rem] border bg-[linear-gradient(135deg,#1a1c18,#2a2e28_55%,var(--color-brand-green))] p-8 text-white shadow-[0_30px_120px_rgba(26,28,24,0.20)] lg:col-span-7 lg:p-10"
+            className="group border-charcoal/15 relative col-span-1 overflow-hidden rounded-[2rem] border bg-[linear-gradient(135deg,#1a1c18,#2a2e28_55%,var(--color-brand-green))] p-fluid-6 text-white shadow-[0_30px_120px_rgba(26,28,24,0.20)] lg:col-span-7 lg:p-fluid-8"
           >
             {featuredMedia.kind === "video" ? (
               <AmbientSiteVideo
@@ -151,8 +151,8 @@ export function HomeGuncel({
                 clipPath: HEX_CLIP,
               }}
             />
-            <div className="relative flex h-full flex-col gap-6">
-              <div className="flex items-center gap-4">
+            <div className="relative flex h-full flex-col gap-fluid-6">
+              <div className="flex items-center gap-fluid-4">
                 <div
                   className="bg-brand-honey text-charcoal grid w-24 place-items-center shadow-[0_24px_60px_rgba(26,28,24,0.22)]"
                   style={{
@@ -161,46 +161,46 @@ export function HomeGuncel({
                   }}
                 >
                   <div className="px-1 text-center">
-                    <p className="text-2xl leading-none font-bold tabular-nums">
+                    <p className="text-[length:var(--text-2xl)] leading-none font-bold tabular-nums">
                       {dayParts(featured.date).day}
                     </p>
-                    <p className="mt-1 text-[0.55rem] font-semibold tracking-[0.18em] whitespace-nowrap uppercase">
+                    <p className="mt-fluid-1 text-[length:var(--text-xs)] font-semibold tracking-[0.18em] whitespace-nowrap uppercase">
                       {dayParts(featured.date).month}
                     </p>
                   </div>
                 </div>
-                <span className="rounded-full border border-white/30 bg-white/10 px-3 py-1 text-[0.65rem] font-semibold tracking-[0.28em] uppercase backdrop-blur">
+                <span className="rounded-full border border-white/30 bg-white/10 px-3 py-1 text-[length:var(--text-xs)] font-semibold tracking-[0.28em] uppercase backdrop-blur">
                   {featuredEventLabel}
                 </span>
               </div>
-              <h3 className="text-3xl leading-[1.1] font-semibold tracking-tight text-balance sm:text-4xl">
+              <h3 className="text-[length:var(--text-3xl)] leading-[1.1] font-semibold tracking-tight text-balance">
                 {featured.title}
               </h3>
-              <p className="max-w-xl text-sm leading-7 text-white/85 sm:text-base">
+              <p className="section-body max-w-xl text-white/85">
                 {featured.excerpt}
               </p>
-              <div className="mt-auto inline-flex items-center gap-2 text-sm font-semibold text-white/90 transition group-hover:text-white">
+              <div className="mt-auto inline-flex items-center gap-fluid-2 text-[length:var(--text-sm)] font-semibold text-white/90 transition group-hover:text-white">
                 Etkinlik detayları <span aria-hidden>→</span>
               </div>
             </div>
           </Link>
         ) : null}
 
-        <div className="col-span-1 flex flex-col gap-6 lg:col-span-5">
-          <GlassPanel className="p-6" interactive>
-            <div className="flex items-center gap-3">
+        <div className="col-span-1 flex flex-col gap-fluid-6 lg:col-span-5">
+          <GlassPanel className="p-fluid-4" interactive>
+            <div className="flex items-center gap-fluid-3">
               <HexBadge size="md">
                 <CalendarDays className="size-5" aria-hidden />
               </HexBadge>
-              <h3 className="text-charcoal/60 text-xs font-semibold tracking-[0.28em] uppercase">
+              <h3 className="section-eyebrow text-charcoal/60">
                 {upcomingEventsLabel}
               </h3>
             </div>
             {otherEvents.length > 0 ? (
-              <StaggerList className="mt-5 space-y-3">
+              <StaggerList className="mt-fluid-4 space-y-fluid-3">
                 {otherEvents.map((e) => (
                   <StaggerItem key={e.id}>
-                    <div className="border-charcoal/10 hover:border-brand-green/30 flex items-start gap-3 rounded-2xl border bg-white/80 p-4 transition">
+                    <div className="border-charcoal/10 hover:border-brand-green/30 flex items-start gap-fluid-3 rounded-2xl border bg-white/80 p-fluid-4 transition">
                       <div
                         className="bg-brand-honey text-charcoal grid w-14 shrink-0 place-items-center"
                         style={{
@@ -209,17 +209,17 @@ export function HomeGuncel({
                         }}
                       >
                         <div className="px-1 text-center">
-                          <p className="text-sm leading-none font-bold">
+                          <p className="text-[length:var(--text-sm)] leading-none font-bold">
                             {dayParts(e.date).day}
                           </p>
-                          <p className="text-[0.45rem] font-semibold tracking-[0.12em] whitespace-nowrap uppercase">
+                          <p className="text-[length:var(--text-xs)] font-semibold tracking-[0.12em] whitespace-nowrap uppercase">
                             {dayParts(e.date).month}
                           </p>
                         </div>
                       </div>
                       <div className="min-w-0">
                         <p className="text-charcoal font-semibold">{e.title}</p>
-                        <p className="text-charcoal/70 mt-1 line-clamp-2 text-sm">
+                        <p className="text-charcoal/70 mt-fluid-1 line-clamp-2 text-[length:var(--text-sm)]">
                           {e.excerpt}
                         </p>
                       </div>
@@ -228,33 +228,33 @@ export function HomeGuncel({
                 ))}
               </StaggerList>
             ) : (
-              <p className="border-charcoal/20 text-charcoal/70 mt-5 rounded-2xl border border-dashed bg-white/60 p-5 text-sm">
+              <p className="border-charcoal/20 text-charcoal/70 mt-fluid-4 rounded-2xl border border-dashed bg-white/60 p-fluid-4 text-[length:var(--text-sm)]">
                 Yaklaşan etkinlikler için tüm takvimi inceleyebilirsiniz.
               </p>
             )}
           </GlassPanel>
 
-          <GlassPanel className="p-6" interactive>
-            <div className="flex items-center gap-3">
+          <GlassPanel className="p-fluid-4" interactive>
+            <div className="flex items-center gap-fluid-3">
               <HexBadge size="md">
                 <Newspaper className="size-5" aria-hidden />
               </HexBadge>
-              <h3 className="text-charcoal/60 text-xs font-semibold tracking-[0.28em] uppercase">
+              <h3 className="section-eyebrow text-charcoal/60">
                 {newsLabel}
               </h3>
             </div>
             {hasNews ? (
-              <StaggerList className="mt-5 space-y-3">
+              <StaggerList className="mt-fluid-4 space-y-fluid-3">
                 {news.map((n) => (
                   <StaggerItem key={n.id}>
-                    <div className="border-charcoal/10 rounded-2xl border bg-white/80 p-4">
-                      <p className="text-charcoal/60 text-xs">
+                    <div className="border-charcoal/10 rounded-2xl border bg-white/80 p-fluid-4">
+                      <p className="text-charcoal/60 text-[length:var(--text-xs)]">
                         {formatDate(n.date)}
                       </p>
-                      <p className="text-charcoal mt-1 font-semibold">
+                      <p className="text-charcoal mt-fluid-1 font-semibold">
                         {n.title}
                       </p>
-                      <p className="text-charcoal/70 mt-1 text-sm">
+                      <p className="text-charcoal/70 mt-fluid-1 text-[length:var(--text-sm)]">
                         {n.excerpt}
                       </p>
                     </div>
@@ -262,7 +262,7 @@ export function HomeGuncel({
                 ))}
               </StaggerList>
             ) : (
-              <p className="border-charcoal/20 text-charcoal/70 mt-5 rounded-2xl border border-dashed bg-white/60 p-5 text-sm">
+              <p className="border-charcoal/20 text-charcoal/70 mt-fluid-4 rounded-2xl border border-dashed bg-white/60 p-fluid-4 text-[length:var(--text-sm)]">
                 Henüz yayınlanmış haber yok. Duyurular için{" "}
                 <Link
                   href="/guncel/haberler"

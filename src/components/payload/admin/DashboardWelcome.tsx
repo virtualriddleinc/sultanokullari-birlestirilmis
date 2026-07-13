@@ -6,7 +6,9 @@ import { getPreviewBaseUrl } from "@/payload/admin-groups";
 const editorQuickLinks = [
   { href: "/admin/globals/ana-sayfa", label: "Ana Sayfa Düzeni" },
   { href: "/admin/collections/hero-slides", label: "Hero Slaytları" },
-  { href: "/admin/collections/news/create", label: "Haber Ekle" },
+  { href: "/admin/collections/news/create", label: "Haber / Duyuru Ekle" },
+  { href: "/admin/collections/media-items/create", label: "Medya Ekle" },
+  { href: "/admin/collections/pages/create", label: "Sayfa Ekle" },
   { href: "/admin/collections/contact-messages?where[status][equals]=new", label: "Gelen Kutusu" },
 ];
 
@@ -14,13 +16,14 @@ const adminQuickLinks = [
   ...editorQuickLinks,
   { href: "/admin/collections/users", label: "Kullanıcılar" },
   { href: "/admin/globals/site-ayarlari", label: "Site Ayarları" },
+  { href: "/admin/globals/navigation", label: "Navigasyon" },
 ];
 
 const siteMapLinks = [
   { href: "/#guncel", label: "Güncel" },
   { href: "/#okullarimiz", label: "Okullarımız" },
   { href: "/kurumsal/hakkimizda", label: "Hakkımızda" },
-  { href: "/kurumsal/burs-olanaklari", label: "Burs" },
+  { href: "/guncel/medya", label: "Medya" },
   { href: "/guncel/haberler", label: "Haberler" },
 ];
 

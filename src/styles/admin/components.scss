@@ -3,18 +3,49 @@
 /* Logo */
 .sultan-admin-logo {
   display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.sultan-admin-logo__img {
+  display: block;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: auto;
+  max-height: 2.75rem;
+  object-fit: contain;
+}
+
+.sultan-admin-logo__text {
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.35rem;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.sultan-admin-logo__name {
+  font-family: var(--font-cinzel), "Cinzel", Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  color: var(--sultan-charcoal);
 }
 
 .sultan-admin-logo__badge {
   font-family: var(--font-cinzel), "Cinzel", Georgia, serif;
-  font-size: 0.7rem;
+  font-size: 0.65rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: color-mix(in srgb, var(--sultan-charcoal) 75%, var(--sultan-honey));
+  color: color-mix(in srgb, var(--sultan-charcoal) 65%, var(--sultan-honey));
+}
+
+/* Login: sağda logo yok — sol panelde gösterilir */
+.template-minimal .sultan-admin-logo {
+  display: none;
 }
 
 /* Sidebar gelen kutusu */

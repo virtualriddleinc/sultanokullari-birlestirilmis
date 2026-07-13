@@ -1,8 +1,11 @@
 "use server";
 
 import { z } from "zod";
+import { headers } from "next/headers";
 import { getPublishedBranches } from "@/lib/branches-data";
 import { persistContactMessage } from "@/lib/form-persistence";
+import { rateLimit } from "@/lib/rate-limit";
+import { verifyRecaptcha } from "@/lib/recaptcha";
 
 async function getBranchSlugSet(): Promise<Set<string>> {
   const list = await getPublishedBranches();
@@ -39,25 +42,23 @@ export type ContactFormState = {
   fieldErrors?: Record<string, string[]>;
 };
 
-async function verifyRecaptcha(token: string | undefined): Promise<boolean> {
-  const secret = process.env.RECAPTCHA_SECRET_KEY;
-  if (!secret) return true;
-  if (!token) return false;
-  const body = new URLSearchParams({ secret, response: token });
-  const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body,
-  });
-  if (!res.ok) return false;
-  const data = (await res.json()) as { success?: boolean };
-  return data.success === true;
-}
-
 export async function submitContact(
   _prev: ContactFormState,
   formData: FormData,
 ): Promise<ContactFormState> {
+  const h = await headers();
+  const ip =
+    h.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    h.get("x-real-ip") ||
+    "unknown";
+  const limited = rateLimit(`contact:${ip}`, 8, 15 * 60 * 1000);
+  if (!limited.ok) {
+    return {
+      ok: false,
+      message: `Çok fazla istek. Lütfen ${limited.retryAfterSec} saniye sonra tekrar deneyin.`,
+    };
+  }
+
   const raw = {
     name: formData.get("name"),
     email: formData.get("email"),

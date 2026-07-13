@@ -78,7 +78,10 @@ export interface Config {
     staff: Staff;
     'contact-messages': ContactMessage;
     'ik-applications': IkApplication;
+    'application-files': ApplicationFile;
     media: Media;
+    'media-items': MediaItem;
+    'audit-logs': AuditLog;
     users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -98,7 +101,10 @@ export interface Config {
     staff: StaffSelect<false> | StaffSelect<true>;
     'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
     'ik-applications': IkApplicationsSelect<false> | IkApplicationsSelect<true>;
+    'application-files': ApplicationFilesSelect<false> | ApplicationFilesSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'media-items': MediaItemsSelect<false> | MediaItemsSelect<true>;
+    'audit-logs': AuditLogsSelect<false> | AuditLogsSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -112,10 +118,12 @@ export interface Config {
   globals: {
     'ana-sayfa': AnaSayfa;
     'site-ayarlari': SiteAyarlari;
+    navigation: Navigation;
   };
   globalsSelect: {
     'ana-sayfa': AnaSayfaSelect<false> | AnaSayfaSelect<true>;
     'site-ayarlari': SiteAyarlariSelect<false> | SiteAyarlariSelect<true>;
+    navigation: NavigationSelect<false> | NavigationSelect<true>;
   };
   locale: null;
   widgets: {
@@ -146,7 +154,7 @@ export interface UserAuthOperations {
   };
 }
 /**
- * Ana sayfa en üstündeki kaydırmalı hero bölümü. Listede sürükle-bırak ile sıralayın.
+ * Ana sayfa en üstündeki kaydırmalı hero bölümü. Kayıt anında canlıya geçer (taslak yok). Listede sürükle-bırak ile sıralayın.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "hero-slides".
@@ -195,6 +203,21 @@ export interface HeroSlide {
     alt: string;
     poster?: string | null;
   };
+  /**
+   * Altıgen çerçevede görünen alanın merkezi (yüzde). Canlı seçici ile ayarlayın.
+   */
+  focalPoint?: {
+    x?: number | null;
+    y?: number | null;
+  };
+  /**
+   * 1x–3x. Canlı seçicideki kaydırıcı ile de ayarlanır.
+   */
+  mediaScale?: number | null;
+  /**
+   * Görsel/video yüklendiğinde otomatik hesaplanır (genişlik ÷ yükseklik).
+   */
+  mediaAspect?: number | null;
   displayDuration?: number | null;
   /**
    * Kaydı en son güncelleyen panel kullanıcısı.
@@ -229,7 +252,7 @@ export interface Media {
   focalY?: number | null;
 }
 /**
- * Yönetici: tam yetki. Editör: içerik ve form gelen kutusu; kullanıcı yönetimi yok.
+ * Yönetici: tam yetki. Editör: içerik. Gelen kutusu: yalnızca form mesajları.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
@@ -237,9 +260,9 @@ export interface Media {
 export interface User {
   id: number;
   /**
-   * En az bir rol seçin. Yönetici tüm panele erişir.
+   * Yönetici: tam yetki. Editör: içerik. Gelen kutusu: yalnızca iletişim/İK.
    */
-  roles: ('admin' | 'editor')[];
+  roles: ('admin' | 'editor' | 'inbox')[];
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -361,6 +384,10 @@ export interface InstagramPost {
  */
 export interface Branch {
   id: number;
+  /**
+   * Yalnızca yönetici yayına alabilir / kaldırabilir.
+   */
+  isPublished?: boolean | null;
   name: string;
   city: string;
   district: string;
@@ -464,7 +491,15 @@ export interface Branch {
  */
 export interface News {
   id: number;
+  /**
+   * Gelecek bir tarih seçilirse kayıt taslakta kalır; zamanı gelince cron ile yayınlanır. Yalnızca yönetici.
+   */
+  publishAt?: string | null;
   title: string;
+  /**
+   * Sitede Haberler ve duyurular listesinde filtre için kullanılır.
+   */
+  kind: 'haber' | 'duyuru';
   date: string;
   /**
    * Liste ve kartlarda görünen kısa metin.
@@ -536,6 +571,10 @@ export interface News {
  */
 export interface Event {
   id: number;
+  /**
+   * Gelecek bir tarih seçilirse kayıt taslakta kalır; zamanı gelince cron ile yayınlanır. Yalnızca yönetici.
+   */
+  publishAt?: string | null;
   title: string;
   date: string;
   excerpt: string;
@@ -602,22 +641,82 @@ export interface Event {
   _status?: ('draft' | 'published') | null;
 }
 /**
- * Kurumsal ve bilgi sayfaları — hakkımızda, burs olanakları vb.
+ * Site sayfaları — kurumsal, eğitim, rehberlik, yasal. Şablon seçin; sitede ilgili rotada görünür.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
  */
 export interface Page {
   id: number;
+  /**
+   * Gelecek bir tarih seçilirse kayıt taslakta kalır; zamanı gelince cron ile yayınlanır. Yalnızca yönetici.
+   */
+  publishAt?: string | null;
   title: string;
   /**
-   * hakkimizda, burs-olanaklari vb.
+   * URL son segmenti: hakkimizda, anaokulu vb.
    */
   slug: string;
+  /**
+   * Sayfanın site yolu: /{öneki}/{slug}
+   */
+  pathPrefix: 'kurumsal' | 'egitim' | 'rehberlik' | 'akademik' | 'yasam' | 'root';
+  /**
+   * Şablon, sitede hangi düzenin kullanılacağını belirler.
+   */
+  template: 'kurumsal-blok' | 'overlay-story' | 'egitim-segment' | 'rehberlik' | 'yasal';
   /**
    * Sayfa hero altında görünen kısa açıklama.
    */
   intro?: string | null;
+  storyEyebrow?: string | null;
+  storyMotto?: string | null;
+  storyRows?:
+    | {
+        eyebrow?: string | null;
+        text: string;
+        highlights?:
+          | {
+              text: string;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  galleryTitle?: string | null;
+  galleryDescription?: string | null;
+  galleryItems?:
+    | {
+        /**
+         * Medya yükleyin veya public klasöründeki dosya yolunu girin. Video için poster yolu ekleyin.
+         */
+        item?: {
+          kind?: ('image' | 'video') | null;
+          /**
+           * Dosya yüklerseniz aşağıdaki yol alanına gerek kalmaz.
+           */
+          media?: (number | null) | Media;
+          /**
+           * Örn. /site-media/IMG-....jpg veya /videos/kademeler.mp4
+           */
+          src?: string | null;
+          alt?: string | null;
+          poster?: string | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Medya yükleyin veya public klasöründeki dosya yolunu girin. Video için poster yolu ekleyin.
+   */
+  heroMedia?: {
+    kind?: ('image' | 'video') | null;
+    media?: (number | null) | Media;
+    src?: string | null;
+    alt?: string | null;
+    poster?: string | null;
+  };
   sections?:
     | (
         | {
@@ -720,6 +819,7 @@ export interface Page {
   lastEditedBy?: (number | null) | User;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * /kurumsal/idari-kadro sayfasındaki yönetim ve şube kadroları.
@@ -730,6 +830,10 @@ export interface Page {
 export interface Staff {
   id: number;
   _order?: string | null;
+  /**
+   * Yalnızca yönetici yayına alabilir / kaldırabilir.
+   */
+  isPublished?: boolean | null;
   fullName: string;
   /**
    * Ad Soyad'ın önüne eklenir. Örn: Dr., Prof. Dr., Öğr. Gör. Boş bırakılabilir.
@@ -744,7 +848,7 @@ export interface Staff {
   /**
    * Yönetim ve Eğitim Danışma Kurulu için boş bırakın.
    */
-  branchSlug?: ('sancaktepe' | 'basiskele' | 'serdivan' | 'sincan') | null;
+  branchSlug?: ('sancaktepe' | 'basiskele' | 'serdivan' | 'sincan' | 'mevlana') | null;
   /**
    * Kaydı en son güncelleyen panel kullanıcısı.
    */
@@ -790,7 +894,93 @@ export interface IkApplication {
   experienceYears: number;
   education: string;
   coverLetter: string;
+  /**
+   * PDF veya Word, en fazla 5 MB.
+   */
+  cv?: (number | null) | ApplicationFile;
   status: 'new' | 'read' | 'archived';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * İK başvurularına eklenen CV dosyaları (PDF/Word, max 5 MB).
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "application-files".
+ */
+export interface ApplicationFile {
+  id: number;
+  alt: string;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * /guncel/medya sayfası ve ana sayfa medya önizlemesi.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-items".
+ */
+export interface MediaItem {
+  id: number;
+  title: string;
+  kind: 'foto' | 'video';
+  date: string;
+  tags?:
+    | {
+        tag: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Ana sayfa veya arşivde öncelikli gösterim için.
+   */
+  featured?: boolean | null;
+  media: number | Media;
+  alt: string;
+  caption?: string | null;
+  /**
+   * Kaydı en son güncelleyen panel kullanıcısı.
+   */
+  lastEditedBy?: (number | null) | User;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * İçerik değişikliklerinin kim/ne/ne zaman kaydı. Salt okunur.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "audit-logs".
+ */
+export interface AuditLog {
+  id: number;
+  summary: string;
+  action: 'create' | 'update' | 'delete';
+  collection: string;
+  documentId?: string | null;
+  userEmail?: string | null;
+  userId?: string | null;
+  /**
+   * Opsiyonel bağlam (ör. _status değişimi).
+   */
+  meta?:
+    | {
+        [k: string]: unknown;
+      }
+    | unknown[]
+    | string
+    | number
+    | boolean
+    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -863,8 +1053,20 @@ export interface PayloadLockedDocument {
         value: number | IkApplication;
       } | null)
     | ({
+        relationTo: 'application-files';
+        value: number | ApplicationFile;
+      } | null)
+    | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'media-items';
+        value: number | MediaItem;
+      } | null)
+    | ({
+        relationTo: 'audit-logs';
+        value: number | AuditLog;
       } | null)
     | ({
         relationTo: 'users';
@@ -934,6 +1136,14 @@ export interface HeroSlidesSelect<T extends boolean = true> {
         alt?: T;
         poster?: T;
       };
+  focalPoint?:
+    | T
+    | {
+        x?: T;
+        y?: T;
+      };
+  mediaScale?: T;
+  mediaAspect?: T;
   displayDuration?: T;
   lastEditedBy?: T;
   updatedAt?: T;
@@ -1003,6 +1213,7 @@ export interface InstagramPostsSelect<T extends boolean = true> {
  * via the `definition` "branches_select".
  */
 export interface BranchesSelect<T extends boolean = true> {
+  isPublished?: T;
   name?: T;
   city?: T;
   district?: T;
@@ -1062,7 +1273,9 @@ export interface BranchesSelect<T extends boolean = true> {
  * via the `definition` "news_select".
  */
 export interface NewsSelect<T extends boolean = true> {
+  publishAt?: T;
   title?: T;
+  kind?: T;
   date?: T;
   excerpt?: T;
   body?: T;
@@ -1090,6 +1303,7 @@ export interface NewsSelect<T extends boolean = true> {
  * via the `definition` "events_select".
  */
 export interface EventsSelect<T extends boolean = true> {
+  publishAt?: T;
   title?: T;
   date?: T;
   excerpt?: T;
@@ -1119,9 +1333,52 @@ export interface EventsSelect<T extends boolean = true> {
  * via the `definition` "pages_select".
  */
 export interface PagesSelect<T extends boolean = true> {
+  publishAt?: T;
   title?: T;
   slug?: T;
+  pathPrefix?: T;
+  template?: T;
   intro?: T;
+  storyEyebrow?: T;
+  storyMotto?: T;
+  storyRows?:
+    | T
+    | {
+        eyebrow?: T;
+        text?: T;
+        highlights?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  galleryTitle?: T;
+  galleryDescription?: T;
+  galleryItems?:
+    | T
+    | {
+        item?:
+          | T
+          | {
+              kind?: T;
+              media?: T;
+              src?: T;
+              alt?: T;
+              poster?: T;
+            };
+        id?: T;
+      };
+  heroMedia?:
+    | T
+    | {
+        kind?: T;
+        media?: T;
+        src?: T;
+        alt?: T;
+        poster?: T;
+      };
   sections?:
     | T
     | {
@@ -1193,6 +1450,7 @@ export interface PagesSelect<T extends boolean = true> {
   lastEditedBy?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1200,6 +1458,7 @@ export interface PagesSelect<T extends boolean = true> {
  */
 export interface StaffSelect<T extends boolean = true> {
   _order?: T;
+  isPublished?: T;
   fullName?: T;
   academicTitle?: T;
   title?: T;
@@ -1239,9 +1498,28 @@ export interface IkApplicationsSelect<T extends boolean = true> {
   experienceYears?: T;
   education?: T;
   coverLetter?: T;
+  cv?: T;
   status?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "application-files_select".
+ */
+export interface ApplicationFilesSelect<T extends boolean = true> {
+  alt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1261,6 +1539,44 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media-items_select".
+ */
+export interface MediaItemsSelect<T extends boolean = true> {
+  title?: T;
+  kind?: T;
+  date?: T;
+  tags?:
+    | T
+    | {
+        tag?: T;
+        id?: T;
+      };
+  featured?: T;
+  media?: T;
+  alt?: T;
+  caption?: T;
+  lastEditedBy?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "audit-logs_select".
+ */
+export interface AuditLogsSelect<T extends boolean = true> {
+  summary?: T;
+  action?: T;
+  collection?: T;
+  documentId?: T;
+  userEmail?: T;
+  userId?: T;
+  meta?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1477,6 +1793,30 @@ export interface AnaSayfa {
         }[]
       | null;
   };
+  yemekhaneSection?: {
+    paragraphs?:
+      | {
+          text: string;
+          id?: string | null;
+        }[]
+      | null;
+    /**
+     * Medya yükleyin veya public klasöründeki dosya yolunu girin. Video için poster yolu ekleyin.
+     */
+    media?: {
+      kind?: ('image' | 'video') | null;
+      /**
+       * Dosya yüklerseniz aşağıdaki yol alanına gerek kalmaz.
+       */
+      media?: (number | null) | Media;
+      /**
+       * Örn. /site-media/IMG-....jpg veya /videos/kademeler.mp4
+       */
+      src?: string | null;
+      alt?: string | null;
+      poster?: string | null;
+    };
+  };
   infoModal: {
     enabled?: boolean | null;
     brandLabel?: string | null;
@@ -1490,7 +1830,7 @@ export interface AnaSayfa {
   createdAt?: string | null;
 }
 /**
- * Footer, sosyal medya ve genel iletişim bilgileri.
+ * Footer, sosyal medya ve genel iletişim bilgileri — footer ve /iletisim sayfasını etkiler. Yalnızca yönetici güncelleyebilir.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-ayarlari".
@@ -1512,6 +1852,67 @@ export interface SiteAyarlari {
    * Sayfa özel görseli yoksa sosyal medya önizlemesinde kullanılır.
    */
   defaultOgImage?: (number | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Üst menü yönetimi. Bölümler doluysa kod içi menünün yerine geçer; boşsa kod menüsü + ek linkler kullanılır. Yalnızca yönetici.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation".
+ */
+export interface Navigation {
+  id: number;
+  /**
+   * Açıkken aşağıdaki menü bölümleri site üst menüsünün kaynağı olur.
+   */
+  useCmsMenu?: boolean | null;
+  /**
+   * Her bölüm bir üst menü başlığıdır (Kurumsal, Eğitim…).
+   */
+  sections?:
+    | {
+        /**
+         * Benzersiz slug — örn. kurumsal, egitim
+         */
+        key: string;
+        label: string;
+        description?: string | null;
+        items?:
+          | {
+              label: string;
+              /**
+               * Örn. /egitim/anaokulu
+               */
+              href: string;
+              /**
+               * Opsiyonel — örn. BookOpen, Compass
+               */
+              icon?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * CMS menüsü kapalıyken kod menüsüne eklenir. CMS menüsü açıkken ilgili bölüme eklenmez — bölüm items kullanın.
+   */
+  extraLinks?:
+    | {
+        label: string;
+        /**
+         * Örn. /egitim/anaokulu
+         */
+        href: string;
+        /**
+         * Opsiyonel — örn. BookOpen, Compass
+         */
+        icon?: string | null;
+        group?: ('kurumsal' | 'egitim' | 'akademik' | 'rehberlik' | 'okullar' | 'yasam' | 'guncel') | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1644,6 +2045,25 @@ export interface AnaSayfaSelect<T extends boolean = true> {
               id?: T;
             };
       };
+  yemekhaneSection?:
+    | T
+    | {
+        paragraphs?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
+        media?:
+          | T
+          | {
+              kind?: T;
+              media?: T;
+              src?: T;
+              alt?: T;
+              poster?: T;
+            };
+      };
   infoModal?:
     | T
     | {
@@ -1676,6 +2096,41 @@ export interface SiteAyarlariSelect<T extends boolean = true> {
         id?: T;
       };
   defaultOgImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "navigation_select".
+ */
+export interface NavigationSelect<T extends boolean = true> {
+  useCmsMenu?: T;
+  sections?:
+    | T
+    | {
+        key?: T;
+        label?: T;
+        description?: T;
+        items?:
+          | T
+          | {
+              label?: T;
+              href?: T;
+              icon?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  extraLinks?:
+    | T
+    | {
+        label?: T;
+        href?: T;
+        icon?: T;
+        group?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

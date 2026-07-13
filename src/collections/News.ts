@@ -4,12 +4,20 @@ import { lexicalEditor } from "@payloadcms/richtext-lexical";
 
 import { ADMIN_GROUPS } from "@/payload/admin-groups";
 import { buildPreviewUrl } from "@/lib/preview-url";
-import { contentCollectionAccess } from "@/payload/access";
+import { draftContentCollectionAccess } from "@/payload/access";
 import { guncelRevalidateHooks } from "@/payload/hooks/collection-hooks";
 import { trackLastEditedBy } from "@/payload/hooks/audit-hooks";
-import { restrictEditorPublish } from "@/payload/hooks/publish-access";
+import {
+  createAuditAfterChange,
+  createAuditAfterDelete,
+} from "@/payload/hooks/audit-log-hooks";
+import {
+  applyScheduledPublish,
+  restrictEditorPublish,
+} from "@/payload/hooks/publish-access";
 import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
+import { publishAtField } from "@/payload/fields/publish-at-field";
 import { seoFields } from "@/payload/fields/seo-fields";
 
 export const News: CollectionConfig = {
@@ -20,8 +28,8 @@ export const News: CollectionConfig = {
   },
   admin: {
     useAsTitle: "title",
-    group: ADMIN_GROUPS.site,
-    defaultColumns: ["title", "date", "featuredImage", "_status", "updatedAt"],
+    group: ADMIN_GROUPS.content,
+    defaultColumns: ["title", "kind", "date", "featuredImage", "_status", "updatedAt"],
     description: "Ana sayfa Güncel bölümü (#guncel) ve /guncel/haberler sayfası.",
     livePreview: {
       url: ({ data }) => {
@@ -34,12 +42,20 @@ export const News: CollectionConfig = {
   },
   defaultSort: "-date",
   hooks: {
-    ...guncelRevalidateHooks,
-    beforeChange: [trackLastEditedBy, restrictEditorPublish],
+    beforeChange: [trackLastEditedBy, applyScheduledPublish, restrictEditorPublish],
+    afterChange: [
+      ...guncelRevalidateHooks.afterChange,
+      createAuditAfterChange("news"),
+    ],
+    afterDelete: [
+      ...guncelRevalidateHooks.afterDelete,
+      createAuditAfterDelete("news"),
+    ],
   },
-  access: contentCollectionAccess,
+  access: draftContentCollectionAccess,
   versions: {
     drafts: true,
+    maxPerDoc: 25,
   },
   fields: [
     adminHintField(
@@ -47,6 +63,7 @@ export const News: CollectionConfig = {
       "Yayınlanan haberler ana sayfa #guncel ve /guncel/haberler listesinde görünür. Slug ile detay sayfası otomatik oluşur. Editörler yalnızca taslak kaydedebilir.",
     ),
     siteLinkField("newsSiteLink", "/guncel/haberler", "Haberler listesini aç →"),
+    publishAtField,
     {
       type: "tabs",
       tabs: [
@@ -59,6 +76,21 @@ export const News: CollectionConfig = {
               label: "Başlık",
               required: true,
               maxLength: 120,
+            },
+            {
+              name: "kind",
+              type: "select",
+              label: "Tür",
+              defaultValue: "haber",
+              required: true,
+              options: [
+                { label: "Haber", value: "haber" },
+                { label: "Duyuru", value: "duyuru" },
+              ],
+              admin: {
+                description:
+                  "Sitede Haberler ve duyurular listesinde filtre için kullanılır.",
+              },
             },
             {
               name: "date",

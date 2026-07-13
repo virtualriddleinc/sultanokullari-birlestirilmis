@@ -1,8 +1,12 @@
 import type { CollectionConfig } from "payload";
 
 import { ADMIN_GROUPS } from "@/payload/admin-groups";
-import { contentCollectionAccess } from "@/payload/access";
+import { contentCollectionAccess, hasRole, type AppUser } from "@/payload/access";
 import { trackLastEditedBy } from "@/payload/hooks/audit-hooks";
+import {
+  createAuditAfterChange,
+  createAuditAfterDelete,
+} from "@/payload/hooks/audit-log-hooks";
 import { staffRevalidateHooks } from "@/payload/hooks/collection-hooks";
 import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
@@ -17,21 +21,41 @@ export const Staff: CollectionConfig = {
   },
   admin: {
     useAsTitle: "fullName",
-    group: ADMIN_GROUPS.site,
-    defaultColumns: ["fullName", "title", "department", "branchSlug", "updatedAt"],
+    group: ADMIN_GROUPS.schools,
+    defaultColumns: ["fullName", "title", "department", "branchSlug", "isPublished", "updatedAt"],
     description: "/kurumsal/idari-kadro sayfasındaki yönetim ve şube kadroları.",
   },
   hooks: {
     beforeChange: [trackLastEditedBy],
-    ...staffRevalidateHooks,
+    afterChange: [
+      ...staffRevalidateHooks.afterChange,
+      createAuditAfterChange("staff"),
+    ],
+    afterDelete: [
+      ...staffRevalidateHooks.afterDelete,
+      createAuditAfterDelete("staff"),
+    ],
   },
   access: contentCollectionAccess,
   fields: [
     adminHintField(
       "staffHint",
-      "Yönetim kadrosu için birim: Yönetim, şube alanı boş. Şube kadroları için birim + şube slug seçin. Sürükle-bırak ile sıralayın. Fotoğraf kullanılmıyor; bunun yerine unvan, görev ve eğitim bilgisi öne çıkarılıyor.",
+      "Yönetim kadrosu için birim: Yönetim, şube alanı boş. Şube kadroları için birim + şube slug seçin. Sürükle-bırak ile sıralayın. Yayında değil kayıtlar sitede görünmez.",
     ),
     siteLinkField("staffSiteLink", "/kurumsal/idari-kadro", "İdari kadro sayfasını aç →"),
+    {
+      name: "isPublished",
+      type: "checkbox",
+      label: "Yayında",
+      defaultValue: true,
+      access: {
+        update: ({ req }) => hasRole(req.user as AppUser | null, "admin"),
+      },
+      admin: {
+        position: "sidebar",
+        description: "Yalnızca yönetici yayına alabilir / kaldırabilir.",
+      },
+    },
     {
       name: "fullName",
       type: "text",
@@ -84,6 +108,7 @@ export const Staff: CollectionConfig = {
         { label: "Başiskele", value: "basiskele" },
         { label: "Serdivan", value: "serdivan" },
         { label: "Sincan", value: "sincan" },
+        { label: "Mevlana (Konya)", value: "mevlana" },
       ],
     },
     lastEditedByField,

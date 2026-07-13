@@ -4,7 +4,9 @@ import Script from "next/script";
 import { draftMode } from "next/headers";
 import { SiteFooter } from "@/components/site-footer";
 import { InfoRequestModal } from "@/components/home/info-request-modal";
+import { HashAnchorScroll } from "@/components/layout/hash-anchor-scroll";
 import { PreventTopOverscroll } from "@/components/layout/prevent-top-overscroll";
+import { RouteReadySignal } from "@/components/layout/route-ready-signal";
 import { SiteHeader } from "@/components/layout/site-header";
 import { MotionProviders } from "@/components/ui/motion-providers";
 import { getPublishedBranches } from "@/lib/branches-data";
@@ -13,6 +15,7 @@ import { PayloadRefreshOnSave } from "@/components/payload/RefreshOnSave";
 import { getRootMetadata } from "@/lib/seo/metadata";
 import { buildOrganizationGraph } from "@/lib/schema/organization";
 import { JsonLd } from "@/lib/schema/JsonLd";
+import { getNavSectionsWithCms } from "@/lib/navigation-data";
 import { getSiteSettings } from "@/lib/site-settings-data";
 import beyazDesen from "@/images/beyaz-desen.svg";
 import "./globals.css";
@@ -58,10 +61,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const { isEnabled: isDraft } = await draftMode();
-  const [branches, settings, infoModal] = await Promise.all([
+  const [branches, settings, infoModal, navSections] = await Promise.all([
     getPublishedBranches(),
     getSiteSettings(),
     getInfoModalData({ draft: isDraft }),
+    getNavSectionsWithCms(),
   ]);
   const organizationSchema = buildOrganizationGraph({
     sameAs: buildSameAs(settings),
@@ -96,13 +100,19 @@ export default async function RootLayout({
 
         <MotionProviders>
           <PreventTopOverscroll />
+          <HashAnchorScroll />
+          <RouteReadySignal />
           <PayloadRefreshOnSave enabled={isDraft} />
           <InfoRequestModal {...infoModal} />
-          <SiteHeader />
+          <SiteHeader sections={navSections} />
           <main className="relative z-[1] flex w-full min-w-0 flex-1 flex-col overflow-x-clip">
             {children}
           </main>
-          <SiteFooter branches={branches} />
+          <SiteFooter
+            branches={branches}
+            settings={settings}
+            sections={navSections}
+          />
         </MotionProviders>
       </body>
     </html>

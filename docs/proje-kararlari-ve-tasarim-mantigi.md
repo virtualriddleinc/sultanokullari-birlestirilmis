@@ -11,7 +11,7 @@
 1. `docs/content/site-metin-icerigi.pdf` — tüm metinler (değiştirilemez)
 2. `docs/rules/projekurallari.md` — teknik kurallar, grid disiplini, site haritası
 3. **Bu dosya** — tasarım mantığı, sohbet kararları, hizalama/simetri (§4), hero/header derinlemesi
-4. Kod: `src/app/globals.css`, `src/features/hero/*`, `src/components/layout/site-header.tsx`
+4. Kod: `src/app/(site)/globals.css`, `src/features/hero/*`, `src/components/layout/site-header.tsx`
 
 ```mermaid
 flowchart TD
@@ -828,6 +828,24 @@ Plan dosyaları (`*.plan.md`) kullanıcı istemedikçe düzenlenmez; nihai karar
 - Genişlik konusunda en güncel kural: **yalnızca telefonda kart ile eşit**; negatif margin ve full-bleed yasak.
 - Geri alınan iş = laptop bozuldu; bir sonraki denemede desktop korunması öncelikli doğrulama adımıdır.
 
+### 8.4 Site geneli layout matrisi (Temmuz 2026)
+
+`projekurallari.md` §8 ile sabitlenen kararlar:
+
+| Karar | Değer |
+| ----- | ----- |
+| Tip A | Full-bleed / `SectionGrid` / nav-hizalı; `max-w-* mx-auto` yasak |
+| Tip B | `PageShell` + `.page-shell-content` (72rem) yalnızca içerik sayfalarında |
+| Tip C | Özel sayfalar; outer gutter yine nav token'larıyla |
+| Yapısal kırılım | Telefon `<768`, tablet `768–1023`, desktop `≥1024` (`md`/`lg`) |
+| `sm:` prefix | Yalnızca ince tipografi/spacing; kolon yapısı değiştirmez |
+| Fluid spacing | `fluid-1`…`fluid-16` (ara: 3, 6, 12 dahil) |
+| Negatif margin | İçerik section'larda yasak |
+| Test kapısı | 360 / 390 / 768 / 1024 / 1280 / 1536 |
+
+Stil yolu: `src/app/(site)/globals.css` — eski `src/app/globals.css` referansları buna işaret eder.
+`cn()` gerçek yolu: `src/lib/cn.ts`.
+
 ---
 
 ## 9. Dosya ve seçici referansı (cheat sheet)
@@ -836,14 +854,15 @@ Plan dosyaları (`*.plan.md`) kullanıcı istemedikçe düzenlenmez; nihai karar
 
 | Dosya                                   | Sorumluluk                                                             |
 | --------------------------------------- | ---------------------------------------------------------------------- |
-| `src/app/globals.css`                   | Design token'lar, hero grid/flex, logo boyutları, breakpoint kuralları |
+| `src/app/(site)/globals.css`            | Design token'lar, hero grid/flex, logo boyutları, breakpoint kuralları |
 | `src/features/hero/hero-section.tsx`    | Section iskeleti, arka plan deseni, logo spacer                        |
 | `src/features/hero/hero-slider.tsx`     | Bilgi kartı + altıgen medya, animasyon, mask, navigasyon               |
 | `src/features/hero/geometry.ts`         | Çerçeve/altıgen oran sabitleri                                         |
 | `src/features/hero/slides.ts`           | Slider içerik verisi                                                   |
 | `src/components/layout/site-header.tsx` | Header, logo SVG, mega menü, mobil drawer                              |
+| `src/components/layout/section-grid.tsx`| Tip A/B section kabuğu (`.section-page-grid`)                          |
 | `src/lib/navigation.ts`                 | Nav section tanımları, rotalar                                         |
-| `src/lib/utils.ts`                      | `cn()` yardımcısı                                                      |
+| `src/lib/cn.ts`                         | `cn()` yardımcısı                                                      |
 
 ### 9.2 Kritik CSS sınıfları
 
@@ -944,7 +963,9 @@ Plan dosyaları (`*.plan.md`) kullanıcı istemedikçe düzenlenmez; nihai karar
 | Hizalama ilkesi                     | Sıfıra sıfır; outer gutter sol = sağ; gözle px yok        |
 | Telefon simetrik yerleşim           | Altıgen ve bilgi kartı aynı sol/sağ kenar (`width: 100%`) |
 | Desktop hero simetri                | Col 1 buffer = Col 4 buffer; logo merkez eksende          |
+| Site layout tipi                    | A full-bleed / B PageShell / C özel (projekurallari §8)   |
+| Yapısal breakpoint                  | `<768` telefon · `768–1023` tablet · `≥1024` desktop      |
 
 ---
 
-_Son güncelleme bağlamı: Hero telefon responsive iyileştirme sohbeti (Haziran 2026). Telefon için altıgen = bilgi kartı genişliği talebi geçerlidir; negatif margin yasaktır; önceki agent denemesi laptop'u bozduğu için geri alınmıştır. Wave/dalga ayırıcı kaldırılmıştır; bu dosyada wave kararı yer almaz._
+_Son güncelleme bağlamı: Temmuz 2026 — site geneli responsive layout matrisi (`projekurallari.md` §8) eklendi. Hero telefon kuralları (altıgen = kart, negatif margin yasak, laptop korunur) geçerliliğini korur._

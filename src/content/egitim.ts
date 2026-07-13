@@ -61,10 +61,17 @@ export const ortaokul = {
 export const nebevi = {
   quote:
     "İçinizden Allah’ın lutfuna ve âhiret gününe umut bağlayanlar, Allah’ı çokça ananlar için hiç şüphe yok ki, Resûlullah’ta güzel bir örneklik vardır. (Ahzâb 21)",
+  /** Hadîs-i şerîf — metin akışında diğer vurgularla aynı highlight. */
+  hadithQuote: "Ben muallîm olarak gönderildim.",
   intro: [
-    "Âyet-i kerîmesinde üsve-i hasene buyrulan Efendimiz “Ben muallîm olarak gönderildim.” buyurmuştur. Hiç şüphesiz ki O, kendi asrında insanlara vermiş olduğu eğitimle bir devir açıp bir devir kapatan çağlar ötesi bir nesli yetiştirmiştir.",
+    "Âyet-i kerîmesinde üsve-i hasene buyrulan Efendimiz (s.a.s) “Ben muallîm olarak gönderildim.” buyurmuştur. Hiç şüphesiz ki O, kendi asrında insanlara vermiş olduğu eğitimle bir devir açıp bir devir kapatan çağlar ötesi bir nesli yetiştirmiştir.",
     "21. asırda da Sultan Eğitim Kurumları olarak bizler, Peygamber Efendimiz’in (s.a.s) gençlere verdiği önem ve ihtimamı kendimize örnek alıyor ve O’nun muhabbetini “Siyer” ve “Peygamber (s.a.s) Ahlâkı” derslerimiz ile çocuklarımızın saf ve duru gönüllerine işliyoruz.",
   ],
+  /** İlk intro paragrafı — alıntı öncesi / sonrası (nebevi-scroll vb.). */
+  introLead:
+    "Âyet-i kerîmesinde üsve-i hasene buyrulan Efendimiz (s.a.s)",
+  introTrail:
+    "buyurmuştur. Hiç şüphesiz ki O, kendi asrında insanlara vermiş olduğu eğitimle bir devir açıp bir devir kapatan çağlar ötesi bir nesli yetiştirmiştir.",
   accordion: [
     {
       title: "Siyer dersleri",
@@ -252,44 +259,14 @@ export const degerler = {
 };
 
 export const ciftDil = {
-  quote: "Her lisan bir insan. (Atasözü)",
+  quote: "Gelin tanış olalım / İşi kolay kılalım.",
+  quoteCitation: "(Âşık Yunus)",
+  motto: "Her lisan bir insan.",
+  mottoCitation: "(Atasözü)",
   intro: [
     "Arapça ve İngilizce çift dil eğitimi ile çocuklarımıza farklı dünyaların kapılarını açıyoruz. Eğitimin her kademesinde alanında uzman yabancı öğretmenlerimiz ile çocuklarımızın dil eğitimini destekliyoruz.",
     "Yabancı dil eğitimiyle öğrencilerimizin yabancı dil öğrenme konusundaki isteklerini canlı tutup; onlara dinleme, anlama, konuşma, okuma ve yazma becerisi kazandırmayı amaçlıyoruz.",
     "Okul öncesi kademesinden itibaren İngilizce ve Arapça dillerini öğrenen yarınlarımız için gelecek, çok iyi gelecek…",
-  ],
-  bands: [
-    {
-      phrases: [
-        "Arapça",
-        "İngilizce",
-        "Listening · Speaking",
-        "Reading · Writing",
-        "Çift dilli yarın",
-      ],
-      direction: 1 as const,
-      scale: "xl" as const,
-    },
-    {
-      phrases: [
-        "Okul öncesinden itibaren",
-        "Uzman yabancı öğretmen",
-        "Drama ve oyunla pratik",
-        "Süreklilik üzerine kurulu",
-      ],
-      direction: -1 as const,
-      scale: "lg" as const,
-    },
-    {
-      phrases: [
-        "Gelin tanış olalım",
-        "İşi kolay kılalım",
-        "Her lisan bir insan",
-        "Çok iyi gelecek…",
-      ],
-      direction: 1 as const,
-      scale: "md" as const,
-    },
   ],
   accordion: [
     {
@@ -316,10 +293,6 @@ export const ciftDil = {
       title: "Süreklilik ilkesi",
       text: "Kademeler arası kesintisiz dil yolculuğu.",
     },
-  ],
-  alintilar: [
-    "Gelin tanış olalım / İşi kolay kılalım. (Âşık Yunus)",
-    "Her lisan bir insan.",
   ],
   not: "Öğretmen tanıtımları, kullanılan yöntemler ve değerlendirme kriterleri yakında eklenecektir.",
 };

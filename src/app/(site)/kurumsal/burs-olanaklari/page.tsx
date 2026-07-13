@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { bursGiris, bursIndirimleri } from "@/content/burs";
 import { BURS_FAQ_ITEMS, BURS_HOWTO_STEPS } from "@/content/sss";
 import { CmsPageSections } from "@/components/cms/cms-page-sections";
@@ -39,7 +40,8 @@ function BursStructuredData() {
 }
 
 export default async function Page() {
-  const cmsPage = await getPageBySlug("burs-olanaklari");
+  const { isEnabled: isDraft } = await draftMode();
+  const cmsPage = await getPageBySlug("burs-olanaklari", { draft: isDraft });
 
   if (cmsPage?.sections?.length) {
     return (

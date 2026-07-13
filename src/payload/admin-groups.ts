@@ -1,9 +1,12 @@
-/** Payload admin sidebar grupları — ana sayfa sırasıyla numaralandırılmış */
+/** Payload admin sidebar grupları — operasyon odaklı */
 export const ADMIN_GROUPS = {
   home: "Ana Sayfa",
-  site: "Site İçeriği",
+  content: "İçerik",
+  schools: "Okullar",
   inbox: "Gelen Kutusu",
-  system: "Sistem",
+  system: "Ayarlar",
+  /** @deprecated use content / schools */
+  site: "İçerik",
 } as const;
 
 export const ICON_KEY_OPTIONS = [

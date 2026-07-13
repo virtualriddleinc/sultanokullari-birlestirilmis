@@ -6,6 +6,7 @@ import { getPayloadClient } from "@/lib/payload";
 
 export type SiteNewsDetail = SiteNews & {
   slug: string;
+  kind?: "haber" | "duyuru";
   body?: unknown;
   featuredImageUrl?: string;
   seoTitle?: string;
@@ -40,13 +41,15 @@ function mapNews(doc: {
   date: string | Date;
   excerpt: string;
   slug?: string | null;
-}): SiteNews & { slug?: string } {
+  kind?: "haber" | "duyuru" | null;
+}): SiteNews & { slug?: string; kind?: "haber" | "duyuru" } {
   return {
     id: String(doc.id),
     title: doc.title,
     date: toIsoDate(doc.date),
     excerpt: doc.excerpt,
     slug: doc.slug ?? undefined,
+    kind: doc.kind === "duyuru" ? "duyuru" : "haber",
   };
 }
 

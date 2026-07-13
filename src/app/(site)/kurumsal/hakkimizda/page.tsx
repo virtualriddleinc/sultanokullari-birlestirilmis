@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import {
   kurulusParagraflari,
   kurucuMesajiNotu,
@@ -17,7 +18,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const cmsPage = await getPageBySlug("hakkimizda");
+  const { isEnabled: isDraft } = await draftMode();
+  const cmsPage = await getPageBySlug("hakkimizda", { draft: isDraft });
 
   if (cmsPage?.sections?.length) {
     return (

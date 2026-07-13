@@ -9,21 +9,30 @@ export function PageStoryRowsCard({
   rows: readonly PageStoryRow[];
 }) {
   return (
-    <ContentCard className="mt-8">
+    <ContentCard className="mt-fluid-8">
       <div className="divide-charcoal/10 divide-y">
-        {rows.map((row) => (
-          <div
-            key={row.eyebrow}
-            className="grid gap-4 py-6 first:pt-0 last:pb-0 sm:grid-cols-[9rem_1fr] sm:gap-8"
-          >
-            <p className="font-cinzel text-charcoal/70 text-xs font-bold tracking-[0.16em] uppercase sm:text-sm">
-              {row.eyebrow}
-            </p>
-            <p className="text-charcoal/90 text-lg leading-relaxed sm:text-xl">
-              {highlightText(row.text, row.highlights)}
-            </p>
-          </div>
-        ))}
+        {rows.map((row, index) => {
+          const hasEyebrow = Boolean(row.eyebrow);
+          return (
+            <div
+              key={row.eyebrow ?? `row-${index}`}
+              className={
+                hasEyebrow
+                  ? "grid gap-fluid-4 py-fluid-6 first:pt-0 last:pb-0 md:grid-cols-[9rem_1fr] md:gap-fluid-8"
+                  : "py-fluid-6 first:pt-0 last:pb-0"
+              }
+            >
+              {hasEyebrow ? (
+                <p className="font-cinzel text-charcoal/70 text-[length:var(--text-xs)] font-bold tracking-[0.16em] uppercase md:text-[length:var(--text-sm)]">
+                  {row.eyebrow}
+                </p>
+              ) : null}
+              <p className="text-charcoal/90 text-[length:var(--text-lg)] leading-relaxed md:text-[length:var(--text-xl)]">
+                {highlightText(row.text, row.highlights)}
+              </p>
+            </div>
+          );
+        })}
       </div>
     </ContentCard>
   );
@@ -34,34 +43,38 @@ export function PageListSection({
   title,
   description,
   groups,
+  gapClassName = "gap-fluid-6",
 }: {
   id: string;
   title: string;
   description?: string;
   groups: readonly { title: string; items: readonly string[] }[];
+  gapClassName?: string;
 }) {
   return (
     <PageDividerSection id={id} title={title} description={description}>
-      <div className="mt-8 grid gap-6 lg:grid-cols-3">
+      <div className={`mt-fluid-8 flex flex-col ${gapClassName}`}>
         {groups.map((group) => (
           <ContentCard key={group.title}>
-            <h3 className="font-cinzel text-charcoal text-lg font-bold">
-              {group.title}
-            </h3>
-            <ul className="mt-4 space-y-2">
-              {group.items.map((item) => (
-                <li
-                  key={item}
-                  className="text-charcoal/85 flex gap-2 text-sm leading-relaxed sm:text-base"
-                >
-                  <span
-                    className="bg-brand-green mt-2 size-1.5 shrink-0 rounded-full"
-                    aria-hidden
-                  />
-                  {item}
-                </li>
-              ))}
-            </ul>
+            <div className="grid gap-fluid-4 md:grid-cols-[minmax(9rem,13rem)_1fr] md:items-start md:gap-fluid-8">
+              <h3 className="font-cinzel text-charcoal text-[length:var(--text-lg)] font-bold md:pt-0.5">
+                {group.title}
+              </h3>
+              <ul className="grid gap-x-fluid-6 gap-y-2 sm:grid-cols-2">
+                {group.items.map((item) => (
+                  <li
+                    key={item}
+                    className="text-charcoal/85 flex gap-2 text-[length:var(--text-sm)] leading-relaxed md:text-[length:var(--text-base)]"
+                  >
+                    <span
+                      className="bg-brand-green mt-2 size-1.5 shrink-0 rounded-full"
+                      aria-hidden
+                    />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </ContentCard>
         ))}
       </div>

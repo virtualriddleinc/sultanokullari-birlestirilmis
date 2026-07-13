@@ -352,17 +352,19 @@ export function HomeHexGallery() {
       >
         <div className="pointer-events-none absolute inset-0 bg-[url('/desen.svg')] bg-cover bg-center bg-no-repeat opacity-[0.06] mix-blend-screen" />
 
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-10 mx-auto max-w-5xl px-6 pt-16 text-center sm:pt-20">
-          <p className="text-xs font-semibold tracking-[0.32em] text-emerald-300/80 uppercase">
-            Sultan vitrini
-          </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl lg:text-5xl">
-            Hayatından kareler — kaydır, sürükle, bırak.
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-white/75 sm:text-base">
-            Sınıf, atölye ve bahçe anlarımız altıgen sahneler arasında akıyor;
-            istediğin yöne sürükle ya da ok tuşlarıyla gez.
-          </p>
+        <div className="section-page-grid pointer-events-none absolute inset-x-0 top-0 z-10 pt-fluid-8 text-center sm:pt-fluid-12">
+          <div className="section-page-grid__content">
+            <p className="section-eyebrow text-emerald-300/80">
+              Sultan vitrini
+            </p>
+            <h2 className="section-title mt-fluid-3 text-white">
+              Hayatından kareler — kaydır, sürükle, bırak.
+            </h2>
+            <p className="section-body mx-auto mt-fluid-4 max-w-xl text-white/75">
+              Sınıf, atölye ve bahçe anlarımız altıgen sahneler arasında akıyor;
+              istediğin yöne sürükle ya da ok tuşlarıyla gez.
+            </p>
+          </div>
         </div>
 
         <ul
@@ -421,7 +423,7 @@ export function HomeHexGallery() {
           ))}
         </ul>
 
-        <div className="absolute inset-x-0 bottom-10 z-10 flex items-center justify-center gap-3 sm:bottom-14">
+        <div className="absolute inset-x-0 bottom-10 z-10 flex items-center justify-center gap-fluid-3 sm:bottom-14">
           <button
             ref={prevRef}
             type="button"
@@ -430,7 +432,7 @@ export function HomeHexGallery() {
           >
             <ChevronLeft className="size-5" aria-hidden />
           </button>
-          <span className="text-[0.7rem] font-semibold tracking-[0.32em] text-white/55 uppercase">
+          <span className="text-[length:var(--text-xs)] font-semibold tracking-[0.32em] text-white/55 uppercase">
             Sürükle · kaydır · snap
           </span>
           <button

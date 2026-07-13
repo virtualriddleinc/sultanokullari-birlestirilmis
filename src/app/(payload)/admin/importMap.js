@@ -1,5 +1,6 @@
 import { default as default_dd23946560bc2ed8f5eff8459afbc84c } from '@/components/payload/admin/AdminHint'
 import { SiteLink as SiteLink_dd23946560bc2ed8f5eff8459afbc84c } from '@/components/payload/admin/AdminHint'
+import { default as default_8dfba45c0f396e130ba3246de2921977 } from '@/components/payload/admin/HexFocalPointPicker'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { LexicalDiffComponent as LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -41,12 +42,14 @@ import { default as default_1fa6a6a2bb55985c4523e19cfb9420d6 } from '@/component
 import { default as default_f3d7b197b906b2ece578c00293cabc51 } from '@/components/payload/admin/DashboardWelcome'
 import { default as default_2000e57b62931ee40afb24bc4eea57f7 } from '@/components/payload/admin/AdminLoginBackdrop'
 import { default as default_31f8ab3df74841aa90634a685c07a4d5 } from '@/components/payload/admin/InboxNavLinks'
+import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
   "@/components/payload/admin/AdminHint#default": default_dd23946560bc2ed8f5eff8459afbc84c,
   "@/components/payload/admin/AdminHint#SiteLink": SiteLink_dd23946560bc2ed8f5eff8459afbc84c,
+  "@/components/payload/admin/HexFocalPointPicker#default": default_8dfba45c0f396e130ba3246de2921977,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#LexicalDiffComponent": LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -88,5 +91,6 @@ export const importMap = {
   "@/components/payload/admin/DashboardWelcome#default": default_f3d7b197b906b2ece578c00293cabc51,
   "@/components/payload/admin/AdminLoginBackdrop#default": default_2000e57b62931ee40afb24bc4eea57f7,
   "@/components/payload/admin/InboxNavLinks#default": default_31f8ab3df74841aa90634a685c07a4d5,
+  "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

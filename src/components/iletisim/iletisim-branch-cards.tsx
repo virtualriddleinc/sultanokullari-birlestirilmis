@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, MapPin, Phone } from "lucide-react";
 import type { Branch } from "@/content/branches";
 import { branches as staticBranches } from "@/content/branches";
+import { SectionGrid } from "@/components/layout/section-grid";
 import {
   staggerContainerVariants,
   staggerItemVariants,
@@ -18,12 +19,13 @@ type CardVariant = "green" | "honey";
 
 const cardVariants: Record<
   CardVariant,
-  { shell: string; badge: string; tag: string; link: string }
+  { shell: string; badge: string; title: string; tag: string; link: string }
 > = {
   green: {
     shell:
       "border-charcoal/10 bg-brand-green text-charcoal shadow-[0_20px_60px_rgba(26,28,24,0.12)] hover:shadow-[0_30px_90px_rgba(26,28,24,0.18)]",
     badge: "bg-white/75 text-charcoal",
+    title: "text-white",
     tag: "border-charcoal/25 bg-white/55 text-charcoal",
     link: "text-charcoal",
   },
@@ -31,6 +33,7 @@ const cardVariants: Record<
     shell:
       "border-charcoal/10 bg-brand-honey text-charcoal shadow-[0_20px_60px_rgba(26,28,24,0.08)] hover:shadow-[0_30px_90px_rgba(26,28,24,0.14)]",
     badge: "bg-white/80 text-charcoal",
+    title: "text-charcoal",
     tag: "border-charcoal/20 bg-white/65 text-charcoal",
     link: "text-charcoal",
   },
@@ -44,26 +47,22 @@ export function IletisimBranchCards({
   const reduce = useReducedMotion();
 
   return (
-    <section
-      id="sube-kartlari"
-      aria-label="Şubelerimiz"
-      className="relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8"
-    >
-      <div className="mb-10 max-w-2xl">
-        <p className="text-xs font-semibold tracking-[0.32em] text-[var(--color-primary)] uppercase">
+    <SectionGrid id="sube-kartlari" aria-label="Şubelerimiz" variant="white">
+      <div className="mb-fluid-8 max-w-2xl">
+        <p className="text-brand-green text-[length:var(--text-xs)] font-semibold tracking-[0.32em] uppercase">
           Şubelerimiz
         </p>
-        <h2 className="mt-3 text-3xl leading-tight font-semibold tracking-tight text-balance text-zinc-950 sm:text-4xl">
+        <h2 className="mt-fluid-3 text-[length:var(--text-3xl)] leading-tight font-semibold tracking-tight text-balance text-zinc-950">
           Size en yakın okul.
         </h2>
-        <p className="mt-3 text-base leading-7 text-zinc-600">
+        <p className="mt-fluid-3 text-[length:var(--text-base)] leading-7 text-zinc-600">
           Dört lokasyon — telefon, adres ve detaylar tek bakışta. İhtiyacınıza
           en uygun kampüsten ilerleyin.
         </p>
       </div>
 
       <motion.div
-        className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        className="grid gap-fluid-4 md:grid-cols-2 lg:grid-cols-3"
         initial={reduce ? false : "hidden"}
         whileInView="visible"
         viewport={viewportInView}
@@ -78,7 +77,7 @@ export function IletisimBranchCards({
           </motion.div>
         ))}
       </motion.div>
-    </section>
+    </SectionGrid>
   );
 }
 
@@ -96,7 +95,7 @@ function BranchCard({
   return (
     <article
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border p-5 transition hover:-translate-y-1 sm:p-6",
+        "group relative flex h-full flex-col overflow-hidden rounded-[1.5rem] border p-5 transition hover:-translate-y-1 md:p-6",
         styles.shell,
       )}
     >
@@ -116,28 +115,33 @@ function BranchCard({
       <div className="relative">
         <span
           className={cn(
-            "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[0.62rem] font-semibold tracking-[0.22em] uppercase backdrop-blur",
+            "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[length:var(--text-xs)] font-semibold tracking-[0.22em] uppercase backdrop-blur",
             styles.badge,
           )}
         >
           <MapPin className="size-3" aria-hidden />
           {branch.city}
         </span>
-        <h3 className="text-charcoal mt-4 text-lg leading-tight font-semibold tracking-tight text-balance">
+        <h3
+          className={cn(
+            "mt-fluid-4 text-[length:var(--text-lg)] leading-tight font-semibold tracking-tight text-balance",
+            styles.title,
+          )}
+        >
           {branch.name}
         </h3>
-        <p className="text-charcoal/60 mt-1 text-xs font-medium tracking-[0.18em] uppercase">
+        <p className="text-charcoal/60 mt-1 text-[length:var(--text-xs)] font-medium tracking-[0.18em] uppercase">
           {branch.district}
         </p>
-        <p className="text-charcoal/80 mt-3 line-clamp-3 text-sm leading-6">
+        <p className="text-charcoal/80 mt-fluid-3 line-clamp-3 text-[length:var(--text-sm)] leading-6">
           {branch.address}
         </p>
-        <div className="mt-3 flex flex-wrap items-center gap-1.5">
+        <div className="mt-fluid-3 flex flex-wrap items-center gap-1.5">
           {branch.levels.map((lv) => (
             <span
               key={lv}
               className={cn(
-                "rounded-full border px-2 py-0.5 text-[0.62rem] font-semibold tracking-[0.18em] uppercase",
+                "rounded-full border px-2 py-0.5 text-[length:var(--text-xs)] font-semibold tracking-[0.18em] uppercase",
                 styles.tag,
               )}
             >
@@ -147,10 +151,10 @@ function BranchCard({
         </div>
       </div>
 
-      <div className="relative mt-5 flex flex-wrap items-center gap-2">
+      <div className="relative mt-fluid-4 flex flex-wrap items-center gap-2">
         <a
           href={tel}
-          className="bg-charcoal inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-charcoal/90"
+          className="bg-charcoal inline-flex min-h-[44px] items-center gap-1.5 rounded-full px-3 py-1.5 text-[length:var(--text-xs)] font-semibold text-white shadow-sm transition hover:bg-charcoal/90"
         >
           <Phone className="size-3.5" aria-hidden />
           {branch.phone}
@@ -159,7 +163,7 @@ function BranchCard({
           href={mapsUrl}
           target="_blank"
           rel="noreferrer"
-          className="border-charcoal/20 text-charcoal hover:border-charcoal/35 inline-flex items-center gap-1 rounded-full border bg-white/80 px-3 py-1.5 text-xs font-semibold transition"
+          className="border-charcoal/20 text-charcoal hover:border-charcoal/35 inline-flex min-h-[44px] items-center gap-1 rounded-full border bg-white/80 px-3 py-1.5 text-[length:var(--text-xs)] font-semibold transition"
         >
           Yol tarifi
           <ArrowUpRight className="size-3.5" aria-hidden />
@@ -170,7 +174,7 @@ function BranchCard({
         href={`/subeler/${branch.slug}`}
         aria-label={`${branch.district} şube sayfası`}
         className={cn(
-          "relative mt-3 inline-flex w-fit items-center gap-1 text-xs font-semibold underline-offset-4 hover:underline",
+          "relative mt-fluid-3 inline-flex min-h-[44px] w-fit items-center gap-1 text-[length:var(--text-xs)] font-semibold underline-offset-4 hover:underline",
           styles.link,
         )}
       >

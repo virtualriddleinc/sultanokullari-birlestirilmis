@@ -145,8 +145,10 @@ const scaleClass: Record<PedagojiBand["scale"], string> = {
 };
 
 export type PedagojiSectionProps = {
-  eyebrow: string;
-  title: string;
+  /** Verilmezse üst başlık bloğu gösterilmez. */
+  eyebrow?: string;
+  /** Verilmezse üst başlık bloğu gösterilmez. */
+  title?: string;
   description?: string;
   /** Boş veya verilmezse kelime şeritleri ve GSAP hareketi gösterilmez. */
   bands?: readonly PedagojiBand[];
@@ -174,6 +176,8 @@ export function PedagojiSection({
   const textRefs = useRef<Array<HTMLSpanElement | null>>([]);
   const palette = themePresets[theme];
   const isHoneycombLayout = itemsLayout === "honeycomb" && items.length === 7;
+  const hasHeading = Boolean(eyebrow || title || description);
+  const sectionLabel = title ?? eyebrow ?? "Pedagojik yaklaşım";
 
   useGSAP(
     () => {
@@ -254,22 +258,35 @@ export function PedagojiSection({
   );
 
   return (
-    <section ref={rootRef} aria-label={title} className="relative mt-14">
-      {!isHoneycombLayout ? (
-        <div className="mx-auto mb-10 max-w-3xl text-center">
-          <p
-            className={cn(
-              "text-xs font-semibold tracking-[0.32em] uppercase",
-              palette.primary,
-            )}
-          >
-            {eyebrow}
-          </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-balance text-zinc-950 sm:text-4xl">
-            {title}
-          </h2>
+    <section
+      ref={rootRef}
+      aria-label={sectionLabel}
+      className="relative mt-fluid-12"
+    >
+      {!isHoneycombLayout && hasHeading ? (
+        <div className="mx-auto mb-fluid-8 max-w-3xl text-center">
+          {eyebrow ? (
+            <p
+              className={cn(
+                "text-[length:var(--text-xs)] font-semibold tracking-[0.32em] uppercase",
+                palette.primary,
+              )}
+            >
+              {eyebrow}
+            </p>
+          ) : null}
+          {title ? (
+            <h2
+              className={cn(
+                "text-[length:var(--text-3xl)] font-semibold tracking-tight text-balance text-zinc-950 md:text-[length:var(--text-4xl)]",
+                eyebrow ? "mt-fluid-3" : undefined,
+              )}
+            >
+              {title}
+            </h2>
+          ) : null}
           {description ? (
-            <p className="mt-3 text-sm leading-7 text-zinc-600">
+            <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-600">
               {description}
             </p>
           ) : null}
@@ -277,10 +294,10 @@ export function PedagojiSection({
       ) : null}
 
       {bands.length > 0 ? (
-        <div className="relative left-1/2 w-screen -translate-x-1/2 px-4 sm:px-6">
+        <div className="relative w-full">
           <div
             className={cn(
-              "velocity-stage relative isolate overflow-hidden rounded-[2.25rem] py-10 sm:py-12",
+              "velocity-stage relative isolate overflow-hidden rounded-[2.25rem] py-fluid-8 md:py-fluid-12",
               theme === "teal"
                 ? "border border-emerald-950/35 bg-[#128a36] shadow-[0_28px_90px_rgba(7,32,17,0.28)]"
                 : cn("border border-zinc-200/80", palette.stage),
@@ -308,11 +325,11 @@ export function PedagojiSection({
               )}
             />
 
-            <div className="relative flex flex-col gap-3 sm:gap-4">
+            <div className="relative flex flex-col gap-fluid-3 md:gap-fluid-4">
               {bands.map((band, i) => (
                 <div
                   key={i}
-                  className="velocity-band relative w-full overflow-hidden py-1"
+                  className="velocity-band relative w-full overflow-hidden py-fluid-1"
                   role="presentation"
                 >
                   <span
@@ -357,19 +374,24 @@ export function PedagojiSection({
       {isHoneycombLayout ? (
         <PedagojiHoneycomb
           items={items}
-          sectionLabel={`${title} — program başlıkları`}
+          sectionLabel={`${sectionLabel} — program başlıkları`}
           eyebrow={eyebrow}
           title={title}
           description={description}
         />
       ) : (
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <ul
+          className={cn(
+            "grid gap-fluid-4 md:grid-cols-2 lg:grid-cols-3",
+            (hasHeading || bands.length > 0) && "mt-fluid-12",
+          )}
+        >
           {items.map((item, index) => {
             const Icon = icons[index % icons.length];
             return (
               <li
                 key={item.title}
-                className="group relative overflow-hidden rounded-[1.5rem] border border-zinc-200/80 bg-white/85 p-5 shadow-[0_18px_60px_rgba(15,23,42,0.06)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:shadow-[0_28px_90px_rgba(15,23,42,0.10)]"
+                className="group relative overflow-hidden rounded-[1.5rem] border border-zinc-200/80 bg-white/85 p-fluid-4 shadow-[0_18px_60px_rgba(15,23,42,0.06)] backdrop-blur-sm transition hover:-translate-y-0.5 hover:shadow-[0_28px_90px_rgba(15,23,42,0.10)] md:p-fluid-6"
               >
                 <div
                   className={cn(
@@ -377,24 +399,24 @@ export function PedagojiSection({
                     palette.blob1,
                   )}
                 />
-                <div className="relative flex items-start gap-4">
+                <div className="relative flex items-start gap-fluid-4">
                   <HexBadge size="md" className="bg-white">
                     <Icon className="size-5" aria-hidden />
                   </HexBadge>
                   <div className="min-w-0">
                     <p
                       className={cn(
-                        "text-[0.65rem] font-semibold tracking-[0.22em] uppercase",
+                        "text-[length:var(--text-xs)] font-semibold tracking-[0.22em] uppercase",
                         palette.primary,
                       )}
                     >
                       {String(index + 1).padStart(2, "0")} /{" "}
                       {String(items.length).padStart(2, "0")}
                     </p>
-                    <h3 className="mt-1.5 text-base font-semibold text-zinc-950">
+                    <h3 className="mt-fluid-2 text-[length:var(--text-base)] font-semibold text-zinc-950">
                       {item.title}
                     </h3>
-                    <p className="mt-2 text-sm leading-6 text-zinc-600">
+                    <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-6 text-zinc-600">
                       {item.text}
                     </p>
                   </div>

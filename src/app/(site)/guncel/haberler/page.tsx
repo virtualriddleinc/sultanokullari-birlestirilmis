@@ -41,29 +41,36 @@ export default async function Page() {
           sayfasına bakın.
         </p>
       ) : (
-        <StaggerList className="space-y-4">
+        <StaggerList className="space-y-fluid-4">
           {news.map((n) => (
             <StaggerItem
               key={n.id}
-              className="rounded-lg border border-zinc-200 bg-white p-4"
+              className="rounded-lg border border-zinc-200 bg-white p-fluid-4"
             >
-              <p className="text-xs text-zinc-500">{formatDate(n.date)}</p>
+              <p className="text-[length:var(--text-xs)] text-zinc-500">
+                {formatDate(n.date)}
+              </p>
               {n.slug ? (
-                <Link href={`/guncel/haberler/${n.slug}`}>
-                  <h2 className="mt-1 text-lg font-semibold text-zinc-900 hover:text-[var(--color-primary)]">
+                <Link
+                  href={`/guncel/haberler/${n.slug}`}
+                  className="inline-flex min-h-[44px] items-center"
+                >
+                  <h2 className="mt-fluid-1 text-[length:var(--text-lg)] font-semibold text-zinc-900 hover:text-[var(--color-primary)]">
                     {n.title}
                   </h2>
                 </Link>
               ) : (
-                <h2 className="mt-1 text-lg font-semibold text-zinc-900">
+                <h2 className="mt-fluid-1 text-[length:var(--text-lg)] font-semibold text-zinc-900">
                   {n.title}
                 </h2>
               )}
-              <p className="mt-2 text-sm text-zinc-600">{n.excerpt}</p>
+              <p className="mt-fluid-2 text-[length:var(--text-sm)] text-zinc-600">
+                {n.excerpt}
+              </p>
               {n.slug ? (
                 <Link
                   href={`/guncel/haberler/${n.slug}`}
-                  className="mt-3 inline-block text-sm font-medium text-[var(--color-primary)] hover:underline"
+                  className="mt-fluid-3 inline-flex min-h-[44px] items-center text-[length:var(--text-sm)] font-medium text-[var(--color-primary)] hover:underline"
                 >
                   Devamını oku →
                 </Link>

@@ -57,6 +57,18 @@ export const HEX_CLIP_PATH = `polygon(${HEX_CLIP_VERTICES.map((vertex) => {
   return `${x.toFixed(4)}% ${y.toFixed(4)}%`;
 }).join(", ")})`;
 
+/**
+ * Altıgen delik clip'i — delik bbox'una göre (0–100%).
+ * Admin odak reticle kenarı için; konteyner HEX_CLIP_PATH ile karıştırma.
+ */
+export const HEX_HOLE_CLIP_PATH = `polygon(${HEX_CLIP_VERTICES.map(([x, y]) => {
+  const lx =
+    ((x - HEX_MASK_INSET.left) / HEXAGON_CLIP_WIDTH_PCT) * 100;
+  const ly =
+    ((y - HEX_MASK_INSET.top) / HEXAGON_CLIP_HEIGHT_PCT) * 100;
+  return `${lx.toFixed(4)}% ${ly.toFixed(4)}%`;
+}).join(", ")})`;
+
 /** Medya — çerçeve iç kenarında yeşil çizgi kalmaması için merkezden büyütme */
 export const HEX_MEDIA_COVER_SCALE = 1.035;
 

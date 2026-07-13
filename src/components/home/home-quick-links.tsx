@@ -27,7 +27,7 @@ function Chip({ link }: { link: QuickLinkItem }) {
   return (
     <Link
       href={link.href}
-      className="group border-charcoal/10 bg-brand-honey hover:border-brand-green/40 relative flex h-16 items-center gap-3 rounded-full border pr-5 pl-2 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+      className="group border-charcoal/10 bg-brand-honey hover:border-brand-green/40 relative flex h-16 items-center gap-fluid-3 rounded-full border pr-5 pl-2 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
     >
       <motion.span
         className="bg-brand-green/25 text-charcoal grid h-12 w-14 place-items-center"
@@ -38,10 +38,10 @@ function Chip({ link }: { link: QuickLinkItem }) {
         <Icon className="size-5" aria-hidden />
       </motion.span>
       <div className="flex min-w-0 flex-col">
-        <span className="text-charcoal group-hover:text-charcoal text-sm font-semibold">
+        <span className="text-charcoal group-hover:text-charcoal text-[length:var(--text-sm)] font-semibold">
           {link.label}
         </span>
-        <span className="text-charcoal/55 text-[0.7rem] font-medium tracking-[0.18em] uppercase">
+        <span className="text-charcoal/55 text-[length:var(--text-xs)] font-medium tracking-[0.18em] uppercase">
           {link.description}
         </span>
       </div>
@@ -69,7 +69,7 @@ export function HomeQuickLinks({
       className="border-charcoal/10 border-t"
     >
       <SectionHeading eyebrow={eyebrow} title={title} description={description} />
-      <div className="mt-10">
+      <div className="mt-fluid-8">
         <Marquee
           speed={70}
           className="[mask-image:var(--marquee-mask)] [--marquee-mask:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)] [-webkit-mask-image:var(--marquee-mask)]"

@@ -8,7 +8,7 @@ import { branches as staticBranches } from "@/content/branches";
 import { InstagramGlyph } from "@/components/icons/instagram-glyph";
 import { ContentCard } from "@/components/layout/content-card";
 import { SectionGrid } from "@/components/layout/section-grid";
-import { NAV_SECTIONS } from "@/lib/navigation";
+import { NAV_SECTIONS, type NavSection } from "@/lib/navigation";
 import { getCampusRouteFromBranch } from "@/lib/campus-routes";
 import { cn } from "@/lib/cn";
 import {
@@ -18,27 +18,81 @@ import {
   viewportInView,
 } from "@/lib/animations";
 
-const socials = [
-  {
-    href: "https://www.instagram.com/sultanokullari/",
-    label: "Instagram",
-    Icon: ({ className }: { className?: string }) => (
-      <InstagramGlyph className={className} useGradient />
-    ),
-  },
-];
+export type SiteFooterSettings = {
+  footerEmail?: string;
+  footerPhone?: string;
+  instagramUrl?: string;
+  socialLinks?: { label: string; href: string }[];
+};
 
-const footerNavGroups = [
-  NAV_SECTIONS.find((s) => s.key === "kurumsal"),
-  NAV_SECTIONS.find((s) => s.key === "egitim"),
-  NAV_SECTIONS.find((s) => s.key === "akademik"),
-  NAV_SECTIONS.find((s) => s.key === "rehberlik"),
-  NAV_SECTIONS.find((s) => s.key === "okullar"),
-  NAV_SECTIONS.find((s) => s.key === "yasam"),
-].filter(Boolean);
+type SocialEntry = {
+  href: string;
+  label: string;
+  Icon: ({ className }: { className?: string }) => React.ReactNode;
+};
 
-export function SiteFooter({ branches = staticBranches }: { branches?: Branch[] }) {
+const DEFAULT_INSTAGRAM = "https://www.instagram.com/sultanokullari/";
+const DEFAULT_EMAIL = "info@sultanokullari.com";
+
+function buildSocials(settings?: SiteFooterSettings): SocialEntry[] {
+  const entries: SocialEntry[] = [];
+  const seen = new Set<string>();
+
+  const add = (href: string, label: string, isInstagram = false) => {
+    const key = href.trim();
+    if (!key || seen.has(key)) return;
+    seen.add(key);
+    entries.push({
+      href: key,
+      label,
+      Icon: isInstagram
+        ? ({ className }: { className?: string }) => (
+            <InstagramGlyph className={className} useGradient />
+          )
+        : ({ className }: { className?: string }) => (
+            <ArrowUpRight className={className} aria-hidden />
+          ),
+    });
+  };
+
+  const instagramUrl = settings?.instagramUrl?.trim() || DEFAULT_INSTAGRAM;
+  add(instagramUrl, "Instagram", true);
+
+  for (const link of settings?.socialLinks ?? []) {
+    if (!link.href?.trim() || !link.label?.trim()) continue;
+    const isIg = /instagram\.com/i.test(link.href);
+    add(link.href, link.label, isIg);
+  }
+
+  return entries;
+}
+
+function footerNavFromSections(sections: NavSection[]) {
+  return [
+    sections.find((s) => s.key === "kurumsal"),
+    sections.find((s) => s.key === "egitim"),
+    sections.find((s) => s.key === "akademik"),
+    sections.find((s) => s.key === "rehberlik"),
+    sections.find((s) => s.key === "okullar"),
+    sections.find((s) => s.key === "yasam"),
+  ].filter(Boolean) as NavSection[];
+}
+
+export function SiteFooter({
+  branches = staticBranches,
+  settings,
+  sections = NAV_SECTIONS,
+}: {
+  branches?: Branch[];
+  settings?: SiteFooterSettings;
+  sections?: NavSection[];
+}) {
   const reduce = useReducedMotion();
+  const socials = buildSocials(settings);
+  const footerNavGroups = footerNavFromSections(sections);
+  const email = settings?.footerEmail?.trim() || DEFAULT_EMAIL;
+  const phone =
+    settings?.footerPhone?.trim() || branches[0]?.phone || "";
 
   return (
     <footer className="border-charcoal/10 bg-brand-honey/25 relative mt-auto border-t">
@@ -72,7 +126,13 @@ export function SiteFooter({ branches = staticBranches }: { branches?: Branch[] 
         </ContentCard>
 
         {reduce ? (
-          <FooterGrid branches={branches} />
+          <FooterGrid
+            branches={branches}
+            socials={socials}
+            email={email}
+            phone={phone}
+            footerNavGroups={footerNavGroups}
+          />
         ) : (
           <motion.div
             initial="hidden"
@@ -80,7 +140,14 @@ export function SiteFooter({ branches = staticBranches }: { branches?: Branch[] 
             viewport={viewportInView}
             variants={staggerContainerVariants}
           >
-            <FooterGrid motion branches={branches} />
+            <FooterGrid
+              motion
+              branches={branches}
+              socials={socials}
+              email={email}
+              phone={phone}
+              footerNavGroups={footerNavGroups}
+            />
           </motion.div>
         )}
 
@@ -129,9 +196,17 @@ export function SiteFooter({ branches = staticBranches }: { branches?: Branch[] 
 function FooterGrid({
   motion: useMotion,
   branches = staticBranches,
+  socials,
+  email,
+  phone,
+  footerNavGroups,
 }: {
   motion?: boolean;
   branches?: Branch[];
+  socials: SocialEntry[];
+  email: string;
+  phone: string;
+  footerNavGroups: NavSection[];
 }) {
   const Wrapper = useMotion ? motion.div : "div";
   const ItemWrapper = useMotion ? motion.div : "div";
@@ -198,31 +273,29 @@ function FooterGrid({
           "lg:col-start-2 lg:row-start-1",
         )}
       >
-        {footerNavGroups.map((section) =>
-          section ? (
-            <ItemWrapper key={section.key} {...itemProps} className="min-w-0">
-              <p className="font-cinzel text-charcoal text-sm font-bold tracking-[0.18em] uppercase">
-                {section.label}
-              </p>
-              <ul className="mt-4 space-y-2.5">
-                {section.items.map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="group text-charcoal/75 hover:text-charcoal flex w-full min-w-0 items-center gap-1.5 text-sm transition"
-                    >
-                      <span className="min-w-0">{item.label}</span>
-                      <ArrowUpRight
-                        className="size-3.5 shrink-0 opacity-0 transition group-hover:opacity-100"
-                        aria-hidden
-                      />
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </ItemWrapper>
-          ) : null,
-        )}
+        {footerNavGroups.map((section) => (
+          <ItemWrapper key={section.key} {...itemProps} className="min-w-0">
+            <p className="font-cinzel text-charcoal text-sm font-bold tracking-[0.18em] uppercase">
+              {section.label}
+            </p>
+            <ul className="mt-4 space-y-2.5">
+              {section.items.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="group text-charcoal/75 hover:text-charcoal flex w-full min-w-0 items-center gap-1.5 text-sm transition"
+                  >
+                    <span className="min-w-0">{item.label}</span>
+                    <ArrowUpRight
+                      className="size-3.5 shrink-0 opacity-0 transition group-hover:opacity-100"
+                      aria-hidden
+                    />
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </ItemWrapper>
+        ))}
       </div>
 
       <Wrapper
@@ -233,17 +306,19 @@ function FooterGrid({
       >
         <ContentCard inset className="mt-2 lg:mt-0">
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            <ContactItem
-              icon={Phone}
-              label="Telefon"
-              value={branches[0].phone}
-              href={`tel:${branches[0].phone.replace(/\s/g, "")}`}
-            />
+            {phone ? (
+              <ContactItem
+                icon={Phone}
+                label="Telefon"
+                value={phone}
+                href={`tel:${phone.replace(/\s/g, "")}`}
+              />
+            ) : null}
             <ContactItem
               icon={Mail}
               label="E-posta"
-              value="info@sultanokullari.com"
-              href="mailto:info@sultanokullari.com"
+              value={email}
+              href={`mailto:${email}`}
             />
             <div className="flex items-start gap-3 sm:col-span-2">
               <span className="bg-brand-green/30 text-charcoal grid size-10 shrink-0 place-items-center rounded-full">

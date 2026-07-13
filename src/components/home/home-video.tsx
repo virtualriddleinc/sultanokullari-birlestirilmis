@@ -52,7 +52,7 @@ export function HomeVideo({
       data-section="video"
       variant="honey"
       className="!bg-brand-honey !py-fluid-8 sm:!py-fluid-16 relative isolate flex min-h-[80svh] items-center overflow-hidden"
-      innerClassName="flex flex-col gap-10"
+      innerClassName="flex flex-col gap-fluid-8"
       aria-label="Tanıtım"
     >
       {/* Beyaz desen — hero ile aynı; daha az zoom (150vw) */}
@@ -76,7 +76,7 @@ export function HomeVideo({
         <SectionHeading eyebrow={eyebrow} title={title} description={description} />
       </div>
 
-      <div className="relative z-[1] mx-auto grid w-full max-w-5xl place-items-center">
+      <div className="relative z-[1] grid w-full place-items-center">
         <div className="border-charcoal/10 relative w-full overflow-hidden rounded-[2rem] border bg-[linear-gradient(135deg,rgba(255,240,133,0.66),rgba(76,255,0,0.26))] shadow-[0_40px_140px_rgba(26,28,24,0.20)]">
           <div className="relative aspect-video w-full overflow-hidden bg-[radial-gradient(circle_at_50%_45%,rgba(255,240,133,0.24),transparent_60%)]">
             <InteractiveSiteVideo
@@ -92,12 +92,12 @@ export function HomeVideo({
         </div>
         <span
           aria-hidden
-          className="bg-brand-honey/40 pointer-events-none absolute -top-6 -left-6 hidden w-16 sm:block"
+          className="bg-brand-honey/40 pointer-events-none absolute -top-6 -left-6 hidden w-16 md:block"
           style={{ aspectRatio: "2 / 1.7320508075688772", clipPath: HEX_CLIP }}
         />
         <span
           aria-hidden
-          className="bg-brand-green/35 pointer-events-none absolute -right-6 -bottom-6 hidden w-24 sm:block"
+          className="bg-brand-green/35 pointer-events-none absolute -right-6 -bottom-6 hidden w-24 md:block"
           style={{ aspectRatio: "2 / 1.7320508075688772", clipPath: HEX_CLIP }}
         />
       </div>
@@ -107,16 +107,16 @@ export function HomeVideo({
         whileInView={reduce ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.4 }}
         transition={t(0.6)}
-        className="relative z-[1] isolate mt-4 flex flex-wrap items-center justify-between gap-6 overflow-hidden rounded-3xl border border-charcoal/10 bg-brand-green px-6 py-8 shadow-[0_30px_100px_rgba(26,28,24,0.12)] sm:px-10 sm:py-10"
+        className="relative z-[1] isolate mt-fluid-4 flex flex-wrap items-center justify-between gap-fluid-6 overflow-hidden rounded-3xl border border-charcoal/10 bg-brand-green px-fluid-6 py-fluid-6 shadow-[0_30px_100px_rgba(26,28,24,0.12)] md:px-fluid-8 md:py-fluid-8"
       >
-        <p className="relative max-w-md text-lg font-semibold text-charcoal sm:text-2xl">
+        <p className="relative max-w-md text-[length:var(--text-lg)] font-semibold text-charcoal md:text-[length:var(--text-2xl)]">
           Görüşmeye hazır mısınız?
         </p>
         <AnimatedLinkButton
           href={ctaHref}
           variant="light"
           showArrow={false}
-          className="relative px-8 py-4 text-base"
+          className="relative px-8 py-4 text-[length:var(--text-base)]"
         >
           {ctaLabel}
           <ArrowUpRight

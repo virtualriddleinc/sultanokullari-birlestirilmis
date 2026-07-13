@@ -1,14 +1,24 @@
-import type { Access } from "payload";
+import type { Access, AccessArgs } from "payload";
 
-export type AppUserRole = "admin" | "editor";
+export type AppUserRole = "admin" | "editor" | "inbox";
 
 export type AppUser = {
   id: number | string;
   roles?: AppUserRole[];
 };
 
-export function hasRole(user: AppUser | null | undefined, role: AppUserRole): boolean {
+export function hasRole(
+  user: AppUser | null | undefined,
+  role: AppUserRole,
+): boolean {
   return Boolean(user?.roles?.includes(role));
+}
+
+export function hasAnyRole(
+  user: AppUser | null | undefined,
+  roles: AppUserRole[],
+): boolean {
+  return roles.some((role) => hasRole(user, role));
 }
 
 export const isAuthenticated: Access = ({ req }) => Boolean(req.user);
@@ -22,7 +32,14 @@ export const isAdminOrEditor: Access = ({ req }) => {
   return hasRole(user, "admin") || hasRole(user, "editor");
 };
 
-/** Yönetici tüm kullanıcıları; editör yalnızca kendi hesabını okur/günceller */
+/** Yönetici, editör veya gelen kutusu rolü */
+export const isAdminOrEditorOrInbox: Access = ({ req }) => {
+  const user = req.user as AppUser | null;
+  if (!user) return false;
+  return hasAnyRole(user, ["admin", "editor", "inbox"]);
+};
+
+/** Yönetici tüm kullanıcıları; editör/inbox yalnızca kendi hesabını okur/günceller */
 const readSelfOrAdmin: Access = ({ req }) => {
   const user = req.user as AppUser | null;
   if (!user) return false;
@@ -37,26 +54,51 @@ const updateSelfOrAdmin: Access = ({ req }) => {
   return { id: { equals: user.id } };
 };
 
-/** Site içeriği — herkese açık okuma, editör/yönetici yazma */
-export const contentCollectionAccess = {
-  read: () => true,
+/**
+ * Taslak destekli içerik — anonim yalnızca published; oturumlu tam okuma.
+ * Taslak sürümleri yalnızca admin/editör.
+ */
+export const publishedOrAuthenticatedRead: Access = ({ req }) => {
+  if (req.user) return true;
+  return { _status: { equals: "published" } };
+};
+
+/** Anında canlı içerik (hero, şube vb.) — herkese açık okuma */
+export const publicRead: Access = () => true;
+
+/** Site içeriği (taslaklı) */
+export const draftContentCollectionAccess = {
+  read: publishedOrAuthenticatedRead,
   create: isAdminOrEditor,
   update: isAdminOrEditor,
   delete: isAdminOrEditor,
+  readVersions: isAdminOrEditor,
 };
 
-/** Form gelen kutusu — yalnızca panelden okuma/güncelleme */
-export const inboxCollectionAccess = {
-  read: isAdminOrEditor,
-  create: () => false,
+/**
+ * Anında canlı site içeriği — herkese açık okuma, editör/yönetici yazma.
+ * @deprecated Prefer draftContentCollectionAccess for draft-enabled collections.
+ */
+export const contentCollectionAccess = {
+  read: publicRead,
+  create: isAdminOrEditor,
   update: isAdminOrEditor,
+  delete: isAdminOrEditor,
+  readVersions: isAdminOrEditor,
+};
+
+/** Form gelen kutusu — panelden okuma/güncelleme; inbox rolü dahil */
+export const inboxCollectionAccess = {
+  read: isAdminOrEditorOrInbox,
+  create: () => false,
+  update: isAdminOrEditorOrInbox,
   delete: isAdmin,
 };
 
-/** Kullanıcı yönetimi — yönetici tam yetki; editör yalnızca kendi hesabı */
+/** Kullanıcı yönetimi — yönetici tam yetki; diğerleri yalnızca kendi hesabı */
 export const usersCollectionAccess = {
   read: readSelfOrAdmin,
-  create: (async ({ req }) => {
+  create: (async ({ req }: AccessArgs) => {
     if (hasRole(req.user as AppUser | null, "admin")) return true;
     const existing = await req.payload.count({
       collection: "users",
@@ -68,8 +110,22 @@ export const usersCollectionAccess = {
   delete: isAdmin,
 };
 
-/** Global — herkese açık okuma */
+/** Global — herkese açık okuma; yazma admin veya editör */
 export const globalReadAccess = {
-  read: () => true,
+  read: publicRead,
   update: isAdminOrEditor,
+};
+
+/** Kritik globals — yalnızca yönetici günceller */
+export const adminOnlyGlobalAccess = {
+  read: publicRead,
+  update: isAdmin,
+};
+
+/** Audit log — yalnızca yönetici okur; yazma sistem hook'ları ile */
+export const auditLogAccess = {
+  read: isAdmin,
+  create: () => false,
+  update: () => false,
+  delete: isAdmin,
 };

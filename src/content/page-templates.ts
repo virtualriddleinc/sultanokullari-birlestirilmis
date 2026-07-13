@@ -200,10 +200,10 @@ export const akademikGelisim = {
 
 export const yabanciDil = {
   intro:
-    "Arapça ve İngilizce çift dil eğitimi ile farklı dünyaların kapılarını açıyoruz.",
+    "Arapça ve İngilizce; alanında uzman yabancı öğretmenlerle okul öncesi kademesinden itibaren dinleme, anlama, konuşma, okuma ve yazma becerilerinin tümünü dengeli geliştiren program.",
   story: {
-    eyebrow: "Yabancı Dil",
-    motto: "Her lisan bir insan",
+    eyebrow: "Çift Yabancı Dil",
+    motto: ciftDil.motto,
     rows: ciftDil.intro.map((text, i) => ({
       eyebrow:
         i === 0
@@ -226,7 +226,7 @@ export const yabanciDil = {
   gallery: {
     title: "Görsel Galeri",
     description:
-      "Yabancı dil eğitimi ve atölye çalışmalarından fotoğraf ve videolar.",
+      "Çift yabancı dil eğitimi ve atölye çalışmalarından fotoğraf ve videolar.",
   } satisfies OverlayPageGallery,
 } as const;
 
@@ -440,14 +440,24 @@ export const nebeviEgitimSayfasi = {
   story: {
     eyebrow: "Nebevî Eğitim",
     motto: "Üsve-i hasene ile gönüllere işlenen muhabbet",
-    rows: nebevi.intro.map((text, i) => ({
-      eyebrow: i === 0 ? "Üsve-i hasene" : "21. asır",
-      text,
-      highlights:
-        i === 0
-          ? ["üsve-i hasene", '"Ben muallîm olarak gönderildim."', "çağlar ötesi"]
-          : ["Siyer", "Peygamber (s.a.s) Ahlâkı", "saf ve duru gönüllerine"],
-    })),
+    rows: [
+      {
+        text: nebevi.intro[0],
+        highlights: [
+          "üsve-i hasene",
+          `“${nebevi.hadithQuote}”`,
+          "çağlar ötesi",
+        ],
+      },
+      {
+        text: nebevi.intro[1],
+        highlights: [
+          "Siyer",
+          "Peygamber (s.a.s) Ahlâkı",
+          "saf ve duru gönüllerine",
+        ],
+      },
+    ],
   } satisfies OverlayPageStory,
   gallery: {
     title: "Görsel Galeri",

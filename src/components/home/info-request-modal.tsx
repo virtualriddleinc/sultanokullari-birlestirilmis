@@ -73,6 +73,9 @@ export function InfoRequestModal({
     if (!enabled) return;
     if (typeof window === "undefined") return;
     if (hasSeenInSession()) return;
+    // Deep-link (#guncel, #okullarimiz vb.): popup scroll'u kilitleyip
+    // hedef bölüme ulaşmayı kesmesin.
+    if (window.location.hash) return;
 
     const id = window.setTimeout(() => {
       markSessionSeen();

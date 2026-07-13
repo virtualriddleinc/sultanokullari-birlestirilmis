@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import { degerler } from "@/content/egitim";
 import { degerlerEgitimiSayfasi } from "@/content/page-templates";
 import { educationGalleryMedia } from "@/content/site-media";
@@ -7,8 +8,12 @@ import { GeoCitationBlock } from "@/components/geo/geo-citation-block";
 import { QuoteOverlayPageShell } from "@/components/layout/quote-overlay-page-shell";
 import { PageStorySection } from "@/components/layout/page-story-section";
 import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-galeri";
+import { mapCmsOverlayContent, toPageMedia } from "@/lib/cms-overlay";
 import { PAGE_MEDIA } from "@/lib/menu-images";
+import { getPageByPath } from "@/lib/pages-data";
 import { buildPageMetadata } from "@/lib/seo/metadata";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Değerler Eğitimi",
@@ -17,14 +22,27 @@ export const metadata: Metadata = buildPageMetadata({
   path: "/egitim/degerler-egitimi",
 });
 
-export default function Page() {
-  const { story, gallery } = degerlerEgitimiSayfasi;
+export default async function Page() {
+  const { isEnabled: isDraft } = await draftMode();
+  const cmsPage = await getPageByPath("egitim", "degerler-egitimi", {
+    draft: isDraft,
+  });
+  const content = mapCmsOverlayContent(cmsPage, {
+    title: "Değerler Eğitimi",
+    intro: degerlerEgitimiSayfasi.intro,
+    story: degerlerEgitimiSayfasi.story,
+    gallery: {
+      ...degerlerEgitimiSayfasi.gallery,
+      items: educationGalleryMedia.degerler,
+    },
+    heroMedia: PAGE_MEDIA.degerlerEgitimi,
+  });
 
   return (
     <QuoteOverlayPageShell
-      title="Değerler Eğitimi"
-      intro={degerlerEgitimiSayfasi.intro}
-      media={PAGE_MEDIA.degerlerEgitimi}
+      title={content.title}
+      intro={content.intro ?? degerlerEgitimiSayfasi.intro}
+      media={toPageMedia(content.heroMedia) ?? PAGE_MEDIA.degerlerEgitimi}
       quote={degerler.quote}
     >
       <GeoCitationBlock>
@@ -34,9 +52,9 @@ export default function Page() {
         programlarını anaokulu, ilkokul ve ortaokul kademelerinde sunar.
       </GeoCitationBlock>
       <PageStorySection
-        eyebrow={story.eyebrow}
-        motto={story.motto}
-        rows={story.rows}
+        eyebrow={content.story.eyebrow}
+        motto={content.story.motto}
+        rows={content.story.rows}
       />
       <PedagojiSection
         eyebrow="Pedagojik yaklaşımımız"
@@ -45,40 +63,40 @@ export default function Page() {
         items={degerler.accordion}
         theme="rose"
       />
-      <section className="mt-14">
+      <section className="mt-fluid-12">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-xs font-semibold tracking-[0.32em] text-rose-600 uppercase">
+          <p className="text-[length:var(--text-xs)] font-semibold tracking-[0.32em] text-rose-600 uppercase">
             Yıllık akış
           </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-balance text-zinc-950 sm:text-4xl">
+          <h2 className="mt-fluid-3 text-[length:var(--text-3xl)] font-semibold tracking-tight text-balance text-zinc-950 md:text-[length:var(--text-4xl)]">
             Aylık tema örnekleri
           </h2>
-          <p className="mt-3 text-sm leading-7 text-zinc-600">
+          <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-600">
             Komisyonumuzun her dönem yeniden değerlendirdiği tematik akıştan
             örnek bir yıl planı.
           </p>
         </div>
-        <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="mt-fluid-8 grid gap-fluid-3 md:grid-cols-2 lg:grid-cols-5">
           {degerler.aylikOrnek.map((r) => (
             <li
               key={r.ay}
-              className="group relative overflow-hidden rounded-2xl border border-zinc-200/80 bg-white/85 p-4 shadow-[0_18px_60px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_70px_rgba(225,29,72,0.10)]"
+              className="group relative overflow-hidden rounded-2xl border border-zinc-200/80 bg-white/85 p-fluid-4 shadow-[0_18px_60px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:shadow-[0_22px_70px_rgba(225,29,72,0.10)]"
             >
-              <p className="text-[0.62rem] font-semibold tracking-[0.24em] text-rose-600 uppercase">
+              <p className="text-[length:var(--text-xs)] font-semibold tracking-[0.24em] text-rose-600 uppercase">
                 {r.ay}
               </p>
-              <p className="mt-1 text-base font-semibold text-zinc-950">
+              <p className="mt-fluid-1 text-[length:var(--text-base)] font-semibold text-zinc-950">
                 {r.deger}
               </p>
             </li>
           ))}
         </ul>
       </section>
-      <p className="section-body mt-6 text-sm text-zinc-500">{degerler.not}</p>
+      <p className="section-body mt-fluid-6 text-zinc-500">{degerler.not}</p>
       <KurumsalKimlikGalerisi
-        title={gallery.title}
-        description={gallery.description}
-        items={educationGalleryMedia.degerler}
+        title={content.gallery.title}
+        description={content.gallery.description}
+        items={content.gallery.items}
       />
     </QuoteOverlayPageShell>
   );

@@ -22,6 +22,15 @@ const labelClassName = "block text-sm font-semibold text-zinc-800";
 const fieldClassName =
   "mt-2 w-full rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-sm text-zinc-900 shadow-sm outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20";
 
+declare global {
+  interface Window {
+    grecaptcha?: {
+      ready: (cb: () => void) => void;
+      execute: (key: string, o: { action: string }) => Promise<string>;
+    };
+  }
+}
+
 export function IkWizard({ branches = staticBranches }: { branches?: Branch[] }) {
   const reduce = useReducedMotion();
   const [step, setStep] = useState(0);
@@ -30,12 +39,24 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
     initial,
   );
   const formRef = useRef<HTMLFormElement>(null);
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
   function next() {
     setStep((s) => Math.min(s + 1, steps.length - 1));
   }
   function back() {
     setStep((s) => Math.max(s - 1, 0));
+  }
+
+  async function onSubmit(formData: FormData) {
+    if (siteKey && typeof window !== "undefined" && window.grecaptcha) {
+      await new Promise<void>((resolve) => window.grecaptcha!.ready(resolve));
+      const token = await window.grecaptcha.execute(siteKey, {
+        action: "ik_application",
+      });
+      formData.set("recaptchaToken", token);
+    }
+    return formAction(formData);
   }
 
   return (
@@ -64,7 +85,7 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
         </p>
       ) : null}
 
-      <form ref={formRef} action={formAction} className="space-y-4">
+      <form ref={formRef} action={onSubmit} className="space-y-4">
         <input
           type="text"
           name="hp"
@@ -122,7 +143,6 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
                       </option>
                     ))}
                   </select>
-                  <FieldError errors={state.fieldErrors?.branchSlug} />
                 </label>
               </>
             ) : null}
@@ -130,17 +150,12 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
             {step === 1 ? (
               <>
                 <label className={labelClassName}>
-                  Başvurulan pozisyon
-                  <input
-                    name="position"
-                    required
-                    placeholder="Örn. Sınıf öğretmeni"
-                    className={fieldClassName}
-                  />
+                  Pozisyon
+                  <input name="position" required className={fieldClassName} />
                   <FieldError errors={state.fieldErrors?.position} />
                 </label>
                 <label className={labelClassName}>
-                  Mesleki deneyim (yıl)
+                  Deneyim (yıl)
                   <input
                     name="experienceYears"
                     type="number"
@@ -175,6 +190,15 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
                     className={fieldClassName}
                   />
                   <FieldError errors={state.fieldErrors?.coverLetter} />
+                </label>
+                <label className={labelClassName}>
+                  CV (PDF veya Word, max 5 MB)
+                  <input
+                    name="cv"
+                    type="file"
+                    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    className={`${fieldClassName} file:mr-3 file:rounded-full file:border-0 file:bg-emerald-50 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-emerald-900`}
+                  />
                 </label>
                 <label className="flex items-start gap-3 rounded-2xl border border-zinc-200 bg-zinc-50/80 p-4 text-sm leading-6 text-zinc-700">
                   <input

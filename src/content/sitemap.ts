@@ -84,8 +84,6 @@ export const SITEMAP_CATEGORIES: SitemapCategory[] = [
       { title: "İlkokul", path: "/egitim/ilkokul" },
       { title: "Ortaokul", path: "/egitim/ortaokul" },
       { title: "Hâfızlık Eğitimi", path: "/egitim/hafizlik" },
-      { title: "Çift Yabancı Dil", path: "/egitim/cift-yabanci-dil" },
-      { title: "Ölçme ve Değerlendirme", path: "/egitim/olcme-degerlendirme" },
     ],
   },
   {
@@ -103,7 +101,6 @@ export const SITEMAP_CATEGORIES: SitemapCategory[] = [
     label: "Rehberlik & Veli",
     icon: HeartHandshake,
     links: [
-      { title: "Rehberlik", path: "/rehberlik" },
       { title: "Rehberlik ve Eğitim Koçluğu", path: "/rehberlik/egitim-koclugu" },
       { title: "Sultanda Veli Olmak & Veli Akademisi", path: "/rehberlik/veli" },
     ],

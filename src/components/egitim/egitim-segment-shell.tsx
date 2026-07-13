@@ -11,8 +11,6 @@ const accentBySlug: Record<string, string> = {
   "nebevi-egitim": "border-l-teal-700",
   hafizlik: "border-l-emerald-800",
   "degerler-egitimi": "border-l-rose-600",
-  "cift-yabanci-dil": "border-l-sky-600",
-  "olcme-degerlendirme": "border-l-slate-600",
 };
 
 export function EgitimSegmentShell({
@@ -40,7 +38,7 @@ export function EgitimSegmentShell({
 }) {
   const accent = accentBySlug[slug] ?? "border-l-[var(--color-primary)]";
   return (
-    <div className={cn("border-l-4 pl-4 sm:pl-6", accent)}>
+    <div className={cn("border-l-4 pl-fluid-4 md:pl-fluid-6", accent)}>
       <PageShell
         title={title}
         intro={intro}

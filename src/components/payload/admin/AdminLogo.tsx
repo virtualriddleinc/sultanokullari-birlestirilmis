@@ -4,18 +4,23 @@ type Props = {
   readonly?: boolean;
 };
 
-/** Admin giriş ve sidebar markası */
+/** Admin giriş ve sidebar markası — arma + metin */
 export default function AdminLogo(_props: Props) {
   return (
     <div className="sultan-admin-logo">
       <img
-        src="/sultan-okullari-logo.svg"
-        alt="Sultan Okulları"
-        width={160}
-        height={40}
-        style={{ maxHeight: "2.25rem", width: "auto" }}
+        className="sultan-admin-logo__img"
+        src="/admin-login-logo.svg"
+        alt=""
+        width={72}
+        height={60}
+        decoding="async"
+        aria-hidden
       />
-      <span className="sultan-admin-logo__badge sultan-display">Yönetim</span>
+      <div className="sultan-admin-logo__text">
+        <span className="sultan-admin-logo__name sultan-display">Sultan Okulları</span>
+        <span className="sultan-admin-logo__badge">Yönetim</span>
+      </div>
     </div>
   );
 }
