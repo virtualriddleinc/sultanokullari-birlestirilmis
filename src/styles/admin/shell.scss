@@ -53,6 +53,39 @@
   color: color-mix(in srgb, var(--sultan-charcoal) 55%, var(--sultan-honey));
 }
 
+/* Sidebar altı — Çıkış Yap (ikon + metin) */
+.template-default .nav__controls {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.template-default .nav__log-out.sultan-nav-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: auto;
+  max-width: 100%;
+  padding: 0.45rem 0.65rem;
+  border-radius: var(--sultan-radius);
+  color: color-mix(in srgb, var(--sultan-charcoal) 85%, transparent);
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.template-default .nav__log-out.sultan-nav-logout:hover {
+  background: color-mix(in srgb, var(--sultan-green) 10%, white);
+  color: var(--sultan-charcoal);
+}
+
+.template-default .sultan-nav-logout__label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
 /* Header / içerik alanı */
 .template-default .app-header {
   background: color-mix(in srgb, var(--sultan-surface) 92%, transparent);

@@ -88,6 +88,9 @@ export default buildConfig({
         Logo: "@/components/payload/admin/AdminLogo",
         Icon: "@/components/payload/admin/AdminIcon",
       },
+      logout: {
+        Button: "@/components/payload/admin/AdminLogoutButton",
+      },
     },
     livePreview: {
       url: () => buildPreviewUrl("/"),

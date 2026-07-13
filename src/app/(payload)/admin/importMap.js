@@ -37,6 +37,7 @@ import { OkullarimizSectionPreview as OkullarimizSectionPreview_90b362c92c98f089
 import { GuncelSectionPreview as GuncelSectionPreview_90b362c92c98f08992ca5325bae46374 } from '@/components/payload/admin/SectionPreviewLink'
 import { InstagramSectionPreview as InstagramSectionPreview_90b362c92c98f08992ca5325bae46374 } from '@/components/payload/admin/SectionPreviewLink'
 import { KisaYollarSectionPreview as KisaYollarSectionPreview_90b362c92c98f08992ca5325bae46374 } from '@/components/payload/admin/SectionPreviewLink'
+import { default as default_d0d07d73003d553ad7b5c8e99145a16a } from '@/components/payload/admin/AdminLogoutButton'
 import { default as default_f2f4ad940bc5ce687ba6128476969b8a } from '@/components/payload/admin/AdminIcon'
 import { default as default_1fa6a6a2bb55985c4523e19cfb9420d6 } from '@/components/payload/admin/AdminLogo'
 import { default as default_f3d7b197b906b2ece578c00293cabc51 } from '@/components/payload/admin/DashboardWelcome'
@@ -87,6 +88,7 @@ export const importMap = {
   "@/components/payload/admin/SectionPreviewLink#GuncelSectionPreview": GuncelSectionPreview_90b362c92c98f08992ca5325bae46374,
   "@/components/payload/admin/SectionPreviewLink#InstagramSectionPreview": InstagramSectionPreview_90b362c92c98f08992ca5325bae46374,
   "@/components/payload/admin/SectionPreviewLink#KisaYollarSectionPreview": KisaYollarSectionPreview_90b362c92c98f08992ca5325bae46374,
+  "@/components/payload/admin/AdminLogoutButton#default": default_d0d07d73003d553ad7b5c8e99145a16a,
   "@/components/payload/admin/AdminIcon#default": default_f2f4ad940bc5ce687ba6128476969b8a,
   "@/components/payload/admin/AdminLogo#default": default_1fa6a6a2bb55985c4523e19cfb9420d6,
   "@/components/payload/admin/DashboardWelcome#default": default_f3d7b197b906b2ece578c00293cabc51,

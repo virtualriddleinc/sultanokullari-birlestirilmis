@@ -15,6 +15,7 @@ const requiredPaths = [
   "@/components/payload/admin/AdminLoginBackdrop",
   "@/components/payload/admin/AdminHomeNavLink",
   "@/components/payload/admin/InboxNavLinks",
+  "@/components/payload/admin/AdminLogoutButton",
   "@/components/payload/admin/InboxBulkActions",
   "@/components/payload/admin/AdminHint",
   "@/components/payload/admin/HexFocalPointPicker",
