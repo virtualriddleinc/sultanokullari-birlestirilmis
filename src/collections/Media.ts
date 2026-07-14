@@ -3,6 +3,7 @@ import type { CollectionBeforeValidateHook, CollectionConfig } from "payload";
 import { ADMIN_GROUPS } from "@/payload/admin-groups";
 import { contentCollectionAccess } from "@/payload/access";
 import { adminHintField } from "@/payload/fields/admin-hint-field";
+import { hideFromInboxOnly } from "@/payload/admin-visibility";
 
 /** 25 MB — video dahil makul üst sınır */
 const MAX_MEDIA_BYTES = 25 * 1024 * 1024;
@@ -25,6 +26,7 @@ export const Media: CollectionConfig = {
   },
   admin: {
     group: ADMIN_GROUPS.content,
+    hidden: hideFromInboxOnly,
     useAsTitle: "filename",
     defaultColumns: ["filename", "alt", "mimeType", "filesize", "updatedAt"],
     description: "Görsel ve video yüklemeleri — hero, yolculuk, şube galerisi vb.",
@@ -66,5 +68,35 @@ export const Media: CollectionConfig = {
   ],
   upload: {
     mimeTypes: ["image/*", "video/*"],
+    // WebP türevleri — kaliteyi koruyarak hafif teslimat
+    formatOptions: {
+      format: "webp",
+      options: {
+        quality: 82,
+      },
+    },
+    imageSizes: [
+      {
+        name: "thumbnail",
+        width: 400,
+        height: 300,
+        position: "centre",
+        formatOptions: { format: "webp", options: { quality: 78 } },
+      },
+      {
+        name: "card",
+        width: 800,
+        height: 600,
+        position: "centre",
+        formatOptions: { format: "webp", options: { quality: 82 } },
+      },
+      {
+        name: "hero",
+        width: 1920,
+        position: "centre",
+        withoutEnlargement: true,
+        formatOptions: { format: "webp", options: { quality: 85 } },
+      },
+    ],
   },
 };

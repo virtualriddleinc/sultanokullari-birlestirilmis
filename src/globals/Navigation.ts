@@ -8,6 +8,7 @@ import {
   revalidateSiteLayout,
   revalidateSitePaths,
 } from "@/payload/hooks/revalidate-site";
+import { hideUnlessAdmin } from "@/payload/admin-visibility";
 
 const navItemFields = [
   {
@@ -39,6 +40,7 @@ export const Navigation: GlobalConfig = {
   slug: "navigation",
   label: "Navigasyon",
   admin: {
+    hidden: hideUnlessAdmin,
     group: ADMIN_GROUPS.system,
     description:
       "Üst menü yönetimi. Bölümler doluysa kod içi menünün yerine geçer; boşsa kod menüsü + ek linkler kullanılır. Yalnızca yönetici.",

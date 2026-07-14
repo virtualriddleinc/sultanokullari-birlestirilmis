@@ -154,6 +154,8 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Ana sayfa üst hero slaytları. Kayıt anında canlıdır; sürükle-bırak ile sıralayın.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "hero-slides".
  */
@@ -212,6 +214,32 @@ export interface Media {
   height?: number | null;
   focalX?: number | null;
   focalY?: number | null;
+  sizes?: {
+    thumbnail?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    card?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+    hero?: {
+      url?: string | null;
+      width?: number | null;
+      height?: number | null;
+      mimeType?: string | null;
+      filesize?: number | null;
+      filename?: string | null;
+    };
+  };
 }
 /**
  * Yönetici: tam yetki. Editör: içerik. Gelen kutusu: yalnızca form mesajları.
@@ -245,7 +273,7 @@ export interface User {
   collection: 'users';
 }
 /**
- * Ana sayfa Yolculuk bölümü (#yolculuk). Listede sürükle-bırak ile sıralayın.
+ * Ana sayfa Yolculuk bölümü panelleri (#yolculuk). Sürükle-bırak ile sıralayın.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "journey-chapters".
@@ -283,7 +311,7 @@ export interface JourneyChapter {
   createdAt: string;
 }
 /**
- * Ana sayfa #neden ve kurumsal Neden Sultan sayfası. Sürükle-bırak ile sıralayın.
+ * Ana sayfa Neden Sultan petek maddeleri (#neden) ve kurumsal sayfa. Sürükle-bırak ile sıralayın.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "neden-sultan-items".
@@ -301,7 +329,7 @@ export interface NedenSultanItem {
   createdAt: string;
 }
 /**
- * Ana sayfa Instagram şeridi (#instagram). Sürükle-bırak ile sıralayın.
+ * Ana sayfa Instagram şeridi gönderileri (#instagram). Sürükle-bırak ile sıralayın.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "instagram-posts".
@@ -1501,6 +1529,40 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+  sizes?:
+    | T
+    | {
+        thumbnail?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        card?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+        hero?:
+          | T
+          | {
+              url?: T;
+              width?: T;
+              height?: T;
+              mimeType?: T;
+              filesize?: T;
+              filename?: T;
+            };
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

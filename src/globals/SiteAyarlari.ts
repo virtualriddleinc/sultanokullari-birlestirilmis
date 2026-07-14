@@ -8,11 +8,13 @@ import {
   revalidateSiteLayout,
   revalidateSitePaths,
 } from "@/payload/hooks/revalidate-site";
+import { hideUnlessAdmin } from "@/payload/admin-visibility";
 
 export const SiteAyarlari: GlobalConfig = {
   slug: "site-ayarlari",
   label: "Site Ayarları",
   admin: {
+    hidden: hideUnlessAdmin,
     group: ADMIN_GROUPS.system,
     description:
       "Footer, sosyal medya ve genel iletişim bilgileri — footer ve /iletisim sayfasını etkiler. Yalnızca yönetici güncelleyebilir.",

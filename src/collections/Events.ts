@@ -19,6 +19,7 @@ import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
 import { publishAtField } from "@/payload/fields/publish-at-field";
 import { seoFields } from "@/payload/fields/seo-fields";
+import { hideFromInboxOnly } from "@/payload/admin-visibility";
 
 export const Events: CollectionConfig = {
   slug: "events",
@@ -29,6 +30,7 @@ export const Events: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     group: ADMIN_GROUPS.content,
+    hidden: hideFromInboxOnly,
     defaultColumns: ["title", "date", "branch", "featuredImage", "_status", "updatedAt"],
     description: "Ana sayfa Güncel bölümü (#guncel) ve /guncel/etkinlikler sayfası.",
     livePreview: {

@@ -12,6 +12,7 @@ import { restrictEditorPublish } from "@/payload/hooks/publish-access";
 import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
 import { revalidateSitePaths } from "@/payload/hooks/revalidate-site";
+import { hideFromInboxOnly } from "@/payload/admin-visibility";
 
 export const MediaItems: CollectionConfig = {
   slug: "media-items",
@@ -22,6 +23,7 @@ export const MediaItems: CollectionConfig = {
   admin: {
     useAsTitle: "title",
     group: ADMIN_GROUPS.content,
+    hidden: hideFromInboxOnly,
     defaultColumns: ["title", "kind", "date", "featured", "_status", "updatedAt"],
     description: "/guncel/medya sayfası ve ana sayfa medya önizlemesi.",
     livePreview: {

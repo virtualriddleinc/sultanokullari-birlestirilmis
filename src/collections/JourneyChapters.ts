@@ -8,6 +8,7 @@ import { trackLastEditedBy } from "@/payload/hooks/audit-hooks";
 import { siteMediaField } from "@/payload/fields/site-media-fields";
 import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
+import { hideFromInboxOnly } from "@/payload/admin-visibility";
 
 export const JourneyChapters: CollectionConfig = {
   slug: "journey-chapters",
@@ -15,14 +16,15 @@ export const JourneyChapters: CollectionConfig = {
   defaultSort: "_order",
   labels: {
     singular: "Yolculuk Bölümü",
-    plural: "3 · Yolculuk Bölümleri",
+    plural: "Yolculuk",
   },
   admin: {
     useAsTitle: "title",
     group: ADMIN_GROUPS.home,
+    hidden: hideFromInboxOnly,
     defaultColumns: ["eyebrow", "title", "updatedAt"],
     description:
-      "Ana sayfa Yolculuk bölümü (#yolculuk). Listede sürükle-bırak ile sıralayın.",
+      "Ana sayfa Yolculuk bölümü panelleri (#yolculuk). Sürükle-bırak ile sıralayın.",
     livePreview: {
       url: () => buildPreviewUrl("/#yolculuk"),
     },

@@ -15,6 +15,7 @@ import { siteMediaField } from "@/payload/fields/site-media-fields";
 import { siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
 import { hexFocalPickerField } from "@/payload/fields/hex-focal-picker-field";
+import { hideFromInboxOnly } from "@/payload/admin-visibility";
 
 const { tagline, titleLine, description, buttonText } = HERO_SLIDE_LIMITS;
 
@@ -68,7 +69,7 @@ export const HeroSlides: CollectionConfig = {
   defaultSort: "_order",
   labels: {
     singular: "Hero Slaytı",
-    plural: "1 · Hero Slaytları",
+    plural: "Hero",
   },
   hooks: {
     beforeChange: [debugHeroSlideOrderBeforeChange, trackLastEditedBy],
@@ -86,7 +87,10 @@ export const HeroSlides: CollectionConfig = {
   admin: {
     useAsTitle: "tagline",
     group: ADMIN_GROUPS.home,
+    hidden: hideFromInboxOnly,
     defaultColumns: ["tagline", "updatedAt"],
+    description:
+      "Ana sayfa üst hero slaytları. Kayıt anında canlıdır; sürükle-bırak ile sıralayın.",
     livePreview: {
       url: () => buildPreviewUrl("/"),
     },

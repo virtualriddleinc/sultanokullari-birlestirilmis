@@ -13,6 +13,7 @@ import { siteMediaField } from "@/payload/fields/site-media-fields";
 import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
 import { seoTab } from "@/payload/fields/seo-fields";
+import { hideFromInboxOnly } from "@/payload/admin-visibility";
 
 export const Branches: CollectionConfig = {
   slug: "branches",
@@ -23,6 +24,7 @@ export const Branches: CollectionConfig = {
   admin: {
     useAsTitle: "name",
     group: ADMIN_GROUPS.schools,
+    hidden: hideFromInboxOnly,
     defaultColumns: ["name", "city", "district", "upcoming", "isPublished", "updatedAt"],
     description:
       "Kampüs sayfaları, iletişim formu, footer ve ana sayfa Okullarımız bölümü (#okullarimiz).",

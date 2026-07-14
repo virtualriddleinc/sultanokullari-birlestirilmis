@@ -2,6 +2,7 @@ import type { CollectionConfig } from "payload";
 
 import { ADMIN_GROUPS } from "@/payload/admin-groups";
 import { auditLogAccess } from "@/payload/access";
+import { hideUnlessAdmin } from "@/payload/admin-visibility";
 
 export const AuditLogs: CollectionConfig = {
   slug: "audit-logs",
@@ -10,6 +11,7 @@ export const AuditLogs: CollectionConfig = {
     plural: "Denetim Kayıtları",
   },
   admin: {
+    hidden: hideUnlessAdmin,
     useAsTitle: "summary",
     group: ADMIN_GROUPS.system,
     defaultColumns: ["summary", "action", "collection", "userEmail", "createdAt"],

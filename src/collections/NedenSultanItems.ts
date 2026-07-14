@@ -7,6 +7,7 @@ import { homeAndNedenRevalidateHooks } from "@/payload/hooks/collection-hooks";
 import { trackLastEditedBy } from "@/payload/hooks/audit-hooks";
 import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
+import { hideFromInboxOnly } from "@/payload/admin-visibility";
 
 export const NedenSultanItems: CollectionConfig = {
   slug: "neden-sultan-items",
@@ -14,14 +15,15 @@ export const NedenSultanItems: CollectionConfig = {
   defaultSort: "_order",
   labels: {
     singular: "Neden Sultan Maddesi",
-    plural: "4 · Neden Sultan Maddeleri",
+    plural: "Neden Sultan",
   },
   admin: {
     useAsTitle: "headline",
     group: ADMIN_GROUPS.home,
+    hidden: hideFromInboxOnly,
     defaultColumns: ["headline", "updatedAt"],
     description:
-      "Ana sayfa #neden ve kurumsal Neden Sultan sayfası. Sürükle-bırak ile sıralayın.",
+      "Ana sayfa Neden Sultan petek maddeleri (#neden) ve kurumsal sayfa. Sürükle-bırak ile sıralayın.",
     livePreview: {
       url: () => buildPreviewUrl("/#neden"),
     },

@@ -10,6 +10,7 @@ import {
 import { staffRevalidateHooks } from "@/payload/hooks/collection-hooks";
 import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
+import { hideFromInboxOnly } from "@/payload/admin-visibility";
 
 export const Staff: CollectionConfig = {
   slug: "staff",
@@ -22,6 +23,7 @@ export const Staff: CollectionConfig = {
   admin: {
     useAsTitle: "fullName",
     group: ADMIN_GROUPS.schools,
+    hidden: hideFromInboxOnly,
     defaultColumns: ["fullName", "title", "department", "branchSlug", "isPublished", "updatedAt"],
     description: "/kurumsal/idari-kadro sayfasındaki yönetim ve şube kadroları.",
   },

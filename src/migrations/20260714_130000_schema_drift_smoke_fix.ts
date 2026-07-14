@@ -535,6 +535,12 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
 
 export async function down({ db }: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
+    DROP TABLE IF EXISTS "_pages_v_version_faq_items" CASCADE;
+    DROP TABLE IF EXISTS "_pages_v_version_gallery_items" CASCADE;
+    DROP TABLE IF EXISTS "_pages_v_version_story_rows_highlights" CASCADE;
+    DROP TABLE IF EXISTS "_pages_v_version_story_rows" CASCADE;
+    DROP TABLE IF EXISTS "_events_v_version_faq_items" CASCADE;
+    DROP TABLE IF EXISTS "_news_v_version_faq_items" CASCADE;
     DROP TABLE IF EXISTS "ana_sayfa_yemekhane_section_paragraphs" CASCADE;
     DROP TABLE IF EXISTS "media_tags" CASCADE;
     DROP TABLE IF EXISTS "pages_faq_items" CASCADE;

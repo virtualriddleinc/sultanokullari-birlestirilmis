@@ -171,7 +171,7 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: url("/desen.svg") center / cover no-repeat;
+  background: url("/honeycomb.svg") center / 180px 180px repeat;
   opacity: 0.08;
   mix-blend-mode: multiply;
 }
@@ -309,7 +309,7 @@
 .sultan-login-panel__pattern {
   position: absolute;
   inset: 0;
-  background: url("/desen.svg") center / cover no-repeat;
+  background: url("/honeycomb.svg") center / 180px 180px repeat;
   opacity: 0.14;
   mix-blend-mode: multiply;
   pointer-events: none;

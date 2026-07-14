@@ -7,6 +7,7 @@ import {
   type AppUser,
   type AppUserRole,
 } from "@/payload/access";
+import { hideUsersFromInbox } from "@/payload/admin-visibility";
 
 export const Users: CollectionConfig = {
   slug: "users",
@@ -15,6 +16,7 @@ export const Users: CollectionConfig = {
     plural: "Kullanıcılar",
   },
   admin: {
+    hidden: hideUsersFromInbox,
     useAsTitle: "email",
     group: ADMIN_GROUPS.system,
     defaultColumns: ["email", "roles", "updatedAt"],
@@ -29,6 +31,13 @@ export const Users: CollectionConfig = {
   hooks: {
     beforeChange: [
       async ({ data, operation, req, originalDoc }) => {
+        const actor = req.user as AppUser | null;
+        // Strip role changes only when a non-admin authenticated actor is present.
+        // Local/system calls (no user) must retain explicit roles for seeding.
+        if (data && actor && !hasRole(actor, "admin")) {
+          delete data.roles;
+        }
+
         const roles = data?.roles ?? originalDoc?.roles;
         if (roles && roles.length > 0) return data;
 
@@ -36,7 +45,6 @@ export const Users: CollectionConfig = {
           collection: "users",
           overrideAccess: true,
         });
-        // İlk kullanıcı admin; sonrakiler varsayılan editör (asla otomatik admin yükseltme yok)
         const fallbackRole: AppUserRole =
           operation === "create" && totalDocs === 0 ? "admin" : "editor";
 
@@ -59,6 +67,7 @@ export const Users: CollectionConfig = {
       ],
       access: {
         update: ({ req }) => hasRole(req.user as AppUser | null, "admin"),
+        create: ({ req }) => hasRole(req.user as AppUser | null, "admin"),
       },
       admin: {
         description:

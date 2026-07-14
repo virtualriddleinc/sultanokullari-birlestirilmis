@@ -8,6 +8,7 @@ import { trackLastEditedBy } from "@/payload/hooks/audit-hooks";
 import { siteMediaField } from "@/payload/fields/site-media-fields";
 import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
+import { hideFromInboxOnly } from "@/payload/admin-visibility";
 
 export const InstagramPosts: CollectionConfig = {
   slug: "instagram-posts",
@@ -15,13 +16,15 @@ export const InstagramPosts: CollectionConfig = {
   defaultSort: "_order",
   labels: {
     singular: "Instagram Gönderisi",
-    plural: "8 · Instagram Gönderileri",
+    plural: "Instagram",
   },
   admin: {
     useAsTitle: "title",
     group: ADMIN_GROUPS.home,
+    hidden: hideFromInboxOnly,
     defaultColumns: ["title", "updatedAt"],
-    description: "Ana sayfa Instagram şeridi (#instagram). Sürükle-bırak ile sıralayın.",
+    description:
+      "Ana sayfa Instagram şeridi gönderileri (#instagram). Sürükle-bırak ile sıralayın.",
     livePreview: {
       url: () => buildPreviewUrl("/#instagram"),
     },

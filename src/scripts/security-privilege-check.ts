@@ -170,8 +170,8 @@ async function main() {
       } else {
         results.push({
           name: "inbox_cannot_update_news",
-          ok: true,
-          detail: "skipped_no_news_doc_available",
+          ok: false,
+          detail: "no_news_doc_available",
         });
       }
 

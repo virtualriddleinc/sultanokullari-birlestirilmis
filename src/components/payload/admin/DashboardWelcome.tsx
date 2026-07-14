@@ -5,11 +5,18 @@ import { getPreviewBaseUrl } from "@/payload/admin-groups";
 
 const editorQuickLinks = [
   { href: "/admin/globals/ana-sayfa", label: "Ana Sayfa Düzeni" },
-  { href: "/admin/collections/hero-slides", label: "Hero Slaytları" },
+  { href: "/admin/collections/hero-slides", label: "Hero" },
   { href: "/admin/collections/news/create", label: "Haber / Duyuru Ekle" },
   { href: "/admin/collections/media-items/create", label: "Medya Ekle" },
   { href: "/admin/collections/pages/create", label: "Sayfa Ekle" },
   { href: "/admin/collections/contact-messages?where[status][equals]=new", label: "Gelen Kutusu" },
+];
+
+const inboxQuickLinks = [
+  { href: "/admin/collections/contact-messages?where[status][equals]=new", label: "İletişim Mesajları" },
+  { href: "/admin/collections/ik-applications?where[status][equals]=new", label: "İK Başvuruları" },
+  { href: "/admin/collections/application-files", label: "Başvuru Dosyaları" },
+  { href: "/admin/account", label: "Hesabım" },
 ];
 
 const adminQuickLinks = [
@@ -49,7 +56,11 @@ function StatCard({
 export default async function DashboardWelcome() {
   const stats = await getDashboardStats();
   const siteUrl = getPreviewBaseUrl();
-  const quickLinks = stats.isAdmin ? adminQuickLinks : editorQuickLinks;
+  const quickLinks = stats.isAdmin
+    ? adminQuickLinks
+    : stats.isInboxOnly
+      ? inboxQuickLinks
+      : editorQuickLinks;
 
   return (
     <div className="sultan-dashboard">
@@ -59,7 +70,9 @@ export default async function DashboardWelcome() {
           <p className="sultan-dashboard__subtitle">
             {stats.isAdmin
               ? "Yönetici görünümü — içerik, kullanıcılar ve sistem ayarları."
-              : "Editör görünümü — taslaklar, gelen kutusu ve hızlı içerik eylemleri."}
+              : stats.isInboxOnly
+                ? "Gelen kutusu görünümü — yalnızca iletişim ve İK başvuruları."
+                : "Editör görünümü — taslaklar, gelen kutusu ve hızlı içerik eylemleri."}
           </p>
         </div>
         <a
@@ -84,42 +97,61 @@ export default async function DashboardWelcome() {
       ) : null}
 
       <section className="sultan-dashboard__stats" aria-label="Özet">
-        <StatCard
-          label="Taslak haber"
-          value={stats.draftNews}
-          href="/admin/collections/news?where[_status][equals]=draft"
-          tone="warn"
-        />
-        <StatCard
-          label="Taslak etkinlik"
-          value={stats.draftEvents}
-          href="/admin/collections/events?where[_status][equals]=draft"
-          tone="warn"
-        />
-        <StatCard
-          label="Okunmamış mesaj"
-          value={stats.unreadContact}
-          href="/admin/collections/contact-messages?where[status][equals]=new"
-          tone="accent"
-        />
-        <StatCard
-          label="Yeni İK başvurusu"
-          value={stats.unreadIk}
-          href="/admin/collections/ik-applications?where[status][equals]=new"
-          tone="accent"
-        />
-        <StatCard
-          label="Yaklaşan etkinlik"
-          value={stats.upcomingEvents}
-          href="/admin/collections/events"
-        />
-        {stats.isAdmin ? (
-          <StatCard
-            label="Panel kullanıcısı"
-            value={stats.userCount}
-            href="/admin/collections/users"
-          />
-        ) : null}
+        {stats.isInboxOnly ? (
+          <>
+            <StatCard
+              label="Okunmamış mesaj"
+              value={stats.unreadContact}
+              href="/admin/collections/contact-messages?where[status][equals]=new"
+              tone="accent"
+            />
+            <StatCard
+              label="Yeni İK başvurusu"
+              value={stats.unreadIk}
+              href="/admin/collections/ik-applications?where[status][equals]=new"
+              tone="accent"
+            />
+          </>
+        ) : (
+          <>
+            <StatCard
+              label="Taslak haber"
+              value={stats.draftNews}
+              href="/admin/collections/news?where[_status][equals]=draft"
+              tone="warn"
+            />
+            <StatCard
+              label="Taslak etkinlik"
+              value={stats.draftEvents}
+              href="/admin/collections/events?where[_status][equals]=draft"
+              tone="warn"
+            />
+            <StatCard
+              label="Okunmamış mesaj"
+              value={stats.unreadContact}
+              href="/admin/collections/contact-messages?where[status][equals]=new"
+              tone="accent"
+            />
+            <StatCard
+              label="Yeni İK başvurusu"
+              value={stats.unreadIk}
+              href="/admin/collections/ik-applications?where[status][equals]=new"
+              tone="accent"
+            />
+            <StatCard
+              label="Yaklaşan etkinlik"
+              value={stats.upcomingEvents}
+              href="/admin/collections/events"
+            />
+            {stats.isAdmin ? (
+              <StatCard
+                label="Panel kullanıcısı"
+                value={stats.userCount}
+                href="/admin/collections/users"
+              />
+            ) : null}
+          </>
+        )}
       </section>
 
       <section className="sultan-dashboard__quick" aria-label="Hızlı eylemler">

@@ -6,6 +6,7 @@ import { globalReadAccess } from "@/payload/access";
 import { revalidateAnaSayfaAfterChange } from "@/payload/hooks/collection-hooks";
 import { siteMediaField } from "@/payload/fields/site-media-fields";
 import { sectionPreviewField } from "@/payload/fields/section-preview-field";
+import { hideFromInboxOnly } from "@/payload/admin-visibility";
 
 export const AnaSayfa: GlobalConfig = {
   slug: "ana-sayfa",
@@ -14,6 +15,7 @@ export const AnaSayfa: GlobalConfig = {
     afterChange: [revalidateAnaSayfaAfterChange],
   },
   admin: {
+    hidden: hideFromInboxOnly,
     group: ADMIN_GROUPS.home,
     description:
       "Ana sayfadaki sabit bölüm başlıkları, metinler ve medya ayarları. Tekrarlayan içerik (slaytlar, yolculuk vb.) ilgili koleksiyonlardan yönetilir.",
@@ -27,8 +29,8 @@ export const AnaSayfa: GlobalConfig = {
       type: "tabs",
       tabs: [
         {
-          label: "2 · Gâyemiz · Ufkumuz",
-          description: "Site: ana sayfa Gâyemiz bölümü — kayıttan sonra / adresinde anında yansır.",
+          label: "Gâyemiz",
+          description: "Ana sayfa Gâyemiz · Ufkumuz bölümü — kayıt sonrası anında yansır.",
           fields: [
             sectionPreviewField(
               "gayemizPreview",
@@ -101,8 +103,8 @@ export const AnaSayfa: GlobalConfig = {
           ],
         },
         {
-          label: "3 · Yolculuk",
-          description: "Levha başlığı burada; paneller 3 · Yolculuk Bölümleri koleksiyonundan gelir.",
+          label: "Yolculuk",
+          description: "Bölüm başlığı burada; paneller Yolculuk koleksiyonundan gelir (#yolculuk).",
           fields: [
             sectionPreviewField(
               "yolculukPreview",
@@ -125,8 +127,8 @@ export const AnaSayfa: GlobalConfig = {
           ],
         },
         {
-          label: "4 · Neden Sultan",
-          description: "Başlık/metin burada; petek maddeleri 4 · Neden Sultan Maddeleri koleksiyonundan.",
+          label: "Neden Sultan",
+          description: "Başlık/metin burada; petek maddeleri Neden Sultan koleksiyonundan (#neden).",
           fields: [
             sectionPreviewField(
               "nedenPreview",
@@ -195,7 +197,7 @@ export const AnaSayfa: GlobalConfig = {
           ],
         },
         {
-          label: "5 · Tanıtım Videosu",
+          label: "Tanıtım Videosu",
           description: "Tanıtım videosu bölümü — kayıttan sonra ana sayfada anında güncellenir.",
           fields: [
             sectionPreviewField(
@@ -246,7 +248,7 @@ export const AnaSayfa: GlobalConfig = {
           ],
         },
         {
-          label: "6 · Okullarımız",
+          label: "Okullarımız",
           description: "Bölüm başlıkları burada; şube kartları Şubeler koleksiyonundan gelir.",
           fields: [
             sectionPreviewField(
@@ -294,7 +296,7 @@ export const AnaSayfa: GlobalConfig = {
           ],
         },
         {
-          label: "7 · Güncel",
+          label: "Güncel",
           description: "Bölüm başlıkları; haber/etkinlik listesi Haberler ve Etkinlikler koleksiyonundan (yayınlanmış).",
           fields: [
             sectionPreviewField(
@@ -358,8 +360,8 @@ export const AnaSayfa: GlobalConfig = {
           ],
         },
         {
-          label: "8 · Instagram",
-          description: "Bölüm başlıkları; gönderiler 8 · Instagram Gönderileri koleksiyonundan.",
+          label: "Instagram",
+          description: "Bölüm başlıkları; gönderiler Instagram koleksiyonundan (#instagram).",
           fields: [
             sectionPreviewField(
               "instagramPreview",
@@ -406,7 +408,7 @@ export const AnaSayfa: GlobalConfig = {
           ],
         },
         {
-          label: "9 · Kısa Yollar",
+          label: "Kısa Yollar",
           description: "Alt kısımdaki hızlı bağlantı kartları — sıra ve ikon buradan düzenlenir.",
           fields: [
             sectionPreviewField(

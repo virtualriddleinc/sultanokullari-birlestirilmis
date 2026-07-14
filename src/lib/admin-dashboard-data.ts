@@ -6,6 +6,7 @@ import { getCmsHealth, type CmsHealth } from "@/lib/cms-health";
 import { getPayloadClient } from "@/lib/payload";
 import type { AppUser } from "@/payload/access";
 import { hasRole } from "@/payload/access";
+import { isInboxOnly } from "@/payload/admin-visibility";
 
 export type { CmsHealth, CmsHealthIssue } from "@/lib/cms-health";
 
@@ -19,6 +20,7 @@ export type RecentEdit = {
 
 export type DashboardStats = {
   isAdmin: boolean;
+  isInboxOnly: boolean;
   draftNews: number;
   draftEvents: number;
   unreadContact: number;
@@ -112,9 +114,11 @@ async function fetchRecentEdits(): Promise<RecentEdit[]> {
 export async function getDashboardStats(): Promise<DashboardStats> {
   const user = await getDashboardUser();
   const isAdmin = hasRole(user, "admin");
+  const inboxOnly = isInboxOnly(user);
 
   const empty: DashboardStats = {
     isAdmin,
+    isInboxOnly: inboxOnly,
     draftNews: 0,
     draftEvents: 0,
     unreadContact: 0,
@@ -162,6 +166,7 @@ export async function getDashboardStats(): Promise<DashboardStats> {
 
     return {
       isAdmin,
+      isInboxOnly: inboxOnly,
       draftNews: newsDrafts.totalDocs,
       draftEvents: eventsDrafts.totalDocs,
       unreadContact: unreadContact.totalDocs,

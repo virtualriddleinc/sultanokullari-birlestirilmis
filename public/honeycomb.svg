@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240" fill="none">
+  <defs>
+    <pattern id="honey" width="48" height="55.4" patternUnits="userSpaceOnUse" patternTransform="scale(1)">
+      <path d="M24 0 L48 13.85 L48 41.55 L24 55.4 L0 41.55 L0 13.85 Z" stroke="rgba(255,240,133,0.35)" stroke-width="1.2" fill="none"/>
+    </pattern>
+  </defs>
+  <rect width="240" height="240" fill="url(#honey)"/>
+</svg>

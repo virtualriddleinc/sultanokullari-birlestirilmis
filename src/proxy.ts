@@ -20,6 +20,21 @@ function applySecurityHeaders(response: NextResponse): NextResponse {
     "Permissions-Policy",
     "camera=(), microphone=(), geolocation=()",
   );
+  response.headers.set(
+    "Content-Security-Policy",
+    [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob: https:",
+      "font-src 'self' data:",
+      "media-src 'self' blob: https:",
+      "connect-src 'self' https:",
+      "frame-ancestors 'self'",
+      "base-uri 'self'",
+      "form-action 'self'",
+    ].join("; "),
+  );
   if (process.env.NODE_ENV === "production") {
     response.headers.set(
       "Strict-Transport-Security",

@@ -49,18 +49,36 @@ export default function HexFocalPointPicker() {
     ([fields]) => fields["slideMedia.media"]?.value as MediaUploadValue,
   );
 
-  const { value: focalX, setValue: setFocalX } = useField<number>({
+  const { value: focalX, setValue: setFocalXRaw } = useField<number>({
     path: "focalPoint.x",
   });
-  const { value: focalY, setValue: setFocalY } = useField<number>({
+  const { value: focalY, setValue: setFocalYRaw } = useField<number>({
     path: "focalPoint.y",
   });
-  const { value: mediaScale, setValue: setMediaScale } = useField<number>({
+  const { value: mediaScale, setValue: setMediaScaleRaw } = useField<number>({
     path: "mediaScale",
   });
-  const { value: mediaAspect, setValue: setMediaAspect } = useField<number>({
+  const { value: mediaAspect, setValue: setMediaAspectRaw } = useField<number>({
     path: "mediaAspect",
   });
+
+  // Explicitly mark form dirty so Save persists focal/scale (Payload setValue 2nd arg)
+  const setFocalX = React.useCallback(
+    (v: number) => setFocalXRaw(Number(v.toFixed(2)), false),
+    [setFocalXRaw],
+  );
+  const setFocalY = React.useCallback(
+    (v: number) => setFocalYRaw(Number(v.toFixed(2)), false),
+    [setFocalYRaw],
+  );
+  const setMediaScale = React.useCallback(
+    (v: number) => setMediaScaleRaw(Number(v.toFixed(2)), false),
+    [setMediaScaleRaw],
+  );
+  const setMediaAspect = React.useCallback(
+    (v: number) => setMediaAspectRaw(v, false),
+    [setMediaAspectRaw],
+  );
 
   const [resolvedUrl, setResolvedUrl] = React.useState<string | null>(null);
   const [localAspect, setLocalAspect] = React.useState(
