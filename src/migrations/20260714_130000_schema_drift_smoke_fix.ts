@@ -56,11 +56,13 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     ALTER TABLE "news" ADD COLUMN IF NOT EXISTS "geo_citation_summary" varchar;
 
     ALTER TABLE "_news_v" ADD COLUMN IF NOT EXISTS "version_kind" "public"."enum_news_kind" DEFAULT 'haber';
+    ALTER TABLE "_news_v" ADD COLUMN IF NOT EXISTS "version_publish_at" timestamp(3) with time zone;
     ALTER TABLE "_news_v" ADD COLUMN IF NOT EXISTS "version_seo_title" varchar;
     ALTER TABLE "_news_v" ADD COLUMN IF NOT EXISTS "version_seo_description" varchar;
     ALTER TABLE "_news_v" ADD COLUMN IF NOT EXISTS "version_og_image_id" integer;
     ALTER TABLE "_news_v" ADD COLUMN IF NOT EXISTS "version_no_index" boolean DEFAULT false;
     ALTER TABLE "_news_v" ADD COLUMN IF NOT EXISTS "version_geo_citation_summary" varchar;
+    ALTER TABLE "_news_v" ADD COLUMN IF NOT EXISTS "version_last_edited_by_id" integer;
 
     ALTER TABLE "events" ADD COLUMN IF NOT EXISTS "seo_title" varchar;
     ALTER TABLE "events" ADD COLUMN IF NOT EXISTS "seo_description" varchar;
@@ -68,12 +70,24 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     ALTER TABLE "events" ADD COLUMN IF NOT EXISTS "no_index" boolean DEFAULT false;
     ALTER TABLE "events" ADD COLUMN IF NOT EXISTS "geo_citation_summary" varchar;
 
+    ALTER TABLE "branches" ADD COLUMN IF NOT EXISTS "seo_title" varchar;
+    ALTER TABLE "branches" ADD COLUMN IF NOT EXISTS "seo_description" varchar;
+    ALTER TABLE "branches" ADD COLUMN IF NOT EXISTS "og_image_id" integer;
+    ALTER TABLE "branches" ADD COLUMN IF NOT EXISTS "no_index" boolean DEFAULT false;
+    ALTER TABLE "branches" ADD COLUMN IF NOT EXISTS "geo_citation_summary" varchar;
+
+    ALTER TABLE "media_items" ADD COLUMN IF NOT EXISTS "last_edited_by_id" integer;
+
     ALTER TABLE "_events_v" ADD COLUMN IF NOT EXISTS "version_seo_title" varchar;
     ALTER TABLE "_events_v" ADD COLUMN IF NOT EXISTS "version_seo_description" varchar;
     ALTER TABLE "_events_v" ADD COLUMN IF NOT EXISTS "version_og_image_id" integer;
     ALTER TABLE "_events_v" ADD COLUMN IF NOT EXISTS "version_no_index" boolean DEFAULT false;
     ALTER TABLE "_events_v" ADD COLUMN IF NOT EXISTS "version_geo_citation_summary" varchar;
+    ALTER TABLE "_events_v" ADD COLUMN IF NOT EXISTS "version_last_edited_by_id" integer;
 
+    ALTER TABLE "_pages_v" ADD COLUMN IF NOT EXISTS "version_title" varchar;
+    ALTER TABLE "_pages_v" ADD COLUMN IF NOT EXISTS "version_slug" varchar;
+    ALTER TABLE "_pages_v" ADD COLUMN IF NOT EXISTS "version_intro" varchar;
     ALTER TABLE "pages" ADD COLUMN IF NOT EXISTS "path_prefix" "public"."enum_pages_path_prefix" DEFAULT 'kurumsal';
     ALTER TABLE "pages" ADD COLUMN IF NOT EXISTS "template" "public"."enum_pages_template" DEFAULT 'kurumsal-blok';
     ALTER TABLE "pages" ADD COLUMN IF NOT EXISTS "story_eyebrow" varchar;
@@ -108,7 +122,11 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     ALTER TABLE "_pages_v" ADD COLUMN IF NOT EXISTS "version_og_image_id" integer;
     ALTER TABLE "_pages_v" ADD COLUMN IF NOT EXISTS "version_no_index" boolean DEFAULT false;
     ALTER TABLE "_pages_v" ADD COLUMN IF NOT EXISTS "version_geo_citation_summary" varchar;
+    ALTER TABLE "_pages_v" ADD COLUMN IF NOT EXISTS "version_last_edited_by_id" integer;
+    ALTER TABLE "_pages_v" ADD COLUMN IF NOT EXISTS "version_updated_at" timestamp(3) with time zone;
+    ALTER TABLE "_pages_v" ADD COLUMN IF NOT EXISTS "version_created_at" timestamp(3) with time zone;
     ALTER TABLE "_pages_v" ADD COLUMN IF NOT EXISTS "version__status" "public"."enum__pages_v_version_status" DEFAULT 'draft';
+    ALTER TABLE "_pages_v" ADD COLUMN IF NOT EXISTS "latest" boolean;
 
     ALTER TABLE "staff" ADD COLUMN IF NOT EXISTS "academic_title" varchar;
     ALTER TABLE "staff" ADD COLUMN IF NOT EXISTS "education" varchar;
@@ -204,11 +222,26 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
       "answer" varchar NOT NULL
     );
 
+    CREATE TABLE IF NOT EXISTS "branches_faq_items" (
+      "_order" integer NOT NULL,
+      "_parent_id" integer NOT NULL,
+      "id" varchar PRIMARY KEY NOT NULL,
+      "question" varchar NOT NULL,
+      "answer" varchar NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS "media_items_tags" (
+      "_order" integer NOT NULL,
+      "_parent_id" integer NOT NULL,
+      "id" varchar PRIMARY KEY NOT NULL,
+      "tag" varchar NOT NULL
+    );
+
     CREATE TABLE IF NOT EXISTS "media_tags" (
       "order" integer NOT NULL,
       "parent_id" integer NOT NULL,
-      "id" varchar PRIMARY KEY NOT NULL,
-      "value" "public"."enum_media_tags"
+      "value" "public"."enum_media_tags",
+      "id" serial PRIMARY KEY NOT NULL
     );
 
     CREATE TABLE IF NOT EXISTS "ana_sayfa_yemekhane_section_paragraphs" (
@@ -216,6 +249,62 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
       "_parent_id" integer NOT NULL,
       "id" varchar PRIMARY KEY NOT NULL,
       "text" varchar NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS "_news_v_version_faq_items" (
+      "_order" integer NOT NULL,
+      "_parent_id" integer NOT NULL,
+      "id" varchar PRIMARY KEY NOT NULL,
+      "question" varchar NOT NULL,
+      "answer" varchar NOT NULL,
+      "_uuid" varchar
+    );
+
+    CREATE TABLE IF NOT EXISTS "_events_v_version_faq_items" (
+      "_order" integer NOT NULL,
+      "_parent_id" integer NOT NULL,
+      "id" varchar PRIMARY KEY NOT NULL,
+      "question" varchar NOT NULL,
+      "answer" varchar NOT NULL,
+      "_uuid" varchar
+    );
+
+    CREATE TABLE IF NOT EXISTS "_pages_v_version_story_rows" (
+      "_order" integer NOT NULL,
+      "_parent_id" integer NOT NULL,
+      "id" varchar PRIMARY KEY NOT NULL,
+      "eyebrow" varchar,
+      "text" varchar NOT NULL,
+      "_uuid" varchar
+    );
+
+    CREATE TABLE IF NOT EXISTS "_pages_v_version_story_rows_highlights" (
+      "_order" integer NOT NULL,
+      "_parent_id" varchar NOT NULL,
+      "id" varchar PRIMARY KEY NOT NULL,
+      "text" varchar NOT NULL,
+      "_uuid" varchar
+    );
+
+    CREATE TABLE IF NOT EXISTS "_pages_v_version_gallery_items" (
+      "_order" integer NOT NULL,
+      "_parent_id" integer NOT NULL,
+      "id" varchar PRIMARY KEY NOT NULL,
+      "item_kind" "public"."enum_pages_hero_media_kind" DEFAULT 'image',
+      "item_media_id" integer,
+      "item_src" varchar,
+      "item_alt" varchar,
+      "item_poster" varchar,
+      "_uuid" varchar
+    );
+
+    CREATE TABLE IF NOT EXISTS "_pages_v_version_faq_items" (
+      "_order" integer NOT NULL,
+      "_parent_id" integer NOT NULL,
+      "id" varchar PRIMARY KEY NOT NULL,
+      "question" varchar NOT NULL,
+      "answer" varchar NOT NULL,
+      "_uuid" varchar
     );
 
     CREATE INDEX IF NOT EXISTS "news_faq_items_order_idx" ON "news_faq_items" ("_order");
@@ -230,10 +319,46 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     CREATE INDEX IF NOT EXISTS "pages_gallery_items_parent_id_idx" ON "pages_gallery_items" ("_parent_id");
     CREATE INDEX IF NOT EXISTS "pages_faq_items_order_idx" ON "pages_faq_items" ("_order");
     CREATE INDEX IF NOT EXISTS "pages_faq_items_parent_id_idx" ON "pages_faq_items" ("_parent_id");
+    CREATE INDEX IF NOT EXISTS "branches_faq_items_order_idx" ON "branches_faq_items" ("_order");
+    CREATE INDEX IF NOT EXISTS "branches_faq_items_parent_id_idx" ON "branches_faq_items" ("_parent_id");
+    CREATE INDEX IF NOT EXISTS "media_items_tags_order_idx" ON "media_items_tags" ("_order");
+    CREATE INDEX IF NOT EXISTS "media_items_tags_parent_id_idx" ON "media_items_tags" ("_parent_id");
     CREATE INDEX IF NOT EXISTS "media_tags_order_idx" ON "media_tags" ("order");
     CREATE INDEX IF NOT EXISTS "media_tags_parent_id_idx" ON "media_tags" ("parent_id");
     CREATE INDEX IF NOT EXISTS "ana_sayfa_yemekhane_section_paragraphs_order_idx" ON "ana_sayfa_yemekhane_section_paragraphs" ("_order");
     CREATE INDEX IF NOT EXISTS "ana_sayfa_yemekhane_section_paragraphs_parent_id_idx" ON "ana_sayfa_yemekhane_section_paragraphs" ("_parent_id");
+    CREATE INDEX IF NOT EXISTS "_news_v_version_faq_items_order_idx" ON "_news_v_version_faq_items" ("_order");
+    CREATE INDEX IF NOT EXISTS "_news_v_version_faq_items_parent_id_idx" ON "_news_v_version_faq_items" ("_parent_id");
+    CREATE INDEX IF NOT EXISTS "_events_v_version_faq_items_order_idx" ON "_events_v_version_faq_items" ("_order");
+    CREATE INDEX IF NOT EXISTS "_events_v_version_faq_items_parent_id_idx" ON "_events_v_version_faq_items" ("_parent_id");
+    CREATE INDEX IF NOT EXISTS "_pages_v_version_story_rows_order_idx" ON "_pages_v_version_story_rows" ("_order");
+    CREATE INDEX IF NOT EXISTS "_pages_v_version_story_rows_parent_id_idx" ON "_pages_v_version_story_rows" ("_parent_id");
+    CREATE INDEX IF NOT EXISTS "_pages_v_version_story_rows_highlights_order_idx" ON "_pages_v_version_story_rows_highlights" ("_order");
+    CREATE INDEX IF NOT EXISTS "_pages_v_version_story_rows_highlights_parent_id_idx" ON "_pages_v_version_story_rows_highlights" ("_parent_id");
+    CREATE INDEX IF NOT EXISTS "_pages_v_version_gallery_items_order_idx" ON "_pages_v_version_gallery_items" ("_order");
+    CREATE INDEX IF NOT EXISTS "_pages_v_version_gallery_items_parent_id_idx" ON "_pages_v_version_gallery_items" ("_parent_id");
+    CREATE INDEX IF NOT EXISTS "_pages_v_version_faq_items_order_idx" ON "_pages_v_version_faq_items" ("_order");
+    CREATE INDEX IF NOT EXISTS "_pages_v_version_faq_items_parent_id_idx" ON "_pages_v_version_faq_items" ("_parent_id");
+  `);
+
+  await db.execute(sql`
+    DO $$ BEGIN
+      IF EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_schema = 'public'
+          AND table_name = 'media'
+          AND column_name = 'tags'
+      ) THEN
+        INSERT INTO "media_tags" ("order", "parent_id", "value")
+        SELECT tag_item.ordinality - 1, "media"."id", tag_item.value
+        FROM "media"
+        CROSS JOIN LATERAL unnest("media"."tags") WITH ORDINALITY AS tag_item(value, ordinality)
+        ON CONFLICT DO NOTHING;
+
+        ALTER TABLE "media" DROP COLUMN "tags";
+      END IF;
+    END $$;
   `);
 
   await db.execute(sql`
@@ -280,9 +405,57 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     EXCEPTION WHEN duplicate_object THEN NULL; WHEN undefined_table THEN NULL; END $$;
 
     DO $$ BEGIN
+      ALTER TABLE "branches_faq_items"
+        ADD CONSTRAINT "branches_faq_items_parent_id_fk"
+        FOREIGN KEY ("_parent_id") REFERENCES "branches"("id") ON DELETE cascade ON UPDATE no action;
+    EXCEPTION WHEN duplicate_object THEN NULL; WHEN undefined_table THEN NULL; END $$;
+
+    DO $$ BEGIN
+      ALTER TABLE "media_items_tags"
+        ADD CONSTRAINT "media_items_tags_parent_id_fk"
+        FOREIGN KEY ("_parent_id") REFERENCES "media_items"("id") ON DELETE cascade ON UPDATE no action;
+    EXCEPTION WHEN duplicate_object THEN NULL; WHEN undefined_table THEN NULL; END $$;
+
+    DO $$ BEGIN
       ALTER TABLE "ana_sayfa_yemekhane_section_paragraphs"
         ADD CONSTRAINT "ana_sayfa_yemekhane_section_paragraphs_parent_id_fk"
         FOREIGN KEY ("_parent_id") REFERENCES "ana_sayfa"("id") ON DELETE cascade ON UPDATE no action;
+    EXCEPTION WHEN duplicate_object THEN NULL; WHEN undefined_table THEN NULL; END $$;
+
+    DO $$ BEGIN
+      ALTER TABLE "_news_v_version_faq_items"
+        ADD CONSTRAINT "_news_v_version_faq_items_parent_id_fk"
+        FOREIGN KEY ("_parent_id") REFERENCES "_news_v"("id") ON DELETE cascade ON UPDATE no action;
+    EXCEPTION WHEN duplicate_object THEN NULL; WHEN undefined_table THEN NULL; END $$;
+
+    DO $$ BEGIN
+      ALTER TABLE "_events_v_version_faq_items"
+        ADD CONSTRAINT "_events_v_version_faq_items_parent_id_fk"
+        FOREIGN KEY ("_parent_id") REFERENCES "_events_v"("id") ON DELETE cascade ON UPDATE no action;
+    EXCEPTION WHEN duplicate_object THEN NULL; WHEN undefined_table THEN NULL; END $$;
+
+    DO $$ BEGIN
+      ALTER TABLE "_pages_v_version_story_rows"
+        ADD CONSTRAINT "_pages_v_version_story_rows_parent_id_fk"
+        FOREIGN KEY ("_parent_id") REFERENCES "_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+    EXCEPTION WHEN duplicate_object THEN NULL; WHEN undefined_table THEN NULL; END $$;
+
+    DO $$ BEGIN
+      ALTER TABLE "_pages_v_version_story_rows_highlights"
+        ADD CONSTRAINT "_pages_v_version_story_rows_highlights_parent_id_fk"
+        FOREIGN KEY ("_parent_id") REFERENCES "_pages_v_version_story_rows"("id") ON DELETE cascade ON UPDATE no action;
+    EXCEPTION WHEN duplicate_object THEN NULL; WHEN undefined_table THEN NULL; END $$;
+
+    DO $$ BEGIN
+      ALTER TABLE "_pages_v_version_gallery_items"
+        ADD CONSTRAINT "_pages_v_version_gallery_items_parent_id_fk"
+        FOREIGN KEY ("_parent_id") REFERENCES "_pages_v"("id") ON DELETE cascade ON UPDATE no action;
+    EXCEPTION WHEN duplicate_object THEN NULL; WHEN undefined_table THEN NULL; END $$;
+
+    DO $$ BEGIN
+      ALTER TABLE "_pages_v_version_faq_items"
+        ADD CONSTRAINT "_pages_v_version_faq_items_parent_id_fk"
+        FOREIGN KEY ("_parent_id") REFERENCES "_pages_v"("id") ON DELETE cascade ON UPDATE no action;
     EXCEPTION WHEN duplicate_object THEN NULL; WHEN undefined_table THEN NULL; END $$;
 
     DO $$ BEGIN
@@ -301,6 +474,18 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
       ALTER TABLE "pages"
         ADD CONSTRAINT "pages_og_image_id_media_id_fk"
         FOREIGN KEY ("og_image_id") REFERENCES "media"("id") ON DELETE set null ON UPDATE no action;
+    EXCEPTION WHEN duplicate_object THEN NULL; WHEN undefined_column THEN NULL; END $$;
+
+    DO $$ BEGIN
+      ALTER TABLE "branches"
+        ADD CONSTRAINT "branches_og_image_id_media_id_fk"
+        FOREIGN KEY ("og_image_id") REFERENCES "media"("id") ON DELETE set null ON UPDATE no action;
+    EXCEPTION WHEN duplicate_object THEN NULL; WHEN undefined_column THEN NULL; END $$;
+
+    DO $$ BEGIN
+      ALTER TABLE "media_items"
+        ADD CONSTRAINT "media_items_last_edited_by_id_users_id_fk"
+        FOREIGN KEY ("last_edited_by_id") REFERENCES "users"("id") ON DELETE set null ON UPDATE no action;
     EXCEPTION WHEN duplicate_object THEN NULL; WHEN undefined_column THEN NULL; END $$;
 
     DO $$ BEGIN

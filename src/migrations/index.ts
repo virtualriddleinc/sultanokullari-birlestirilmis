@@ -15,6 +15,7 @@ import * as migration_20260714_130000_schema_drift_smoke_fix from "./20260714_13
 import * as migration_20260714_130100_media_tags_order_columns from "./20260714_130100_media_tags_order_columns";
 import * as migration_20260714_130200_media_size_columns from "./20260714_130200_media_size_columns";
 import * as migration_20260714_130300_locked_document_rel_columns from "./20260714_130300_locked_document_rel_columns";
+import * as migration_20260714_130400_branch_media_item_tables from "./20260714_130400_branch_media_item_tables";
 
 export const migrations = [
   {
@@ -101,5 +102,10 @@ export const migrations = [
     up: migration_20260714_130300_locked_document_rel_columns.up,
     down: migration_20260714_130300_locked_document_rel_columns.down,
     name: "20260714_130300_locked_document_rel_columns",
+  },
+  {
+    up: migration_20260714_130400_branch_media_item_tables.up,
+    down: migration_20260714_130400_branch_media_item_tables.down,
+    name: "20260714_130400_branch_media_item_tables",
   },
 ];

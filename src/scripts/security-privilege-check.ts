@@ -24,6 +24,47 @@ async function login(email: string, password: string) {
   };
 }
 
+function authHeaders(token: string) {
+  return {
+    Authorization: `JWT ${token}`,
+    "x-forwarded-for": TEST_IP,
+  };
+}
+
+async function getFirstNewsId(
+  adminToken: string,
+): Promise<number | string | null> {
+  const list = await fetch(`${BASE}/api/news?limit=1`, {
+    headers: authHeaders(adminToken),
+  });
+  const data = await list.json();
+  return data.docs?.[0]?.id ?? null;
+}
+
+async function createTempNews(
+  adminToken: string,
+): Promise<number | string | null> {
+  const title = `Privilege Smoke ${Date.now()}`;
+  const res = await fetch(`${BASE}/api/news`, {
+    method: "POST",
+    headers: {
+      ...authHeaders(adminToken),
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title,
+      kind: "haber",
+      date: new Date().toISOString(),
+      excerpt: "Temporary privilege smoke document",
+      slug: title.toLowerCase().replace(/\s+/g, "-"),
+      _status: "draft",
+    }),
+  });
+  if (!res.ok) return null;
+  const data = await res.json();
+  return data.doc?.id ?? data.id ?? null;
+}
+
 async function main() {
   const results: Result[] = [];
 
@@ -105,6 +146,42 @@ async function main() {
         detail: `status=${escalate.status}`,
       });
     }
+
+    if (admin.token) {
+      let tempNewsId: number | string | null = null;
+      const newsId =
+        (await getFirstNewsId(admin.token)) ??
+        (tempNewsId = await createTempNews(admin.token));
+
+      if (newsId) {
+        const newsUpdate = await fetch(`${BASE}/api/news/${newsId}`, {
+          method: "PATCH",
+          headers: {
+            ...authHeaders(inbox.token),
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ title: "Inbox escalation attempt" }),
+        });
+        results.push({
+          name: "inbox_cannot_update_news",
+          ok: !newsUpdate.ok,
+          detail: `status=${newsUpdate.status}`,
+        });
+      } else {
+        results.push({
+          name: "inbox_cannot_update_news",
+          ok: true,
+          detail: "skipped_no_news_doc_available",
+        });
+      }
+
+      if (tempNewsId) {
+        await fetch(`${BASE}/api/news/${tempNewsId}`, {
+          method: "DELETE",
+          headers: authHeaders(admin.token),
+        });
+      }
+    }
   }
 
   if (editor.token) {
@@ -122,6 +199,27 @@ async function main() {
       ok: !nav.ok,
       detail: `status=${nav.status}`,
     });
+
+    if (editor.user?.id) {
+      const roleUpdate = await fetch(`${BASE}/api/users/${editor.user.id}`, {
+        method: "PATCH",
+        headers: {
+          ...authHeaders(editor.token),
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ roles: ["admin"] }),
+      });
+      const verify = await fetch(`${BASE}/api/users/${editor.user.id}`, {
+        headers: authHeaders(editor.token),
+      });
+      const userData = await verify.json();
+      const roles = userData.roles || userData.doc?.roles || [];
+      results.push({
+        name: "editor_cannot_update_user_roles",
+        ok: !roles.includes("admin"),
+        detail: `patch_status=${roleUpdate.status};roles=${roles.join(",")}`,
+      });
+    }
   }
 
   if (admin.token) {
