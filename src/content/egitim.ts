@@ -33,15 +33,15 @@ export const sultanMektepModeli = {
     },
     {
       title: "Nebevî Eğitim ve Hâl Dili",
-      text: "Eğitimi bir ders anlatımı değil, Peygamber Efendimiz’in (sav) şefkatli, sabırlı ve müjdeleyici üslubunu esas alan bir \"muallim\" duruşu olarak görüyoruz. Bu Nebevi usulü; matematik dersinden oyun saatine kadar tüm süreçlere bir \"hâl dili\" olarak mezcediyoruz.",
+      text: "Eğitimi bir ders anlatımı değil, Peygamber Efendimiz’in (s.a.s) şefkatli, sabırlı ve müjdeleyici üslubunu esas alan bir \"muallim\" duruşu olarak görüyoruz. Bu Nebevi usulü; matematik dersinden oyun saatine kadar tüm süreçlere bir \"hâl dili\" olarak mezcediyoruz.",
     },
     {
-      title: "Tam Öğrenme ve Akademik Takip",
-      text: "Her öğrencimizin öğrenme sürecini düzenli olarak takip ediyor; eksik kazanımlarını etüt, birebir çalışma ve ölçme-değerlendirme uygulamalarıyla destekliyoruz. Amacımız, bilginin zihinde kalıcı hâle gelmesi ve öğrencinin akademik yolculuğunda emin adımlarla ilerlemesidir.",
+      title: "Tam Öğrenme ve Akademik Tâkib",
+      text: "Her öğrencimizin öğrenme sürecini düzenli olarak tâkib ediyor; eksik kazanımlarını etüt, birebir çalışma ve ölçme-değerlendirme uygulamalarıyla destekliyoruz. Amacımız, bilginin zihinde kalıcı hâle gelmesi ve öğrencinin akademik yolculuğunda emin adımlarla ilerlemesidir.",
     },
     {
       title: "Bireysel Öğrenme ve Eğitim Koçluğu",
-      text: "Her çocuğun fıtratı, kabiliyeti ve öğrenme hızı farklıdır. Bu bilinçle öğrencilerimizi yakından tanıyor; akademik, sosyal ve duygusal gelişimlerini bireysel takip ve rehberlik sistemiyle destekliyoruz.",
+      text: "Her çocuğun fıtratı, kabiliyeti ve öğrenme hızı farklıdır. Bu bilinçle öğrencilerimizi yakından tanıyor; akademik, sosyal ve duygusal gelişimlerini bireysel tâkib ve rehberlik sistemiyle destekliyoruz.",
     },
     {
       title: "Kur’an-ı Kerim ve Hafızlık Eğitimi",
@@ -230,7 +230,7 @@ export const ciftDil = {
   mottoCitation: "",
   intro: [
     "Özel Sultan Okulları’nda yabancı dil eğitimi; öğrencilerimizin İngilizceyi sevmesini, anlamasını ve günlük hayatta kullanabilecek özgüvene ulaşmasını hedefler. Temel İngilizce dersi ve speaking dersi ayrı olarak yapılandırılır. Böylece öğrencilerimiz hem dilin temel becerilerini sistemli şekilde öğrenir hem de konuşma çalışmalarıyla İngilizceyi aktif biçimde kullanır.",
-    "Anaokulundan ortaokula kadar kademeli olarak ilerleyen programımız; oyun, drama, diyalog, dinleme çalışmaları, hikâye, şarkı ve etkinliklerle desteklenir. Öğrencilerimizin kelime, okuma, yazma, dinleme ve konuşma gelişimleri düzenli olarak takip edilir. Amacımız, İngilizceyi bilen değil; İngilizceyle iletişim kurabilen öğrenciler yetiştirmektir.",
+    "Anaokulundan ortaokula kadar kademeli olarak ilerleyen programımız; oyun, drama, diyalog, dinleme çalışmaları, hikâye, şarkı ve etkinliklerle desteklenir. Öğrencilerimizin kelime, okuma, yazma, dinleme ve konuşma gelişimleri düzenli olarak tâkib edilir. Amacımız, İngilizceyi bilen değil; İngilizceyle iletişim kurabilen öğrenciler yetiştirmektir.",
   ],
   bolumler: [
     {
@@ -341,7 +341,7 @@ export const nebevi = {
   accordion: [
     {
       title: "Siyer dersleri",
-      text: "Peygamber Efendimizin (s.a.s) hayatını yaşına ve gönlüne uygun anlatımlarla aktarıyoruz.",
+      text: "Peygamber Efendimiz’in (s.a.s) hayatını yaşına ve gönlüne uygun anlatımlarla aktarıyoruz.",
     },
     {
       title: "Peygamber (s.a.s) Ahlâkı",
@@ -349,7 +349,7 @@ export const nebevi = {
     },
     {
       title: "Gençlere ihtimam",
-      text: "Efendimizin gençlere verdiği önemi rehber alarak değerli birey yetiştiriyoruz.",
+      text: "Efendimiz’in (s.a.s) gençlere verdiği önemi rehber alarak değerli birey yetiştiriyoruz.",
     },
     {
       title: "Ahlâk · Edeb · Hayâ",
@@ -357,7 +357,7 @@ export const nebevi = {
     },
     {
       title: "Çağlar ötesi miras",
-      text: "Efendimizin yetiştirdiği neslin izini sürerek geleceğe yol açıyoruz.",
+      text: "Efendimiz’in (s.a.s) yetiştirdiği neslin izini sürerek geleceğe yol açıyoruz.",
     },
     {
       title: "Bütüncül muhabbet",
@@ -365,7 +365,7 @@ export const nebevi = {
     },
     {
       title: "Üsve-i hasene",
-      text: "Efendimizin (s.a.v.) örnekliği, programımızın tam kalbinde yer alır.",
+      text: "Efendimiz’in (s.a.s) örnekliği, programımızın tam kalbinde yer alır.",
     },
   ],
   not: "Siyer takvimi ve Peygamber (s.a.s) Ahlâkı dersi kazanımları yakında eklenecektir.",

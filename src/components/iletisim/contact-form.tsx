@@ -2,7 +2,10 @@
 
 import { useActionState, useEffect, useRef } from "react";
 import type { Branch } from "@/content/branches";
-import { branches as staticBranches } from "@/content/branches";
+import {
+  branches as staticBranches,
+  formatBranchLocation,
+} from "@/content/branches";
 import { submitContact, type ContactFormState } from "@/app/(site)/iletisim/actions";
 
 const initial: ContactFormState = { ok: false, message: "" };
@@ -108,7 +111,7 @@ export function ContactForm({
               <option value="">Seçiniz</option>
               {branches.map((b) => (
                 <option key={b.slug} value={b.slug}>
-                  {b.name}
+                  {formatBranchLocation(b)}
                 </option>
               ))}
             </select>

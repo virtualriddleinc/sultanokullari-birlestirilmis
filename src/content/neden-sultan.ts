@@ -14,7 +14,7 @@ export const nedenSultanItems: NedenItem[] = [
   },
   {
     headline: "Peygamberinin (s.a.s) izinde geleceğe örnek nesiller… Sultan Okulları",
-    body: "Nebevî eğitimle insanlığa üsve-i hasene (en güzel örnek) Peygamberimizi (s.a.s) tanıyan, seven ve hayatına rehber edinen, İslam ahlâkı ile ahlâklanmış, geleceğe öncü örnek nesiller yetiştiriyoruz.",
+    body: "Nebevî eğitimle insanlığa üsve-i hasene (en güzel örnek) Peygamberimizi (s.a.s) tanıyan, seven ve hayatına rehber edinen, İslâm ahlâkı ile ahlâklanmış, geleceğe öncü örnek nesiller yetiştiriyoruz.",
   },
   {
     headline: "İlmin hayatla buluşması… Sultan Okulları",

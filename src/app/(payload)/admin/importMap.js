@@ -32,6 +32,7 @@ import { ContactInboxActions as ContactInboxActions_0ca114dfd7399ec9fac85ac4adcb
 import { IkInboxBulkActions as IkInboxBulkActions_141a8b8c53ec21fd7d76a7badee2d42d } from '@/components/payload/admin/InboxBulkActions'
 import { IkInboxActions as IkInboxActions_0ca114dfd7399ec9fac85ac4adcb1622 } from '@/components/payload/admin/InboxActionWrappers'
 import { GayemizSectionPreview as GayemizSectionPreview_90b362c92c98f08992ca5325bae46374 } from '@/components/payload/admin/SectionPreviewLink'
+import { default as default_d319f09f40cc5353c43ef69d5a5f0b89 } from '@/components/payload/admin/MissionDecorCellRowLabel'
 import { YolculukSectionPreview as YolculukSectionPreview_90b362c92c98f08992ca5325bae46374 } from '@/components/payload/admin/SectionPreviewLink'
 import { NedenSectionPreview as NedenSectionPreview_90b362c92c98f08992ca5325bae46374 } from '@/components/payload/admin/SectionPreviewLink'
 import { VideoSectionPreview as VideoSectionPreview_90b362c92c98f08992ca5325bae46374 } from '@/components/payload/admin/SectionPreviewLink'
@@ -85,6 +86,7 @@ export const importMap = {
   "@/components/payload/admin/InboxBulkActions#IkInboxBulkActions": IkInboxBulkActions_141a8b8c53ec21fd7d76a7badee2d42d,
   "@/components/payload/admin/InboxActionWrappers#IkInboxActions": IkInboxActions_0ca114dfd7399ec9fac85ac4adcb1622,
   "@/components/payload/admin/SectionPreviewLink#GayemizSectionPreview": GayemizSectionPreview_90b362c92c98f08992ca5325bae46374,
+  "@/components/payload/admin/MissionDecorCellRowLabel#default": default_d319f09f40cc5353c43ef69d5a5f0b89,
   "@/components/payload/admin/SectionPreviewLink#YolculukSectionPreview": YolculukSectionPreview_90b362c92c98f08992ca5325bae46374,
   "@/components/payload/admin/SectionPreviewLink#NedenSectionPreview": NedenSectionPreview_90b362c92c98f08992ca5325bae46374,
   "@/components/payload/admin/SectionPreviewLink#VideoSectionPreview": VideoSectionPreview_90b362c92c98f08992ca5325bae46374,

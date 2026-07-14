@@ -37,6 +37,9 @@ export type JourneyChapter = {
   cta: { href: string; label: string };
   iconKey: string;
   media: SiteMedia;
+  focalPoint?: { x: number; y: number };
+  mediaScale?: number;
+  mediaAspect?: number;
 };
 
 export type QuickLinkItem = {

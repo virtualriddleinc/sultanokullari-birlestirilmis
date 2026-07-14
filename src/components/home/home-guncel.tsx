@@ -53,10 +53,12 @@ export type HomeGuncelProps = {
   news?: (SiteNews & { slug?: string })[];
 };
 
+const HOME_GUNCEL_LIST_LIMIT = 3;
+
 export function HomeGuncel({
   eyebrow = "Duyurular",
   title = "Etkinlikler ve haberler",
-  description = "Okul takvimi, duyurular ve kurum içinden kısa gelişmeler tek alanda.",
+  description,
   ctaLabel = "Tüm içerikler",
   ctaHref = "/guncel/haberler",
   featuredEventLabel = "Öne çıkan etkinlik",
@@ -68,9 +70,10 @@ export function HomeGuncel({
 }: HomeGuncelProps) {
   const featured = events[0];
   const featuredMedia = featuredEventMedia;
-  const otherEvents = events.slice(1);
-  const hasNews = news.length > 0;
-  const marqueeItems = [...events, ...news, ...events];
+  const otherEvents = events.slice(1, 1 + HOME_GUNCEL_LIST_LIMIT);
+  const newsItems = news.slice(0, HOME_GUNCEL_LIST_LIMIT);
+  const hasNews = newsItems.length > 0;
+  const marqueeItems = [...events.slice(0, 1 + HOME_GUNCEL_LIST_LIMIT), ...newsItems, ...events.slice(0, 1 + HOME_GUNCEL_LIST_LIMIT)];
   const featuredHref = featured?.slug
     ? `/guncel/etkinlikler/${featured.slug}`
     : "/guncel/etkinlikler";
@@ -245,7 +248,7 @@ export function HomeGuncel({
             </div>
             {hasNews ? (
               <StaggerList className="mt-fluid-4 space-y-fluid-3">
-                {news.map((n) => (
+                {newsItems.map((n) => (
                   <StaggerItem key={n.id}>
                     <div className="border-charcoal/10 rounded-2xl border bg-white/80 p-fluid-4">
                       <p className="text-charcoal/60 text-[length:var(--text-xs)]">

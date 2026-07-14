@@ -2,11 +2,13 @@
 
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowDown, MapPin, Phone } from "lucide-react";
+import { iletisimMetinleri } from "@/content/sultanda-yasam";
 
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
 
 export function IletisimHero() {
   const reduce = useReducedMotion();
+  const telHref = `tel:${iletisimMetinleri.telefon.replace(/\s/g, "")}`;
 
   return (
     <section className="relative isolate overflow-hidden border-b border-brand-green/15 bg-gradient-to-br from-brand-green/10 via-white to-amber-50 py-fluid-8 sm:py-fluid-16">
@@ -56,10 +58,7 @@ export function IletisimHero() {
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.12 }}
           >
-            Özel Sultan Eğitim Kurumları hakkında detaylı bilgi almak, kayıt
-            süreciyle ilgili görüşmek veya okul birimlerimizle iletişime geçmek
-            için bize ulaşabilirsiniz. İlgili kampüsümüz en kısa sürede sizinle
-            iletişime geçecektir.
+            {iletisimMetinleri.bizeUlasin}
           </motion.p>
 
           <motion.div
@@ -73,7 +72,7 @@ export function IletisimHero() {
               className="border-brand-green/40 text-brand-green hover:border-brand-green inline-flex min-h-[44px] items-center gap-2 rounded-full border bg-white/80 px-4 py-2 text-[length:var(--text-sm)] font-semibold backdrop-blur transition hover:bg-white"
             >
               <MapPin className="size-4" aria-hidden />
-              Şubelere bak
+              Yol Tarifi
             </a>
             <a
               href="#iletisim-formu"
@@ -83,11 +82,11 @@ export function IletisimHero() {
               Forma git
             </a>
             <a
-              href="tel:05060576072"
+              href={telHref}
               className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-[length:var(--text-sm)] font-semibold text-amber-800 transition hover:bg-amber-100"
             >
               <Phone className="size-4" aria-hidden />
-              Hemen ara
+              Hemen Ara
             </a>
           </motion.div>
         </div>

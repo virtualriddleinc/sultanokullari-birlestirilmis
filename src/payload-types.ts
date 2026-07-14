@@ -116,11 +116,13 @@ export interface Config {
   };
   fallbackLocale: null;
   globals: {
+    gayemiz: Gayemiz;
     'ana-sayfa': AnaSayfa;
     'site-ayarlari': SiteAyarlari;
     navigation: Navigation;
   };
   globalsSelect: {
+    gayemiz: GayemizSelect<false> | GayemizSelect<true>;
     'ana-sayfa': AnaSayfaSelect<false> | AnaSayfaSelect<true>;
     'site-ayarlari': SiteAyarlariSelect<false> | SiteAyarlariSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
@@ -242,7 +244,7 @@ export interface Media {
   };
 }
 /**
- * Yönetici: tam yetki. Editör: içerik. Gelen kutusu: yalnızca form mesajları.
+ * Yalnızca yöneticiler kullanıcı ekleyebilir, silebilir ve rollerini değiştirebilir.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
@@ -303,6 +305,12 @@ export interface JourneyChapter {
     alt: string;
     poster?: string | null;
   };
+  focalPoint?: {
+    x?: number | null;
+    y?: number | null;
+  };
+  mediaScale?: number | null;
+  mediaAspect?: number | null;
   /**
    * Kaydı en son güncelleyen panel kullanıcısı.
    */
@@ -1160,6 +1168,14 @@ export interface JourneyChaptersSelect<T extends boolean = true> {
         alt?: T;
         poster?: T;
       };
+  focalPoint?:
+    | T
+    | {
+        x?: T;
+        y?: T;
+      };
+  mediaScale?: T;
+  mediaAspect?: T;
   lastEditedBy?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -1666,6 +1682,61 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Hero sonrası petek örüntüsü ve hücre hover bilgi kartları. Tüm bilgi kartları silinebilir. Kayıt sonrası ana sayfada anında yansır.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gayemiz".
+ */
+export interface Gayemiz {
+  id: number;
+  /**
+   * Petek üzerine gelince yeşil kartta görünen içerik. Tüm kartları silebilirsiniz; boş bırakılırsa yeşil kart ancak hücre hover’ında dolu olur.
+   */
+  decorCells?:
+    | {
+        slot: 'top-left' | 'top-right' | 'right' | 'bottom';
+        tagline: string;
+        titleLine1: string;
+        titleLine2: string;
+        titleLine3: string;
+        description: string;
+        buttonText: string;
+        buttonLink: string;
+        media: {
+          kind?: ('image' | 'video') | null;
+          media?: (number | null) | Media;
+          src?: string | null;
+          alt: string;
+          poster?: string | null;
+        };
+        focalPoint?: {
+          x?: number | null;
+          y?: number | null;
+        };
+        mediaScale?: number | null;
+        mediaAspect?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Anaokulu, İlkokul, Ortaokul — sıra: üst / orta / sol alt.
+   */
+  levels?:
+    | {
+        label: string;
+        description: string;
+        href: string;
+        /**
+         * Boş bırakılırsa "{Etiket} Programını Keşfet".
+         */
+        ctaLabel?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * Ana sayfadaki sabit bölüm başlıkları, metinler ve medya ayarları. Tekrarlayan içerik (slaytlar, yolculuk vb.) ilgili koleksiyonlardan yönetilir.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1673,41 +1744,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface AnaSayfa {
   id: number;
-  mission: {
-    tagline: string;
-    titleLine1: string;
-    titleLine2: string;
-    titleLine3?: string | null;
-    description: string;
-    secondaryDescription?: string | null;
-    levels?:
-      | {
-          label: string;
-          id?: string | null;
-        }[]
-      | null;
-    decorMedia?:
-      | {
-          /**
-           * Medya yükleyin veya public klasöründeki dosya yolunu girin. Video için poster yolu ekleyin.
-           */
-          media?: {
-            kind?: ('image' | 'video') | null;
-            /**
-             * Dosya yüklerseniz aşağıdaki yol alanına gerek kalmaz.
-             */
-            media?: (number | null) | Media;
-            /**
-             * Örn. /site-media/IMG-....jpg veya /videos/kademeler.mp4
-             */
-            src?: string | null;
-            alt?: string | null;
-            poster?: string | null;
-          };
-          id?: string | null;
-        }[]
-      | null;
-  };
   journey: {
     headline: string;
   };
@@ -1761,11 +1797,17 @@ export interface AnaSayfa {
   guncelSection: {
     eyebrow: string;
     title: string;
-    description: string;
+    description?: string | null;
     ctaLabel: string;
     ctaHref: string;
     featuredEventLabel?: string | null;
+    /**
+     * Listede en fazla 3 yaklaşan etkinlik gösterilir.
+     */
     upcomingEventsLabel?: string | null;
+    /**
+     * Listede en fazla 3 haber gösterilir.
+     */
     newsLabel?: string | null;
     /**
      * Medya yükleyin veya public klasöründeki dosya yolunu girin. Video için poster yolu ekleyin.
@@ -1787,19 +1829,19 @@ export interface AnaSayfa {
   instagramSection: {
     eyebrow: string;
     title: string;
-    description: string;
+    description?: string | null;
     handle: string;
     profileUrl: string;
   };
-  quickLinksSection: {
-    eyebrow: string;
-    title: string;
-    description: string;
+  quickLinksSection?: {
+    eyebrow?: string | null;
+    title?: string | null;
+    description?: string | null;
     links?:
       | {
           href: string;
           label: string;
-          description: string;
+          description?: string | null;
           iconKey:
             | 'book-open'
             | 'graduation-cap'
@@ -1942,39 +1984,57 @@ export interface Navigation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ana-sayfa_select".
+ * via the `definition` "gayemiz_select".
  */
-export interface AnaSayfaSelect<T extends boolean = true> {
-  mission?:
+export interface GayemizSelect<T extends boolean = true> {
+  decorCells?:
     | T
     | {
+        slot?: T;
         tagline?: T;
         titleLine1?: T;
         titleLine2?: T;
         titleLine3?: T;
         description?: T;
-        secondaryDescription?: T;
-        levels?:
+        buttonText?: T;
+        buttonLink?: T;
+        media?:
           | T
           | {
-              label?: T;
-              id?: T;
+              kind?: T;
+              media?: T;
+              src?: T;
+              alt?: T;
+              poster?: T;
             };
-        decorMedia?:
+        focalPoint?:
           | T
           | {
-              media?:
-                | T
-                | {
-                    kind?: T;
-                    media?: T;
-                    src?: T;
-                    alt?: T;
-                    poster?: T;
-                  };
-              id?: T;
+              x?: T;
+              y?: T;
             };
+        mediaScale?: T;
+        mediaAspect?: T;
+        id?: T;
       };
+  levels?:
+    | T
+    | {
+        label?: T;
+        description?: T;
+        href?: T;
+        ctaLabel?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ana-sayfa_select".
+ */
+export interface AnaSayfaSelect<T extends boolean = true> {
   journey?:
     | T
     | {

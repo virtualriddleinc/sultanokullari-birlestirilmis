@@ -85,3 +85,13 @@ export const branches: Branch[] = branchSchema.array().parse([
 export function getBranchBySlug(slug: string): Branch | undefined {
   return branches.find((b) => b.slug === slug);
 }
+
+/** Ana sayfa / footer ile aynı: «İlçe – İl» */
+export function formatBranchLocation(
+  branch: Pick<Branch, "district" | "city">,
+): string {
+  const district = branch.district?.trim() ?? "";
+  const city = branch.city?.trim() ?? "";
+  if (district && city) return `${district} – ${city}`;
+  return district || city;
+}

@@ -20,21 +20,24 @@ export function mapPayloadMediaGroup(
   group: PayloadMediaGroup | null | undefined,
   fallback?: SiteMedia,
 ): SiteMedia | undefined {
-  if (!group && fallback) return fallback;
-  if (!group) return undefined;
+  if (!group) return fallback;
 
   const uploadSrc = resolveUploadUrl(
     typeof group.media === "object" ? group.media : null,
   );
-  const src = uploadSrc || group.src || fallback?.src;
-  if (!src) return fallback;
+  const ownSrc = uploadSrc || group.src?.trim() || undefined;
+
+  // Payload group alanları defaultValue ile boş kayıt oluşturur (kind: "image").
+  // Gerçek medya yoksa fallback’i olduğu gibi kullan — aksi halde video URL
+  // image olarak render edilip kırılır.
+  if (!ownSrc) return fallback;
 
   const kind = (group.kind || fallback?.kind || "image") as "image" | "video";
   const alt = group.alt || fallback?.alt || "";
 
   return {
     kind,
-    src,
+    src: ownSrc,
     alt,
     poster: group.poster || fallback?.poster,
   };

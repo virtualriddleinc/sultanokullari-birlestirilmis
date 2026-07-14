@@ -1,8 +1,10 @@
 "use client";
 
 import Image from "next/image";
+import Link from "@/components/navigation/site-link";
 import { motion, useReducedMotion } from "framer-motion";
-import { Leaf, ShieldCheck } from "lucide-react";
+import { ArrowRight, Leaf, ShieldCheck } from "lucide-react";
+import { AmbientSiteVideo } from "@/components/media/ambient-site-video";
 import { yemekhaneParagraphs as staticParagraphs } from "@/content/yemekhane";
 import { yemekhaneMedia as staticMedia } from "@/content/site-media";
 import type { SiteMedia } from "@/content/site-media";
@@ -117,6 +119,14 @@ export function HomeYemekhane({
               </motion.li>
             ))}
           </ul>
+
+          <Link
+            href="/yasam/sultanda-yasam"
+            className="text-charcoal mt-fluid-4 inline-flex min-h-[44px] items-center gap-2 text-[length:var(--text-sm)] font-semibold underline-offset-4 hover:underline md:mt-fluid-6 md:text-[length:var(--text-base)]"
+          >
+            Helâl gıda ve kantinsiz okul
+            <ArrowRight className="size-4" aria-hidden />
+          </Link>
         </motion.div>
 
         <motion.div
@@ -128,14 +138,24 @@ export function HomeYemekhane({
         >
           <div className="relative overflow-hidden rounded-2xl bg-brand-honey shadow-[0_20px_50px_rgba(26,28,24,0.16)]">
             <div className="relative aspect-[16/9] w-full md:aspect-[21/9] lg:aspect-[4/3]">
-              <Image
-                src={media.src}
-                alt={media.alt}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                priority={false}
-              />
+              {media.kind === "video" && !reduce ? (
+                <AmbientSiteVideo
+                  src={media.src}
+                  poster={media.poster}
+                  title={media.alt}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  preload="metadata"
+                />
+              ) : (
+                <Image
+                  src={media.kind === "video" ? (media.poster ?? media.src) : media.src}
+                  alt={media.alt}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority={false}
+                />
+              )}
             </div>
           </div>
         </motion.div>

@@ -6,6 +6,7 @@ import { getPreviewBaseUrl } from "@/payload/admin-groups";
 const editorQuickLinks = [
   { href: "/admin/globals/ana-sayfa", label: "Ana Sayfa Düzeni" },
   { href: "/admin/collections/hero-slides", label: "Hero" },
+  { href: "/admin/globals/gayemiz", label: "Gâyemiz" },
   { href: "/admin/collections/news/create", label: "Haber / Duyuru Ekle" },
   { href: "/admin/collections/media-items/create", label: "Medya Ekle" },
   { href: "/admin/collections/pages/create", label: "Sayfa Ekle" },
@@ -240,8 +241,9 @@ export default async function DashboardWelcome() {
       ) : null}
 
       <p className="sultan-dashboard__hint">
-        Hero, yolculuk, Instagram ve Neden Sultan listelerinde sıralama için
-        koleksiyon listesinde <strong>sürükle-bırak</strong> kullanın.
+        Hero, Gâyemiz, yolculuk, Instagram ve Neden Sultan içerikleri Ana Sayfa
+        menüsünden yönetilir. Listelerde sıralama için{" "}
+        <strong>sürükle-bırak</strong> kullanın.
       </p>
     </div>
   );

@@ -9,7 +9,7 @@ import type { HeroSlide } from "@/features/hero/slides";
 import type { Branch } from "@/content/branches";
 
 import { HERO_SLIDES } from "@/features/hero/slides";
-import { hexGalleryMedia, featuredVideo, mediaPageItems, yemekhaneMedia } from "@/content/site-media";
+import { featuredVideo, mediaPageItems, yemekhaneMedia } from "@/content/site-media";
 import { yemekhaneParagraphs } from "@/content/yemekhane";
 import { nedenSultanItems } from "@/content/neden-sultan";
 import {
@@ -24,8 +24,16 @@ import { mapPayloadMediaGroup } from "@/lib/payload-media";
 import { getPayloadClient } from "@/lib/payload";
 import { normalizeHeroSlide } from "@/lib/hero-slide-limits";
 import type { JourneyChapter, QuickLinkItem } from "@/lib/home-shared";
+import {
+  DEFAULT_MISSION,
+  type MissionDecorCellData,
+  type MissionDecorSlot,
+  type MissionLevelData,
+  type MissionSectionData,
+} from "@/lib/mission-defaults";
 
 export type { JourneyChapter, QuickLinkItem } from "@/lib/home-shared";
+export type { MissionSectionData } from "@/lib/mission-defaults";
 
 type FetchOptions = {
   draft?: boolean;
@@ -33,14 +41,7 @@ type FetchOptions = {
 
 export type HomePageData = {
   heroSlides: HeroSlide[];
-  mission: {
-    tagline: string;
-    titleLines: [string, string, string];
-    description: string;
-    secondaryDescription: string;
-    levels: string[];
-    decorMedia: SiteMedia[];
-  };
+  mission: MissionSectionData;
   journey: {
     headline: string;
     chapters: JourneyChapter[];
@@ -113,23 +114,140 @@ export type HomePageData = {
   };
 };
 
-const DEFAULT_MISSION = {
-  tagline: "Gâyemiz · Ufkumuz",
-  titleLines: [
-    "Değer merkezli eğitim,",
-    "güçlü bir gelecek vizyonu ile birleşiyor.",
-    "",
-  ] as [string, string, string],
-  description:
-    "Peygamber Efendimizin (s.a.s) izinde, üsve-i hasene olmayı hedefleyen; ilim, hikmet ve ahlâkla bütünleşmiş nesiller yetiştiriyoruz.",
-  secondaryDescription:
-    "Anaokulu, ilkokul ve ortaokul kademeleriyle bütüncül bir eğitim yolculuğu; okul öncesinden üniversiteye, câmi ve hâfızlık binasıyla bütünleşik Eğitim Külliyesi ufkumuz.",
-  levels: ["Anaokulu", "İlkokul", "Ortaokul"],
-  decorMedia: hexGalleryMedia.slice(0, 6) as unknown as SiteMedia[],
-};
-
 const DEFAULT_JOURNEY_HEADLINE =
   "Peygamber Efendimiz'in (s.a.s) İzinde Geleceğe Örnek Nesiller...";
+
+const SLOTS: MissionDecorSlot[] = [
+  "top-left",
+  "top-right",
+  "right",
+  "bottom",
+];
+
+type DecorCellRaw = {
+  slot?: string;
+  tagline?: string;
+  titleLine1?: string;
+  titleLine2?: string;
+  titleLine3?: string;
+  description?: string;
+  buttonText?: string;
+  buttonLink?: string;
+  media?: Parameters<typeof mapPayloadMediaGroup>[0];
+  focalPoint?: { x?: number; y?: number } | null;
+  mediaScale?: number | null;
+};
+
+type LevelRaw = {
+  label?: string;
+  description?: string;
+  href?: string;
+  ctaLabel?: string;
+};
+
+function mapMissionDecorCell(
+  raw: DecorCellRaw | undefined,
+  fallback: MissionDecorCellData,
+): MissionDecorCellData {
+  const media = mapPayloadMediaGroup(raw?.media, fallback.media) ?? fallback.media;
+  const slot =
+    raw?.slot && SLOTS.includes(raw.slot as MissionDecorSlot)
+      ? (raw.slot as MissionDecorSlot)
+      : fallback.slot;
+  const focalRaw = raw?.focalPoint;
+  return {
+    slot,
+    tagline: raw?.tagline || fallback.tagline,
+    titleLines: [
+      raw?.titleLine1 || fallback.titleLines[0],
+      raw?.titleLine2 || fallback.titleLines[1],
+      raw?.titleLine3 || fallback.titleLines[2],
+    ],
+    description: raw?.description || fallback.description,
+    buttonText: raw?.buttonText || fallback.buttonText,
+    buttonLink: raw?.buttonLink || fallback.buttonLink,
+    media,
+    focalPoint:
+      typeof focalRaw?.x === "number" && typeof focalRaw?.y === "number"
+        ? { x: focalRaw.x, y: focalRaw.y }
+        : fallback.focalPoint,
+    mediaScale:
+      typeof raw?.mediaScale === "number"
+        ? raw.mediaScale
+        : fallback.mediaScale,
+  };
+}
+
+function mapMissionLevels(raw: LevelRaw[] | undefined): MissionLevelData[] {
+  return DEFAULT_MISSION.levels.map((fallback, index) => {
+    const item = raw?.[index];
+    const label = item?.label?.trim() || fallback.label;
+    return {
+      label,
+      description: item?.description?.trim() || fallback.description,
+      href: item?.href?.trim() || fallback.href,
+      ctaLabel:
+        item?.ctaLabel?.trim() ||
+        fallback.ctaLabel ||
+        `${label} Programını Keşfet`,
+    };
+  });
+}
+
+function mapMissionDecorCells(
+  decorRaw: DecorCellRaw[] | undefined,
+  legacyDecor:
+    | Array<{ media?: Parameters<typeof mapPayloadMediaGroup>[0] }>
+    | undefined,
+): MissionDecorCellData[] {
+  // CMS’te açıkça kaydedilmiş dizi: boş dahil — varsayılanlarla doldurma.
+  if (Array.isArray(decorRaw)) {
+    const seen = new Set<MissionDecorSlot>();
+    const mapped: MissionDecorCellData[] = [];
+    for (const raw of decorRaw) {
+      if (!raw?.slot || !SLOTS.includes(raw.slot as MissionDecorSlot)) continue;
+      const slot = raw.slot as MissionDecorSlot;
+      if (seen.has(slot)) continue;
+      seen.add(slot);
+      const fallback =
+        DEFAULT_MISSION.decorCells.find((c) => c.slot === slot) ??
+        DEFAULT_MISSION.decorCells[0];
+      mapped.push(mapMissionDecorCell(raw, fallback));
+    }
+    return mapped;
+  }
+
+  // Henüz yapılandırılmamış: legacy veya statik varsayılan.
+  return DEFAULT_MISSION.decorCells.map((fallback) => {
+    const legacyIndex =
+      fallback.slot === "top-left"
+        ? 0
+        : fallback.slot === "top-right"
+          ? 2
+          : fallback.slot === "right"
+            ? 3
+            : 5;
+    const legacyItem = legacyDecor?.[legacyIndex];
+    if (legacyItem?.media) {
+      return mapMissionDecorCell({ media: legacyItem.media }, fallback);
+    }
+    return fallback;
+  });
+}
+
+function mapMissionSection(
+  missionRaw: Record<string, unknown> | undefined,
+): MissionSectionData {
+  const decorRaw = missionRaw?.decorCells as DecorCellRaw[] | undefined;
+  const legacyDecor = missionRaw?.decorMedia as
+    | Array<{ media?: Parameters<typeof mapPayloadMediaGroup>[0] }>
+    | undefined;
+
+  return {
+    decorCells: mapMissionDecorCells(decorRaw, legacyDecor),
+    levels: mapMissionLevels(missionRaw?.levels as LevelRaw[] | undefined),
+  };
+}
 
 const DEFAULT_NEDEN = {
   eyebrow: "Ayırt edici yaklaşım",
@@ -154,7 +272,7 @@ const DEFAULT_VIDEO = {
   eyebrow: "Tanıtım · Sinematik bakış",
   title: "Okul atmosferini yakından görün.",
   description:
-    "Sultan Okulları'nın sınıf, bahçe ve etkinlik atmosferinden seçilen kısa bir tanıtım kesiti.",
+    "Sultan Okulları'nın sınıf, bahçe ve etkinlik atmosferinden seçilen bir kare.",
   ctaLabel: "Görüşme planla",
   ctaHref: "/iletisim",
   video: featuredVideo,
@@ -169,10 +287,12 @@ const DEFAULT_BRANCHES_SECTION = {
   ctaHref: "/iletisim",
 };
 
+const HOME_GUNCEL_LIST_LIMIT = 3;
+
 const DEFAULT_GUNCEL = {
   eyebrow: "Duyurular",
   title: "Etkinlikler ve haberler",
-  description: "Okul takvimi, duyurular ve kurum içinden kısa gelişmeler tek alanda.",
+  description: "",
   ctaLabel: "Tüm içerikler",
   ctaHref: "/guncel/haberler",
   featuredEventLabel: "Öne çıkan etkinlik",
@@ -184,27 +304,25 @@ const DEFAULT_GUNCEL = {
 const DEFAULT_INSTAGRAM = {
   eyebrow: "Sosyal medya vitrini",
   title: "Sosyal Medyada Biz",
-  description:
-    "Sultan Okulları'nın resmî sosyal medya hesaplarından okul atmosferi, etkinlikler ve kısa video paylaşımları — kareler kendi hızında yana doğru akar.",
+  description: "",
   handle: instagramHandle,
   profileUrl: instagramProfileUrl,
   posts: instagramPosts,
 };
 
 const DEFAULT_QUICK_LINKS = {
-  eyebrow: "Kısa yollar",
-  title: "Aradığınız sayfaya hızla ulaşın",
-  description:
-    "Kademeler, olanaklar ve duyurular için en sık kullanılan bağlantılar — şeritte gezinin veya tıklayın.",
+  eyebrow: "",
+  title: "",
+  description: "",
   links: [
-    { href: "/egitim/kademeler", label: "Kademeler", description: "Sultan Mektebi Modeli", iconKey: "book-open" },
-    { href: "/egitim/nebevi-egitim", label: "Nebevî Eğitim", description: "Kur'an-ı Kerîm", iconKey: "graduation-cap" },
-    { href: "/akademik/yabanci-dil", label: "Atölyeler", description: "Yabancı dil & atölye", iconKey: "palette" },
-    { href: "/#yemekhane", label: "Yemekhane", description: "Kantinsiz okul projesi", iconKey: "hand-heart" },
-    { href: "/rehberlik/egitim-koclugu", label: "Rehberlik", description: "Eğitim koçluğu", iconKey: "heart-handshake" },
-    { href: "/kurumsal/burs-olanaklari", label: "Burs", description: "Burs olanakları", iconKey: "sprout" },
-    { href: "/guncel/haberler", label: "Duyurular", description: "Haber ve etkinlikler", iconKey: "radio" },
-    { href: "/iletisim", label: "İletişim", description: "Bizimle iletişime geçin", iconKey: "phone" },
+    { href: "/egitim/kademeler", label: "Kademeler", description: "", iconKey: "book-open" },
+    { href: "/egitim/nebevi-egitim", label: "Nebevî Eğitim", description: "", iconKey: "graduation-cap" },
+    { href: "/akademik/yabanci-dil", label: "Atölyeler", description: "", iconKey: "palette" },
+    { href: "/yasam/sultanda-yasam", label: "Yemekhane", description: "", iconKey: "hand-heart" },
+    { href: "/rehberlik/egitim-koclugu", label: "Rehberlik", description: "", iconKey: "heart-handshake" },
+    { href: "/kurumsal/burs-olanaklari", label: "Burs", description: "", iconKey: "sprout" },
+    { href: "/guncel/haberler", label: "Duyurular", description: "", iconKey: "radio" },
+    { href: "/iletisim", label: "İletişim", description: "", iconKey: "phone" },
   ],
 };
 
@@ -307,19 +425,42 @@ const JOURNEY_FALLBACK_ICONS = [
   "sparkles",
 ] as const;
 
+/** Yolculuk medyası — marka `/videos/*` + public site-media */
 const JOURNEY_FALLBACK_MEDIA = [
-  { kind: "video" as const, src: "/site-media/VID-20260429-WA0127.mp4", alt: "Nebevî eğitim", poster: "/site-media/IMG-20260429-WA0090.jpg" },
-  { kind: "video" as const, src: "/site-media/VID-20260429-WA0119.mp4", alt: "Hâfızlık", poster: "/site-media/IMG-20260429-WA0122.jpg" },
-  { kind: "image" as const, src: "/site-media/IMG-20260429-WA0086.jpg", alt: "Keşf-i Bilim" },
-  { kind: "video" as const, src: "/site-media/VID-20260429-WA0141.mp4", alt: "Sanat ve Spor", poster: "/site-media/IMG-20260429-WA0130.jpg" },
-  { kind: "image" as const, src: "/site-media/IMG-20260429-WA0089.jpg", alt: "Ayakkabısız okul" },
+  {
+    kind: "image" as const,
+    src: "/site-media/IMG-20260429-WA0114.jpg",
+    alt: "Nebevî eğitim",
+  },
+  {
+    kind: "video" as const,
+    src: "/videos/nebevi-egitim.mp4",
+    alt: "Hâfızlık",
+    poster: "/videos/nebevi-egitim-poster.jpg",
+  },
+  {
+    kind: "video" as const,
+    src: "/videos/bilim.mp4",
+    alt: "Keşf-i Bilim",
+    poster: "/videos/bilim-poster.jpg",
+  },
+  {
+    kind: "image" as const,
+    src: "/site-media/sanat.jpg",
+    alt: "Sanat ve Spor",
+  },
+  {
+    kind: "image" as const,
+    src: "/site-media/ayakkabisiz.JPG",
+    alt: "Ayakkabısız okul",
+  },
 ];
 
 const DEFAULT_JOURNEY_CHAPTERS: JourneyChapter[] = [
   {
     eyebrow: "01 / Köken",
     title: "Nebevî eğitim",
-    body: "Peygamberimizi (s.a.s) tanıyan, seven ve hayatına rehber edinen; üsve-i hasene ile İslam ahlâkı ile ahlâklanmış nesiller yetiştiriyoruz.",
+    body: "Peygamberimizi (s.a.s) tanıyan, seven ve hayatına rehber edinen; üsve-i hasene ile İslâm ahlâkı ile ahlâklanmış nesiller yetiştiriyoruz.",
     cta: { href: "/egitim/nebevi-egitim", label: "Nebevî eğitim" },
     iconKey: "book-open-text",
     media: JOURNEY_FALLBACK_MEDIA[0],
@@ -358,22 +499,44 @@ const DEFAULT_JOURNEY_CHAPTERS: JourneyChapter[] = [
   },
 ];
 
+function isRemovedJourneyChapter(doc: Record<string, unknown>): boolean {
+  const eyebrow = String(doc.eyebrow ?? "")
+    .trim()
+    .toLocaleLowerCase("tr-TR");
+  const title = String(doc.title ?? "")
+    .trim()
+    .toLocaleLowerCase("tr-TR");
+  return eyebrow.includes("sofra") || title === "kantinsiz okul";
+}
+
 function mapJourneyChapter(doc: Record<string, unknown>, index: number): JourneyChapter {
   const media = mapPayloadMediaGroup(
     doc.chapterMedia as Parameters<typeof mapPayloadMediaGroup>[0],
     JOURNEY_FALLBACK_MEDIA[index],
   )!;
+  const focalRaw = doc.focalPoint as { x?: number; y?: number } | null | undefined;
 
   return {
     eyebrow: doc.eyebrow as string,
     title: doc.title as string,
     body: doc.body as string,
     cta: {
-      href: doc.ctaHref as string,
+      href:
+        doc.ctaHref === "/#yemekhane"
+          ? "/yasam/sultanda-yasam"
+          : (doc.ctaHref as string),
       label: doc.ctaLabel as string,
     },
     iconKey: (doc.iconKey as string) || JOURNEY_FALLBACK_ICONS[index] || "book-open-text",
     media,
+    focalPoint:
+      typeof focalRaw?.x === "number" && typeof focalRaw?.y === "number"
+        ? { x: focalRaw.x, y: focalRaw.y }
+        : undefined,
+    mediaScale:
+      typeof doc.mediaScale === "number" ? doc.mediaScale : undefined,
+    mediaAspect:
+      typeof doc.mediaAspect === "number" ? doc.mediaAspect : undefined,
   };
 }
 
@@ -390,6 +553,7 @@ export async function getHomePageData(
   const guncelNews = news.length > 0 ? news : staticNews;
 
   let globalData: Record<string, unknown> = {};
+  let gayemizData: Record<string, unknown> = {};
   let heroDocs: Record<string, unknown>[] = [];
   let journeyDocs: Record<string, unknown>[] = [];
   let nedenDocs: Record<string, unknown>[] = [];
@@ -397,9 +561,14 @@ export async function getHomePageData(
 
   try {
     const payload = await getPayloadClient();
-    const [global, hero, journey, neden, instagram] = await Promise.all([
+    const [global, gayemiz, hero, journey, neden, instagram] = await Promise.all([
       payload.findGlobal({
         slug: "ana-sayfa",
+        depth: 2,
+        draft: options.draft,
+      }),
+      payload.findGlobal({
+        slug: "gayemiz",
         depth: 2,
         draft: options.draft,
       }),
@@ -434,6 +603,7 @@ export async function getHomePageData(
     ]);
 
     globalData = global as unknown as Record<string, unknown>;
+    gayemizData = gayemiz as unknown as Record<string, unknown>;
     heroDocs = hero.docs as unknown as Record<string, unknown>[];
     journeyDocs = journey.docs as unknown as Record<string, unknown>[];
     nedenDocs = neden.docs as unknown as Record<string, unknown>[];
@@ -442,7 +612,15 @@ export async function getHomePageData(
     console.warn("Ana sayfa CMS verisi alınamadı, statik veri kullanılıyor.", error);
   }
 
-  const missionRaw = globalData.mission as Record<string, unknown> | undefined;
+  const gayemizConfigured =
+    Array.isArray(gayemizData?.decorCells) ||
+    Array.isArray(gayemizData?.levels) ||
+    typeof gayemizData?.tagline === "string";
+  const missionRaw =
+    (gayemizConfigured
+      ? gayemizData
+      : (globalData.mission as Record<string, unknown> | undefined)) ??
+    undefined;
   const journeyRaw = globalData.journey as Record<string, unknown> | undefined;
   const nedenRaw = globalData.neden as Record<string, unknown> | undefined;
   const videoRaw = globalData.videoSection as Record<string, unknown> | undefined;
@@ -460,21 +638,9 @@ export async function getHomePageData(
       ? heroDocs.map(mapHeroSlide)
       : HERO_SLIDES.map(normalizeHeroSlide);
 
-  const decorMediaRaw = missionRaw?.decorMedia as
-    | Array<{ media?: Parameters<typeof mapPayloadMediaGroup>[0] }>
-    | undefined;
-  const decorMedia =
-    decorMediaRaw?.length
-      ? decorMediaRaw
-          .map((d, i) => mapPayloadMediaGroup(d.media, DEFAULT_MISSION.decorMedia[i]))
-          .filter((m): m is SiteMedia => Boolean(m))
-      : DEFAULT_MISSION.decorMedia;
-
-  const levelsRaw = missionRaw?.levels as Array<{ label?: string }> | undefined;
-
   const journeyChapters =
     journeyDocs.length > 0
-      ? journeyDocs.map(mapJourneyChapter)
+      ? journeyDocs.filter((doc) => !isRemovedJourneyChapter(doc)).map(mapJourneyChapter)
       : DEFAULT_JOURNEY_CHAPTERS;
 
   const nedenItems: NedenItem[] =
@@ -518,22 +684,7 @@ export async function getHomePageData(
 
   return {
     heroSlides,
-    mission: {
-      tagline: (missionRaw?.tagline as string) || DEFAULT_MISSION.tagline,
-      titleLines: [
-        (missionRaw?.titleLine1 as string) || DEFAULT_MISSION.titleLines[0],
-        (missionRaw?.titleLine2 as string) || DEFAULT_MISSION.titleLines[1],
-        (missionRaw?.titleLine3 as string) || DEFAULT_MISSION.titleLines[2],
-      ],
-      description: (missionRaw?.description as string) || DEFAULT_MISSION.description,
-      secondaryDescription:
-        (missionRaw?.secondaryDescription as string) ||
-        DEFAULT_MISSION.secondaryDescription,
-      levels:
-        levelsRaw?.map((l) => l.label).filter(Boolean) as string[] ||
-        DEFAULT_MISSION.levels,
-      decorMedia,
-    },
+    mission: mapMissionSection(missionRaw),
     journey: {
       headline: (journeyRaw?.headline as string) || DEFAULT_JOURNEY_HEADLINE,
       chapters: journeyChapters,
@@ -576,7 +727,7 @@ export async function getHomePageData(
     guncelSection: {
       eyebrow: (guncelRaw?.eyebrow as string) || DEFAULT_GUNCEL.eyebrow,
       title: (guncelRaw?.title as string) || DEFAULT_GUNCEL.title,
-      description: (guncelRaw?.description as string) || DEFAULT_GUNCEL.description,
+      description: "",
       ctaLabel: (guncelRaw?.ctaLabel as string) || DEFAULT_GUNCEL.ctaLabel,
       ctaHref: (guncelRaw?.ctaHref as string) || DEFAULT_GUNCEL.ctaHref,
       featuredEventLabel:
@@ -591,28 +742,31 @@ export async function getHomePageData(
           guncelRaw?.featuredEventMedia as Parameters<typeof mapPayloadMediaGroup>[0],
           DEFAULT_GUNCEL.featuredEventMedia,
         ) || DEFAULT_GUNCEL.featuredEventMedia,
-      events: guncelEvents,
-      news: guncelNews,
+      // Öne çıkan + en fazla 3 yaklaşan etkinlik; haberler en fazla 3
+      events: guncelEvents.slice(0, 1 + HOME_GUNCEL_LIST_LIMIT),
+      news: guncelNews.slice(0, HOME_GUNCEL_LIST_LIMIT),
     },
     instagramSection: {
       eyebrow: (instagramRaw?.eyebrow as string) || DEFAULT_INSTAGRAM.eyebrow,
       title: (instagramRaw?.title as string) || DEFAULT_INSTAGRAM.title,
-      description:
-        (instagramRaw?.description as string) || DEFAULT_INSTAGRAM.description,
+      description: "",
       handle: (instagramRaw?.handle as string) || DEFAULT_INSTAGRAM.handle,
       profileUrl: (instagramRaw?.profileUrl as string) || DEFAULT_INSTAGRAM.profileUrl,
       posts: instagramPostsMapped,
     },
     quickLinksSection: {
-      eyebrow: (quickRaw?.eyebrow as string) || DEFAULT_QUICK_LINKS.eyebrow,
-      title: (quickRaw?.title as string) || DEFAULT_QUICK_LINKS.title,
-      description: (quickRaw?.description as string) || DEFAULT_QUICK_LINKS.description,
+      eyebrow: "",
+      title: "",
+      description: "",
       links:
         quickLinksRaw?.length
           ? quickLinksRaw.map((l) => ({
-              href: l.href || "/",
+              href:
+                l.href === "/#yemekhane"
+                  ? "/yasam/sultanda-yasam"
+                  : l.href || "/",
               label: l.label || "",
-              description: l.description || "",
+              description: "",
               iconKey: l.iconKey || "book-open",
             }))
           : DEFAULT_QUICK_LINKS.links,

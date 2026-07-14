@@ -2,21 +2,22 @@
    Hero slider veri modülü
    ─────────────────────────────────────────────────────────────────────────
    navigation.ts ile aynı desende statik typed veri.
-   KRİTİK: Tüm metinler docs/content/site-metin-icerigi.pdf'ten birebir
-   alınmıştır; hiçbir kelime değiştirilemez (projekurallari.md §1).
-   Başlık satırları, PDF cümlelerinin satır kırılımıyla bölünmüş hâlidir;
-   açıklamalar cümlenin devamı veya PDF'teki komşu cümledir.
+   KRİTİK: Tüm metinler ilgili sayfa içeriklerinden birebir alınmıştır;
+   hiçbir kelime değiştirilemez (projekurallari.md §1).
+   Başlık ve açıklama birbirinden bağımsız, kendi içinde tam cümlelerdir
+   (başlık, açıklamanın devamı değildir).
+   Karakter sınırları: src/lib/hero-slide-limits.ts (Yönetim Paneli).
    ------------------------------------------------------------------------- */
 
-import { MENU_IMAGES } from "@/lib/menu-images";
+import { PAGE_MEDIA } from "@/lib/menu-images";
 
 export interface HeroSlide {
   id: string;
-  /** Kart üstündeki pill etiketi (PDF bölüm başlığı) */
+  /** Kart üstündeki pill etiketi (sayfa / bölüm başlığı) */
   tagline: string;
-  /** Üç satıra bölünmüş başlık — kelimeler PDF'ten birebir */
+  /** Üç satıra bölünmüş başlık — kelimeler sayfa metninden birebir */
   titleLines: [string, string, string];
-  /** Başlığın devamı veya PDF'teki komşu cümle */
+  /** Başlıktan bağımsız, kendi içinde tam cümle */
   description: string;
   /** Site haritasındaki sayfa adı (projekurallari.md §2) */
   buttonText: string;
@@ -37,78 +38,86 @@ export interface HeroSlide {
 
 export const HERO_SLIDES: HeroSlide[] = [
   {
-    id: "kurumsal",
-    tagline: "KURUMSAL KİMLİĞİMİZ",
-    titleLines: ["İlimde âlim,", "ibâdette âbid,", "gayrette mücahit"],
-    description: "bir neslin yetiştiği çift kanatlı eğitim modeli",
-    buttonText: "Kurumsal Kimliğimiz",
-    buttonLink: "/kurumsal/kurumsal-kimligimiz",
-    mediaUrl: MENU_IMAGES.kurumsalKimlik,
+    id: "nesil-tasavvurumuz",
+    tagline: "NESİL TASAVVURUMUZ",
+    titleLines: [
+      "Yeryüzünde iyiliğin,",
+      "merhametin ve adâletin",
+      "temsilcisi bir nesil...",
+    ],
+    description:
+      "Nesil tasavvurumuzun merkezinde; yalnızca başarılı ve donanımlı öğrenciler değil, vicdanı diri, merhameti güçlü, adaleti gözeten ve her varlığa emanet bilinciyle yaklaşan şahsiyetler yetiştirmek vardır.",
+    buttonText: "Nesil Tasavvurumuz",
+    buttonLink: "/kurumsal/nesil-tasavvurumuz",
+    mediaUrl: PAGE_MEDIA.nesilTasavvur.src,
+    mediaType: PAGE_MEDIA.nesilTasavvur.type,
+    posterUrl: PAGE_MEDIA.nesilTasavvur.poster,
+    displayDuration: 6,
+  },
+  {
+    id: "kademeler",
+    tagline: "SULTAN MEKTEBİ MODELİ",
+    titleLines: [
+      "Bilginin hikmete, bilincin",
+      "ise erdeme dönüştüğü özgün",
+      "bir eğitim modeli.",
+    ],
+    description:
+      "Her öğrenciyi ruhu, kalbi, bedeni ve şahsiyetiyle bir bütün olarak ele alır.",
+    buttonText: "Sultan Mektebi Modeli & Kademeler",
+    buttonLink: "/egitim/kademeler",
+    mediaUrl: "/site-media/IMG_5381.jpg",
     mediaType: "image",
     displayDuration: 6,
   },
   {
-    id: "egitim",
-    tagline: "SULTAN MEKTEBİ MODELİ",
+    id: "nebevi-egitim",
+    tagline: "NEBEVÎ EĞİTİM",
     titleLines: [
-      "Bilginin hikmete,",
-      "bilincin ise erdeme",
-      "dönüştüğü özgün model",
+      "Nebevî terbiyeyi günlük",
+      "okul yaşamının merkezine",
+      "yerleştiriyoruz.",
     ],
     description:
-      "Her öğrenciyi ruhu, kalbi, bedeni ve şahsiyetiyle bütün ele alır; mâzide kök, âtîde nesil yetişir.",
-    buttonText: "Sultan Mektebi Modeli & Kademeler",
-    buttonLink: "/egitim/kademeler",
-    mediaUrl: "/videos/kademeler.mp4",
-    mediaType: "video",
-    posterUrl: MENU_IMAGES.egitim,
+      "Efendimizin (s.a.v.) örnekliği, programımızın tam kalbinde yer alır.",
+    buttonText: "Nebevî Eğitim ve Kur'an-ı Kerîm",
+    buttonLink: "/egitim/nebevi-egitim",
+    mediaUrl: PAGE_MEDIA.nebeviEgitim.src,
+    mediaType: PAGE_MEDIA.nebeviEgitim.type,
+    posterUrl: PAGE_MEDIA.nebeviEgitim.poster,
     displayDuration: 6,
   },
   {
-    id: "akademik",
-    tagline: "AKADEMİK GELİŞİM VE BİREYSEL TÂKİB",
+    id: "degerler-egitimi",
+    tagline: "DEĞERLER VE MÂNEVİ EĞİTİM",
+    titleLines: [
+      "Okul hayatının tamamına",
+      "yayılan bir mektep",
+      "iklimi",
+    ],
+    description:
+      "Sultan Eğitim Kurumları olarak eğitimi yalnızca bilgi aktarma süreci olarak değil; çocuğun kalbine, zihnine ve şahsiyetine dokunan bir inşa yolculuğu olarak görüyoruz.",
+    buttonText: "Değerler ve Mânevî Eğitim",
+    buttonLink: "/egitim/degerler-egitimi",
+    mediaUrl: "/site-media/degerler.jpg",
+    mediaType: "image",
+    displayDuration: 6,
+  },
+  {
+    id: "akademik-gelisim",
+    tagline: "BİREYSEL TAKİP",
     titleLines: [
       "Her evladımızın",
       "kabiliyetini emanet",
-      "bilinciyle tâkib ediyor",
+      "bilinciyle takip ediyoruz.",
     ],
-    description: "ilmini ve gayretini adım adım büyütüyoruz.",
+    description:
+      "Her evladımızın kabiliyetini emanet bilinciyle takip ediyor, ilmini ve gayretini adım adım büyütüyoruz.",
     buttonText: "Akademik Gelişim ve Tâkib",
     buttonLink: "/akademik/gelisim",
-    mediaUrl: MENU_IMAGES.akademik,
-    mediaType: "image",
-    displayDuration: 6,
-  },
-  {
-    id: "rehberlik",
-    tagline: "REHBERLİK VE EĞİTİM KOÇLUĞU",
-    titleLines: [
-      "Başarıdan ziyade",
-      "şahsiyete odaklanan",
-      "bir model uyguluyoruz",
-    ],
-    description:
-      "Çocuklarımızın ruhsal ve bedensel gelişiminde doğru rehberliğin hayati önem taşıdığının bilincindeyiz.",
-    buttonText: "Rehberlik ve Eğitim Koçluğu",
-    buttonLink: "/rehberlik/egitim-koclugu",
-    mediaUrl: MENU_IMAGES.rehberlik,
-    mediaType: "image",
-    displayDuration: 6,
-  },
-  {
-    id: "yasam",
-    tagline: "SULTANDA YAŞAM",
-    titleLines: [
-      "Özel Sultan Okulları'nda",
-      "eğitim; akademik gelişimin",
-      "yanında ahlâkî becerileri",
-    ],
-    description:
-      "öğrencilerimizin sosyal gelişimini desteklemeyi amaçlar.",
-    buttonText: "Sultanda Yaşam",
-    buttonLink: "/yasam/sultanda-yasam",
-    mediaUrl: MENU_IMAGES.yasam,
-    mediaType: "image",
+    mediaUrl: "/videos/akademik.mp4",
+    mediaType: "video",
+    posterUrl: "/videos/akademik-poster.jpg",
     displayDuration: 6,
   },
 ];

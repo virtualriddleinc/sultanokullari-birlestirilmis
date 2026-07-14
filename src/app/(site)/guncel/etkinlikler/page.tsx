@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "@/components/navigation/site-link";
-import { branches } from "@/content/branches";
+import { branches, formatBranchLocation } from "@/content/branches";
 import { PageShell } from "@/components/page-shell";
 import { StaggerItem, StaggerList } from "@/components/motion/stagger-list";
 import { getPublishedEvents } from "@/lib/guncel-data";
@@ -24,7 +24,8 @@ function formatDate(iso: string) {
 
 function branchName(slug: string | null) {
   if (!slug) return "Tüm şubeler";
-  return branches.find((b) => b.slug === slug)?.name ?? slug;
+  const branch = branches.find((b) => b.slug === slug);
+  return branch ? formatBranchLocation(branch) : slug;
 }
 
 export default async function Page() {

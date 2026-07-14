@@ -36,7 +36,7 @@ export type HomeInstagramHorizontalProps = {
 export function HomeInstagramHorizontal({
   eyebrow = "Sosyal medya vitrini",
   title = "Sosyal Medyada Biz",
-  description = "Sultan Okulları'nın resmî sosyal medya hesaplarından okul atmosferi, etkinlikler ve kısa video paylaşımları — kareler kendi hızında yana doğru akar.",
+  description,
   handle = instagramHandle,
   profileUrl = instagramProfileUrl,
   posts = instagramPosts,
@@ -241,7 +241,9 @@ export function HomeInstagramHorizontal({
             <div className="max-w-2xl">
               <p className="section-eyebrow">{eyebrow}</p>
               <h2 className="section-title mt-fluid-3">{title}</h2>
-              <p className="section-body mt-fluid-3 max-w-xl">{description}</p>
+              {description ? (
+                <p className="section-body mt-fluid-3 max-w-xl">{description}</p>
+              ) : null}
             </div>
             <Link
               href={profileUrl}

@@ -1,14 +1,14 @@
-/** Web Sitesi İçerik Çalışması.pdf — Akademik Gelişim ve Bireysel Takip */
+/** Web Sitesi İçerik Çalışması.pdf — Akademik Gelişim ve Bireysel Tâkib */
 
 export const akademikGelisimGiris = [
-  "Özel Sultan Okulları’nda akademik takip, yalnızca not ölçümü ya da sınav sonucunu görmek değil; öğrencinin zihinsel, duygusal ve şahsiyet gelişimini bütüncül olarak izleyen, öğrenme sürecindeki güçlü yönlerini, gelişim alanlarını ve desteklenmesi gereken kazanımlarını ölçme-değerlendirme çalışmaları, haftalık veli görüşmeleri, mentor öğretmen takibi ve rehberlik desteğiyle yakından takip eden bir rehberlik sürecidir.",
-  "Her evladımızın kabiliyetini emanet bilinciyle takip ediyor, ilmini ve gayretini adım adım büyütüyoruz. Amacımız; öğrencimizin akademik ve şahsiyet yolculuğunu bütüncül bir sistemle izlemek, eksiklerini tamamlamak ve potansiyelini en üst seviyeye taşımaktır.",
+  "Özel Sultan Okulları’nda akademik tâkib, yalnızca not ölçümü ya da sınav sonucunu görmek değil; öğrencinin zihinsel, duygusal ve şahsiyet gelişimini bütüncül olarak izleyen, öğrenme sürecindeki güçlü yönlerini, gelişim alanlarını ve desteklenmesi gereken kazanımlarını ölçme-değerlendirme çalışmaları, haftalık veli görüşmeleri, mentor öğretmen tâkibi ve rehberlik desteğiyle yakından tâkib eden bir rehberlik sürecidir.",
+  "Her evladımızın kabiliyetini emanet bilinciyle tâkib ediyor, ilmini ve gayretini adım adım büyütüyoruz. Amacımız; öğrencimizin akademik ve şahsiyet yolculuğunu bütüncül bir sistemle izlemek, eksiklerini tamamlamak ve potansiyelini en üst seviyeye taşımaktır.",
 ] as const;
 
 export const akademikGelisimBolumleri = [
   {
-    title: "Bireysel Akademik Takip",
-    text: "Her öğrencimizin derse katılımı, ödev düzeni, konu kavrama düzeyi ve akademik gelişimi düzenli olarak takip edilir. Öğrencinin yalnızca sınav sonucu değil; öğrenme sürecindeki gayreti, çalışma disiplini ve ilerleme düzeyi de değerlendirilir.",
+    title: "Bireysel Akademik Tâkib",
+    text: "Her öğrencimizin derse katılımı, ödev düzeni, konu kavrama düzeyi ve akademik gelişimi düzenli olarak tâkib edilir. Öğrencinin yalnızca sınav sonucu değil; öğrenme sürecindeki gayreti, çalışma disiplini ve ilerleme düzeyi de değerlendirilir.",
   },
   {
     title: "Kazanım Odaklı Ölçme",
@@ -20,11 +20,11 @@ export const akademikGelisimBolumleri = [
   },
   {
     title: "Eğitim Koçluğu ve Mentor Öğretmen Sistemi",
-    text: "Her öğrencimizin akademik gelişimi eğitim koçları ve mentor öğretmenler tarafından yakından izlenir. Öğrencinin çalışma alışkanlığı, hedefleri, ders takibi ve gelişim ihtiyacı düzenli olarak değerlendirilir.",
+    text: "Her öğrencimizin akademik gelişimi eğitim koçları ve mentor öğretmenler tarafından yakından izlenir. Öğrencinin çalışma alışkanlığı, hedefleri, ders tâkibi ve gelişim ihtiyacı düzenli olarak değerlendirilir.",
   },
   {
-    title: "Akademik Ajanda Takibi",
-    text: "Öğrencilerimizin günlük ve haftalık çalışma düzeni akademik ajanda üzerinden takip edilir. Böylece öğrenci planlı çalışma alışkanlığı kazanır, veli de çocuğunun akademik sürecini somut olarak görebilir.",
+    title: "Akademik Ajanda Tâkibi",
+    text: "Öğrencilerimizin günlük ve haftalık çalışma düzeni akademik ajanda üzerinden tâkib edilir. Böylece öğrenci planlı çalışma alışkanlığı kazanır, veli de çocuğunun akademik sürecini somut olarak görebilir.",
   },
   {
     title: "Rehberlik Destekli Akademik İzleme",
@@ -32,7 +32,7 @@ export const akademikGelisimBolumleri = [
   },
   {
     title: "Veli ile Düzenli İletişim",
-    text: "Velilerimiz, öğrencinin akademik gelişimi hakkında düzenli olarak bilgilendirilir. Ders durumu, ödev takibi, sınav performansı, eksik kazanımları ve destek ihtiyacı okul-aile iş birliği içinde paylaşılır.",
+    text: "Velilerimiz, öğrencinin akademik gelişimi hakkında düzenli olarak bilgilendirilir. Ders durumu, ödev tâkibi, sınav performansı, eksik kazanımları ve destek ihtiyacı okul-aile iş birliği içinde paylaşılır.",
   },
 ] as const;
 

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 import { ciftDil } from "@/content/egitim";
 import { yabanciDil } from "@/content/page-templates";
-import { educationGalleryMedia, pageGalleryMedia } from "@/content/site-media";
+import { pageGalleryMedia } from "@/content/site-media";
 import { OrnamentalQuote } from "@/components/egitim/ornamental-quote";
 import { PedagojiSection } from "@/components/egitim/pedagoji-section";
 import { PageShell } from "@/components/page-shell";
@@ -18,14 +18,7 @@ export const dynamic = "force-dynamic";
 const MERGED_INTRO =
   "Arapça ve İngilizce; alanında uzman yabancı öğretmenlerle okul öncesi kademesinden itibaren dinleme, anlama, konuşma, okuma ve yazma becerilerinin tümünü dengeli geliştiren program.";
 
-const galleryItems = [
-  ...pageGalleryMedia.yabanciDil,
-  ...educationGalleryMedia.ciftDil.filter(
-    (item) =>
-      !pageGalleryMedia.yabanciDil.some((existing) => existing.src === item.src),
-  ),
-];
-
+const galleryItems = pageGalleryMedia.yabanciDil;
 export const metadata: Metadata = {
   title: "Yabancı Dil & Atölyeler",
   description: MERGED_INTRO,

@@ -1,4 +1,4 @@
-import type { CollectionConfig, TextField, TextareaField } from "payload";
+import type { CollectionConfig } from "payload";
 
 import { ADMIN_GROUPS } from "@/payload/admin-groups";
 import { HERO_SLIDE_LIMITS } from "@/lib/hero-slide-limits";
@@ -15,53 +15,13 @@ import { siteMediaField } from "@/payload/fields/site-media-fields";
 import { siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
 import { hexFocalPickerField } from "@/payload/fields/hex-focal-picker-field";
+import {
+  limitedText,
+  limitedTextarea,
+} from "@/payload/fields/limited-text-fields";
 import { hideFromInboxOnly } from "@/payload/admin-visibility";
 
 const { tagline, titleLine, description, buttonText } = HERO_SLIDE_LIMITS;
-
-const LIMITED_TEXT_FIELD =
-  "@/components/payload/admin/LimitedTextField#default";
-
-function limitedText(
-  field: Omit<TextField, "type" | "hasMany"> & { type?: "text" },
-  max: number,
-): TextField {
-  return {
-    ...field,
-    type: "text",
-    hasMany: false,
-    maxLength: max,
-    admin: {
-      ...field.admin,
-      components: {
-        Field: {
-          path: LIMITED_TEXT_FIELD,
-          clientProps: { maxLength: max },
-        },
-      },
-    },
-  } as TextField;
-}
-
-function limitedTextarea(
-  field: Omit<TextareaField, "type"> & { type?: "textarea" },
-  max: number,
-): TextareaField {
-  return {
-    ...field,
-    type: "textarea",
-    maxLength: max,
-    admin: {
-      ...field.admin,
-      components: {
-        Field: {
-          path: LIMITED_TEXT_FIELD,
-          clientProps: { maxLength: max, multiline: true },
-        },
-      },
-    },
-  };
-}
 
 export const HeroSlides: CollectionConfig = {
   slug: "hero-slides",

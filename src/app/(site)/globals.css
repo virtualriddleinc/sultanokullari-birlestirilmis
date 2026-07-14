@@ -1178,7 +1178,7 @@
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 5;
     text-overflow: ellipsis;
   }
 
@@ -1199,9 +1199,10 @@
 
   .hero-slide-cta-label {
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow: visible;
+    white-space: normal;
+    text-wrap: balance;
+    line-height: 1.25;
   }
 
   .hero-slide-media-col {
@@ -1631,9 +1632,10 @@
 
     .hero-section-grid:not(.journey-stage-grid) .hero-slide-cta-label {
       min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      overflow: visible;
+      white-space: normal;
+      text-wrap: balance;
+      line-height: 1.25;
     }
 
     /* Başlık: 3 satırlık sabit yükseklik ayrılır — 1/2 satırlık başlıklarda da yer sabit kalır */
@@ -1650,7 +1652,7 @@
     }
 
     /*
-     * Açıklama: 3 satırlık sabit yükseklik ayrılır.
+     * Açıklama: 5 satıra kadar (uzun motto açıklamaları için).
      * text-wrap:pretty (text-pretty) + line-clamp birlikte kullanıldığında
      * Chromium satırı erken kırpabiliyor; clamp'li metinde normal sarımaya dön.
      */
@@ -1659,10 +1661,10 @@
       overflow: hidden;
       display: -webkit-box;
       -webkit-box-orient: vertical;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 5;
       text-overflow: ellipsis;
       text-wrap: normal;
-      min-height: 4.125em;
+      min-height: 6.875em;
     }
 
     .hero-slide-media-col {

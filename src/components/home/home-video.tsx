@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import {
   motion,
   useReducedMotion,
@@ -20,18 +21,14 @@ import beyazDesen from "@/images/beyaz-desen.svg";
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
 
 export type HomeVideoProps = {
-  eyebrow?: string;
   title?: string;
-  description?: string;
   ctaLabel?: string;
   ctaHref?: string;
   video?: SiteMedia;
 };
 
 export function HomeVideo({
-  eyebrow = "Tanıtım · Sinematik bakış",
-  title = "Okul atmosferini yakından görün.",
-  description = "Sultan Okulları'nın sınıf, bahçe ve etkinlik atmosferinden seçilen kısa bir tanıtım kesiti.",
+  title = "Okulumuzu yakından görün",
   ctaLabel = "Görüşme planla",
   ctaHref = "/iletisim",
   video = featuredVideo,
@@ -73,20 +70,31 @@ export function HomeVideo({
       </motion.div>
 
       <div className="relative z-[1]">
-        <SectionHeading eyebrow={eyebrow} title={title} description={description} />
+        <SectionHeading title={title} />
       </div>
 
       <div className="relative z-[1] grid w-full place-items-center">
         <div className="border-charcoal/10 relative w-full overflow-hidden rounded-[2rem] border bg-[linear-gradient(135deg,rgba(255,240,133,0.66),rgba(76,255,0,0.26))] shadow-[0_40px_140px_rgba(26,28,24,0.20)]">
           <div className="relative aspect-video w-full overflow-hidden bg-[radial-gradient(circle_at_50%_45%,rgba(255,240,133,0.24),transparent_60%)]">
-            <InteractiveSiteVideo
-              className="absolute inset-0 h-full w-full object-cover"
-              src={video.src}
-              poster={video.poster}
-              title={video.alt}
-              autoPlay={!reduce}
-              loop
-            />
+            {video.kind === "video" ? (
+              <InteractiveSiteVideo
+                className="absolute inset-0 h-full w-full object-cover"
+                src={video.src}
+                poster={video.poster}
+                title={video.alt}
+                autoPlay={!reduce}
+                loop
+              />
+            ) : (
+              <Image
+                src={video.src}
+                alt={video.alt}
+                fill
+                sizes="(max-width: 1024px) 100vw, min(1120px, 90vw)"
+                className="object-cover"
+                priority={false}
+              />
+            )}
             <div className="from-charcoal/34 pointer-events-none absolute inset-0 bg-gradient-to-t via-transparent to-white/8" />
           </div>
         </div>

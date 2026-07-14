@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
 import cerceveFrame from "@/images/cini-cerceve.png";
 import { AmbientSiteVideo } from "@/components/media/ambient-site-video";
 import type { SiteMedia } from "@/content/site-media";
@@ -15,6 +18,7 @@ export type HeroFramedHexMediaProps = {
   sizes?: string;
   focalPoint?: FocalPoint;
   mediaScale?: number;
+  /** naturalWidth / naturalHeight — verilmezse yükleme anında ölçülür */
   mediaAspect?: number;
   interactive?: boolean;
   onActivate?: () => void;
@@ -32,11 +36,30 @@ function FramedHexMediaInner({
   onActivate,
   activateLabel,
 }: HeroFramedHexMediaProps) {
+  const [measuredAspect, setMeasuredAspect] = useState<number | undefined>();
+
+  useEffect(() => {
+    setMeasuredAspect(undefined);
+  }, [media.src]);
+
+  const resolvedAspect =
+    typeof mediaAspect === "number" && mediaAspect > 0
+      ? mediaAspect
+      : measuredAspect;
+
   const { wrapperStyle } = computeMediaPlacement({
-    mediaAspect,
+    mediaAspect: resolvedAspect,
     mediaScale,
     focalPoint,
   });
+
+  const captureAspect = useCallback((width: number, height: number) => {
+    if (!(width > 0 && height > 0)) return;
+    const next = width / height;
+    setMeasuredAspect((prev) =>
+      prev && Math.abs(prev - next) < 0.0001 ? prev : next,
+    );
+  }, []);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!interactive || !onActivate) return;
@@ -69,13 +92,34 @@ function FramedHexMediaInner({
         >
           <div style={wrapperStyle}>
             {media.kind === "video" ? (
-              <AmbientSiteVideo
-                src={media.src}
-                poster={media.poster}
-                title={media.alt}
-                preload="metadata"
-                className="absolute inset-0 h-full w-full object-fill"
-              />
+              <>
+                {/*
+                  clip-path + <video> Safari’de sıkça boş/koyu kutu bırakır.
+                  Poster (veya yoksa video kaynağı yerine poster) alt katmanda
+                  her zaman görünür kalsın; video üstte oynasın.
+                */}
+                {media.poster ? (
+                  <Image
+                    src={media.poster}
+                    alt={media.alt}
+                    fill
+                    sizes={sizes}
+                    priority={priority}
+                    className="object-cover"
+                    onLoadingComplete={(img) => {
+                      captureAspect(img.naturalWidth, img.naturalHeight);
+                    }}
+                  />
+                ) : null}
+                <AmbientSiteVideo
+                  src={media.src}
+                  poster={media.poster}
+                  title={media.alt}
+                  preload={priority ? "auto" : "metadata"}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  onMediaAspect={media.poster ? undefined : captureAspect}
+                />
+              </>
             ) : (
               <Image
                 src={media.src}
@@ -83,7 +127,10 @@ function FramedHexMediaInner({
                 fill
                 sizes={sizes}
                 priority={priority}
-                className="object-fill"
+                className="object-cover"
+                onLoadingComplete={(img) => {
+                  captureAspect(img.naturalWidth, img.naturalHeight);
+                }}
               />
             )}
           </div>

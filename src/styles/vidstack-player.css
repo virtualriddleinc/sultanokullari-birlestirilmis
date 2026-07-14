@@ -2,24 +2,42 @@
 
 .site-vidstack-ambient[data-media-player] {
   display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   aspect-ratio: unset;
+  background: transparent;
 }
 
-.site-vidstack-ambient [data-media-provider] {
+.site-vidstack-ambient [data-media-provider],
+.site-vidstack-ambient > div {
   position: absolute;
   inset: 0;
   height: 100%;
   width: 100%;
 }
 
-.site-vidstack-ambient [data-media-provider] video {
+.site-vidstack-ambient [data-media-provider] video,
+.site-vidstack-ambient video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.site-vidstack-ambient__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.site-vidstack-ambient__poster:not([data-visible]) {
+  opacity: 0;
 }
 
 .site-vidstack-interactive[data-media-player] {

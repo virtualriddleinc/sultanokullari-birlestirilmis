@@ -23,19 +23,26 @@ import {
   akademikGelisimGiris,
 } from "@/content/olcme";
 import {
-  ogrenciCalismalari,
-  ogretmenCalismalari,
+  ogrenciCalismalariDetay,
+  ogretmenCalismalariDetay,
+  ogrenciGelisimiGiris,
+  ogretmenGelisimiGiris,
   rehberlikGiris,
   rehberlikHedefimiz,
   sultandaVeliOlmak,
   veliAkademisi,
-  veliCalismalari,
+  veliCalismalariDetay,
+  veliGelisimiGiris,
 } from "@/content/rehberlik";
 import {
   ayakkabisizOkul,
   butikOkul,
   sultandaYasamBilgilendirme,
 } from "@/content/sultanda-yasam";
+import {
+  helalGidaVeBeslenme,
+  kantinsizOkul,
+} from "@/content/yemekhane";
 
 export type OverlayPageStory = {
   eyebrow: string;
@@ -59,7 +66,7 @@ export const niyetimizIstikametimiz = {
         text: niyetimizParagraflari[0],
         highlights: [
           "çift kanatlı",
-          "İslam fıtratlarını muhafaza ederek",
+          "İslâm fıtratlarını muhafaza ederek",
           "şahsiyetli nesiller",
         ],
       },
@@ -216,11 +223,11 @@ export const kademeler = {
 export const akademikGelisim = {
   intro: akademikGelisimGiris[0],
   story: {
-    eyebrow: "Akademik Gelişim ve Bireysel Takip",
-    motto: "Her evladımızın kabiliyetini emanet bilinciyle takip ediyoruz",
+    eyebrow: "Akademik Gelişim ve Bireysel Tâkib",
+    motto: "Her evladımızın kabiliyetini emanet bilinciyle tâkib ediyoruz",
     rows: [
       {
-        eyebrow: "Akademik takip",
+        eyebrow: "Akademik tâkib",
         text: akademikGelisimGiris[0],
         highlights: [
           "bütüncül olarak izleyen",
@@ -307,9 +314,21 @@ export const rehberlikKocluk = {
     ],
   } satisfies OverlayPageStory,
   calismaBasliklari: [
-    { title: "1. Öğrenci Gelişimi", items: ogrenciCalismalari },
-    { title: "2. Öğretmen Gelişimi", items: ogretmenCalismalari },
-    { title: "3. Veli Gelişimi", items: veliCalismalari },
+    {
+      title: "1. Öğrenci Gelişimi",
+      description: ogrenciGelisimiGiris,
+      items: ogrenciCalismalariDetay,
+    },
+    {
+      title: "2. Öğretmen Gelişimi",
+      description: ogretmenGelisimiGiris,
+      items: ogretmenCalismalariDetay,
+    },
+    {
+      title: "3. Veli Gelişimi",
+      description: veliGelisimiGiris,
+      items: veliCalismalariDetay,
+    },
   ],
   gallery: {
     title: "Görsel Galeri",
@@ -369,7 +388,7 @@ export const sultandaYasam = {
   intro: sultandaYasamBilgilendirme.giris,
   story: {
     eyebrow: "Sultanda Yaşam",
-    motto: "Butik okul, ayakkabısız okul ve okul-aile iş birliği",
+    motto: "Butik okul, ayakkabısız okul, helâl gıda ve kantinsiz okul",
     rows: [
       {
         eyebrow: "1. Butik Okul",
@@ -383,6 +402,27 @@ export const sultandaYasam = {
         eyebrow: "2. Ayakkabısız Okul",
         text: ayakkabisizOkul,
         highlights: ["Temizlik imandandır", "Ayakkabısız Okul"],
+      },
+      {
+        eyebrow: "3. Helâl Gıda ve Beslenme",
+        text: helalGidaVeBeslenme.intro,
+        highlights: [
+          "Her lokmada güven, her günde sağlık",
+          "sağlıklı beslenmesini",
+        ],
+      },
+      ...helalGidaVeBeslenme.bolumler.map((b) => ({
+        eyebrow: b.title,
+        text: b.text,
+        highlights: [b.title] as string[],
+      })),
+      {
+        eyebrow: "4. Kantinsiz Okul",
+        text: kantinsizOkul.join(" "),
+        highlights: [
+          "kantinsiz okul",
+          "gönül rahatlığı",
+        ],
       },
       {
         eyebrow: "Velilere Bilgilendirme",
@@ -494,7 +534,7 @@ export const nebeviEgitimSayfasi = {
         highlights: [
           "muallim",
           "hâl dili",
-          "Peygamber Efendimiz’in (sav)",
+          "Peygamber Efendimiz’in (s.a.s)",
         ],
       },
     ],

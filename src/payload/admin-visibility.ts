@@ -18,11 +18,7 @@ export function hideUnlessAdmin({ user }: HiddenArgs): boolean {
 
 /** Inbox rolü Users listesini görmesin; hesap için /admin/account kullanır */
 export function hideUsersFromInbox({ user }: HiddenArgs): boolean {
-  if (!user) return false;
-  if (hasRole(user, "admin")) return false;
-  // Editör kendi hesabını Account'tan yönetir; liste yalnızca admin
-  if (hasRole(user, "editor") && !hasRole(user, "admin")) return true;
-  return hasRole(user, "inbox");
+  return hideUnlessAdmin({ user });
 }
 
 export function userPrimaryRole(user: AppUser | null | undefined): AppUserRole | null {

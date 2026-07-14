@@ -38,6 +38,13 @@ export function PageStoryRowsCard({
   );
 }
 
+export type PageListItem =
+  | string
+  | {
+      title: string;
+      text?: string;
+    };
+
 export function PageListSection({
   id,
   title,
@@ -48,7 +55,11 @@ export function PageListSection({
   id: string;
   title: string;
   description?: string;
-  groups: readonly { title: string; items: readonly string[] }[];
+  groups: readonly {
+    title: string;
+    description?: string;
+    items: readonly PageListItem[];
+  }[];
   gapClassName?: string;
 }) {
   return (
@@ -57,22 +68,51 @@ export function PageListSection({
         {groups.map((group) => (
           <ContentCard key={group.title}>
             <div className="grid gap-fluid-4 md:grid-cols-[minmax(9rem,13rem)_1fr] md:items-start md:gap-fluid-8">
-              <h3 className="font-cinzel text-charcoal text-[length:var(--text-lg)] font-bold md:pt-0.5">
-                {group.title}
-              </h3>
-              <ul className="grid gap-x-fluid-6 gap-y-2 sm:grid-cols-2">
-                {group.items.map((item) => (
-                  <li
-                    key={item}
-                    className="text-charcoal/85 flex gap-2 text-[length:var(--text-sm)] leading-relaxed md:text-[length:var(--text-base)]"
-                  >
-                    <span
-                      className="bg-brand-green mt-2 size-1.5 shrink-0 rounded-full"
-                      aria-hidden
-                    />
-                    {item}
-                  </li>
-                ))}
+              <div className="grid gap-2">
+                <h3 className="font-cinzel text-charcoal text-[length:var(--text-lg)] font-bold md:pt-0.5">
+                  {group.title}
+                </h3>
+                {group.description ? (
+                  <p className="text-charcoal/70 text-[length:var(--text-sm)] leading-relaxed">
+                    {group.description}
+                  </p>
+                ) : null}
+              </div>
+              <ul
+                className={
+                  group.items.some(
+                    (item) => typeof item !== "string" && item.text,
+                  )
+                    ? "grid gap-fluid-4"
+                    : "grid gap-x-fluid-6 gap-y-2 sm:grid-cols-2"
+                }
+              >
+                {group.items.map((item) => {
+                  const itemTitle = typeof item === "string" ? item : item.title;
+                  const itemText =
+                    typeof item === "string" ? undefined : item.text;
+                  return (
+                    <li
+                      key={itemTitle}
+                      className="text-charcoal/85 flex gap-2 text-[length:var(--text-sm)] leading-relaxed md:text-[length:var(--text-base)]"
+                    >
+                      <span
+                        className="bg-brand-green mt-2 size-1.5 shrink-0 rounded-full"
+                        aria-hidden
+                      />
+                      {itemText ? (
+                        <div className="grid gap-1">
+                          <span className="text-charcoal font-medium">
+                            {itemTitle}
+                          </span>
+                          <span className="text-charcoal/80">{itemText}</span>
+                        </div>
+                      ) : (
+                        itemTitle
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           </ContentCard>

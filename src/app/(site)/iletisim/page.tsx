@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "@/components/navigation/site-link";
-import { Mail, MessageCircle } from "lucide-react";
+import { Mail, MessageCircle, Phone } from "lucide-react";
 import { ContactForm } from "@/components/iletisim/contact-form";
 import { IletisimBranchCards } from "@/components/iletisim/iletisim-branch-cards";
 import { IletisimHero } from "@/components/iletisim/iletisim-hero";
 import { InstagramGlyph } from "@/components/icons/instagram-glyph";
+import { iletisimMetinleri } from "@/content/sultanda-yasam";
 import { getPublishedBranches } from "@/lib/branches-data";
 import { getSiteSettings } from "@/lib/site-settings-data";
 import beyazDesen from "@/images/beyaz-desen.svg";
@@ -13,8 +14,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "İletişim",
-  description:
-    "Özel Sultan Eğitim Kurumları hakkında detaylı bilgi almak, kayıt süreciyle ilgili görüşmek veya okul birimlerimizle iletişime geçmek için bize ulaşabilirsiniz.",
+  description: iletisimMetinleri.bizeUlasin,
 };
 
 export default async function Page() {
@@ -25,7 +25,9 @@ export default async function Page() {
   const instagramHandle = settings.instagramHandle.startsWith("@")
     ? settings.instagramHandle
     : `@${settings.instagramHandle}`;
-  const email = settings.footerEmail;
+  const email = settings.footerEmail || iletisimMetinleri.email;
+  const phone = settings.footerPhone || iletisimMetinleri.telefon;
+  const telHref = `tel:${phone.replace(/\s/g, "")}`;
 
   return (
     <article className="relative">
@@ -56,12 +58,7 @@ export default async function Page() {
                     Ön Kayıt / Bilgi Talep Formu
                   </h2>
                   <p className="text-charcoal/75 mt-fluid-4 max-w-xl text-[length:var(--text-base)] leading-7">
-                    Çocuğunuzun Sultan Okulları eğitim yolculuğuna ilk adımı
-                    atması için ön kayıt / bilgi talep formunu
-                    doldurabilirsiniz. Formunuz bize ulaştığında ilgili
-                    kampüsümüz sizinle iletişime geçerek kayıt süreci, kontenjan
-                    durumu ve okul tanıtımı hakkında detaylı bilgilendirme
-                    yapacaktır.
+                    {iletisimMetinleri.onKayit}
                   </p>
                 </div>
 
@@ -101,19 +98,47 @@ export default async function Page() {
                   </a>
                 </div>
 
-                <div className="border-charcoal/10 rounded-2xl border bg-brand-honey p-5">
+                <div className="border-charcoal/10 grid gap-fluid-3 rounded-2xl border bg-brand-honey p-5">
+                  <div className="flex items-start gap-3">
+                    <span className="bg-brand-green text-charcoal grid size-9 shrink-0 place-items-center rounded-full">
+                      <Phone className="size-4" aria-hidden />
+                    </span>
+                    <div>
+                      <p className="text-charcoal text-[length:var(--text-sm)] font-semibold">
+                        Bize Ulaşın
+                      </p>
+                      <p className="text-charcoal/75 mt-1 text-[length:var(--text-sm)] leading-6">
+                        <a
+                          href={telHref}
+                          className="font-semibold text-charcoal underline-offset-2 hover:underline"
+                        >
+                          {phone}
+                        </a>
+                        {" · "}
+                        <a
+                          href={`mailto:${email}`}
+                          className="font-semibold text-charcoal underline-offset-2 hover:underline"
+                        >
+                          {email}
+                        </a>
+                      </p>
+                      <p className="text-charcoal/75 mt-1 text-[length:var(--text-sm)] leading-6">
+                        Hafta içi {iletisimMetinleri.calismaSaatleri.haftaIci}
+                        {" · "}
+                        Cumartesi {iletisimMetinleri.calismaSaatleri.cumartesi}
+                      </p>
+                    </div>
+                  </div>
                   <div className="flex items-start gap-3">
                     <span className="bg-brand-green text-charcoal grid size-9 shrink-0 place-items-center rounded-full">
                       <MessageCircle className="size-4" aria-hidden />
                     </span>
                     <div>
                       <p className="text-charcoal text-[length:var(--text-sm)] font-semibold">
-                        Hızlı yanıt
+                        Yol Tarifi
                       </p>
                       <p className="text-charcoal/75 mt-1 text-[length:var(--text-sm)] leading-6">
-                        Mesai saatleri içinde gelen iletilere genellikle 1 iş
-                        günü içinde dönüş yapıyoruz. Acil durumlar için şube
-                        telefonlarını arayabilirsiniz.
+                        {iletisimMetinleri.yolTarifi}
                       </p>
                     </div>
                   </div>

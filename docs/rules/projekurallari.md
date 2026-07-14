@@ -12,7 +12,7 @@ GitHub Reposu: [github.com/virtualriddleinc/sultan-okullari-resmi-sitesi]
 
 Proje Amacı: Sultan Okulları Resmî Web Sitesi'ni geliştirerek mevcut ve potansiyel öğrenci ve velilere hizmet sunmaktır. Okulun tanıtımını ve okula erişilebilirliği sağlamayı amaçlamaktadır.
 
-İçerik Kaynağı (Kritik): Sitede kullanılacak tüm metinler, başlıklar, açıklamalar ve yönlendirme etiketleri docs/content/site-metin-icerigi.pdf dosyasından alınacaktır. AI asistanı hiçbir metin üretmeyecek, metin gerektiğinde doğrudan bu dosyaya başvuracaktır. Bu dosyadaki hiçbir kelimede dahi değişiklik yapılmayacaktır.
+İçerik Kaynağı (Kritik): Sitede kullanılacak tüm metinler, başlıklar, açıklamalar ve yönlendirme etiketleri `src/content/Web Sitesi İçerik Çalışması .pdf` dosyasından alınacaktır. AI asistanı hiçbir metin üretmeyecek, metin gerektiğinde doğrudan bu dosyaya başvuracaktır. Anlam değiştirilmez; yalnızca onaylı imlâ iyileştirmeleri (`helâl`, `tâkib`, `(s.a.s)` vb.) yapılabilir.
 
 Marka Renkleri:
 
@@ -74,15 +74,15 @@ SULTANDA YAŞAM
 
 OKULLARIMIZ
 
-[İstanbul - Sancaktepe] -> [/okullarimiz/istanbul/sancaktepe]
+[Sancaktepe - İstanbul] -> [/okullarimiz/istanbul/sancaktepe]
 
-[Kocaeli - Başiskele] -> [/okullarimiz/kocaeli/basiskele]
+[Başiskele - Kocaeli] -> [/okullarimiz/kocaeli/basiskele]
 
-[Sakarya - Serdivan] -> [/okullarimiz/sakarya/serdivan]
+[Serdivan - Sakarya] -> [/okullarimiz/sakarya/serdivan]
 
-[Ankara - Sincan] -> [/okullarimiz/ankara/sincan]
+[Sincan - Ankara] -> [/okullarimiz/ankara/sincan]
 
-[Konya - Mevlânâ] -> [/okullarimiz/konya/mevlana]
+[Mevlânâ - Konya] -> [/okullarimiz/konya/mevlana]
 
 3. Teknoloji Yığını ve Bileşen Stratejisi
 

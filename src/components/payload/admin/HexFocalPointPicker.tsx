@@ -37,29 +37,59 @@ function resolveUploadId(media: MediaUploadValue): number | null {
   return null;
 }
 
-export default function HexFocalPointPicker() {
+type Props = {
+  /** Payload UI alan yolu (örn. hexFocalPicker veya mission.decorCells.0.hexFocalPicker) */
+  path?: string;
+  /** Medya group adı — Hero: slideMedia, petek: media */
+  mediaPathPrefix?: string;
+};
+
+function siblingBasePath(uiPath: string | undefined): string {
+  if (!uiPath) return "";
+  const parts = uiPath.split(".");
+  if (parts.length <= 1) return "";
+  return parts.slice(0, -1).join(".");
+}
+
+function joinPath(base: string, ...segments: string[]): string {
+  return [base, ...segments].filter(Boolean).join(".");
+}
+
+export default function HexFocalPointPicker({
+  path: uiPath,
+  mediaPathPrefix = "slideMedia",
+}: Props) {
+  const base = siblingBasePath(uiPath);
+  const mediaSrcPath = joinPath(base, mediaPathPrefix, "src");
+  const mediaKindPath = joinPath(base, mediaPathPrefix, "kind");
+  const mediaUploadPath = joinPath(base, mediaPathPrefix, "media");
+  const focalXPath = joinPath(base, "focalPoint", "x");
+  const focalYPath = joinPath(base, "focalPoint", "y");
+  const mediaScalePath = joinPath(base, "mediaScale");
+  const mediaAspectPath = joinPath(base, "mediaAspect");
+
   const slideMediaSrc = useFormFields(
-    ([fields]) => fields["slideMedia.src"]?.value as string | null | undefined,
+    ([fields]) => fields[mediaSrcPath]?.value as string | null | undefined,
   );
   const slideMediaKind = useFormFields(
     ([fields]) =>
-      fields["slideMedia.kind"]?.value as "image" | "video" | null | undefined,
+      fields[mediaKindPath]?.value as "image" | "video" | null | undefined,
   );
   const slideMediaUpload = useFormFields(
-    ([fields]) => fields["slideMedia.media"]?.value as MediaUploadValue,
+    ([fields]) => fields[mediaUploadPath]?.value as MediaUploadValue,
   );
 
   const { value: focalX, setValue: setFocalXRaw } = useField<number>({
-    path: "focalPoint.x",
+    path: focalXPath,
   });
   const { value: focalY, setValue: setFocalYRaw } = useField<number>({
-    path: "focalPoint.y",
+    path: focalYPath,
   });
   const { value: mediaScale, setValue: setMediaScaleRaw } = useField<number>({
-    path: "mediaScale",
+    path: mediaScalePath,
   });
   const { value: mediaAspect, setValue: setMediaAspectRaw } = useField<number>({
-    path: "mediaAspect",
+    path: mediaAspectPath,
   });
 
   // Explicitly mark form dirty so Save persists focal/scale (Payload setValue 2nd arg)
@@ -257,7 +287,7 @@ export default function HexFocalPointPicker() {
                       inset: 0,
                       width: "100%",
                       height: "100%",
-                      objectFit: "fill",
+                      objectFit: "cover",
                     }}
                   />
                 ) : (
@@ -270,7 +300,7 @@ export default function HexFocalPointPicker() {
                       inset: 0,
                       width: "100%",
                       height: "100%",
-                      objectFit: "fill",
+                      objectFit: "cover",
                     }}
                   />
                 )}

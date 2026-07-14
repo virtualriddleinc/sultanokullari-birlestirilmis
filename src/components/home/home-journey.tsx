@@ -40,6 +40,9 @@ const CHAPTER_STYLES = [
   {
     wash: "bg-[radial-gradient(circle_at_78%_22%,rgba(0,0,0,0.04),transparent_34rem)]",
   },
+  {
+    wash: "bg-[radial-gradient(circle_at_52%_48%,rgba(0,0,0,0.04),transparent_34rem)]",
+  },
 ] as const;
 
 function JourneyLevha({ headline }: { headline: string }) {
@@ -259,6 +262,9 @@ export function HomeJourney({
                       media={chapter.media}
                       priority={i === 0}
                       sizes="(max-width: 1024px) 60vw, 35vw"
+                      focalPoint={chapter.focalPoint}
+                      mediaScale={chapter.mediaScale}
+                      mediaAspect={chapter.mediaAspect}
                       interactive
                       onActivate={() => openChapterModal(chapter)}
                       activateLabel={`${chapter.eyebrow} — detayları görüntüle`}
@@ -322,6 +328,9 @@ export function HomeJourney({
                     <HeroFramedHexMedia
                       media={chapter.media}
                       sizes="(max-width: 768px) 38vw, 12rem"
+                      focalPoint={chapter.focalPoint}
+                      mediaScale={chapter.mediaScale}
+                      mediaAspect={chapter.mediaAspect}
                       interactive
                       onActivate={() => openChapterModal(chapter)}
                       activateLabel={`${chapter.eyebrow} — detayları görüntüle`}

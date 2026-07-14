@@ -4,7 +4,10 @@ import { useActionState, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { transitionShort } from "@/lib/animations";
 import type { Branch } from "@/content/branches";
-import { branches as staticBranches } from "@/content/branches";
+import {
+  branches as staticBranches,
+  formatBranchLocation,
+} from "@/content/branches";
 import {
   submitIkApplication,
   type IkState,
@@ -139,7 +142,7 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
                     <option value="">Seçiniz</option>
                     {branches.map((b) => (
                       <option key={b.slug} value={b.slug}>
-                        {b.name}
+                        {formatBranchLocation(b)}
                       </option>
                     ))}
                   </select>

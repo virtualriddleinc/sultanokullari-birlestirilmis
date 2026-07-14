@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, MapPin, Phone } from "lucide-react";
 import type { Branch } from "@/content/branches";
 import { branches as staticBranches } from "@/content/branches";
+import { iletisimMetinleri } from "@/content/sultanda-yasam";
 import { SectionGrid } from "@/components/layout/section-grid";
 import {
   staggerContainerVariants,
@@ -50,14 +51,13 @@ export function IletisimBranchCards({
     <SectionGrid id="sube-kartlari" aria-label="Şubelerimiz" variant="white">
       <div className="mb-fluid-8 max-w-2xl">
         <p className="text-brand-green text-[length:var(--text-xs)] font-semibold tracking-[0.32em] uppercase">
-          Şubelerimiz
+          Yol Tarifi
         </p>
         <h2 className="mt-fluid-3 text-[length:var(--text-3xl)] leading-tight font-semibold tracking-tight text-balance text-zinc-950">
-          Size en yakın okul.
+          Okullarımız
         </h2>
         <p className="mt-fluid-3 text-[length:var(--text-base)] leading-7 text-zinc-600">
-          Dört lokasyon — telefon, adres ve detaylar tek bakışta. İhtiyacınıza
-          en uygun kampüsten ilerleyin.
+          {iletisimMetinleri.yolTarifi}
         </p>
       </div>
 

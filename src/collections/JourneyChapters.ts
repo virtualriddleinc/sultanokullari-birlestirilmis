@@ -6,6 +6,7 @@ import { contentCollectionAccess } from "@/payload/access";
 import { homeRevalidateHooks } from "@/payload/hooks/collection-hooks";
 import { trackLastEditedBy } from "@/payload/hooks/audit-hooks";
 import { siteMediaField } from "@/payload/fields/site-media-fields";
+import { hexFocalPickerField } from "@/payload/fields/hex-focal-picker-field";
 import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
 import { hideFromInboxOnly } from "@/payload/admin-visibility";
@@ -78,6 +79,51 @@ export const JourneyChapters: CollectionConfig = {
       required: true,
     },
     siteMediaField("chapterMedia", "Bölüm medyası", { required: true }),
+    hexFocalPickerField("hexFocalPicker", { mediaPathPrefix: "chapterMedia" }),
+    {
+      name: "focalPoint",
+      type: "group",
+      label: "Odak noktası",
+      fields: [
+        {
+          name: "x",
+          type: "number",
+          label: "X (%)",
+          defaultValue: 50,
+          min: 0,
+          max: 100,
+          admin: { step: 1 },
+        },
+        {
+          name: "y",
+          type: "number",
+          label: "Y (%)",
+          defaultValue: 50,
+          min: 0,
+          max: 100,
+          admin: { step: 1 },
+        },
+      ],
+    },
+    {
+      name: "mediaScale",
+      type: "number",
+      label: "Yakınlaştırma",
+      defaultValue: 1,
+      min: 1,
+      max: 3,
+      admin: {
+        step: 0.05,
+      },
+    },
+    {
+      name: "mediaAspect",
+      type: "number",
+      label: "Medya en-boy oranı",
+      admin: {
+        readOnly: true,
+      },
+    },
     lastEditedByField,
   ],
 };

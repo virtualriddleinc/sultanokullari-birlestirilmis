@@ -211,31 +211,31 @@ export const NAV_SECTIONS: NavSection[] = [
     },
     items: [
       {
-        label: "İstanbul – Sancaktepe",
+        label: "Sancaktepe – İstanbul",
         href: "/okullarimiz/istanbul/sancaktepe",
         icon: "MapPin",
         img: IMG.istanbul,
       },
       {
-        label: "Kocaeli – Başiskele",
+        label: "Başiskele – Kocaeli",
         href: "/okullarimiz/kocaeli/basiskele",
         icon: "MapPin",
         img: IMG.kocaeli,
       },
       {
-        label: "Sakarya – Serdivan",
+        label: "Serdivan – Sakarya",
         href: "/okullarimiz/sakarya/serdivan",
         icon: "MapPin",
         img: IMG.sakarya,
       },
       {
-        label: "Ankara – Sincan",
+        label: "Sincan – Ankara",
         href: "/okullarimiz/ankara/sincan",
         icon: "MapPin",
         img: IMG.ankara,
       },
       {
-        label: "Konya – Mevlânâ",
+        label: "Mevlânâ – Konya",
         href: "/okullarimiz/konya/mevlana",
         icon: "MapPin",
         img: IMG.konya,

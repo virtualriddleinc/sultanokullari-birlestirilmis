@@ -1,11 +1,12 @@
 import type { HeroSlide } from "@/features/hero/slides";
 
-/** Rehberlik slaytı referans alınarak belirlenen hero bilgi kartı metin limitleri */
+/** Yönetim Paneli hero bilgi kartı metin limitleri */
 export const HERO_SLIDE_LIMITS = {
-  /** En uzun mevcut etiket: AKADEMİK GELİŞİM VE BİREYSEL TÂKİB (34) */
+  /** En uzun mevcut etiket: DEĞERLER VE MÂNEVİ EĞİTİM (25) — üst sınır 34 */
   tagline: 34,
   titleLine: 26,
-  description: 100,
+  /** Nesil Tasavvurumuz açıklaması (202); diğer slaytlar daha kısa */
+  description: 220,
   buttonText: 36,
 } as const;
 

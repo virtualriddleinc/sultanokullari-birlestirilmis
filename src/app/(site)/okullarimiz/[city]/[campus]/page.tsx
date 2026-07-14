@@ -173,7 +173,7 @@ export default async function CampusPage({
       <JsonLd data={structuredData} />
       <PageShell
         title={branch.name}
-        intro={`${branch.district} / ${branch.city}`}
+        intro={`${branch.district} – ${branch.city}`}
         media={campusMedia}
         mediaLayout="overlay"
       >

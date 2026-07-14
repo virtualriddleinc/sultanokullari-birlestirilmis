@@ -5,7 +5,11 @@ import {
 } from "@/content/branches";
 import { mapPayloadMediaGroup } from "@/lib/payload-media";
 import { getPayloadClient } from "@/lib/payload";
-import { branchPreviewMedia, branchGalleryMedia } from "@/content/site-media";
+import {
+  branchPreviewMedia,
+  branchGalleryMedia,
+  galleryFromLevels,
+} from "@/content/site-media";
 import type { SiteMedia } from "@/content/site-media";
 
 type FetchOptions = {
@@ -15,25 +19,25 @@ type FetchOptions = {
 function mapCmsBranch(doc: Record<string, unknown>): Branch {
   const slug = doc.slug as string;
   const levelsRaw = doc.levels as Array<{ level?: string }> | undefined;
-  const galleryRaw = doc.gallery as
-    | Array<{ item?: Parameters<typeof mapPayloadMediaGroup>[0] }>
-    | undefined;
-
   const staticFallback = staticBranches.find((b) => b.slug === slug);
   const previewFallback = branchPreviewMedia[slug];
-  const galleryFallback = branchGalleryMedia[slug] ?? [];
+
+  const levels =
+    (levelsRaw?.map((l) => l.level).filter(Boolean) as string[]) ||
+    staticFallback?.levels ||
+    [];
+
+  // Galeri = okulun kademelerine göre Anaokulu/İlkokul/Ortaokul havuzu
+  const levelGallery = galleryFromLevels(levels);
+  const gallery =
+    levelGallery.length > 0
+      ? levelGallery
+      : (branchGalleryMedia[slug] ?? staticFallback?.gallery ?? []);
 
   const preview = mapPayloadMediaGroup(
     doc.previewMedia as Parameters<typeof mapPayloadMediaGroup>[0],
     previewFallback,
   );
-
-  const gallery =
-    galleryRaw
-      ?.map((g, i) =>
-        mapPayloadMediaGroup(g.item, galleryFallback[i]),
-      )
-      .filter((m): m is NonNullable<typeof m> => Boolean(m)) ?? galleryFallback;
 
   return {
     slug,
@@ -42,12 +46,9 @@ function mapCmsBranch(doc: Record<string, unknown>): Branch {
     district: (doc.district as string) || staticFallback?.district || "",
     address: (doc.address as string) || staticFallback?.address || "",
     phone: (doc.phone as string) || staticFallback?.phone || "",
-    levels:
-      levelsRaw?.map((l) => l.level).filter(Boolean) as string[] ||
-      staticFallback?.levels ||
-      [],
+    levels,
     upcoming: Boolean(doc.upcoming),
-    gallery: gallery.length ? gallery : staticFallback?.gallery || [],
+    gallery,
     ...(preview ? {} : {}),
   };
 }

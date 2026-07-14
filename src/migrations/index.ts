@@ -16,6 +16,9 @@ import * as migration_20260714_130100_media_tags_order_columns from "./20260714_
 import * as migration_20260714_130200_media_size_columns from "./20260714_130200_media_size_columns";
 import * as migration_20260714_130300_locked_document_rel_columns from "./20260714_130300_locked_document_rel_columns";
 import * as migration_20260714_130400_branch_media_item_tables from "./20260714_130400_branch_media_item_tables";
+import * as migration_20260714_190000_gayemiz_global from "./20260714_190000_gayemiz_global";
+import * as migration_20260714_200000_gayemiz_remove_default_card from "./20260714_200000_gayemiz_remove_default_card";
+import * as migration_20260714_210000_journey_chapter_focal_point from "./20260714_210000_journey_chapter_focal_point";
 
 export const migrations = [
   {
@@ -107,5 +110,20 @@ export const migrations = [
     up: migration_20260714_130400_branch_media_item_tables.up,
     down: migration_20260714_130400_branch_media_item_tables.down,
     name: "20260714_130400_branch_media_item_tables",
+  },
+  {
+    up: migration_20260714_190000_gayemiz_global.up,
+    down: migration_20260714_190000_gayemiz_global.down,
+    name: "20260714_190000_gayemiz_global",
+  },
+  {
+    up: migration_20260714_200000_gayemiz_remove_default_card.up,
+    down: migration_20260714_200000_gayemiz_remove_default_card.down,
+    name: "20260714_200000_gayemiz_remove_default_card",
+  },
+  {
+    up: migration_20260714_210000_journey_chapter_focal_point.up,
+    down: migration_20260714_210000_journey_chapter_focal_point.down,
+    name: "20260714_210000_journey_chapter_focal_point",
   },
 ];

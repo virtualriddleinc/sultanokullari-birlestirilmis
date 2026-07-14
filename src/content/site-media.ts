@@ -1,5 +1,10 @@
 import { BRANCH_MENU_IMAGES } from "@/lib/menu-images";
+import {
+  galleryAssets,
+  generatedPageGalleries,
+} from "@/content/gallery-media.generated";
 
+export { galleryAssets };
 const MEDIA_BASE = "/site-media";
 
 export type SiteMedia = {
@@ -114,13 +119,13 @@ export const hexGalleryMedia = [
     "IMG-20260429-WA0102.jpg",
   ),
   image("IMG-20260429-WA0114.jpg", "Hâfızlık halkasından bir kare"),
-  image("IMG-20260429-WA0112.jpg", "Bahçede oyun anı"),
+  image("IMG_1910.JPG", "Bahçede oyun anı"),
   video(
     "VID-20260429-WA0165.mp4",
     "Sınıf etkinliğinden kısa video",
     "IMG-20260429-WA0177.jpg",
   ),
-  image("IMG-20260429-WA0111.jpg", "Okul töreninden bir kare"),
+  image("IMG_1685.JPG", "Okul töreninden bir kare"),
   video(
     "VID-20260429-WA0141.mp4",
     "Spor zamanından kısa video",
@@ -137,15 +142,16 @@ export const hexGalleryMedia = [
   image("IMG-20260429-WA0086.jpg", "Bilim ve keşif alanından seçili kare"),
 ] as const satisfies readonly SiteMedia[];
 
-export const yemekhaneMedia = image(
-  "IMG-20260429-WA0108.jpg",
-  "Yemekhane ve sağlıklı beslenme — taze ürünlerle hazırlanan menüler",
-);
+export const yemekhaneMedia: SiteMedia = {
+  kind: "video",
+  src: "/videos/kantinsizokul.mp4",
+  alt: "Kantinsiz okul — yemekhane ve sağlıklı beslenme",
+  poster: "/videos/kantinsizokul-poster.jpg",
+};
 
-export const featuredVideo = video(
-  "VID-20260429-WA0156.mp4",
-  "Sultan Okulları tanıtım videosu",
-  "IMG-20260429-WA0140.jpg",
+export const featuredVideo = image(
+  "IMG_1545.JPG",
+  "Sultan Okulları okul atmosferinden bir kare",
 );
 
 export const insanKaynaklariMedia = [
@@ -194,208 +200,78 @@ export const branchPreviewMedia: Record<string, SiteMedia> = {
   },
 };
 
+/** Eğitim sayfası galerileri — Görsel/ klasöründen (paylaşımlı asset havuzu) */
+export const educationGalleryMedia = {
+  anaokulu: generatedPageGalleries.anaokulu,
+  ilkokul: generatedPageGalleries.ilkokul,
+  ortaokul: generatedPageGalleries.ortaokul,
+  nebevi: generatedPageGalleries.nebevi,
+  /** Görsel klasöründe Hâfızlık yok — mevcut medya korunur */
+  hafizlik: [
+    heroMedia[2],
+    image("IMG-20260429-WA0121.jpg", "Hâfızlık galerisinden fotoğraf"),
+    image("IMG-20260429-WA0143.jpg", "Hâfızlık ve etkinlik atmosferi"),
+  ],
+  degerler: generatedPageGalleries.degerler,
+  ciftDil: generatedPageGalleries.yabanciDil,
+} as const satisfies Record<string, readonly SiteMedia[]>;
+
+const LEVEL_GALLERY_BY_LABEL: Record<string, readonly SiteMedia[]> = {
+  Anaokulu: educationGalleryMedia.anaokulu,
+  İlkokul: educationGalleryMedia.ilkokul,
+  Ortaokul: educationGalleryMedia.ortaokul,
+};
+
+/** Okul kademelerine göre ilgili eğitim galerilerini birleştirir (src ile dedupe). */
+export function galleryFromLevels(levels: readonly string[]): SiteMedia[] {
+  const seen = new Set<string>();
+  const out: SiteMedia[] = [];
+  for (const level of levels) {
+    const items = LEVEL_GALLERY_BY_LABEL[level];
+    if (!items) continue;
+    for (const item of items) {
+      if (seen.has(item.src)) continue;
+      seen.add(item.src);
+      out.push(item);
+    }
+  }
+  return out;
+}
+
+/**
+ * Okullarımız şube galerileri — her okulun kademelerine göre
+ * Anaokulu / İlkokul / Ortaokul galerilerinden (merkezi asset havuzu).
+ */
 export const branchGalleryMedia: Record<string, SiteMedia[]> = {
-  sancaktepe: [
-    image("IMG-20260429-WA0137.jpg", "Sancaktepe okul galerisinden fotoğraf"),
-    image("IMG-20260429-WA0036.jpg", "Sancaktepe etkinlik alanı"),
-    video(
-      "VID-20260429-WA0159.mp4",
-      "Sancaktepe okul galerisinden video",
-      "IMG-20260429-WA0108.jpg",
-    ),
-  ],
-  basiskele: [
-    image("IMG-20260429-WA0100.jpg", "Başiskele okul galerisinden fotoğraf"),
-    image("IMG-20260429-WA0145.jpg", "Başiskele sınıf ve kampüs alanı"),
-    video(
-      "VID-20260429-WA0171.mp4",
-      "Başiskele okul galerisinden video",
-      "IMG-20260429-WA0142.jpg",
-    ),
-  ],
-  serdivan: [
-    image("IMG-20260429-WA0104.jpg", "Serdivan okul galerisinden fotoğraf"),
-    image("IMG-20260429-WA0084.jpg", "Serdivan sınıf ve etkinlik alanı"),
-    video(
-      "VID-20260429-WA0162.mp4",
-      "Serdivan okul galerisinden video",
-      "IMG-20260429-WA0158.jpg",
-    ),
-  ],
-  sincan: [
-    image("IMG-20260429-WA0039.jpg", "Sincan okul galerisinden fotoğraf"),
-    image("IMG-20260429-WA0109.jpg", "Sincan sınıf ve etkinlik alanı"),
-    video(
-      "VID-20260429-WA0163.mp4",
-      "Sincan okul galerisinden video",
-      "IMG-20260429-WA0035.jpg",
-    ),
-  ],
+  sancaktepe: galleryFromLevels(["Anaokulu"]),
+  basiskele: galleryFromLevels(["Anaokulu", "İlkokul", "Ortaokul"]),
+  serdivan: galleryFromLevels(["Anaokulu"]),
+  sincan: galleryFromLevels(["Anaokulu"]),
   mevlana: [
     {
       kind: "image",
       src: BRANCH_MENU_IMAGES.mevlana,
       alt: "Konya Mevlânâ kampüsü — yakında",
     },
-    image("IMG-20260429-WA0089.jpg", "Sultan Okulları okul atmosferi"),
-    image(
-      "IMG-20260429-WA0086.jpg",
-      "Keşf-i Bilim ve okul yaşamından bir kare",
-    ),
   ],
 };
-
-export const educationGalleryMedia = {
-  anaokulu: [
-    headerMedia.anaokulu,
-    image("IMG-20260429-WA0142.jpg", "Anaokulu etkinliklerinden fotoğraf"),
-    image("IMG-20260429-WA0104.jpg", "Anaokulu sınıf atmosferi"),
-  ],
-  ilkokul: [
-    headerMedia.ilkokul,
-    image("IMG-20260429-WA0122.jpg", "İlkokul etkinliklerinden fotoğraf"),
-    video(
-      "VID-20260429-WA0126.mp4",
-      "İlkokul etkinliklerinden video",
-      "IMG-20260429-WA0090.jpg",
-    ),
-  ],
-  ortaokul: [
-    headerMedia.ortaokul,
-    image("IMG-20260429-WA0139.jpg", "Ortaokul sosyal alanlarından fotoğraf"),
-    video(
-      "VID-20260429-WA0144.mp4",
-      "Ortaokul sosyal alanlarından video",
-      "IMG-20260429-WA0113.jpg",
-    ),
-  ],
-  nebevi: [
-    heroMedia[0],
-    image("IMG-20260429-WA0114.jpg", "Nebevî eğitim galerisinden fotoğraf"),
-    image("IMG-20260429-WA0112.jpg", "Değerler eğitimi etkinliği"),
-  ],
-  hafizlik: [
-    heroMedia[2],
-    image("IMG-20260429-WA0121.jpg", "Hâfızlık galerisinden fotoğraf"),
-    image("IMG-20260429-WA0143.jpg", "Hâfızlık ve etkinlik atmosferi"),
-  ],
-  degerler: [
-    image("IMG-20260429-WA0112.jpg", "Değerler eğitimi panosundan bir kare"),
-    image("IMG-20260429-WA0111.jpg", "Sınıf değerler etkinliği"),
-    video(
-      "VID-20260429-WA0165.mp4",
-      "Sınıf etkinliklerinden kısa video",
-      "IMG-20260429-WA0177.jpg",
-    ),
-  ],
-  ciftDil: [
-    image("IMG-20260429-WA0086.jpg", "Çift yabancı dil dersinden bir kare"),
-    image("IMG-20260429-WA0038.jpg", "Sanat ve dil atölyesi atmosferi"),
-    video(
-      "VID-20260429-WA0118.mp4",
-      "Atölye atmosferinden kısa video",
-      "IMG-20260429-WA0102.jpg",
-    ),
-  ],
-} as const;
 
 export const mediaPageItems = [
   featuredVideo,
   ...hexGalleryMedia.slice(0, 5),
 ] as const satisfies readonly SiteMedia[];
 
-export const kurumsalKimlikGalleryMedia = [
-  video(
-    "VID-20260429-WA0134.mp4",
-    "Sultan Okulları kurumsal tanıtım videosu",
-    "IMG-20260429-WA0140.jpg",
-  ),
-  image("IMG-20260429-WA0113.jpg", "Kurucu mesajı için temsilî okul atmosferi"),
-  image("IMG-20260429-WA0123.jpg", "Kampüs yaşamından seçili kare"),
-  video(
-    "VID-20260429-WA0119.mp4",
-    "İdari kadro ve çalışma atmosferi videosu",
-    "IMG-20260429-WA0122.jpg",
-  ),
-  image("IMG-20260429-WA0114.jpg", "Hâfızlık halkasından bir kare"),
-  image("IMG-20260429-WA0111.jpg", "Okul töreninden bir kare"),
-  video(
-    "VID-20260429-WA0141.mp4",
-    "Spor zamanından kısa video",
-    "IMG-20260429-WA0130.jpg",
-  ),
-  image("IMG-20260429-WA0143.jpg", "Mezuniyet ve etkinlik karesi"),
-  image("IMG-20260429-WA0132.jpg", "Kütüphane ve sakin çalışma atmosferi"),
-  video(
-    "VID-20260429-WA0127.mp4",
-    "Nebevî eğitim ve okul atmosferinden video kesiti",
-    "IMG-20260429-WA0090.jpg",
-  ),
-  image("IMG-20260429-WA0089.jpg", "Okul içinde temiz ve huzurlu yaşam alanı"),
-  image("IMG-20260429-WA0086.jpg", "Keşf-i Bilim — bilim ve keşif alanından bir kare"),
-] as const satisfies readonly SiteMedia[];
+export const kurumsalKimlikGalleryMedia =
+  generatedPageGalleries.kurumsalKimlik;
 
 export const pageGalleryMedia = {
-  niyetimiz: kurumsalKimlikGalleryMedia.slice(0, 9),
-  nesilTasavvur: kurumsalKimlikGalleryMedia.slice(2, 11),
-  kurumsalDegerler: kurumsalKimlikGalleryMedia.slice(4, 12),
-  kademeler: [
-    ...educationGalleryMedia.anaokulu,
-    ...educationGalleryMedia.ilkokul.slice(1),
-    ...educationGalleryMedia.ortaokul.slice(1),
-  ],
-  akademikGelisim: [
-    image("IMG-20260429-WA0082.jpg", "İlkokul sınıf atmosferi"),
-    image("IMG-20260429-WA0175.jpg", "Ortaokul kademe vitrini"),
-    image("IMG-20260429-WA0122.jpg", "İlkokul etkinliklerinden fotoğraf"),
-    video(
-      "VID-20260429-WA0126.mp4",
-      "İlkokul etkinliklerinden video",
-      "IMG-20260429-WA0090.jpg",
-    ),
-    image("IMG-20260429-WA0139.jpg", "Ortaokul sosyal alanlarından fotoğraf"),
-    image("IMG-20260429-WA0113.jpg", "Akademik çalışma atmosferi"),
-  ],
-  yabanciDil: educationGalleryMedia.ciftDil,
-  rehberlikKocluk: [
-    image("IMG-20260429-WA0129.jpg", "Rehberlik ve danışmanlık atmosferi"),
-    image("IMG-20260429-WA0111.jpg", "Sınıf rehberliği etkinliği"),
-    image("IMG-20260429-WA0112.jpg", "Değerler eğitimi sınıf etkinliği"),
-    video(
-      "VID-20260429-WA0165.mp4",
-      "Sınıf etkinliklerinden kısa video",
-      "IMG-20260429-WA0177.jpg",
-    ),
-    image("IMG-20260429-WA0104.jpg", "Anaokulu sınıf atmosferi"),
-    image("IMG-20260429-WA0089.jpg", "Okul içinde huzurlu yaşam alanı"),
-  ],
-  veli: [
-    video(
-      "VID-20260429-WA0134.mp4",
-      "Veli etkinliklerinden video",
-      "IMG-20260429-WA0140.jpg",
-    ),
-    image("IMG-20260429-WA0111.jpg", "Okul töreninden bir kare"),
-    image("IMG-20260429-WA0143.jpg", "Mezuniyet ve etkinlik karesi"),
-    image("IMG-20260429-WA0123.jpg", "Kampüs yaşamından seçili kare"),
-    image("IMG-20260429-WA0089.jpg", "Okul içinde temiz ve huzurlu yaşam alanı"),
-    image("IMG-20260429-WA0113.jpg", "Veli buluşması atmosferi"),
-  ],
-  sultandaYasam: [
-    video(
-      "VID-20260429-WA0141.mp4",
-      "Spor ve sanat etkinliklerinden video kesiti",
-      "IMG-20260429-WA0130.jpg",
-    ),
-    image("IMG-20260429-WA0089.jpg", "Okul içinde temiz ve huzurlu yaşam alanı"),
-    image("IMG-20260429-WA0086.jpg", "Keşf-i Bilim — bilim ve keşif alanından bir kare"),
-    image("IMG-20260429-WA0135.jpg", "Okul olanaklarından seçili kare"),
-    image("IMG-20260429-WA0130.jpg", "Spor zamanından bir kare"),
-    image("IMG-20260429-WA0142.jpg", "Anaokulu etkinliklerinden fotoğraf"),
-    video(
-      "VID-20260429-WA0124.mp4",
-      "Atölye çalışmalarından kısa video",
-      "IMG-20260429-WA0110.jpg",
-    ),
-  ],
+  niyetimiz: generatedPageGalleries.niyetimiz,
+  nesilTasavvur: generatedPageGalleries.nesilTasavvur,
+  kurumsalDegerler: generatedPageGalleries.kurumsalDegerler,
+  kademeler: generatedPageGalleries.kademeler,
+  akademikGelisim: generatedPageGalleries.akademikGelisim,
+  yabanciDil: generatedPageGalleries.yabanciDil,
+  rehberlikKocluk: generatedPageGalleries.rehberlikKocluk,
+  veli: generatedPageGalleries.veli,
+  sultandaYasam: generatedPageGalleries.sultandaYasam,
 } as const satisfies Record<string, readonly SiteMedia[]>;

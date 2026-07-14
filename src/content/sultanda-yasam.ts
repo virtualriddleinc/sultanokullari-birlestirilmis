@@ -1,14 +1,14 @@
 /** Web Sitesi İçerik Çalışması.pdf — Sultanda Yaşam */
 
 export const butikOkul = [
-  "Sultan Okulları’nda butik okul anlayışı; her öğrenciyi ismiyle, mizacıyla, ihtiyaçlarıyla ve gelişim süreciyle yakından tanımak demektir. Kalabalıkta kaybolmayan, fark edilen ve birebir takip edilen öğrenciler yetiştirmeyi önemsiyoruz.",
+  "Sultan Okulları’nda butik okul anlayışı; her öğrenciyi ismiyle, mizacıyla, ihtiyaçlarıyla ve gelişim süreciyle yakından tanımak demektir. Kalabalıkta kaybolmayan, fark edilen ve birebir tâkib edilen öğrenciler yetiştirmeyi önemsiyoruz.",
   "Sınıf mevcutlarımızın dengeli tutulması sayesinde öğretmenlerimiz öğrencilerimizin akademik ilerleyişini, sosyal gelişimini, duygu dünyasını ve ihtiyaç duyduğu destek alanlarını yakından izler. Böylece her çocuğa zaman ayırabilen, güçlü iletişimin kurulduğu, güvenli ve sıcak bir okul iklimi oluşur.",
-  "Butik okul yapımız; öğrenci, öğretmen ve veli arasındaki iletişimi güçlendirir. Her öğrencinin öğrenme süreci düzenli takip edilir; eksik kazanımları belirlenir, güçlü yönleri desteklenir ve gelişim yolculuğu rehberlik birimiyle birlikte bütüncül şekilde değerlendirilir.",
-  "Sultan Okulları’nda butik okul; az öğrenciyle çok ilgi, güçlü takip ve aile sıcaklığında bir mektep ortamıdır.",
+  "Butik okul yapımız; öğrenci, öğretmen ve veli arasındaki iletişimi güçlendirir. Her öğrencinin öğrenme süreci düzenli tâkib edilir; eksik kazanımları belirlenir, güçlü yönleri desteklenir ve gelişim yolculuğu rehberlik birimiyle birlikte bütüncül şekilde değerlendirilir.",
+  "Sultan Okulları’nda butik okul; az öğrenciyle çok ilgi, güçlü tâkib ve aile sıcaklığında bir mektep ortamıdır.",
 ] as const;
 
 export const ayakkabisizOkul =
-  '"Temizlik imandandır" düsturuyla öğrencilerimize nezih, kendilerini evlerindeki gibi huzurlu ve güvende hissettikleri sıcak bir eğitim ortamı sunuyoruz.';
+  'Ayakkabısız Okul Modeli: "Temizlik imandandır" düsturuyla öğrencilerimize nezih, kendilerini evlerindeki gibi huzurlu ve güvende hissettikleri sıcak bir eğitim ortamı sunuyoruz.';
 
 export const sultandaYasamBilgilendirme = {
   giris:
@@ -20,11 +20,11 @@ export const sultandaYasamBilgilendirme = {
     },
     {
       title: "Devam Zorunluluğu ve Sağlık Kuralları",
-      text: "Öğrencilerimizin eğitim sürecinden tam verim alabilmeleri için okula düzenli devam etmeleri önemlidir. Devamsızlık durumu takip edilir; devamsızlığı 10 günü geçen öğrenciler hakkında velilerimiz bilgilendirilir. Öğrencimizin sağlık problemi yaşaması veya acil bir durum oluşması hâlinde veli ile iletişime geçilir. Gerekli görüldüğünde öğrencimizin okuldan alınması sağlanır.",
+      text: "Öğrencilerimizin eğitim sürecinden tam verim alabilmeleri için okula düzenli devam etmeleri önemlidir. Devamsızlık durumu tâkib edilir; devamsızlığı 10 günü geçen öğrenciler hakkında velilerimiz bilgilendirilir. Öğrencimizin sağlık problemi yaşaması veya acil bir durum oluşması hâlinde veli ile iletişime geçilir. Gerekli görüldüğünde öğrencimizin okuldan alınması sağlanır.",
     },
     {
       title: "Veli İş Birliği ve Okul Kuralları",
-      text: "Özel Sultan Okulları olarak, çocuğun eğitim yolculuğunda okul ve ailenin aynı istikamette ilerlemesini önemsiyoruz. Bu sebeple velilerimizin okul toplantılarına, seminerlere ve bilgilendirme süreçlerine katılım göstermeleri beklenir. Okulumuzun eğitim, rehberlik ve disiplin süreçlerinde alınan kararlara velilerimizin destek vermesi; öğrencilerimizin okul düzenine uyumunu, sorumluluk bilincini ve karakter gelişimini güçlendirmektedir. Öğrencilerimize dair güncellemeler, veli bilgilendirmeleri ve okul ile iletişim süreçleri hassasiyetle yürütülür. Sağlıklı, düzenli ve güvene dayalı bir iletişim için velilerimizin okul tarafından yapılan bilgilendirmeleri takip etmeleri önem arz eder.",
+      text: "Özel Sultan Okulları olarak, çocuğun eğitim yolculuğunda okul ve ailenin aynı istikamette ilerlemesini önemsiyoruz. Bu sebeple velilerimizin okul toplantılarına, seminerlere ve bilgilendirme süreçlerine katılım göstermeleri beklenir. Okulumuzun eğitim, rehberlik ve disiplin süreçlerinde alınan kararlara velilerimizin destek vermesi; öğrencilerimizin okul düzenine uyumunu, sorumluluk bilincini ve karakter gelişimini güçlendirmektedir. Öğrencilerimize dair güncellemeler, veli bilgilendirmeleri ve okul ile iletişim süreçleri hassasiyetle yürütülür. Sağlıklı, düzenli ve güvene dayalı bir iletişim için velilerimizin okul tarafından yapılan bilgilendirmeleri tâkib etmeleri önem arz eder.",
     },
   ],
 } as const;

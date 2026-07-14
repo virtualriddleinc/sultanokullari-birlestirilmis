@@ -4,7 +4,10 @@ import Link from "@/components/navigation/site-link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, MapPin, Mail, Phone } from "lucide-react";
 import type { Branch } from "@/content/branches";
-import { branches as staticBranches } from "@/content/branches";
+import {
+  branches as staticBranches,
+  formatBranchLocation,
+} from "@/content/branches";
 import { InstagramGlyph } from "@/components/icons/instagram-glyph";
 import { ContentCard } from "@/components/layout/content-card";
 import { SectionGrid } from "@/components/layout/section-grid";
@@ -334,7 +337,7 @@ function FooterGrid({
                         href={getCampusRouteFromBranch(b)}
                         className="text-charcoal font-semibold hover:underline"
                       >
-                        {b.district} – {b.city}
+                        {formatBranchLocation(b)}
                       </Link>
                     </span>
                   ))}

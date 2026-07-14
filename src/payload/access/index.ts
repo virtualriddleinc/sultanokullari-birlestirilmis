@@ -39,19 +39,22 @@ export const isAdminOrEditorOrInbox: Access = ({ req }) => {
   return hasAnyRole(user, ["admin", "editor", "inbox"]);
 };
 
-/** Yönetici tüm kullanıcıları; editör/inbox yalnızca kendi hesabını okur/günceller */
-const readSelfOrAdmin: Access = ({ req }) => {
+/** Yönetici tüm kullanıcıları; diğerleri yalnızca kendi hesabını (boolean — liste/UI gizlensin) */
+const readSelfOrAdmin: Access = ({ req, id }) => {
   const user = req.user as AppUser | null;
   if (!user) return false;
   if (hasRole(user, "admin")) return true;
-  return { id: { equals: user.id } };
+  // Access Operation / liste: id yok → false (Kullanıcılar menüsü ve sayfası gizlenir)
+  if (id == null) return false;
+  return String(user.id) === String(id);
 };
 
-const updateSelfOrAdmin: Access = ({ req }) => {
+const updateSelfOrAdmin: Access = ({ req, id }) => {
   const user = req.user as AppUser | null;
   if (!user) return false;
   if (hasRole(user, "admin")) return true;
-  return { id: { equals: user.id } };
+  if (id == null) return false;
+  return String(user.id) === String(id);
 };
 
 /**
@@ -95,11 +98,16 @@ export const inboxCollectionAccess = {
   delete: isAdmin,
 };
 
-/** Kullanıcı yönetimi — yönetici tam yetki; diğerleri yalnızca kendi hesabı */
+/**
+ * Kullanıcı yönetimi — yalnızca yönetici liste/ekleme/silme/unlock.
+ * Editör/inbox: panelde Kullanıcılar sayfasını görmez; kendi hesabını
+ * (/admin/account, findByID) okuyup güncelleyebilir; rollerini değiştiremez.
+ */
 export const usersCollectionAccess = {
   read: readSelfOrAdmin,
   create: (async ({ req }: AccessArgs) => {
     if (hasRole(req.user as AppUser | null, "admin")) return true;
+    // İlk kurulum: henüz kullanıcı yoksa create-first-user
     const existing = await req.payload.count({
       collection: "users",
       overrideAccess: true,
@@ -108,6 +116,7 @@ export const usersCollectionAccess = {
   }) satisfies Access,
   update: updateSelfOrAdmin,
   delete: isAdmin,
+  unlock: isAdmin,
 };
 
 /** Global — herkese açık okuma; yazma admin veya editör */

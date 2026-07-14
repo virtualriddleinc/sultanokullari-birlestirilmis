@@ -7,7 +7,7 @@ import {
   type AppUser,
   type AppUserRole,
 } from "@/payload/access";
-import { hideUsersFromInbox } from "@/payload/admin-visibility";
+import { hideUnlessAdmin } from "@/payload/admin-visibility";
 
 export const Users: CollectionConfig = {
   slug: "users",
@@ -16,12 +16,12 @@ export const Users: CollectionConfig = {
     plural: "Kullanıcılar",
   },
   admin: {
-    hidden: hideUsersFromInbox,
+    hidden: hideUnlessAdmin,
     useAsTitle: "email",
     group: ADMIN_GROUPS.system,
     defaultColumns: ["email", "roles", "updatedAt"],
     description:
-      "Yönetici: tam yetki. Editör: içerik. Gelen kutusu: yalnızca form mesajları.",
+      "Yalnızca yöneticiler kullanıcı ekleyebilir, silebilir ve rollerini değiştirebilir.",
   },
   auth: {
     maxLoginAttempts: 5,

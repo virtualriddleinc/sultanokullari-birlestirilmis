@@ -39,7 +39,7 @@ flowchart TD
 
 ### 1.2 Mutlak kurallar (asla ihlal edilmez)
 
-1. **Metin kaynağı:** Hiçbir metin uydurulmaz. Tüm kopya `docs/content/site-metin-icerigi.pdf` dosyasından birebir alınır.
+1. **Metin kaynağı:** Hiçbir metin uydurulmaz. Tüm kopya `src/content/Web Sitesi İçerik Çalışması .pdf` dosyasından birebir alınır (yalnızca onaylı imlâ iyileştirmeleri: `helâl`, `tâkib`, `(s.a.s)`).
 2. **Gözle hizalama yok:** Tüm boşluklar explicit `calc()`, token veya grid hücresi ile tanımlanır.
 3. **Layout-first:** Önce grid/flex iskeleti, Grid Inspector doğrulaması; sonra renk, tipografi, görsel.
 4. **Desktop bozulmaz:** Mobil düzenlemeler `md` (768px) ve üzeri desktop layout'u etkilememelidir.
@@ -94,9 +94,10 @@ Kullanıcı talepleri zaman içinde evrilebilir. **En son kullanıcı mesajı ge
 
 ### 2.1 İçerik tek kaynak ilkesi
 
-- **Kaynak:** `docs/content/site-metin-icerigi.pdf`
+- **Kaynak:** `src/content/Web Sitesi İçerik Çalışması .pdf` (eski referans yolu: `docs/content/site-metin-icerigi.pdf`)
 - **Yasak:** Lorem ipsum, placeholder, “örnek metin”, AI üretimi kopya
-- **Yasak:** PDF'teki kelimelerde değişiklik (noktalama, büyük/küçük harf dahil)
+- **Kural:** PDF metni birebir alınır; anlam veya cümle uydurulmaz
+- **İstisna (imlâ):** Kullanıcı onayıyla Osmanlı Türkçesi imlâsı iyileştirilebilir — örn. `helal` → `helâl`, `takip` → `tâkib`; Peygamber zamirlerinde `(s.a.s)` tutarlılığı. Anlam değiştiren kelime/cümle eklenmez
 - **Hero slider:** Metinler `src/features/hero/slides.ts` içinde PDF'ten alınmış olmalı
 
 ### 2.2 Marka renkleri
@@ -154,17 +155,17 @@ Header'da 5 ana mega menü + merkez logo. Routing bu hiyerarşiye sıkı bağlı
 
 | Kampüs                | Rota                               |
 | --------------------- | ---------------------------------- |
-| İstanbul - Sancaktepe | `/okullarimiz/istanbul/sancaktepe` |
-| Kocaeli - Başiskele   | `/okullarimiz/kocaeli/basiskele`   |
-| Sakarya - Serdivan    | `/okullarimiz/sakarya/serdivan`    |
-| Ankara - Sincan       | `/okullarimiz/ankara/sincan`       |
-| Konya - Mevlânâ       | `/okullarimiz/konya/mevlana`       |
+| Sancaktepe - İstanbul | `/okullarimiz/istanbul/sancaktepe` |
+| Başiskele - Kocaeli   | `/okullarimiz/kocaeli/basiskele`   |
+| Serdivan - Sakarya    | `/okullarimiz/sakarya/serdivan`    |
+| Sincan - Ankara       | `/okullarimiz/ankara/sincan`       |
+| Mevlânâ - Konya       | `/okullarimiz/konya/mevlana`       |
 
 ### 2.4 PR öncesi içerik kontrol listesi
 
 - [ ] Yeni metin PDF'ten mi alındı?
 - [ ] PDF'te olmayan başlık/CTA eklenmedi mi?
-- [ ] Türkçe karakterler (â, î, û vb.) PDF ile birebir mi?
+- [ ] Türkçe karakterler (â, î, û vb.) ve onaylı imlâ (`helâl`, `tâkib`, `(s.a.s)`) tutarlı mı?
 
 ### 2.5 Agent için kritik çıkarım
 

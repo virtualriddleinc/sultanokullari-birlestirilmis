@@ -45,7 +45,7 @@ export default async function SubelerPage({
   return (
     <PageShell
       title={branch.name}
-      intro={`${branch.district} / ${branch.city}`}
+      intro={`${branch.district} – ${branch.city}`}
       bodyMotion="immediate"
     >
       <div className="flex flex-wrap gap-fluid-2">

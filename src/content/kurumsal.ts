@@ -1,14 +1,14 @@
 /** Web Sitesi İçerik Çalışması.pdf — Kurumsal metinler */
 
 export const kurulusParagraflari = [
-  "Sultan Okulları, köklerine bağlı geçmişinden (mazisinden) beslenerek geleceğe (âtiye) yön verecek fenni ve İslamî ilimlerle donanmış, değerlerine bağlı, nebevi eğitim modeliyle yetiştirilmiş ahlaklı nesillerin tohumunu atmak amacıyla 2016-2017 yılında kurulmuştur. İstanbul, Sakarya ve Ankara illerinde anaokulu şubeleriyle eğitim faaliyetlerini sürdürmektedir. Adımızın temsil ettiği “Sultan” ruhunu; ilimde âlim, ibadette âbid, gayrette mücahit bir neslin yetiştiği çift kanatlı eğitim modelimize yansıtıyoruz.",
+  "Sultan Okulları, köklerine bağlı geçmişinden (mazisinden) beslenerek geleceğe (âtiye) yön verecek fenni ve İslâmî ilimlerle donanmış, değerlerine bağlı, nebevi eğitim modeliyle yetiştirilmiş ahlaklı nesillerin tohumunu atmak amacıyla 2016-2017 yılında kurulmuştur. İstanbul, Sakarya ve Ankara illerinde anaokulu şubeleriyle eğitim faaliyetlerini sürdürmektedir. Adımızın temsil ettiği “Sultan” ruhunu; ilimde âlim, ibadette âbid, gayrette mücahit bir neslin yetiştiği çift kanatlı eğitim modelimize yansıtıyoruz.",
   "Sultan Eğitim Kurumları olarak gayemiz, ahlaklı, dürüst, saygılı, çevresine örnek, milli ve manevi değerlerle kuşanmış, çalışkan, yaşadığı asrı okuyabilen, millet ve ümmet bilincine sahip, çağın sorunlarını fark ederek onlara çözümler üretebilen, geçmişini bilip geleceğine sahip çıkan nesiller yetiştirmektir.",
   "Gelecek mefkuremizin odak noktasında öncelikli olarak Anadolu ve Fen Lisemizi hayata geçirmek yer almaktadır. Bu adımı; okul öncesinden üniversiteye kadar uzanan, içerisinde cami ve hafızlık merkezinin de bulunduğu kapsamlı bir “Eğitim Külliyesi” projesiyle tamamlamayı hedeflemekteyiz.",
   "Bu proje ile maksadımız; evlatlarımızı anaokulundan üniversiteye kadar sürecek 17 yıllık eğitim yolculuğunda tek bir çatı altında toplayarak fenni ve dini ilimlerle harmanlanmış, ahlakı ve şahsiyeti tekemmül etmiş, topluma rehberlik edecek nitelikte parlak bir geleceğe hazırlamaktır.",
 ] as const;
 
 export const niyetimizParagraflari = [
-  "Sultan Okulları olarak niyetimiz; ailelerinden devraldığımız en kıymetli emanet olan evlatlarımızı, İslam fıtratlarını muhafaza ederek, fenni ve İslâmî ilimlerin bütünlüğünde, \"çift kanatlı\" bir anlayışla yetiştirmektir. Öğrencilerimizi; akademik başarıyı değerlerinden koparmadan, milli ve manevi mukaddesatına bağlı, ümmet bilinciyle yaşayan ve yarının sorunlarına hikmetle çözümler üretebilen şahsiyetli nesiller olarak geleceğe hazırlamak için gayret ediyoruz.",
+  "Sultan Okulları olarak niyetimiz; ailelerinden devraldığımız en kıymetli emanet olan evlatlarımızı, İslâm fıtratlarını muhafaza ederek, fenni ve İslâmî ilimlerin bütünlüğünde, \"çift kanatlı\" bir anlayışla yetiştirmektir. Öğrencilerimizi; akademik başarıyı değerlerinden koparmadan, milli ve manevi mukaddesatına bağlı, ümmet bilinciyle yaşayan ve yarının sorunlarına hikmetle çözümler üretebilen şahsiyetli nesiller olarak geleceğe hazırlamak için gayret ediyoruz.",
   "Eğitim anlayışımız; sadece bireysel başarıyı değil; milli ve manevi değerlerine sadık, ümmet ve insanlık bilincine sahip, sorumluluk alan ve çözüm odaklı bir nesil inşa etmeyi hedefler. Sultan Okulları olarak öğrencilerimizi sadece bugüne değil; yeryüzünün her enlem ve boylamında adalet ile merhameti temsil etme sorumluluğu taşıyacak, medeniyet inşasına öncülük edecek ve insanlığa rehberlik yapacak bir istikamete hazırlıyoruz.",
 ] as const;
 
@@ -56,8 +56,8 @@ export const kurumsalDegerlerMaddeleri = [
     text: "Öğrencilerimize vatanına bağlılığı bir sadakat borcu, ümmetin derdiyle dertlenmeyi ise imanın bir gereği olarak öğretiyoruz.",
   },
   {
-    title: "Helal Hassasiyeti ve Doğruluk",
-    text: "Helal ve temiz beslenme hassasiyeti gösteren, teknolojiyi doğru kullanabilen, dürüstlüğü en büyük kazanç sayan nesiller hazırlıyoruz.",
+    title: "Helâl Hassasiyeti ve Doğruluk",
+    text: "Helâl ve temiz beslenme hassasiyeti gösteren, teknolojiyi doğru kullanabilen, dürüstlüğü en büyük kazanç sayan nesiller hazırlıyoruz.",
   },
   {
     title: "Gayret ve Sorumluluk",

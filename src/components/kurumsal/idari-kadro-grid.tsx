@@ -128,11 +128,13 @@ function BranchTitleSelector({
           type="button"
           aria-haspopup="listbox"
           aria-expanded={open}
-          aria-label={`Şube seç: ${current?.name ?? "Şube"}`}
+          aria-label={`Şube seç: ${current ? `${current.name} – ${current.city}` : "Şube"}`}
           onClick={() => setOpen((prev) => !prev)}
           className="bg-brand-honey text-charcoal hover:ring-charcoal/20 inline-flex min-h-[44px] items-center gap-1.5 rounded-full px-4 py-1.5 shadow-[0_10px_30px_rgba(0,0,0,0.12)] ring-1 ring-black/5 transition hover:ring-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-charcoal"
         >
-          <span>{current?.name ?? "Şube"}</span>
+          <span>
+            {current ? `${current.name} – ${current.city}` : "Şube"}
+          </span>
           <ChevronDown
             className={cn(
               "size-5 shrink-0 transition-transform duration-200",
@@ -174,8 +176,9 @@ function BranchTitleSelector({
                         : "hover:bg-black/5",
                     )}
                   >
-                    <span>{opt.name}</span>
-                    <span className="text-charcoal/60 text-xs">{opt.city}</span>
+                    <span>
+                      {opt.name} – {opt.city}
+                    </span>
                   </button>
                 </li>
               );

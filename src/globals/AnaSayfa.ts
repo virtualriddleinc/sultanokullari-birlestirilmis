@@ -6,6 +6,7 @@ import { globalReadAccess } from "@/payload/access";
 import { revalidateAnaSayfaAfterChange } from "@/payload/hooks/collection-hooks";
 import { siteMediaField } from "@/payload/fields/site-media-fields";
 import { sectionPreviewField } from "@/payload/fields/section-preview-field";
+import { siteLinkField, adminHintField } from "@/payload/fields/admin-hint-field";
 import { hideFromInboxOnly } from "@/payload/admin-visibility";
 
 export const AnaSayfa: GlobalConfig = {
@@ -30,76 +31,22 @@ export const AnaSayfa: GlobalConfig = {
       tabs: [
         {
           label: "Gâyemiz",
-          description: "Ana sayfa Gâyemiz · Ufkumuz bölümü — kayıt sonrası anında yansır.",
+          description:
+            "Petek ve bilgi kartı artık sol menüdeki Gâyemiz kaydından yönetilir.",
           fields: [
+            adminHintField(
+              "gayemizMovedHint",
+              "Gâyemiz petek örüntüsü ve bilgi kartı içeriği sol menüdeki «Gâyemiz» bölümünden düzenlenir (Hero ile aynı seviye).",
+            ),
+            siteLinkField(
+              "gayemizAdminLink",
+              "/admin/globals/gayemiz",
+              "Gâyemiz düzenle →",
+            ),
             sectionPreviewField(
               "gayemizPreview",
               "@/components/payload/admin/SectionPreviewLink#GayemizSectionPreview",
             ),
-            {
-              name: "mission",
-              type: "group",
-              label: "Gâyemiz · Ufkumuz",
-              fields: [
-                {
-                  name: "tagline",
-                  type: "text",
-                  label: "Üst etiket",
-                  required: true,
-                },
-                {
-                  name: "titleLine1",
-                  type: "text",
-                  label: "Başlık satırı 1",
-                  required: true,
-                  maxLength: 80,
-                },
-                {
-                  name: "titleLine2",
-                  type: "text",
-                  label: "Başlık satırı 2",
-                  required: true,
-                  maxLength: 80,
-                },
-                {
-                  name: "titleLine3",
-                  type: "text",
-                  label: "Başlık satırı 3",
-                  maxLength: 80,
-                },
-                {
-                  name: "description",
-                  type: "textarea",
-                  label: "Açıklama",
-                  required: true,
-                },
-                {
-                  name: "secondaryDescription",
-                  type: "textarea",
-                  label: "İkincil açıklama",
-                },
-                {
-                  name: "levels",
-                  type: "array",
-                  label: "Kademe etiketleri",
-                  fields: [
-                    {
-                      name: "label",
-                      type: "text",
-                      label: "Etiket",
-                      required: true,
-                    },
-                  ],
-                },
-                {
-                  name: "decorMedia",
-                  type: "array",
-                  label: "Petek dekor görselleri",
-                  maxRows: 6,
-                  fields: [siteMediaField("media", "Medya")],
-                },
-              ],
-            },
           ],
         },
         {
@@ -325,7 +272,9 @@ export const AnaSayfa: GlobalConfig = {
                   name: "description",
                   type: "textarea",
                   label: "Açıklama",
-                  required: true,
+                  admin: {
+                    hidden: true,
+                  },
                 },
                 {
                   name: "ctaLabel",
@@ -348,11 +297,17 @@ export const AnaSayfa: GlobalConfig = {
                   name: "upcomingEventsLabel",
                   type: "text",
                   label: "Yaklaşan etkinlikler başlığı",
+                  admin: {
+                    description: "Listede en fazla 3 yaklaşan etkinlik gösterilir.",
+                  },
                 },
                 {
                   name: "newsLabel",
                   type: "text",
                   label: "Haberler başlığı",
+                  admin: {
+                    description: "Listede en fazla 3 haber gösterilir.",
+                  },
                 },
                 siteMediaField("featuredEventMedia", "Öne çıkan etkinlik arka planı"),
               ],
@@ -389,7 +344,9 @@ export const AnaSayfa: GlobalConfig = {
                   name: "description",
                   type: "textarea",
                   label: "Açıklama",
-                  required: true,
+                  admin: {
+                    hidden: true,
+                  },
                 },
                 {
                   name: "handle",
@@ -424,20 +381,26 @@ export const AnaSayfa: GlobalConfig = {
                   name: "eyebrow",
                   type: "text",
                   label: "Üst satır",
-                  required: true,
+                  admin: {
+                    hidden: true,
+                  },
                 },
                 {
                   name: "title",
                   type: "text",
                   label: "Başlık",
-                  required: true,
                   maxLength: 100,
+                  admin: {
+                    hidden: true,
+                  },
                 },
                 {
                   name: "description",
                   type: "textarea",
                   label: "Açıklama",
-                  required: true,
+                  admin: {
+                    hidden: true,
+                  },
                 },
                 {
                   name: "links",
@@ -460,7 +423,9 @@ export const AnaSayfa: GlobalConfig = {
                       name: "description",
                       type: "text",
                       label: "Alt açıklama",
-                      required: true,
+                      admin: {
+                        hidden: true,
+                      },
                     },
                     {
                       name: "iconKey",

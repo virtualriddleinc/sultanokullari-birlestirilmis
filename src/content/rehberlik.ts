@@ -8,7 +8,7 @@ export const ogrenciGelisimiGiris =
 
 export const ogrenciCalismalariDetay = [
   {
-    title: "Bireysel Tanıma ve Takip",
+    title: "Bireysel Tanıma ve Tâkib",
     text: "Gözlem ve ölçme değerlendirme çalışmalarıyla her öğrencimizin güçlü yönlerini tanıyor, ihtiyaçlarına uygun akademik ve kişisel gelişim planlamalarını yapıyoruz.",
   },
   {
@@ -17,7 +17,7 @@ export const ogrenciCalismalariDetay = [
   },
   {
     title: "Akademik Motivasyon ve Çalışma Disiplini",
-    text: "Eğitim koçluğu sistemiyle planlı çalışma ve sorumluluk alma becerilerini geliştiriyor, akademik süreci takip ediyoruz.",
+    text: "Eğitim koçluğu sistemiyle planlı çalışma ve sorumluluk alma becerilerini geliştiriyor, akademik süreci tâkib ediyoruz.",
   },
   {
     title: "Duygusal Gelişim ve Uyum Süreci",
@@ -73,7 +73,7 @@ export const veliCalismalariDetay = [
   },
   {
     title: "Okul-Aile İş Birliği",
-    text: "Öğrenci gelişimini okul ve aile bütünlüğü içerisinde takip ediyor, güvene dayalı iş birliği ile çocuğun hem akademik hem de şahsiyet gelişimini birlikte destekliyoruz.",
+    text: "Öğrenci gelişimini okul ve aile bütünlüğü içerisinde tâkib ediyor, güvene dayalı iş birliği ile çocuğun hem akademik hem de şahsiyet gelişimini birlikte destekliyoruz.",
   },
   {
     title: "Sosyal Aidiyet Çalışmaları",
@@ -95,9 +95,9 @@ export const veliAkademisi =
   "Sultan Okulları’nda öğrencilerimizin akademik başarıları kadar; mutlu, dengeli, sağlıklı ve değerleriyle güçlü bireyler olarak yetişmelerini de önemsiyoruz. Bu süreçte velilerimizi, çocuklarımızın gelişim yolculuğunun en kıymetli paydaşları olarak görüyoruz. Veli Akademisi çalışmalarıyla anne babaların; çocuklarının akademik, sosyal, duygusal ve manevi gelişimine daha bilinçli şekilde eşlik etmelerini destekliyoruz. Yıl boyunca düzenlenen uzman seminerleri, söyleşiler ve atölyelerle velilerimize; çocuk gelişimi, iletişim, değerler eğitimi, dijital dünya ve okul-aile iş birliği gibi alanlarda rehberlik sunuyoruz.";
 
 export const sultandaVeliOlmak = [
-  "Sultan Okulları’nda veli olmak; evladının eğitim, karakter ve şahsiyet yolculuğunda okuluyla aynı niyet ve istikamette buluşmak demektir. Bizim için veli, süreci yalnızca dışarıdan takip eden kişi değil; çocuğun gelişimine emek veren, okulla gönül bağı kuran ve bu mektep ikliminin kıymetli bir parçası olan yol arkadaşımızdır.",
+  "Sultan Okulları’nda veli olmak; evladının eğitim, karakter ve şahsiyet yolculuğunda okuluyla aynı niyet ve istikamette buluşmak demektir. Bizim için veli, süreci yalnızca dışarıdan tâkib eden kişi değil; çocuğun gelişimine emek veren, okulla gönül bağı kuran ve bu mektep ikliminin kıymetli bir parçası olan yol arkadaşımızdır.",
   "Çocuklarımızın akademik başarısı kadar ahlaki, sosyal ve manevi gelişimini de önemsiyoruz. Bu nedenle ailelerimizle düzenli veli görüşmeleri, seminerler, kitap okumaları, aile buluşmaları, bilgilendirme toplantıları ve rehberlik çalışmalarıyla güçlü bir iletişim zemini kuruyoruz.",
-  "Sultan Okulları’nda okul-aile iş birliği; sadece bilgi paylaşımı değil, aynı değer dünyasında buluşma gayretidir. Velilerimizin görüşlerini, ihtiyaçlarını ve katkılarını önemsiyor; her çocuğun gelişimini aile ile birlikte takip ediyoruz. Çünkü inanıyoruz ki bir çocuğun yolculuğu, okul ve aile aynı dili konuştuğunda daha sağlam, daha huzurlu ve daha bereketli ilerler. Sultan Okulları olarak velilerimizle birlikte; evlatlarımızı bilgili, erdemli, sorumluluk sahibi ve güzel ahlaklı bireyler olarak yetiştirmeyi hedefliyoruz.",
+  "Sultan Okulları’nda okul-aile iş birliği; sadece bilgi paylaşımı değil, aynı değer dünyasında buluşma gayretidir. Velilerimizin görüşlerini, ihtiyaçlarını ve katkılarını önemsiyor; her çocuğun gelişimini aile ile birlikte tâkib ediyoruz. Çünkü inanıyoruz ki bir çocuğun yolculuğu, okul ve aile aynı dili konuştuğunda daha sağlam, daha huzurlu ve daha bereketli ilerler. Sultan Okulları olarak velilerimizle birlikte; evlatlarımızı bilgili, erdemli, sorumluluk sahibi ve güzel ahlaklı bireyler olarak yetiştirmeyi hedefliyoruz.",
 ] as const;
 
 /** PDF dışı — silinmedi; karar bekleniyor */

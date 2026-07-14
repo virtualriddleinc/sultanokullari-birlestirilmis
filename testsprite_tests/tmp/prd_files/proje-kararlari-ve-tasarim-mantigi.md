@@ -154,11 +154,11 @@ Header'da 5 ana mega menü + merkez logo. Routing bu hiyerarşiye sıkı bağlı
 
 | Kampüs                | Rota                               |
 | --------------------- | ---------------------------------- |
-| İstanbul - Sancaktepe | `/okullarimiz/istanbul/sancaktepe` |
-| Kocaeli - Başiskele   | `/okullarimiz/kocaeli/basiskele`   |
-| Sakarya - Serdivan    | `/okullarimiz/sakarya/serdivan`    |
-| Ankara - Sincan       | `/okullarimiz/ankara/sincan`       |
-| Konya - Mevlânâ       | `/okullarimiz/konya/mevlana`       |
+| Sancaktepe - İstanbul | `/okullarimiz/istanbul/sancaktepe` |
+| Başiskele - Kocaeli   | `/okullarimiz/kocaeli/basiskele`   |
+| Serdivan - Sakarya    | `/okullarimiz/sakarya/serdivan`    |
+| Sincan - Ankara       | `/okullarimiz/ankara/sincan`       |
+| Mevlânâ - Konya       | `/okullarimiz/konya/mevlana`       |
 
 ### 2.4 PR öncesi içerik kontrol listesi
 

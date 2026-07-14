@@ -18,7 +18,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = buildPageMetadata({
   title: "Ana sayfa",
   description:
-    "Sultan Okulları — köklerine bağlı, fennî ve İslami ilimlerle donanmış nesiller için eğitim. Nebevî eğitim, ayakkabısız okul, butik sınıflar.",
+    "Sultan Okulları — köklerine bağlı, fennî ve İslâmî ilimlerle donanmış nesiller için eğitim. Nebevî eğitim, ayakkabısız okul, butik sınıflar.",
   path: "/",
 });
 

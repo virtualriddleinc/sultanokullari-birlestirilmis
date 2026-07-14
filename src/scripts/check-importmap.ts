@@ -19,6 +19,7 @@ const requiredPaths = [
   "@/components/payload/admin/InboxBulkActions",
   "@/components/payload/admin/AdminHint",
   "@/components/payload/admin/HexFocalPointPicker",
+  "@/components/payload/admin/MissionDecorCellRowLabel",
   "@/components/payload/admin/InboxActionWrappers",
   "@/components/payload/admin/InboxStatusCell",
 ];

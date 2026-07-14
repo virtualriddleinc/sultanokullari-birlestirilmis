@@ -49,7 +49,7 @@ export const PAGE_MEDIA = {
   kademeler: {
     src: "/videos/kademeler.mp4",
     type: "video",
-    poster: MENU_IMAGES.egitim,
+    poster: "/videos/kademeler-poster.jpg",
     alt: "Sultan Mektebi Modeli ve Kademeler",
   },
   degerlerEgitimi: {
@@ -107,9 +107,9 @@ export const PAGE_MEDIA = {
     alt: "Ortaokul kademe vitrini",
   },
   nebeviEgitim: {
-    src: "/site-media/VID-20260429-WA0127.mp4",
+    src: "/videos/nebevi-egitim.mp4",
     type: "video",
-    poster: "/site-media/IMG-20260429-WA0090.jpg",
+    poster: "/videos/nebevi-egitim-poster.jpg",
     alt: "Nebevî eğitim ve Kur'an-ı Kerîm",
   },
 } as const satisfies Record<string, PageMedia>;

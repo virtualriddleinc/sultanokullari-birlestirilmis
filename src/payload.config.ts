@@ -26,6 +26,7 @@ import { Pages } from "./collections/Pages";
 import { Staff } from "./collections/Staff";
 import { Users } from "./collections/Users";
 import { AnaSayfa } from "./globals/AnaSayfa";
+import { Gayemiz } from "./globals/Gayemiz";
 import { Navigation } from "./globals/Navigation";
 import { SiteAyarlari } from "./globals/SiteAyarlari";
 import { assertCmsEnv } from "./lib/env";
@@ -168,7 +169,7 @@ export default buildConfig({
     AuditLogs,
     Users,
   ],
-  globals: [AnaSayfa, SiteAyarlari, Navigation],
+  globals: [Gayemiz, AnaSayfa, SiteAyarlari, Navigation],
   editor: lexicalEditor(),
   secret: payloadSecret,
   typescript: {

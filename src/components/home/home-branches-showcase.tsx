@@ -164,7 +164,7 @@ export function HomeBranchesShowcase({
 
       <div className="mt-12 grid gap-10 lg:grid-cols-[1.05fr_1fr] lg:items-stretch">
         {/* Mobil — kaydırma tetiklemeli akordiyon; fotoğraf okul adının hemen altında */}
-        <ol className="divide-charcoal/15 border-charcoal/15 divide-y border-y lg:hidden">
+        <ol className="border-charcoal/15 grid grid-cols-[auto_auto_1fr] gap-x-4 border-y lg:hidden">
           {branches.map((b, i) => {
             const isActive = i === active;
             const branchMedia = getBranchMedia(b);
@@ -176,53 +176,47 @@ export function HomeBranchesShowcase({
                   mobileItemRefs.current[i] = el;
                 }}
                 data-branch-index={i}
-                className="py-1"
+                className="border-charcoal/15 col-span-3 grid grid-cols-subgrid border-b last:border-b-0"
               >
-                <div className="flex items-start justify-between gap-3 py-4">
+                <div className="col-span-3 grid grid-cols-subgrid items-start gap-y-1 py-4">
                   <Link
                     href={getCampusRouteFromBranch(b)}
-                    className="group min-w-0 flex-1"
+                    className="contents"
                   >
-                    <div className="flex items-start gap-3">
-                      <span
-                        className={cn(
-                          "pt-1 text-sm font-semibold tracking-wide tabular-nums",
-                          isActive ? "text-brand-green" : "text-charcoal/40",
-                        )}
-                      >
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                      <div className="min-w-0">
-                        <p
-                          className={cn(
-                            "font-cinzel text-xl font-bold tracking-tight transition-colors sm:text-2xl",
-                            isActive ? "text-charcoal" : "text-charcoal/70",
-                          )}
-                        >
-                          {b.district}
-                          <span className="text-charcoal/45"> · {b.city}</span>
-                        </p>
-                        <p className="text-charcoal/55 mt-1 text-xs font-medium tracking-[0.22em] uppercase">
-                          {b.upcoming
-                            ? "Yakında açılacak"
-                            : b.levels.join(" · ")}
-                        </p>
-                      </div>
-                    </div>
+                    <span
+                      className={cn(
+                        "font-cinzel text-lg font-bold tracking-tight transition-colors sm:text-xl",
+                        isActive ? "text-charcoal" : "text-charcoal/70",
+                      )}
+                    >
+                      {b.district}
+                    </span>
+                    <span
+                      className={cn(
+                        "font-cinzel text-lg font-bold tracking-tight transition-colors sm:text-xl",
+                        isActive ? "text-charcoal/45" : "text-charcoal/35",
+                      )}
+                    >
+                      {b.city}
+                    </span>
                   </Link>
-
                   <ChevronDown
                     aria-hidden
                     className={cn(
-                      "mt-1 size-5 shrink-0 text-charcoal/35 transition-transform duration-300",
+                      "mt-1 size-5 justify-self-end shrink-0 text-charcoal/35 transition-transform duration-300",
                       isActive && "rotate-180 text-brand-green",
                     )}
                   />
+                  <p className="text-charcoal/55 col-span-2 text-xs font-medium tracking-[0.22em] uppercase">
+                    {b.upcoming
+                      ? "Yakında açılacak"
+                      : b.levels.join(" · ")}
+                  </p>
                 </div>
 
                 <div
                   className={cn(
-                    "grid transition-[grid-template-rows] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
+                    "col-span-3 grid transition-[grid-template-rows] ease-[cubic-bezier(0.25,0.46,0.45,0.94)]",
                     reduce ? "duration-0" : "duration-500",
                     isActive ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
                   )}
@@ -261,47 +255,40 @@ export function HomeBranchesShowcase({
           })}
         </ol>
 
-        {/* Masaüstü — hover ile sağ panelde önizleme */}
-        <ol className="divide-charcoal/15 border-charcoal/15 divide-y border-y max-lg:hidden">
+        {/* Masaüstü — hover ile sağ panelde önizleme; ilçe/il sütunları subgrid ile hizalı */}
+        <ol className="border-charcoal/15 grid grid-cols-[auto_auto_1fr] gap-x-4 border-y max-lg:hidden">
           {branches.map((b, i) => {
             const isActive = i === active;
             return (
               <li
                 key={b.slug}
+                className="border-charcoal/15 col-span-3 grid grid-cols-subgrid border-b last:border-b-0"
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
               >
                 <Link
                   href={getCampusRouteFromBranch(b)}
-                  className="group flex flex-wrap items-center justify-between gap-4 py-5"
+                  className="group col-span-3 grid grid-cols-subgrid items-center gap-y-1 py-5"
                 >
-                  <div className="flex items-center gap-4">
-                    <span
-                      className={cn(
-                        "text-sm font-semibold tracking-wide tabular-nums",
-                        isActive ? "text-brand-green" : "text-charcoal/40",
-                      )}
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <div>
-                      <p
-                        className={cn(
-                          "font-cinzel text-2xl font-bold tracking-tight transition-colors sm:text-3xl",
-                          isActive ? "text-charcoal" : "text-charcoal/70",
-                        )}
-                      >
-                        {b.district}
-                        <span className="text-charcoal/45"> · {b.city}</span>
-                      </p>
-                      <p className="text-charcoal/55 mt-1 text-xs font-medium tracking-[0.22em] uppercase">
-                        {b.upcoming ? "Yakında açılacak" : b.levels.join(" · ")}
-                      </p>
-                    </div>
-                  </div>
                   <span
                     className={cn(
-                      "inline-flex h-10 items-center gap-1 rounded-full px-3 text-xs font-semibold transition",
+                      "font-cinzel text-xl font-bold tracking-tight transition-colors sm:text-2xl",
+                      isActive ? "text-charcoal" : "text-charcoal/70",
+                    )}
+                  >
+                    {b.district}
+                  </span>
+                  <span
+                    className={cn(
+                      "font-cinzel pr-4 text-xl font-bold tracking-tight transition-colors sm:text-2xl",
+                      isActive ? "text-charcoal/45" : "text-charcoal/35",
+                    )}
+                  >
+                    {b.city}
+                  </span>
+                  <span
+                    className={cn(
+                      "inline-flex h-10 justify-self-end items-center gap-1 rounded-full px-3 text-xs font-semibold transition",
                       isActive
                         ? "bg-brand-green text-charcoal"
                         : "border-charcoal/15 text-charcoal/75 group-hover:border-brand-green/40 border",
@@ -310,6 +297,9 @@ export function HomeBranchesShowcase({
                     {b.upcoming ? "Yakında" : "Okula git"}{" "}
                     <ArrowUpRight className="size-4" aria-hidden />
                   </span>
+                  <p className="text-charcoal/55 col-span-2 text-xs font-medium tracking-[0.22em] uppercase">
+                    {b.upcoming ? "Yakında açılacak" : b.levels.join(" · ")}
+                  </p>
                 </Link>
               </li>
             );

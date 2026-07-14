@@ -82,7 +82,7 @@ async def run_test():
         # district text field
         elem = page.locator('[id="field-district"]')
         await elem.wait_for(state="visible", timeout=10000)
-        await elem.fill("Sincan - QA")
+        await elem.fill("Sincan")
         
         # -> Edit the 'İlçe / kampüs adı' field and click the 'Save' button to save changes.
         # button

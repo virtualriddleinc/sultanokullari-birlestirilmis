@@ -96,8 +96,8 @@ export function HeroSlideTitle({
     <Tag className={cn(HERO_SLIDE_TITLE_CLASS, className)}>
       <span className="hero-slide-title-flow lg:hidden">{lines.join(" ")}</span>
       <span className="hidden lg:contents">
-        {lines.map((line) => (
-          <span key={line} className="block">
+        {lines.map((line, index) => (
+          <span key={`title-line-${index}`} className="block">
             {line}
           </span>
         ))}

@@ -59,7 +59,7 @@ export const SSS_CATEGORIES: SssCategory[] = [
       {
         question: "Yemek ve beslenme nasıl sağlanıyor?",
         answer:
-          "Beslenme düzenimiz ana sayfadaki Yemekhane bölümünde (/#yemekhane) anlatılmaktadır. Kantinsiz okul projesi kapsamında helâl sertifikalı, günlük hazırlanan menüler sunulmaktadır.",
+          "Beslenme düzenimiz Sultanda Yaşam sayfasında (/yasam/sultanda-yasam) anlatılmaktadır. Kantinsiz okul projesi kapsamında helâl sertifikalı, günlük hazırlanan menüler sunulmaktadır.",
       },
     ],
   },
