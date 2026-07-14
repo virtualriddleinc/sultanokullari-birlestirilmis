@@ -1,3 +1,19 @@
+# CMS İyileştirme Raporu
+
+## Faz 4 — TestSprite seed temizliği
+
+### Yalın özet
+
+- Admin test hesabı korundu; editör ve gelen kutusu test kullanıcıları privilege smoke için tutuldu.
+- TestSprite geçici iletişim mesajları temizlendi; IK ve taslak haber tarafında silinecek spam bulunmadı.
+- Seed scripti artık örnek içerik üretmez, yalnızca test kullanıcılarını garanti eder ve TestSprite izli geçici kayıtları temizler.
+
+### Teknik özet
+
+- `src/scripts/seed-testsprite-admin.ts`, `admin@admin.com`, `editor@test.local`, `inbox@test.local` kullanıcılarını güncel rollerle koruyacak şekilde sadeleştirildi.
+- `contact-messages`, `ik-applications` ve `news` koleksiyonlarında `TestSprite`, `ts-new`, `ts-read`, `ts-arch`, `ts-ik` izleri taranıp siliniyor.
+- 2026-07-14 çalıştırmasında `deletedContacts=4`, `deletedIk=0`, `deletedDraftNews=0` sonucu alındı.
+
 # CMS İyileştirme Operasyon Raporu
 
 Bu rapor, mevcut çalışma ağacında tamamlanmış görünen Faz 1-3 CMS iyileştirmelerini ve ağaçta yer alan güvenlik/medya çalışmalarını belgelendirir. Şema düzeltmeleri, Cloud DB drift temizliği veya 100 döngülük test çalışması bu raporun kapsamına alınmadı; yalnızca tamamlanmış işlerin operasyon etkisi yazıldı.
