@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import Link from "@/components/navigation/site-link";
 import { Mail, MessageCircle } from "lucide-react";
 import { ContactForm } from "@/components/iletisim/contact-form";
@@ -11,10 +11,11 @@ import beyazDesen from "@/images/beyaz-desen.svg";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
+  path: "/iletisim",
   title: "İletişim",
   description: "İletişim formu, şube seçimi ve KVKK onayı.",
-};
+});
 
 export default async function Page() {
   const [branches, settings] = await Promise.all([

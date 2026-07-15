@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import Link from "@/components/navigation/site-link";
 import { notFound } from "next/navigation";
 import { WhatsAppContactButton } from "@/components/branch/whatsapp-contact-button";
@@ -21,14 +21,15 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
+}) {
   const { slug } = await params;
   const b = await getBranchBySlugFromCms(slug);
   if (!b) return { title: "Şube" };
-  return {
+  return buildPageMetadata({
+    path: `/subeler/${slug}`,
     title: b.name,
     description: `${b.district}, ${b.city} — ${b.levels.join(", ")}`,
-  };
+  });
 }
 
 export default async function SubelerPage({

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import { absoluteUrl, getSiteUrl, resolveMediaUrl } from "@/lib/seo/site-url";
 
-export const DEFAULT_OG_IMAGE = "/logo.svg";
+export const DEFAULT_OG_IMAGE = "/opengraph-image";
 
 export const SITE_NAME = "Sultan Okulları";
 
@@ -55,6 +55,13 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
   };
 }
 
+// Twitter/X handle — CMS'ten yönetildiğinde buraya taşınabilir.
+// Google Search Console doğrulama: GOOGLE_SITE_VERIFICATION env değişkenine ekle.
+// Bing Webmaster doğrulama: BING_SITE_VERIFICATION env değişkenine ekle.
+const TWITTER_HANDLE = process.env.TWITTER_HANDLE ?? undefined;
+const GOOGLE_VERIFICATION = process.env.GOOGLE_SITE_VERIFICATION ?? undefined;
+const BING_VERIFICATION = process.env.BING_SITE_VERIFICATION ?? undefined;
+
 export function getRootMetadata(defaultOgImage?: string): Metadata {
   const ogImage = resolveMediaUrl(defaultOgImage ?? DEFAULT_OG_IMAGE) ?? absoluteUrl(DEFAULT_OG_IMAGE);
 
@@ -65,6 +72,14 @@ export function getRootMetadata(defaultOgImage?: string): Metadata {
       template: `%s | ${SITE_NAME}`,
     },
     description: DEFAULT_DESCRIPTION,
+    ...(GOOGLE_VERIFICATION || BING_VERIFICATION
+      ? {
+          verification: {
+            ...(GOOGLE_VERIFICATION ? { google: GOOGLE_VERIFICATION } : {}),
+            ...(BING_VERIFICATION ? { other: { "msvalidate.01": BING_VERIFICATION } } : {}),
+          },
+        }
+      : {}),
     openGraph: {
       type: "website",
       locale: "tr_TR",
@@ -76,6 +91,7 @@ export function getRootMetadata(defaultOgImage?: string): Metadata {
       title: SITE_NAME,
       description: DEFAULT_DESCRIPTION,
       images: [ogImage],
+      ...(TWITTER_HANDLE ? { site: TWITTER_HANDLE, creator: TWITTER_HANDLE } : {}),
     },
   };
 }
