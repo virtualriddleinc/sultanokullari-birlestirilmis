@@ -24,6 +24,7 @@
 .DS_Store
 *.pem
 /media
+public/_quarantine/
 
 # Ham görsel kaynağı (işlenmiş kopyalar public/site-media/gallery altında)
 /Görsel/

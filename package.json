@@ -22,7 +22,9 @@
     "seed:all": "cross-env NODE_OPTIONS=--no-deprecation tsx src/scripts/seed-all.ts",
     "cms:health": "cross-env NODE_OPTIONS=--no-deprecation tsx src/scripts/cms-health.ts",
     "check:importmap": "tsx src/scripts/check-importmap.ts",
-    "import:gorsel": "python3 scripts/import-gorsel-galleries.py"
+    "import:gorsel": "python3 scripts/import-gorsel-galleries.py",
+    "audit:unused-content": "python3 scripts/find-unused-content.py --markdown docs/kullanilmayan-icerik-raporu.md",
+    "check:cms-media-paths": "cross-env NODE_OPTIONS=--no-deprecation tsx scripts/check-cms-media-paths.ts"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",

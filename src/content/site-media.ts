@@ -51,64 +51,15 @@ export const heroMedia = [
 ] as const satisfies readonly SiteMedia[];
 
 export const headerMedia = {
-  hakkimizda: video(
-    "VID-20260429-WA0134.mp4",
-    "Sultan Okulları kurumsal tanıtım videosu",
-  ),
-  kurucuMesaji: image(
-    "IMG-20260429-WA0113.jpg",
-    "Kurucu mesajı için temsilî okul atmosferi",
-  ),
-  idariKadro: video(
-    "VID-20260429-WA0119.mp4",
-    "İdari kadro ve çalışma atmosferi videosu",
-  ),
   insanKaynaklari: image(
     "IMG-20260429-WA0137.jpg",
     "İnsan kaynakları ve ekip iletişimi",
-  ),
-  anaokulu: video(
-    "VID-20260429-WA0181.mp4",
-    "Anaokulu programından kısa video",
-    "IMG-20260429-WA0133.jpg",
-  ),
-  ilkokul: image("IMG-20260429-WA0082.jpg", "İlkokul sınıf atmosferi"),
-  ortaokul: image("IMG-20260429-WA0175.jpg", "Ortaokul kademe vitrini"),
-  nebevi: video(
-    "VID-20260429-WA0127.mp4",
-    "Nebevî eğitim ve siyer ortamından kısa video",
-    "IMG-20260429-WA0090.jpg",
-  ),
-  hafizlik: video(
-    "VID-20260429-WA0119.mp4",
-    "Hâfızlık halkasından kısa video",
-    "IMG-20260429-WA0114.jpg",
-  ),
-  degerler: image(
-    "IMG-20260429-WA0112.jpg",
-    "Değerler eğitimi sınıf etkinliği",
-  ),
-  ciftDil: image(
-    "IMG-20260429-WA0086.jpg",
-    "Çift yabancı dil eğitiminden bir kare",
   ),
   atolyeler: video(
     "VID-20260429-WA0124.mp4",
     "Atölye çalışmalarından kısa video",
     "IMG-20260429-WA0110.jpg",
   ),
-  olanaklar: image(
-    "IMG-20260429-WA0135.jpg",
-    "Okul olanaklarından seçili kare",
-  ),
-  rehberlik: image(
-    "IMG-20260429-WA0129.jpg",
-    "Rehberlik ve öğrenci gelişimi alanı",
-  ),
-  sancaktepe: image("IMG-20260429-WA0138.jpg", "Sancaktepe kampüs fotoğrafı"),
-  basiskele: image("IMG-20260429-WA0131.jpg", "Başiskele kampüs fotoğrafı"),
-  serdivan: image("IMG-20260429-WA0041.jpg", "Serdivan kampüs fotoğrafı"),
-  sincan: image("IMG-20260429-WA0106.jpg", "Sincan kampüs fotoğrafı"),
 } as const;
 
 export const hexGalleryMedia = [
