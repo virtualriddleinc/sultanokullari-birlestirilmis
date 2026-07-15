@@ -74,6 +74,7 @@
     "typescript": "^5"
   },
   "overrides": {
-    "sharp": "0.34.5"
+    "sharp": "0.34.5",
+    "drizzle-kit": "0.31.10"
   }
 }
