@@ -75,9 +75,29 @@ function mapCmsBranchExtended(doc: Record<string, unknown>): CmsBranch {
   };
 }
 
+function isNextBuild(): boolean {
+  return (
+    process.env.NEXT_PHASE === "phase-production-build" ||
+    process.env.npm_lifecycle_event === "build"
+  );
+}
+
+function staticFallbackBranches(): CmsBranch[] {
+  return staticBranches.map((b) => ({
+    ...b,
+    citySlug: getStaticCitySlug(b.slug),
+    campusSlug: getStaticCampusSlug(b.slug),
+    previewMedia: branchPreviewMedia[b.slug],
+  }));
+}
+
 export async function getPublishedBranches(
   options: FetchOptions = {},
 ): Promise<CmsBranch[]> {
+  // Build sırasında DB bağlantısı yoktur; statik veri kullanılır.
+  if (isNextBuild() && !options.draft) {
+    return staticFallbackBranches();
+  }
   try {
     const payload = await getPayloadClient();
     const result = await payload.find({
@@ -105,12 +125,7 @@ export async function getPublishedBranches(
     );
   } catch (error) {
     console.warn("Şube verisi CMS'ten alınamadı, statik veri kullanılıyor.", error);
-    return staticBranches.map((b) => ({
-      ...b,
-      citySlug: getStaticCitySlug(b.slug),
-      campusSlug: getStaticCampusSlug(b.slug),
-      previewMedia: branchPreviewMedia[b.slug],
-    }));
+    return staticFallbackBranches();
   }
 }
 

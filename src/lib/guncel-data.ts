@@ -110,9 +110,17 @@ type FetchOptions = {
   draft?: boolean;
 };
 
+function isNextBuild(): boolean {
+  return (
+    process.env.NEXT_PHASE === "phase-production-build" ||
+    process.env.npm_lifecycle_event === "build"
+  );
+}
+
 export async function getPublishedNews(
   options: FetchOptions = {},
 ): Promise<(SiteNews & { slug?: string })[]> {
+  if (isNextBuild() && !options.draft) return [];
   try {
     const payload = await getPayloadClient();
     const result = await payload.find({
@@ -176,6 +184,7 @@ export async function getNewsBySlug(
 export async function getPublishedEvents(
   options: FetchOptions = {},
 ): Promise<(SiteEvent & { slug?: string })[]> {
+  if (isNextBuild() && !options.draft) return [];
   try {
     const payload = await getPayloadClient();
     const result = await payload.find({
