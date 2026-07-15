@@ -582,13 +582,8 @@ export function SiteHeader({
                 <CentralLogo onClick={closeAllMenus} />
               </div>
 
-              {/* Sağ — "Sizi Arayalım" butonu */}
-              <Link
-                href="/iletisim"
-                className="flex h-[52px] items-center justify-center rounded-xl bg-[#4cff00] px-5 text-[0.88rem] font-bold text-black shadow-sm transition-opacity hover:opacity-85 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1a1c18]"
-              >
-                Sizi Arayalım
-              </Link>
+              {/* Sağ — hamburger ile simetri için boşluk (min-w = hamburger genişliği) */}
+              <div className="min-h-[44px] min-w-[44px]" aria-hidden="true" />
             </div>
 
             {/* ---- Desktop grid (lg+) · 10 kolon · baş ve son kenar tamponu ---- */}
