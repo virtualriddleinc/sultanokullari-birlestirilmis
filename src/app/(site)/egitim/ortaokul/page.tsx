@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { draftMode } from "next/headers";
 import { ortaokulSayfasi } from "@/content/page-templates";
 import { educationGalleryMedia } from "@/content/site-media";
@@ -11,14 +11,17 @@ import { ortaokul } from "@/content/egitim";
 import { mapCmsOverlayContent, toPageMedia } from "@/lib/cms-overlay";
 import { PAGE_MEDIA } from "@/lib/menu-images";
 import { getPageByPath } from "@/lib/pages-data";
+import { buildBreadcrumbSchema } from "@/lib/schema/breadcrumb";
+import { JsonLd } from "@/lib/schema/JsonLd";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
+  path: "/egitim/ortaokul",
   title: "Ortaokul",
   description:
     "Ortaokul programı; atölyeler, kulüpler, etüt ve değerler eğitimi.",
-};
+});
 
 export default async function Page() {
   const { isEnabled: isDraft } = await draftMode();
@@ -35,6 +38,11 @@ export default async function Page() {
   });
   const { etut } = ortaokulSayfasi;
 
+  const breadcrumbs = buildBreadcrumbSchema([
+    { name: "Ana sayfa", path: "/" },
+    { name: "Eğitim", path: "/egitim/kademeler" },
+    { name: "Ortaokul", path: "/egitim/ortaokul" },
+  ]);
   return (
     <QuoteOverlayPageShell
       title={content.title}
@@ -43,6 +51,7 @@ export default async function Page() {
       quote={ortaokul.quote}
       quoteCitation={ortaokul.quoteCitation}
     >
+      <JsonLd data={breadcrumbs} />
       <PageStorySection
         eyebrow={content.story.eyebrow}
         motto={content.story.motto}

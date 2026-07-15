@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import Link from "@/components/navigation/site-link";
 import { PageShell } from "@/components/page-shell";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
+  path: "/kvkk",
   title: "KVKK Aydınlatma Metni",
   description:
     "Sultan Okulları Kişisel Verilerin Korunması ve İşlenmesine İlişkin Aydınlatma Metni — 6698 sayılı KVKK kapsamında haklarınız ve veri işleme politikamız.",
-};
+});
 
 const sections = [
   {

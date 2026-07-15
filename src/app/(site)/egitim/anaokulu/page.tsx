@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { draftMode } from "next/headers";
 import { anaokulu } from "@/content/egitim";
 import { anaokuluSayfasi } from "@/content/page-templates";
@@ -11,14 +11,17 @@ import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-ga
 import { mapCmsOverlayContent, toPageMedia } from "@/lib/cms-overlay";
 import { PAGE_MEDIA } from "@/lib/menu-images";
 import { getPageByPath } from "@/lib/pages-data";
+import { buildBreadcrumbSchema } from "@/lib/schema/breadcrumb";
+import { JsonLd } from "@/lib/schema/JsonLd";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
+  path: "/egitim/anaokulu",
   title: "Anaokulu",
   description:
     "Anaokulu programı, Kur’an ve Peygamber (s.a.s) Ahlâkı, oyun tabanlı öğrenme.",
-};
+});
 
 export default async function Page() {
   const { isEnabled: isDraft } = await draftMode();
@@ -31,6 +34,11 @@ export default async function Page() {
     heroMedia: PAGE_MEDIA.anaokulu,
   });
 
+  const breadcrumbs = buildBreadcrumbSchema([
+    { name: "Ana sayfa", path: "/" },
+    { name: "Eğitim", path: "/egitim/kademeler" },
+    { name: "Anaokulu", path: "/egitim/anaokulu" },
+  ]);
   return (
     <QuoteOverlayPageShell
       title={content.title}
@@ -39,6 +47,7 @@ export default async function Page() {
       quote={anaokulu.quote}
       quoteCitation={anaokulu.quoteCitation}
     >
+      <JsonLd data={breadcrumbs} />
       <PageStorySection
         eyebrow={content.story.eyebrow}
         motto={content.story.motto}

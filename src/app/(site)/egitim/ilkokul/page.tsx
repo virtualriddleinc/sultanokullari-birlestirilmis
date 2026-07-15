@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { draftMode } from "next/headers";
 import { ilkokul } from "@/content/egitim";
 import { ilkokulSayfasi } from "@/content/page-templates";
@@ -9,14 +9,17 @@ import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-ga
 import { mapCmsOverlayContent, toPageMedia } from "@/lib/cms-overlay";
 import { PAGE_MEDIA } from "@/lib/menu-images";
 import { getPageByPath } from "@/lib/pages-data";
+import { buildBreadcrumbSchema } from "@/lib/schema/breadcrumb";
+import { JsonLd } from "@/lib/schema/JsonLd";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
+  path: "/egitim/ilkokul",
   title: "İlkokul",
   description:
     "İlkokul programı; akademik ve Mânevî gelişim, yapılandırmacı yaklaşım.",
-};
+});
 
 export default async function Page() {
   const { isEnabled: isDraft } = await draftMode();
@@ -29,6 +32,11 @@ export default async function Page() {
     heroMedia: PAGE_MEDIA.ilkokul,
   });
 
+  const breadcrumbs = buildBreadcrumbSchema([
+    { name: "Ana sayfa", path: "/" },
+    { name: "Eğitim", path: "/egitim/kademeler" },
+    { name: "İlkokul", path: "/egitim/ilkokul" },
+  ]);
   return (
     <QuoteOverlayPageShell
       title={content.title}
@@ -37,6 +45,7 @@ export default async function Page() {
       quote={ilkokul.quote}
       quoteCitation={ilkokul.quoteCitation}
     >
+      <JsonLd data={breadcrumbs} />
       <PageStorySection
         eyebrow={content.story.eyebrow}
         motto={content.story.motto}

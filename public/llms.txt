@@ -1,0 +1,78 @@
+# Sultan Okulları — llms.txt
+# https://sultanokullari.com.tr
+# Son güncelleme: 2026
+
+## Kurum Kimliği
+
+Sultan Okulları, 2017 yılında kurulan ve Türkiye'nin beş şehrinde faaliyet gösteren özel eğitim kurumudur. Millî ve mânevî değerlerle bütünleşik, sultan mektebi modeline dayalı anaokulu, ilkokul ve ortaokul programları sunar. Müfredat, akademik mükemmeliyeti Kur'an ve Peygamber ahlâkıyla harmanlayan "Nebevî Eğitim" anlayışına dayanmaktadır.
+
+## Alıntılanabilir Özet
+
+Sultan Okulları; İstanbul, Kocaeli, Sakarya, Ankara ve Konya'da beş kampüste eğitim veren, değerler eğitimini akademik gelişimle bütünleştiren özel bir okul zinciridir. 2017'de kurulan okullar, hafızlık, çift yabancı dil, eğitim koçluğu ve veli akademisi gibi özgün programlarıyla bilinmektedir.
+
+## Kampüsler
+
+- İstanbul Sancaktepe Kampüsü: https://sultanokullari.com.tr/okullarimiz/istanbul/sancaktepe
+- Kocaeli Başiskele Kampüsü: https://sultanokullari.com.tr/okullarimiz/kocaeli/basiskele
+- Sakarya Serdivan Kampüsü: https://sultanokullari.com.tr/okullarimiz/sakarya/serdivan
+- Ankara Sincan Kampüsü: https://sultanokullari.com.tr/okullarimiz/ankara/sincan
+- Konya Mevlânâ Kampüsü: https://sultanokullari.com.tr/okullarimiz/konya/mevlana
+
+## Eğitim Programları
+
+- Anaokulu: https://sultanokullari.com.tr/egitim/anaokulu
+  Oyun tabanlı öğrenme, Kur'an ve Peygamber ahlâkı, motor gelişim.
+
+- İlkokul: https://sultanokullari.com.tr/egitim/ilkokul
+  Yapılandırmacı yaklaşım, akademik ve mânevî gelişim bütünlüğü.
+
+- Ortaokul: https://sultanokullari.com.tr/egitim/ortaokul
+  Atölyeler, kulüpler, etüt ve değerler eğitimi.
+
+- Hâfızlık Eğitimi: https://sultanokullari.com.tr/egitim/hafizlik
+  Otağ-ı Hümâyun'da mescid-rahle usulüyle, anaokulundan başlayıp ilkokulda taçlanan program.
+
+- Nebevî Eğitim: https://sultanokullari.com.tr/egitim/nebevi-egitim
+  Siyer ve Peygamber ahlâkı dersleriyle bütünleşik müfredat.
+
+## Kurumsal Bilgi
+
+- Hakkımızda: https://sultanokullari.com.tr/kurumsal/hakkimizda
+- Misyon ve Vizyon: https://sultanokullari.com.tr/kurumsal/niyetimiz-istikametimiz
+- Nesil Tasavvuru: https://sultanokullari.com.tr/kurumsal/nesil-tasavvurumuz
+- Kurumsal Değerler: https://sultanokullari.com.tr/kurumsal/kurumsal-degerlerimiz
+- Neden Sultan?: https://sultanokullari.com.tr/kurumsal/neden-sultan
+- İdari Kadro: https://sultanokullari.com.tr/kurumsal/idari-kadro
+- Burs Olanakları: https://sultanokullari.com.tr/kurumsal/burs-olanaklari
+- İnsan Kaynakları: https://sultanokullari.com.tr/kurumsal/insan-kaynaklari
+
+## Akademik
+
+- Akademik Gelişim ve Takip: https://sultanokullari.com.tr/akademik/gelisim
+- Yabancı Dil Programı: https://sultanokullari.com.tr/akademik/yabanci-dil
+
+## Rehberlik ve Veli
+
+- Eğitim Koçluğu: https://sultanokullari.com.tr/rehberlik/egitim-koclugu
+- Veli Akademisi: https://sultanokullari.com.tr/rehberlik/veli
+
+## Güncel İçerik
+
+- Haberler: https://sultanokullari.com.tr/guncel/haberler
+- Etkinlikler: https://sultanokullari.com.tr/guncel/etkinlikler
+- Medya Arşivi: https://sultanokullari.com.tr/guncel/medya
+
+## Diğer
+
+- Sık Sorulan Sorular: https://sultanokullari.com.tr/sss
+- İletişim: https://sultanokullari.com.tr/iletisim
+- Site Haritası: https://sultanokullari.com.tr/sitemap
+
+## Teknik Bilgi
+
+- Dil: Türkçe (tr-TR)
+- Kuruluş: 2017
+- Tür: Özel eğitim kurumu (anaokulu, ilkokul, ortaokul)
+- Kapsam: 5 şehir, 5 kampüs
+- Web: https://sultanokullari.com.tr
+- İletişim: info@sultanokullari.com

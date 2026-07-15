@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { AtolyeHoneycomb } from "@/components/atolyeler/atolye-honeycomb";
 import { SectionGrid } from "@/components/layout/section-grid";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
+  path: "/atolyeler-ve-kulupler",
   title: "Atölyeler ve kulüpler",
   description:
     "Sultan Okulları atölyeleri ve kulüpleri — bilim, sanat, sosyal ve spor kategorilerinde altıgen petek görünümünde envanter.",
-};
+});
 
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
 

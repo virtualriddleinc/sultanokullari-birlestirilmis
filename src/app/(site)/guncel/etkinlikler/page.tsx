@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import Link from "@/components/navigation/site-link";
 import { branches } from "@/content/branches";
 import { PageShell } from "@/components/page-shell";
@@ -7,10 +7,11 @@ import { getPublishedEvents } from "@/lib/guncel-data";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
+  path: "/guncel/etkinlikler",
   title: "Etkinlik takvimi",
   description: "Yaklaşan etkinlikler ve tarihler.",
-};
+});
 
 function formatDate(iso: string) {
   try {
