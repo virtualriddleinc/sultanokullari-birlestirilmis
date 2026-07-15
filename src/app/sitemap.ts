@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
 
-import { getAllPublishedSlugs } from "@/lib/guncel-data";
 import { STATIC_SITE_ROUTES } from "@/lib/seo/static-routes";
 import { absoluteUrl } from "@/lib/seo/site-url";
 
@@ -13,7 +12,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: path === "/" ? 1 : 0.7,
   }));
 
+  // Dinamik import: payload.config → assertCmsEnv import-time throw'u
+  // buradaki try/catch tarafından yakalanabilsin (statik import yakalanamaz).
   try {
+    const { getAllPublishedSlugs } = await import("@/lib/guncel-data");
     const { news, events } = await getAllPublishedSlugs();
     const dynamicEntries: MetadataRoute.Sitemap = [
       ...news.map((slug) => ({

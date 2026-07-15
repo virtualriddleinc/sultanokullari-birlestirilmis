@@ -1,6 +1,8 @@
 /**
  * CMS / runtime ortam doğrulaması.
- * PAYLOAD_SECRET veya DATABASE_URL eksikse süreç durur.
+ * Runtime'da PAYLOAD_SECRET veya DATABASE_URL eksikse süreç durur.
+ * `next build` (page data collect) sırasında eksik secret'lar modül
+ * yüklenmesini engellemez; sitemap ve diğer route'lar statik fallback'e düşer.
  */
 
 import { config as loadEnv } from "dotenv";
@@ -17,6 +19,14 @@ const WEAK_SECRETS = new Set([
   "test",
 ]);
 
+/** Next.js production build (`next build`) sırasında true. */
+function isNextProductionBuild(): boolean {
+  return (
+    process.env.NEXT_PHASE === "phase-production-build" ||
+    process.env.npm_lifecycle_event === "build"
+  );
+}
+
 function requireEnv(name: string): string {
   const value = process.env[name]?.trim() ?? "";
   if (!value) {
@@ -27,15 +37,34 @@ function requireEnv(name: string): string {
   return value;
 }
 
+const BUILD_PLACEHOLDER_SECRET =
+  "BUILD_TIME_PLACEHOLDER_PAYLOAD_SECRET_32CHARS";
+const BUILD_PLACEHOLDER_DATABASE_URL =
+  "postgres://build:build@127.0.0.1:5432/payload_build";
+
 export function assertCmsEnv(): {
   payloadSecret: string;
   databaseUrl: string;
   previewSecret: string;
 } {
+  const payloadSecretRaw = process.env.PAYLOAD_SECRET?.trim() ?? "";
+  const databaseUrlRaw = process.env.DATABASE_URL?.trim() ?? "";
+  const previewSecret = process.env.PREVIEW_SECRET?.trim() ?? "";
+  const isProd = process.env.NODE_ENV === "production";
+  const isBuild = isNextProductionBuild();
+
+  // Build fazında secret yoksa placeholder ile devam et.
+  // Aksi halde /sitemap.xml collect, import-time throw ile tüm build'i düşürür.
+  if (isBuild && (!payloadSecretRaw || !databaseUrlRaw)) {
+    return {
+      payloadSecret: payloadSecretRaw || BUILD_PLACEHOLDER_SECRET,
+      databaseUrl: databaseUrlRaw || BUILD_PLACEHOLDER_DATABASE_URL,
+      previewSecret,
+    };
+  }
+
   const payloadSecret = requireEnv("PAYLOAD_SECRET");
   const databaseUrl = requireEnv("DATABASE_URL");
-  const isProd = process.env.NODE_ENV === "production";
-  const previewSecret = process.env.PREVIEW_SECRET?.trim() ?? "";
 
   if (payloadSecret.length < 16) {
     throw new Error(
@@ -47,7 +76,10 @@ export function assertCmsEnv(): {
   const allowLocalProduction =
     process.env.ALLOW_LOCAL_PRODUCTION?.trim() === "true";
 
-  if (isProd && !allowLocalProduction) {
+  // Runtime production kontrolleri (build collect sırasında atlanır —
+  // Vercel build anında PREVIEW_SECRET henüz yoksa bile derleme tamamlanır;
+  // canlı isteklerde yine zorunludur).
+  if (isProd && !allowLocalProduction && !isBuild) {
     if (!previewSecret) {
       throw new Error("[env] Üretimde PREVIEW_SECRET zorunludur.");
     }
