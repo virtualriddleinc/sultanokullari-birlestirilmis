@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { AtolyeHoneycomb } from "@/components/atolyeler/atolye-honeycomb";
 import { SectionGrid } from "@/components/layout/section-grid";
 import { workshopIntro } from "@/content/workshops";
 
-export const metadata: Metadata = {
-  title: "Atölyeler ve Kulüpler",
+export const metadata = buildPageMetadata({
+  path: "/atolyeler-ve-kulupler",
+  title: "Atölyeler ve kulüpler",
   description: workshopIntro[0],
-};
+});
 
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
 

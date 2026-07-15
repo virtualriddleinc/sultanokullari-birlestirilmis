@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { draftMode } from "next/headers";
 import { ciftDil } from "@/content/egitim";
 import { yabanciDil } from "@/content/page-templates";
@@ -12,17 +12,27 @@ import { mapCmsOverlayContent, toPageMedia } from "@/lib/cms-overlay";
 import { PAGE_MEDIA } from "@/lib/menu-images";
 import { getPageByPath } from "@/lib/pages-data";
 import Link from "@/components/navigation/site-link";
+import { buildBreadcrumbSchema } from "@/lib/schema/breadcrumb";
+import { JsonLd } from "@/lib/schema/JsonLd";
 
 export const dynamic = "force-dynamic";
 
 const MERGED_INTRO =
   "Arapça ve İngilizce; alanında uzman yabancı öğretmenlerle okul öncesi kademesinden itibaren dinleme, anlama, konuşma, okuma ve yazma becerilerinin tümünü dengeli geliştiren program.";
 
-const galleryItems = pageGalleryMedia.yabanciDil;
-export const metadata: Metadata = {
+const galleryItems = [
+  ...pageGalleryMedia.yabanciDil,
+  ...educationGalleryMedia.ciftDil.filter(
+    (item) =>
+      !pageGalleryMedia.yabanciDil.some((existing) => existing.src === item.src),
+  ),
+];
+
+export const metadata = buildPageMetadata({
+  path: "/akademik/yabanci-dil",
   title: "Yabancı Dil & Atölyeler",
   description: MERGED_INTRO,
-};
+});
 
 export default async function Page() {
   const { isEnabled: isDraft } = await draftMode();
@@ -41,6 +51,11 @@ export default async function Page() {
     heroMedia: PAGE_MEDIA.yabanciDil,
   });
 
+  const breadcrumbs = buildBreadcrumbSchema([
+    { name: "Ana sayfa", path: "/" },
+    { name: "Akademik", path: "/akademik/gelisim" },
+    { name: "Yabancı Dil & Atölyeler", path: "/akademik/yabanci-dil" },
+  ]);
   return (
     <PageShell
       title={content.title}
@@ -48,6 +63,7 @@ export default async function Page() {
       media={toPageMedia(content.heroMedia) ?? PAGE_MEDIA.yabanciDil}
       mediaLayout="overlay"
     >
+      <JsonLd data={breadcrumbs} />
       <PageStorySection
         eyebrow={content.story.eyebrow}
         motto={content.story.motto}

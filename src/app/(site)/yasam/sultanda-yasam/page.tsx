@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { draftMode } from "next/headers";
 import { sultandaYasam } from "@/content/page-templates";
 import { pageGalleryMedia } from "@/content/site-media";
@@ -11,10 +11,11 @@ import { getPageByPath } from "@/lib/pages-data";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
+  path: "/yasam/sultanda-yasam",
   title: "Sultanda Yaşam",
   description: sultandaYasam.intro,
-};
+});
 
 export default async function Page() {
   const { isEnabled: isDraft } = await draftMode();

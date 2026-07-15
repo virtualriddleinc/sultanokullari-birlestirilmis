@@ -39,6 +39,20 @@ export function buildOrganizationGraph(options: {
           "Milli ve Mânevî değerlerle bütünleşik eğitim. Anaokulu, ilkokul ve ortaokul programları.",
         foundingDate: "2017",
         email: "info@sultanokullari.com",
+        contactPoint: {
+          "@type": "ContactPoint",
+          email: "info@sultanokullari.com",
+          contactType: "customer support",
+          availableLanguage: "Turkish",
+          areaServed: "TR",
+        },
+        areaServed: [
+          { "@type": "City", name: "İstanbul" },
+          { "@type": "City", name: "Kocaeli" },
+          { "@type": "City", name: "Sakarya" },
+          { "@type": "City", name: "Ankara" },
+          { "@type": "City", name: "Konya" },
+        ],
         sameAs,
         educationalLevel: ["Preschool", "Primary Education", "Middle School"],
         knowsAbout: [
@@ -46,6 +60,7 @@ export function buildOrganizationGraph(options: {
           "Nebevî Eğitim",
           "Sultan Mektebi Modeli",
           "Çift Yabancı Dil",
+          "Hâfızlık Eğitimi",
         ],
         ...(subOrganizations.length ? { subOrganization: subOrganizations } : {}),
       },

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { draftMode } from "next/headers";
 import {
   kurulusParagraflari,
@@ -9,17 +9,25 @@ import { CmsPageSections } from "@/components/cms/cms-page-sections";
 import { PageShell } from "@/components/page-shell";
 import { HakkimizdaNav } from "@/components/kurumsal/hakkimizda-nav";
 import { getPageBySlug } from "@/lib/pages-data";
+import { buildBreadcrumbSchema } from "@/lib/schema/breadcrumb";
+import { JsonLd } from "@/lib/schema/JsonLd";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
+  path: "/kurumsal/hakkimizda",
   title: "Hakkımızda",
   description: kurulusParagraflari[0],
-};
+});
 
 export default async function Page() {
   const { isEnabled: isDraft } = await draftMode();
   const cmsPage = await getPageBySlug("hakkimizda", { draft: isDraft });
+  const breadcrumbs = buildBreadcrumbSchema([
+    { name: "Ana sayfa", path: "/" },
+    { name: "Kurumsal", path: "/kurumsal/hakkimizda" },
+    { name: "Hakkımızda", path: "/kurumsal/hakkimizda" },
+  ]);
 
   if (cmsPage?.sections?.length) {
     return (
@@ -27,14 +35,15 @@ export default async function Page() {
         title={cmsPage.title}
         intro={cmsPage.intro ?? undefined}
       >
+        <JsonLd data={breadcrumbs} />
         <HakkimizdaNav />
         <CmsPageSections sections={cmsPage.sections} />
       </PageShell>
     );
   }
-
   return (
     <PageShell title="Hakkımızda" intro={kurulusParagraflari[0]}>
+      <JsonLd data={breadcrumbs} />
       <HakkimizdaNav />
 
       <section

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import Link from "@/components/navigation/site-link";
 import { PageShell } from "@/components/page-shell";
 import { StaggerItem, StaggerList } from "@/components/motion/stagger-list";
@@ -6,10 +6,11 @@ import { getPublishedNews } from "@/lib/guncel-data";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
+  path: "/guncel/haberler",
   title: "Haberler ve duyurular",
   description: "Kurum haberleri ve duyurular.",
-};
+});
 
 function formatDate(iso: string) {
   try {

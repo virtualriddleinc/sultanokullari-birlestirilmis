@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { draftMode } from "next/headers";
 import { nebevi } from "@/content/egitim";
 import { nebeviEgitimSayfasi } from "@/content/page-templates";
@@ -10,13 +10,17 @@ import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-ga
 import { mapCmsOverlayContent, toPageMedia } from "@/lib/cms-overlay";
 import { PAGE_MEDIA } from "@/lib/menu-images";
 import { getPageByPath } from "@/lib/pages-data";
+import { buildBreadcrumbSchema } from "@/lib/schema/breadcrumb";
+import { JsonLd } from "@/lib/schema/JsonLd";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
-  title: "Nebevî Eğitim ve Hâl Dili",
-  description: nebevi.intro[0],
-};
+export const metadata = buildPageMetadata({
+  path: "/egitim/nebevi-egitim",
+  title: "Nebevî Eğitim",
+  description:
+    "Üsve-i hasene Efendimizi rehber alan, siyer ve Peygamber (s.a.s) Ahlâkı dersleriyle bütünleşik nebevî eğitim programı.",
+});
 
 export default async function Page() {
   const { isEnabled: isDraft } = await draftMode();
@@ -34,6 +38,11 @@ export default async function Page() {
     heroMedia: PAGE_MEDIA.nebeviEgitim,
   });
 
+  const breadcrumbs = buildBreadcrumbSchema([
+    { name: "Ana sayfa", path: "/" },
+    { name: "Eğitim", path: "/egitim/kademeler" },
+    { name: "Nebevî Eğitim", path: "/egitim/nebevi-egitim" },
+  ]);
   return (
     <QuoteOverlayPageShell
       title={content.title}
@@ -42,6 +51,7 @@ export default async function Page() {
       quote={nebevi.quote}
       quoteFullWidth
     >
+      <JsonLd data={breadcrumbs} />
       <PageStorySection
         eyebrow={content.story.eyebrow}
         motto={content.story.motto}

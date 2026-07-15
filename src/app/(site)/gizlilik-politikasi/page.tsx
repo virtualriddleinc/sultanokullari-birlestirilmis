@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import Link from "@/components/navigation/site-link";
 import { PageShell } from "@/components/page-shell";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
+  path: "/gizlilik-politikasi",
   title: "Gizlilik Politikası",
   description:
     "Sultan Okulları Gizlilik Politikası — kişisel verilerinizin nasıl toplandığını, kullanıldığını ve korunduğunu açıklar.",
-};
+});
 
 function SectionHeading({
   id,

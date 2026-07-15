@@ -1,23 +1,32 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { PageShell } from "@/components/page-shell";
 import { StaggerItem, StaggerList } from "@/components/motion/stagger-list";
 import { getNedenSultanItems } from "@/lib/home-data";
+import { buildBreadcrumbSchema } from "@/lib/schema/breadcrumb";
+import { JsonLd } from "@/lib/schema/JsonLd";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
+  path: "/kurumsal/neden-sultan",
   title: "Niçin Sultan Okulları?",
   description: "Kurum değerleri ve tercih nedenleri — 11 madde.",
-};
+});
 
 export default async function Page() {
   const items = await getNedenSultanItems();
 
+  const breadcrumbs = buildBreadcrumbSchema([
+    { name: "Ana sayfa", path: "/" },
+    { name: "Kurumsal", path: "/kurumsal/hakkimizda" },
+    { name: "Niçin Sultan Okulları?", path: "/kurumsal/neden-sultan" },
+  ]);
   return (
     <PageShell
       title="Niçin Sultan Okulları?"
       intro="Temiz ve huzurlu ortamdan nebevî eğitime, doğa ile iç içe yaşamdan hâfızlık vizyonuna kadar on bir başlıkta özet."
     >
+      <JsonLd data={breadcrumbs} />
       <StaggerList as="ol" className="list-none space-y-6">
         {items.map((item, i) => (
           <StaggerItem

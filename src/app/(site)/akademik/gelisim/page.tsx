@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { buildPageMetadata } from "@/lib/seo/metadata";
 import { draftMode } from "next/headers";
 import { akademikGelisim } from "@/content/page-templates";
 import { pageGalleryMedia } from "@/content/site-media";
@@ -8,13 +8,16 @@ import { KurumsalKimlikGalerisi } from "@/components/kurumsal/kurumsal-kimlik-ga
 import { mapCmsOverlayContent, toPageMedia } from "@/lib/cms-overlay";
 import { PAGE_MEDIA } from "@/lib/menu-images";
 import { getPageByPath } from "@/lib/pages-data";
+import { buildBreadcrumbSchema } from "@/lib/schema/breadcrumb";
+import { JsonLd } from "@/lib/schema/JsonLd";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = {
+export const metadata = buildPageMetadata({
+  path: "/akademik/gelisim",
   title: "Akademik Gelişim ve Tâkib",
   description: akademikGelisim.intro,
-};
+});
 
 export default async function Page() {
   const { isEnabled: isDraft } = await draftMode();
@@ -30,6 +33,11 @@ export default async function Page() {
     heroMedia: PAGE_MEDIA.akademikGelisim,
   });
 
+  const breadcrumbs = buildBreadcrumbSchema([
+    { name: "Ana sayfa", path: "/" },
+    { name: "Akademik", path: "/akademik/gelisim" },
+    { name: "Akademik Gelişim ve Tâkib", path: "/akademik/gelisim" },
+  ]);
   return (
     <PageShell
       title={content.title}
@@ -37,6 +45,7 @@ export default async function Page() {
       media={toPageMedia(content.heroMedia) ?? PAGE_MEDIA.akademikGelisim}
       mediaLayout="overlay"
     >
+      <JsonLd data={breadcrumbs} />
       <PageStorySection
         eyebrow={content.story.eyebrow}
         motto={content.story.motto}
