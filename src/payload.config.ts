@@ -61,6 +61,9 @@ const emailAdapter = smtpHost
   : undefined;
 
 export default buildConfig({
+  serverURL:
+    process.env.SITE_URL ??
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined),
   admin: {
     user: Users.slug,
     meta: {

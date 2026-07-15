@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "src/app/(payload)/api/[...slug]/route.ts": { "maxDuration": 60 },
+    "src/app/(payload)/api/graphql/route.ts": { "maxDuration": 60 },
+    "src/app/(payload)/api/graphql-playground/route.ts": { "maxDuration": 60 }
+  }
+}

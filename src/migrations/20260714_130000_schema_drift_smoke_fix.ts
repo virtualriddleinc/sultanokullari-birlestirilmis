@@ -47,6 +47,58 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
     EXCEPTION WHEN duplicate_object THEN NULL; WHEN undefined_object THEN NULL; END $$;
   `);
 
+  // media_items tablosu — local dev'de push ile oluşturulmuş; yeni ortamlarda eksikse oluştur
+  await db.execute(sql`
+    DO $$ BEGIN
+      CREATE TYPE "public"."enum_media_items_kind" AS ENUM ('foto', 'video');
+    EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
+    DO $$ BEGIN
+      CREATE TYPE "public"."enum_media_items_status" AS ENUM ('draft', 'published');
+    EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
+    DO $$ BEGIN
+      CREATE TYPE "public"."enum__media_items_v_version_kind" AS ENUM ('foto', 'video');
+    EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
+    DO $$ BEGIN
+      CREATE TYPE "public"."enum__media_items_v_version_status" AS ENUM ('draft', 'published');
+    EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
+    CREATE TABLE IF NOT EXISTS "media_items" (
+      "id" serial PRIMARY KEY NOT NULL,
+      "title" varchar NOT NULL,
+      "kind" "public"."enum_media_items_kind" NOT NULL DEFAULT 'foto',
+      "date" timestamp(3) with time zone NOT NULL,
+      "featured" boolean DEFAULT false,
+      "media_id" integer,
+      "alt" varchar NOT NULL DEFAULT '',
+      "caption" varchar,
+      "updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+      "created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+      "_status" "public"."enum_media_items_status" DEFAULT 'draft'
+    );
+
+    CREATE TABLE IF NOT EXISTS "_media_items_v" (
+      "id" serial PRIMARY KEY NOT NULL,
+      "parent_id" integer,
+      "version_title" varchar,
+      "version_kind" "public"."enum__media_items_v_version_kind" DEFAULT 'foto',
+      "version_date" timestamp(3) with time zone,
+      "version_featured" boolean,
+      "version_media_id" integer,
+      "version_alt" varchar,
+      "version_caption" varchar,
+      "version_updated_at" timestamp(3) with time zone,
+      "version_created_at" timestamp(3) with time zone,
+      "version__status" "public"."enum__media_items_v_version_status" DEFAULT 'draft',
+      "created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+      "updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+      "latest" boolean,
+      "autosave" boolean
+    );
+  `);
+
   await db.execute(sql`
     ALTER TABLE "news" ADD COLUMN IF NOT EXISTS "kind" "public"."enum_news_kind" DEFAULT 'haber';
     ALTER TABLE "news" ADD COLUMN IF NOT EXISTS "seo_title" varchar;

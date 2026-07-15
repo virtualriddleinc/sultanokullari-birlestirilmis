@@ -14,6 +14,25 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
       WHEN undefined_object THEN NULL;
     END $$;
 
+    -- _pages_v versiyonlama tablosu — ilk migration'da eksikse oluştur
+    CREATE TABLE IF NOT EXISTS "_pages_v" (
+      "id" serial PRIMARY KEY NOT NULL,
+      "parent_id" integer,
+      "version_updated_at" timestamp(3) with time zone,
+      "version_created_at" timestamp(3) with time zone,
+      "created_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+      "updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+      "latest" boolean,
+      "autosave" boolean
+    );
+
+    -- navigation global tablosu — ilk migration'da eksikse oluştur
+    CREATE TABLE IF NOT EXISTS "navigation" (
+      "id" serial PRIMARY KEY NOT NULL,
+      "updated_at" timestamp(3) with time zone DEFAULT now() NOT NULL,
+      "created_at" timestamp(3) with time zone DEFAULT now() NOT NULL
+    );
+
     -- Zamanlanmış yayın
     ALTER TABLE "news" ADD COLUMN IF NOT EXISTS "publish_at" timestamp(3) with time zone;
     ALTER TABLE "events" ADD COLUMN IF NOT EXISTS "publish_at" timestamp(3) with time zone;
