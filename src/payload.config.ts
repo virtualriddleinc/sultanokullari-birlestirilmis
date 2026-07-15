@@ -95,6 +95,12 @@ export default buildConfig({
       logout: {
         Button: "@/components/payload/admin/AdminLogoutButton",
       },
+      views: {
+        createFirstUser: {
+          Component: "@/components/payload/admin/CreateFirstUserView",
+          path: "/create-first-user",
+        },
+      },
     },
     livePreview: {
       url: () => buildPreviewUrl("/"),
