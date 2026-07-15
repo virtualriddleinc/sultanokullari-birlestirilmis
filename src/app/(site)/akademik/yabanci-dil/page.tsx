@@ -20,13 +20,7 @@ export const dynamic = "force-dynamic";
 const MERGED_INTRO =
   "Arapça ve İngilizce; alanında uzman yabancı öğretmenlerle okul öncesi kademesinden itibaren dinleme, anlama, konuşma, okuma ve yazma becerilerinin tümünü dengeli geliştiren program.";
 
-const galleryItems = [
-  ...pageGalleryMedia.yabanciDil,
-  ...educationGalleryMedia.ciftDil.filter(
-    (item) =>
-      !pageGalleryMedia.yabanciDil.some((existing) => existing.src === item.src),
-  ),
-];
+const galleryItems = pageGalleryMedia.yabanciDil;
 
 export const metadata = buildPageMetadata({
   path: "/akademik/yabanci-dil",

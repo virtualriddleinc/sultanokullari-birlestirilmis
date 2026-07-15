@@ -533,7 +533,7 @@ ile aynı değildir. Yapısal kararlarda `@theme --breakpoint-sm` kullanılmaz; 
 
 Tipografi:
 - Section başlıkları: `.section-eyebrow` / `.section-title` / `.section-body`
-  veya fluid `text-[length:var(--text-*)]`
+  veya fluid `text-[length:var(--text-{token})]` (token: xs, sm, base, lg, …)
 - Sabit `text-2xl` / `text-[0.88rem]` gibi ad-hoc boyutlar yeni kodda yasak;
   mevcut kod responsive turlarında fluid/semantik sınıflara taşınır
 - Marka başlık/nav: Cinzel (`.font-cinzel`); gövde: Geist Sans

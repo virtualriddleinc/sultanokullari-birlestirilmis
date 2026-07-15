@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* docs/ altındaki örnek utility yazımları üretim CSS'ine sızmasın */
+@source not "../../../docs";
 @import "@vidstack/react/player/styles/base.css";
 @import "../../styles/vidstack-player.css";
 
