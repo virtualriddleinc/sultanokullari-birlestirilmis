@@ -136,8 +136,18 @@
   outline-offset: 2px;
 }
 
-/* ─── Login: bal köpüğü + yeşil marka ─── */
-.template-minimal.login {
+/* ─── Auth (login + ilk kullanıcı): bal köpüğü + yeşil marka ─── */
+.template-minimal.login,
+.template-minimal:has(.create-first-user) {
+  --theme-bg: var(--sultan-surface);
+  --theme-input-bg: var(--sultan-surface);
+  --theme-text: var(--sultan-charcoal);
+  --theme-border-color: var(--sultan-border);
+  --theme-elevation-0: #ffffff;
+  --theme-elevation-50: #f8fafc;
+  --theme-elevation-100: #f1f3ef;
+  --theme-elevation-800: var(--sultan-charcoal);
+  --theme-elevation-1000: #000000;
   position: relative;
   isolation: isolate;
   min-height: 100vh;
@@ -146,6 +156,8 @@
   justify-content: center;
   padding: clamp(1.25rem, 3vw, 2.75rem);
   overflow: hidden;
+  color-scheme: light;
+  color: var(--sultan-charcoal);
   background:
     radial-gradient(
       110% 80% at 12% 10%,
@@ -165,7 +177,8 @@
     );
 }
 
-.template-minimal.login::before {
+.template-minimal.login::before,
+.template-minimal:has(.create-first-user)::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -178,7 +191,9 @@
 
 /* Payload max-width:480px kısıtını aş */
 .template-minimal.login.template-minimal--width-normal .template-minimal__wrap,
-.template-minimal.login .template-minimal__wrap {
+.template-minimal.login .template-minimal__wrap,
+.template-minimal:has(.create-first-user).template-minimal--width-normal .template-minimal__wrap,
+.template-minimal:has(.create-first-user) .template-minimal__wrap {
   position: relative;
   z-index: 1;
   width: min(100%, 480px);
@@ -194,7 +209,8 @@
   flex-direction: column;
 }
 
-.template-minimal.login .template-minimal__wrap::before {
+.template-minimal.login .template-minimal__wrap::before,
+.template-minimal:has(.create-first-user) .template-minimal__wrap::before {
   content: none;
 }
 
@@ -203,11 +219,28 @@
   display: none !important;
 }
 
-.template-minimal.login .login__form {
+.template-minimal.login .login__form,
+.template-minimal .create-first-user {
   display: flex;
   flex-direction: column;
   gap: 1.05rem;
   padding: 1.6rem 1.55rem 1.85rem;
+}
+
+.template-minimal .create-first-user > h1 {
+  margin: 0;
+  font-family: var(--font-cinzel), "Cinzel", Georgia, serif;
+  font-size: clamp(1.55rem, 2.4vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--sultan-charcoal);
+}
+
+.template-minimal .create-first-user > p {
+  margin: -0.35rem 0 0.15rem;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: color-mix(in srgb, var(--sultan-charcoal) 62%, transparent);
 }
 
 .template-minimal.login .login__form__inputWrap {
@@ -216,7 +249,8 @@
   gap: 0.9rem;
 }
 
-.template-minimal.login .field-label {
+.template-minimal.login .field-label,
+.template-minimal .create-first-user .field-label {
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -224,10 +258,13 @@
 }
 
 .template-minimal.login .field-type input,
-.template-minimal.login .field-type__wrap input {
+.template-minimal.login .field-type__wrap input,
+.template-minimal .create-first-user .field-type input,
+.template-minimal .create-first-user .field-type__wrap input {
   border-radius: var(--sultan-radius);
   border-color: color-mix(in srgb, var(--sultan-charcoal) 14%, transparent);
   background: var(--sultan-surface);
+  color: var(--sultan-charcoal);
   min-height: 2.7rem;
   transition:
     border-color 0.15s ease,
@@ -235,19 +272,71 @@
 }
 
 .template-minimal.login .field-type input:focus,
-.template-minimal.login .field-type__wrap input:focus {
+.template-minimal.login .field-type__wrap input:focus,
+.template-minimal .create-first-user .field-type input:focus,
+.template-minimal .create-first-user .field-type__wrap input:focus {
   border-color: color-mix(in srgb, var(--sultan-green) 55%, var(--sultan-charcoal));
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--sultan-green) 28%, transparent);
 }
 
-.template-minimal.login a {
+.template-minimal .create-first-user .field-description,
+.template-minimal .create-first-user .field-type__description {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: color-mix(in srgb, var(--sultan-charcoal) 55%, transparent);
+}
+
+/* Roller çoklu seçim — login form ile aynı açık yüzey */
+.template-minimal .create-first-user .react-select-container .rs__control,
+.template-minimal .create-first-user .react-select .rs__control {
+  min-height: 2.7rem;
+  border-radius: var(--sultan-radius);
+  border-color: color-mix(in srgb, var(--sultan-charcoal) 14%, transparent);
+  background: var(--sultan-surface);
+  box-shadow: none;
+}
+
+.template-minimal .create-first-user .react-select-container .rs__control--is-focused,
+.template-minimal .create-first-user .react-select .rs__control--is-focused {
+  border-color: color-mix(in srgb, var(--sultan-green) 55%, var(--sultan-charcoal));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--sultan-green) 28%, transparent);
+}
+
+.template-minimal .create-first-user .react-select-container .rs__multi-value,
+.template-minimal .create-first-user .react-select .rs__multi-value {
+  background: color-mix(in srgb, var(--sultan-green) 18%, white);
+  border-radius: 6px;
+}
+
+.template-minimal .create-first-user .react-select-container .rs__multi-value__label,
+.template-minimal .create-first-user .react-select .rs__multi-value__label {
+  color: var(--sultan-charcoal);
+  font-weight: 600;
+}
+
+.template-minimal .create-first-user .react-select-container .rs__menu,
+.template-minimal .create-first-user .react-select .rs__menu {
+  background: var(--sultan-surface);
+  border: 1px solid color-mix(in srgb, var(--sultan-charcoal) 10%, transparent);
+  box-shadow: var(--sultan-shadow-soft);
+  z-index: 20;
+}
+
+.template-minimal .create-first-user .react-select-container .rs__option--is-focused,
+.template-minimal .create-first-user .react-select .rs__option--is-focused {
+  background: color-mix(in srgb, var(--sultan-green) 14%, white);
+}
+
+.template-minimal.login a,
+.template-minimal .create-first-user a {
   color: color-mix(in srgb, var(--sultan-charcoal) 68%, #15803d);
   font-size: 0.8125rem;
   font-weight: 600;
   text-underline-offset: 3px;
 }
 
-.template-minimal.login a:hover {
+.template-minimal.login a:hover,
+.template-minimal .create-first-user a:hover {
   color: var(--sultan-charcoal);
 }
 
@@ -364,7 +453,9 @@
 
 @media (min-width: 960px) {
   .template-minimal.login.template-minimal--width-normal .template-minimal__wrap,
-  .template-minimal.login .template-minimal__wrap {
+  .template-minimal.login .template-minimal__wrap,
+  .template-minimal:has(.create-first-user).template-minimal--width-normal .template-minimal__wrap,
+  .template-minimal:has(.create-first-user) .template-minimal__wrap {
     width: min(100%, 1040px);
     max-width: min(100%, 1040px);
     display: grid;
@@ -373,9 +464,10 @@
     flex-direction: unset;
   }
 
-  .sultan-login-panel {
+  .template-minimal.login .sultan-login-panel,
+  .template-minimal:has(.create-first-user) .sultan-login-panel {
     grid-column: 1;
-    grid-row: 1 / span 3;
+    grid-row: 1 / span 4;
     justify-content: center;
     min-height: 100%;
     padding: clamp(2.25rem, 4vw, 3.25rem) 2rem;
@@ -400,7 +492,8 @@
     gap: 0.3rem;
   }
 
-  .template-minimal.login .login__form {
+  .template-minimal.login .login__form,
+  .template-minimal .create-first-user {
     grid-column: 2;
     align-self: center;
     gap: 1.15rem;
@@ -408,7 +501,9 @@
   }
 
   .template-minimal.login .field-type input,
-  .template-minimal.login .field-type__wrap input {
+  .template-minimal.login .field-type__wrap input,
+  .template-minimal .create-first-user .field-type input,
+  .template-minimal .create-first-user .field-type__wrap input {
     min-height: 3rem;
   }
 
