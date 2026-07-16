@@ -1,9 +1,12 @@
 /**
  * TestSprite derin admin testleri için kalıcı kullanıcılar ve geçici içerik temizliği.
  * Kullanım: NODE_OPTIONS=--no-deprecation npx tsx src/scripts/seed-testsprite-admin.ts
+ *
+ * Production/Vercel'e karşı korumalıdır — yalnızca local/ALLOW_LOCAL_PRODUCTION.
  */
 import { getPayload } from "payload";
 import config from "../payload.config";
+import { isProductionLike } from "../lib/cms-security";
 
 const PASSWORD = "admin123";
 
@@ -32,12 +35,19 @@ async function ensureUser(
     collection: "users",
     data: { email, password: PASSWORD, roles },
     overrideAccess: true,
+    context: { skipBootstrapLock: true },
   });
   console.log("user created", email, roles);
   return created.id;
 }
 
 async function main() {
+  if (isProductionLike()) {
+    throw new Error(
+      "seed-testsprite-admin production/preview'da çalıştırılamaz (zayıf admin123 şifresi).",
+    );
+  }
+
   const payload = await getPayload({ config });
 
   await ensureUser(payload, "admin@admin.com", ["admin"]);

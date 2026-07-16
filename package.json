@@ -20,6 +20,7 @@
     "seed:pages": "cross-env NODE_OPTIONS=--no-deprecation tsx src/scripts/seed-pages.ts",
     "seed:overlay": "cross-env NODE_OPTIONS=--no-deprecation tsx src/scripts/seed-overlay-pages.ts",
     "seed:all": "cross-env NODE_OPTIONS=--no-deprecation tsx src/scripts/seed-all.ts",
+    "seed:admin": "cross-env NODE_OPTIONS=--no-deprecation tsx src/scripts/seed-admin.ts",
     "cms:health": "cross-env NODE_OPTIONS=--no-deprecation tsx src/scripts/cms-health.ts",
     "check:importmap": "tsx src/scripts/check-importmap.ts",
     "import:gorsel": "python3 scripts/import-gorsel-galleries.py",
