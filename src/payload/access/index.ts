@@ -107,7 +107,18 @@ export const usersCollectionAccess = {
   read: readSelfOrAdmin,
   create: (async ({ req }: AccessArgs) => {
     if (hasRole(req.user as AppUser | null, "admin")) return true;
-    // İlk kurulum: henüz kullanıcı yoksa create-first-user
+
+    // Production/preview fail-closed: anonymous/count=0 create kapalı.
+    // first-register overrideAccess kullanır; asıl kapı proxy + bootstrap lock.
+    const vercelEnv = process.env.VERCEL_ENV?.trim();
+    const productionLike =
+      vercelEnv === "production" ||
+      vercelEnv === "preview" ||
+      (process.env.NODE_ENV === "production" &&
+        process.env.ALLOW_LOCAL_PRODUCTION?.trim() !== "true");
+    if (productionLike) return false;
+
+    // Local/dev: henüz kullanıcı yoksa create-first-user
     const existing = await req.payload.count({
       collection: "users",
       overrideAccess: true,

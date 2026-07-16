@@ -243,6 +243,18 @@
   color: color-mix(in srgb, var(--sultan-charcoal) 62%, transparent);
 }
 
+.template-minimal .sultan-bootstrap-closed {
+  gap: 1.15rem;
+}
+
+.template-minimal .sultan-bootstrap-closed .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  margin-top: 0.5rem;
+}
+
 .template-minimal.login .login__form__inputWrap {
   display: flex;
   flex-direction: column;
