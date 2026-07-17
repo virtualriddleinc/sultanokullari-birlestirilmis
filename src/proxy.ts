@@ -29,7 +29,9 @@ function applySecurityHeaders(response: NextResponse): NextResponse {
       "img-src 'self' data: blob: https:",
       "font-src 'self' data:",
       "media-src 'self' blob: https:",
-      "connect-src 'self' https:",
+      // Supabase Auth/DB: üretimde barındırılan Supabase https olduğundan `https:` kapsar;
+      // yerel geliştirmede Supabase yerel yığını (http://127.0.0.1:54321) da açıkça izinlenir.
+      `connect-src 'self' https:${process.env.NODE_ENV !== "production" ? " http://127.0.0.1:54321" : ""}`,
       "frame-ancestors 'self'",
       "base-uri 'self'",
       "form-action 'self'",
