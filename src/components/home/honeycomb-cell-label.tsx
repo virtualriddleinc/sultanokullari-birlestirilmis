@@ -3,9 +3,18 @@
 import { useLayoutEffect, useRef } from "react";
 
 /** Flat-top altıgende orta bantta güvenli yatay alan oranı (köşe kırpmasına pay). */
-const HEX_SAFE_WIDTH_RATIO = 0.82;
+const HEX_SAFE_WIDTH_RATIO = 0.78;
 /** Tek satır başlık için güvenli dikey alan oranı. */
-const HEX_SAFE_HEIGHT_RATIO = 0.4;
+const HEX_SAFE_HEIGHT_RATIO = 0.36;
+/**
+ * Cinzel + Türkçe İ noktasında geometrik ortalama optik olarak yukarı kayar;
+ * hafif aşağı kaydırma metni optik merkeze alır.
+ */
+const OPTICAL_NUDGE_Y = "0.1em";
+
+function toHexLabel(label: string) {
+  return label.trim().toLocaleUpperCase("tr-TR");
+}
 
 function measureLabel(text: HTMLElement) {
   const { width, height } = text.getBoundingClientRect();
@@ -15,7 +24,7 @@ function measureLabel(text: HTMLElement) {
 function fitLabelFontSize(
   container: HTMLElement,
   text: HTMLElement,
-  label: string,
+  displayLabel: string,
 ): void {
   const { width: cw, height: ch } = container.getBoundingClientRect();
   if (cw <= 0 || ch <= 0) return;
@@ -23,10 +32,10 @@ function fitLabelFontSize(
   const maxWidth = cw * HEX_SAFE_WIDTH_RATIO;
   const maxHeight = ch * HEX_SAFE_HEIGHT_RATIO;
 
-  text.textContent = label;
+  text.textContent = displayLabel;
 
   let lo = 8;
-  let hi = Math.min(cw * 0.22, ch * 0.48, 44);
+  let hi = Math.min(cw * 0.2, ch * 0.42, 40);
   let best = lo;
 
   while (hi - lo > 0.25) {
@@ -49,10 +58,11 @@ type HoneycombCellLabelProps = {
   label: string;
 };
 
-/** Petek hücresi başlığı — tam ortalı, hücreye sığan en büyük font. */
+/** Petek hücresi başlığı — optik ortalı, hücreye sığan en büyük font. */
 export function HoneycombCellLabel({ label }: HoneycombCellLabelProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLParagraphElement>(null);
+  const displayLabel = toHexLabel(label);
 
   useLayoutEffect(() => {
     const container = containerRef.current;
@@ -63,7 +73,7 @@ export function HoneycombCellLabel({ label }: HoneycombCellLabelProps) {
 
     const runFit = () => {
       if (cancelled) return;
-      fitLabelFontSize(container, text, label);
+      fitLabelFontSize(container, text, displayLabel);
     };
 
     runFit();
@@ -79,7 +89,7 @@ export function HoneycombCellLabel({ label }: HoneycombCellLabelProps) {
       cancelled = true;
       observer.disconnect();
     };
-  }, [label]);
+  }, [displayLabel]);
 
   return (
     <div
@@ -88,9 +98,10 @@ export function HoneycombCellLabel({ label }: HoneycombCellLabelProps) {
     >
       <p
         ref={textRef}
-        className="font-cinzel m-0 max-w-full text-center font-bold leading-none tracking-tight whitespace-nowrap"
+        className="font-cinzel m-0 max-w-full text-center font-bold leading-none tracking-[0.02em] whitespace-nowrap"
+        style={{ transform: `translateY(${OPTICAL_NUDGE_Y})` }}
       >
-        {label}
+        {displayLabel}
       </p>
     </div>
   );

@@ -54,9 +54,9 @@ export type MissionHoneycombProps = {
 export const MISSION_HONEYCOMB_ASPECT =
   MISSION_HONEYCOMB_LAYOUT.aspectRatioNumber;
 const cellLift = {
-  scale: 1.045,
+  scale: 1.03,
   zIndex: 20,
-  filter: "drop-shadow(0 28px 44px rgba(180, 83, 9, 0.28))",
+  filter: "drop-shadow(0 20px 32px rgba(180, 83, 9, 0.22))",
   transition: springSnappy,
 };
 const toneClassName = {

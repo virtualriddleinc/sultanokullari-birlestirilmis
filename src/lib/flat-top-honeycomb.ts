@@ -20,8 +20,12 @@ const FLAT_TOP_HEX_VERTICES: readonly (readonly [number, number])[] = [
 
 const HEX_CLIP_CENTER: readonly [number, number] = [50, 50];
 
-/** Subpiksel anti-alias boşlukları için hafif clip genişletmesi — konumlandırmayı değiştirmez. */
-const HEX_CLIP_BLEED = 0.015;
+/**
+ * Negatif bleed: clip’i hafifçe içeri çeker.
+ * Komşu hücreler arasında ince bir derz bırakır; aynı renk/özellikteki
+ * altıgenlerin birbirinin görünür alanını yemesini (optik “çakışma”) önler.
+ */
+const HEX_CLIP_BLEED = -0.022;
 
 function expandHexClipVertex([x, y]: readonly [number, number]) {
   const [cx, cy] = HEX_CLIP_CENTER;

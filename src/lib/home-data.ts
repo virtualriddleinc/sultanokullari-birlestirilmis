@@ -194,40 +194,45 @@ function mapMissionLevels(raw: LevelRaw[] | undefined): MissionLevelData[] {
   });
 }
 
+function legacyDecorIndex(slot: MissionDecorSlot): number {
+  switch (slot) {
+    case "top-left":
+      return 0;
+    case "top-right":
+      return 2;
+    case "right":
+      return 3;
+    case "bottom":
+      return 5;
+  }
+}
+
 function mapMissionDecorCells(
   decorRaw: DecorCellRaw[] | undefined,
   legacyDecor:
     | Array<{ media?: Parameters<typeof mapPayloadMediaGroup>[0] }>
     | undefined,
 ): MissionDecorCellData[] {
-  // CMS’te açıkça kaydedilmiş dizi: boş dahil — varsayılanlarla doldurma.
+  const fromCms = new Map<MissionDecorSlot, MissionDecorCellData>();
+
   if (Array.isArray(decorRaw)) {
-    const seen = new Set<MissionDecorSlot>();
-    const mapped: MissionDecorCellData[] = [];
     for (const raw of decorRaw) {
       if (!raw?.slot || !SLOTS.includes(raw.slot as MissionDecorSlot)) continue;
       const slot = raw.slot as MissionDecorSlot;
-      if (seen.has(slot)) continue;
-      seen.add(slot);
+      if (fromCms.has(slot)) continue;
       const fallback =
         DEFAULT_MISSION.decorCells.find((c) => c.slot === slot) ??
-        DEFAULT_MISSION.decorCells[0];
-      mapped.push(mapMissionDecorCell(raw, fallback));
+        DEFAULT_MISSION.decorCells[0]!;
+      fromCms.set(slot, mapMissionDecorCell(raw, fallback));
     }
-    return mapped;
   }
 
-  // Henüz yapılandırılmamış: legacy veya statik varsayılan.
+  // Eksik slotları varsayılanlarla tamamla — boş CMS peteği 3 hücreye düşürüp
+  // kademe altıgenlerinin “üst üste binmiş” görünmesine yol açıyordu.
   return DEFAULT_MISSION.decorCells.map((fallback) => {
-    const legacyIndex =
-      fallback.slot === "top-left"
-        ? 0
-        : fallback.slot === "top-right"
-          ? 2
-          : fallback.slot === "right"
-            ? 3
-            : 5;
-    const legacyItem = legacyDecor?.[legacyIndex];
+    const cms = fromCms.get(fallback.slot);
+    if (cms) return cms;
+    const legacyItem = legacyDecor?.[legacyDecorIndex(fallback.slot)];
     if (legacyItem?.media) {
       return mapMissionDecorCell({ media: legacyItem.media }, fallback);
     }
