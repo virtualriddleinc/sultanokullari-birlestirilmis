@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useRef, useState } from "react";
+import { startTransition, useActionState, useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { transitionShort } from "@/lib/animations";
 import type { Branch } from "@/content/branches";
@@ -15,11 +15,7 @@ import {
 
 const initial: IkState = { ok: false, message: "" };
 
-const steps = [
-  "Kişisel bilgiler",
-  "Mesleki bilgiler",
-  "Ön yazı ve onay",
-] as const;
+const steps = ["Kişisel bilgiler", "Mesleki bilgiler", "Ön yazı ve onay"] as const;
 
 const labelClassName = "block text-sm font-semibold text-zinc-800";
 const fieldClassName =
@@ -34,15 +30,57 @@ declare global {
   }
 }
 
+type IkValues = {
+  fullName: string;
+  email: string;
+  phone: string;
+  branchSlug: string;
+  position: string;
+  experienceYears: string;
+  education: string;
+  coverLetter: string;
+};
+
+const emptyValues: IkValues = {
+  fullName: "",
+  email: "",
+  phone: "",
+  branchSlug: "",
+  position: "",
+  experienceYears: "0",
+  education: "",
+  coverLetter: "",
+};
+
 export function IkWizard({ branches = staticBranches }: { branches?: Branch[] }) {
   const reduce = useReducedMotion();
   const [step, setStep] = useState(0);
+  const [values, setValues] = useState<IkValues>(emptyValues);
+  const [cvFile, setCvFile] = useState<File | null>(null);
+  const [kvkk, setKvkk] = useState(false);
   const [state, formAction, pending] = useActionState(
     submitIkApplication,
     initial,
   );
-  const formRef = useRef<HTMLFormElement>(null);
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+
+  // Başarılı gönderimde formu sıfırla.
+  useEffect(() => {
+    if (state.ok) {
+      setValues(emptyValues);
+      setCvFile(null);
+      setKvkk(false);
+      setStep(0);
+    }
+  }, [state.ok]);
+
+  function set<K extends keyof IkValues>(key: K) {
+    return (
+      e: React.ChangeEvent<
+        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >,
+    ) => setValues((v) => ({ ...v, [key]: e.target.value }));
+  }
 
   function next() {
     setStep((s) => Math.min(s + 1, steps.length - 1));
@@ -51,7 +89,18 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
     setStep((s) => Math.max(s - 1, 0));
   }
 
-  async function onSubmit(formData: FormData) {
+  // Çok adımlı sihirbaz: alan değerleri React state'te tutulur; gönderimde
+  // tüm adımların verileri tek bir FormData'ya toplanır (koşullu render
+  // nedeniyle DOM'dan kalkan inputların kaybolmaması için).
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const formData = new FormData();
+    (Object.keys(values) as (keyof IkValues)[]).forEach((key) => {
+      formData.set(key, values[key]);
+    });
+    formData.set("kvkk", kvkk ? "on" : "");
+    if (cvFile) formData.set("cv", cvFile);
+
     if (siteKey && typeof window !== "undefined" && window.grecaptcha) {
       await new Promise<void>((resolve) => window.grecaptcha!.ready(resolve));
       const token = await window.grecaptcha.execute(siteKey, {
@@ -59,7 +108,8 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
       });
       formData.set("recaptchaToken", token);
     }
-    return formAction(formData);
+    // useActionState dispatch'i bir transition içinde çağrılmalı (await sonrası).
+    startTransition(() => formAction(formData));
   }
 
   return (
@@ -88,16 +138,7 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
         </p>
       ) : null}
 
-      <form ref={formRef} action={onSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="hp"
-          tabIndex={-1}
-          className="hidden"
-          autoComplete="off"
-          aria-hidden
-        />
-
+      <form onSubmit={handleSubmit} className="space-y-4">
         <AnimatePresence mode="wait">
           <motion.div
             key={step}
@@ -111,7 +152,12 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
               <>
                 <label className={labelClassName}>
                   Ad soyad
-                  <input name="fullName" required className={fieldClassName} />
+                  <input
+                    name="fullName"
+                    value={values.fullName}
+                    onChange={set("fullName")}
+                    className={fieldClassName}
+                  />
                   <FieldError errors={state.fieldErrors?.fullName} />
                 </label>
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -120,7 +166,8 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
                     <input
                       name="email"
                       type="email"
-                      required
+                      value={values.email}
+                      onChange={set("email")}
                       className={fieldClassName}
                     />
                     <FieldError errors={state.fieldErrors?.email} />
@@ -130,7 +177,8 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
                     <input
                       name="phone"
                       inputMode="tel"
-                      required
+                      value={values.phone}
+                      onChange={set("phone")}
                       className={fieldClassName}
                     />
                     <FieldError errors={state.fieldErrors?.phone} />
@@ -138,7 +186,12 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
                 </div>
                 <label className={labelClassName}>
                   Tercih edilen şube
-                  <select name="branchSlug" className={fieldClassName}>
+                  <select
+                    name="branchSlug"
+                    value={values.branchSlug}
+                    onChange={set("branchSlug")}
+                    className={fieldClassName}
+                  >
                     <option value="">Seçiniz</option>
                     {branches.map((b) => (
                       <option key={b.slug} value={b.slug}>
@@ -154,7 +207,12 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
               <>
                 <label className={labelClassName}>
                   Pozisyon
-                  <input name="position" required className={fieldClassName} />
+                  <input
+                    name="position"
+                    value={values.position}
+                    onChange={set("position")}
+                    className={fieldClassName}
+                  />
                   <FieldError errors={state.fieldErrors?.position} />
                 </label>
                 <label className={labelClassName}>
@@ -164,7 +222,8 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
                     type="number"
                     min={0}
                     max={50}
-                    defaultValue={0}
+                    value={values.experienceYears}
+                    onChange={set("experienceYears")}
                     className={fieldClassName}
                   />
                   <FieldError errors={state.fieldErrors?.experienceYears} />
@@ -173,8 +232,9 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
                   Öğrenim / sertifikalar
                   <textarea
                     name="education"
-                    required
                     rows={3}
+                    value={values.education}
+                    onChange={set("education")}
                     className={fieldClassName}
                   />
                   <FieldError errors={state.fieldErrors?.education} />
@@ -188,8 +248,9 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
                   Ön yazı
                   <textarea
                     name="coverLetter"
-                    required
                     rows={6}
+                    value={values.coverLetter}
+                    onChange={set("coverLetter")}
                     className={fieldClassName}
                   />
                   <FieldError errors={state.fieldErrors?.coverLetter} />
@@ -200,15 +261,21 @@ export function IkWizard({ branches = staticBranches }: { branches?: Branch[] })
                     name="cv"
                     type="file"
                     accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                    onChange={(e) => setCvFile(e.target.files?.[0] ?? null)}
                     className={`${fieldClassName} file:mr-3 file:rounded-full file:border-0 file:bg-emerald-50 file:px-3 file:py-1.5 file:text-xs file:font-semibold file:text-emerald-900`}
                   />
+                  {cvFile ? (
+                    <span className="mt-1 block text-xs text-emerald-800">
+                      Seçilen dosya: {cvFile.name}
+                    </span>
+                  ) : null}
                 </label>
                 <label className="flex items-start gap-3 rounded-2xl border border-zinc-200 bg-zinc-50/80 p-4 text-sm leading-6 text-zinc-700">
                   <input
                     name="kvkk"
                     type="checkbox"
-                    value="on"
-                    required
+                    checked={kvkk}
+                    onChange={(e) => setKvkk(e.target.checked)}
                     className="mt-1 h-4 w-4 rounded border-zinc-300 text-[var(--color-primary)]"
                   />
                   <span>
