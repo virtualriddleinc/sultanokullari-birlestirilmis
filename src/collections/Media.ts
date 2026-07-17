@@ -2,6 +2,10 @@ import type { CollectionBeforeValidateHook, CollectionConfig } from "payload";
 
 import { ADMIN_GROUPS } from "@/payload/admin-groups";
 import { contentCollectionAccess } from "@/payload/access";
+import {
+  createAuditAfterChange,
+  createAuditAfterDelete,
+} from "@/payload/hooks/audit-log-hooks";
 import { adminHintField } from "@/payload/fields/admin-hint-field";
 import { hideFromInboxOnly } from "@/payload/admin-visibility";
 
@@ -36,6 +40,8 @@ export const Media: CollectionConfig = {
   access: contentCollectionAccess,
   hooks: {
     beforeValidate: [enforceMediaLimits],
+    afterChange: [createAuditAfterChange("media")],
+    afterDelete: [createAuditAfterDelete("media")],
   },
   fields: [
     adminHintField(

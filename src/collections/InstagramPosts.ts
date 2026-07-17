@@ -5,6 +5,10 @@ import { buildPreviewUrl } from "@/lib/preview-url";
 import { contentCollectionAccess } from "@/payload/access";
 import { homeRevalidateHooks } from "@/payload/hooks/collection-hooks";
 import { trackLastEditedBy } from "@/payload/hooks/audit-hooks";
+import {
+  createAuditAfterChange,
+  createAuditAfterDelete,
+} from "@/payload/hooks/audit-log-hooks";
 import { siteMediaField } from "@/payload/fields/site-media-fields";
 import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
@@ -31,7 +35,14 @@ export const InstagramPosts: CollectionConfig = {
   },
   hooks: {
     beforeChange: [trackLastEditedBy],
-    ...homeRevalidateHooks,
+    afterChange: [
+      ...homeRevalidateHooks.afterChange,
+      createAuditAfterChange("instagram-posts"),
+    ],
+    afterDelete: [
+      ...homeRevalidateHooks.afterDelete,
+      createAuditAfterDelete("instagram-posts"),
+    ],
   },
   access: contentCollectionAccess,
   fields: [

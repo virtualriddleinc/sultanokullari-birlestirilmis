@@ -5,6 +5,10 @@ import { buildPreviewUrl } from "@/lib/preview-url";
 import { contentCollectionAccess } from "@/payload/access";
 import { homeRevalidateHooks } from "@/payload/hooks/collection-hooks";
 import { trackLastEditedBy } from "@/payload/hooks/audit-hooks";
+import {
+  createAuditAfterChange,
+  createAuditAfterDelete,
+} from "@/payload/hooks/audit-log-hooks";
 import { siteMediaField } from "@/payload/fields/site-media-fields";
 import { hexFocalPickerField } from "@/payload/fields/hex-focal-picker-field";
 import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
@@ -32,7 +36,14 @@ export const JourneyChapters: CollectionConfig = {
   },
   hooks: {
     beforeChange: [trackLastEditedBy],
-    ...homeRevalidateHooks,
+    afterChange: [
+      ...homeRevalidateHooks.afterChange,
+      createAuditAfterChange("journey-chapters"),
+    ],
+    afterDelete: [
+      ...homeRevalidateHooks.afterDelete,
+      createAuditAfterDelete("journey-chapters"),
+    ],
   },
   access: contentCollectionAccess,
   fields: [
