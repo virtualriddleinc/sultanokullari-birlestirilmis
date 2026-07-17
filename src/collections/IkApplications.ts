@@ -3,6 +3,10 @@ import type { CollectionConfig } from "payload";
 import { ADMIN_GROUPS } from "@/payload/admin-groups";
 import { inboxCollectionAccess } from "@/payload/access";
 import { inboxNotifyAfterChange } from "@/payload/hooks/inbox-hooks";
+import {
+  createAuditAfterChange,
+  createAuditAfterDelete,
+} from "@/payload/hooks/audit-log-hooks";
 import { adminHintField } from "@/payload/fields/admin-hint-field";
 
 export const IkApplications: CollectionConfig = {
@@ -30,7 +34,8 @@ export const IkApplications: CollectionConfig = {
   defaultSort: "-createdAt",
   access: inboxCollectionAccess,
   hooks: {
-    afterChange: [inboxNotifyAfterChange],
+    afterChange: [inboxNotifyAfterChange, createAuditAfterChange("ik-applications")],
+    afterDelete: [createAuditAfterDelete("ik-applications")],
   },
   timestamps: true,
   fields: [

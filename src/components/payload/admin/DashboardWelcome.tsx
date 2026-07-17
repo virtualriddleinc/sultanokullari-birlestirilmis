@@ -112,6 +112,11 @@ export default async function DashboardWelcome() {
               href="/admin/collections/ik-applications?where[status][equals]=new"
               tone="accent"
             />
+            <StatCard
+              label="Okunmamış bildirim"
+              value={stats.unreadNotifications}
+              href="/admin/collections/notifications?where[isRead][equals]=false"
+            />
           </>
         ) : (
           <>
@@ -143,6 +148,11 @@ export default async function DashboardWelcome() {
               label="Yaklaşan etkinlik"
               value={stats.upcomingEvents}
               href="/admin/collections/events"
+            />
+            <StatCard
+              label="Okunmamış bildirim"
+              value={stats.unreadNotifications}
+              href="/admin/collections/notifications?where[isRead][equals]=false"
             />
             {stats.isAdmin ? (
               <StatCard
@@ -194,6 +204,28 @@ export default async function DashboardWelcome() {
                   <span>{item.label}</span>
                   <time dateTime={item.updatedAt}>
                     {new Date(item.updatedAt).toLocaleDateString("tr-TR")}
+                  </time>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      {stats.isAdmin && stats.recentActivity.length > 0 ? (
+        <section className="sultan-dashboard__recent" aria-label="Son işlem geçmişi">
+          <h2 className="sultan-dashboard__section-title">Son işlem geçmişi (denetim)</h2>
+          <ul className="sultan-dashboard__recent-list">
+            {stats.recentActivity.map((item) => (
+              <li key={item.id}>
+                <a href={`/admin/collections/audit-logs/${item.id}`}>
+                  <strong>{item.summary}</strong>
+                  <span>
+                    {item.collection}
+                    {item.userEmail ? ` · ${item.userEmail}` : ""}
+                  </span>
+                  <time dateTime={item.createdAt}>
+                    {new Date(item.createdAt).toLocaleString("tr-TR")}
                   </time>
                 </a>
               </li>

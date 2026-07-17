@@ -5,6 +5,10 @@ import { buildPreviewUrl } from "@/lib/preview-url";
 import { contentCollectionAccess } from "@/payload/access";
 import { homeAndNedenRevalidateHooks } from "@/payload/hooks/collection-hooks";
 import { trackLastEditedBy } from "@/payload/hooks/audit-hooks";
+import {
+  createAuditAfterChange,
+  createAuditAfterDelete,
+} from "@/payload/hooks/audit-log-hooks";
 import { adminHintField, siteLinkField } from "@/payload/fields/admin-hint-field";
 import { lastEditedByField } from "@/payload/fields/last-edited-by-field";
 import { hideFromInboxOnly } from "@/payload/admin-visibility";
@@ -30,7 +34,14 @@ export const NedenSultanItems: CollectionConfig = {
   },
   hooks: {
     beforeChange: [trackLastEditedBy],
-    ...homeAndNedenRevalidateHooks,
+    afterChange: [
+      ...homeAndNedenRevalidateHooks.afterChange,
+      createAuditAfterChange("neden-sultan-items"),
+    ],
+    afterDelete: [
+      ...homeAndNedenRevalidateHooks.afterDelete,
+      createAuditAfterDelete("neden-sultan-items"),
+    ],
   },
   access: contentCollectionAccess,
   fields: [
