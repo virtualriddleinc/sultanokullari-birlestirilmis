@@ -79,6 +79,7 @@ export interface Config {
     'contact-messages': ContactMessage;
     'ik-applications': IkApplication;
     'application-files': ApplicationFile;
+    notifications: Notification;
     media: Media;
     'media-items': MediaItem;
     'audit-logs': AuditLog;
@@ -102,6 +103,7 @@ export interface Config {
     'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
     'ik-applications': IkApplicationsSelect<false> | IkApplicationsSelect<true>;
     'application-files': ApplicationFilesSelect<false> | ApplicationFilesSelect<true>;
+    notifications: NotificationsSelect<false> | NotificationsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'media-items': MediaItemsSelect<false> | MediaItemsSelect<true>;
     'audit-logs': AuditLogsSelect<false> | AuditLogsSelect<true>;
@@ -255,6 +257,10 @@ export interface User {
    * Yönetici: tam yetki. Editör: içerik. Gelen kutusu: yalnızca iletişim/İK.
    */
   roles: ('admin' | 'editor' | 'inbox')[];
+  /**
+   * Pasifleştirilen kullanıcı panele giriş yapamaz. Yalnızca yönetici değiştirebilir.
+   */
+  isActive?: boolean | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -922,6 +928,25 @@ export interface ApplicationFile {
   focalY?: number | null;
 }
 /**
+ * Panel bildirimleri. Yeni form kayıtları ve önemli olaylar burada listelenir. Okuduktan sonra 'Okundu' işaretleyin.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notifications".
+ */
+export interface Notification {
+  id: number;
+  title: string;
+  message?: string | null;
+  type: 'info' | 'inbox' | 'content' | 'system';
+  /**
+   * İlgili kaydın panel adresi (opsiyonel).
+   */
+  link?: string | null;
+  isRead?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * /guncel/medya sayfası ve ana sayfa medya önizlemesi.
  *
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1053,6 +1078,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'application-files';
         value: number | ApplicationFile;
+      } | null)
+    | ({
+        relationTo: 'notifications';
+        value: number | Notification;
       } | null)
     | ({
         relationTo: 'media';
@@ -1529,6 +1558,19 @@ export interface ApplicationFilesSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notifications_select".
+ */
+export interface NotificationsSelect<T extends boolean = true> {
+  title?: T;
+  message?: T;
+  type?: T;
+  link?: T;
+  isRead?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media_select".
  */
 export interface MediaSelect<T extends boolean = true> {
@@ -1624,6 +1666,7 @@ export interface AuditLogsSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   roles?: T;
+  isActive?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

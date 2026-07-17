@@ -18,6 +18,15 @@ export type RecentEdit = {
   updatedAt: string;
 };
 
+export type RecentActivity = {
+  id: string | number;
+  summary: string;
+  action: string;
+  collection: string;
+  userEmail: string;
+  createdAt: string;
+};
+
 export type DashboardStats = {
   isAdmin: boolean;
   isInboxOnly: boolean;
@@ -29,6 +38,8 @@ export type DashboardStats = {
   recentContacts: { id: string | number; name: string; subject: string; createdAt: string }[];
   recentIk: { id: string | number; fullName: string; position: string; createdAt: string }[];
   recentEdits: RecentEdit[];
+  recentActivity: RecentActivity[];
+  unreadNotifications: number;
   cmsHealth: CmsHealth;
   userCount: number;
 };
@@ -67,6 +78,42 @@ export async function getInboxNavCounts(): Promise<{
     };
   } catch {
     return { unreadContact: 0, unreadIk: 0 };
+  }
+}
+
+export async function getUnreadNotificationCount(): Promise<number> {
+  try {
+    const payload = await getPayloadClient();
+    const res = await payload.count({
+      collection: "notifications",
+      where: { isRead: { equals: false } },
+    });
+    return res.totalDocs;
+  } catch {
+    return 0;
+  }
+}
+
+async function fetchRecentActivity(isAdmin: boolean): Promise<RecentActivity[]> {
+  if (!isAdmin) return [];
+  try {
+    const payload = await getPayloadClient();
+    const res = await payload.find({
+      collection: "audit-logs",
+      sort: "-createdAt",
+      limit: 8,
+      depth: 0,
+    });
+    return res.docs.map((d) => ({
+      id: d.id,
+      summary: (d.summary as string) || "—",
+      action: (d.action as string) || "",
+      collection: (d.collection as string) || "",
+      userEmail: (d.userEmail as string) || "",
+      createdAt: d.createdAt as string,
+    }));
+  } catch {
+    return [];
   }
 }
 
@@ -127,6 +174,8 @@ export async function getDashboardStats(): Promise<DashboardStats> {
     recentContacts: [],
     recentIk: [],
     recentEdits: [],
+    recentActivity: [],
+    unreadNotifications: 0,
     cmsHealth: emptyHealth,
     userCount: 0,
   };
@@ -145,6 +194,8 @@ export async function getDashboardStats(): Promise<DashboardStats> {
       recentIk,
       cmsHealth,
       recentEdits,
+      recentActivity,
+      unreadNotifications,
       userCount,
     ] = await Promise.all([
       payload.count({ collection: "news", where: { _status: { equals: "draft" } } }),
@@ -161,6 +212,8 @@ export async function getDashboardStats(): Promise<DashboardStats> {
       payload.find({ collection: "ik-applications", sort: "-createdAt", limit: 5, depth: 0 }),
       getCmsHealth(),
       fetchRecentEdits(),
+      fetchRecentActivity(isAdmin),
+      getUnreadNotificationCount(),
       isAdmin ? payload.count({ collection: "users" }) : Promise.resolve({ totalDocs: 0 }),
     ]);
 
@@ -185,6 +238,8 @@ export async function getDashboardStats(): Promise<DashboardStats> {
         createdAt: doc.createdAt as string,
       })),
       recentEdits,
+      recentActivity,
+      unreadNotifications,
       cmsHealth,
       userCount: userCount.totalDocs,
     };

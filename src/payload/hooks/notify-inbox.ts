@@ -28,8 +28,45 @@ function buildBody(collectionSlug: string, doc: Record<string, unknown>): string
   return lines.join("\n");
 }
 
-/** Yeni form kaydı — e-posta (SMTP yapılandırılmışsa) veya konsol */
+/** Panel-içi bildirim kaydı oluştur (hearing-crm notifications uyarlaması) */
+async function createInboxPanelNotification(
+  collectionSlug: string,
+  doc: Record<string, unknown>,
+  req: PayloadRequest,
+): Promise<void> {
+  const isIk = collectionSlug === "ik-applications";
+  const who = String(doc.fullName ?? doc.name ?? "—");
+  const title = isIk
+    ? `Yeni İK başvurusu: ${who}`
+    : `Yeni iletişim mesajı: ${who}`;
+  const message = isIk
+    ? `${who} — ${doc.position ?? "pozisyon belirtilmedi"}`
+    : `${who} — ${doc.subject ?? "konu belirtilmedi"}`;
+
+  try {
+    await req.payload.create({
+      collection: "notifications",
+      data: {
+        title,
+        message,
+        type: "inbox",
+        link: `/admin/collections/${collectionSlug}/${doc.id}`,
+        isRead: false,
+      },
+      overrideAccess: true,
+      req,
+    });
+  } catch (error) {
+    req.payload.logger.warn({ err: error }, "Panel-içi bildirim oluşturulamadı");
+  }
+}
+
+/** Yeni form kaydı — panel bildirimi + e-posta (SMTP yapılandırılmışsa) veya konsol */
 export async function notifyInboxSubmission({ collectionSlug, doc, req }: Args): Promise<void> {
+  // 1) Panel-içi bildirim (SMTP olmasa da her zaman çalışır)
+  await createInboxPanelNotification(collectionSlug, doc, req);
+
+  // 2) E-posta bildirimi
   const recipients =
     process.env.INBOX_NOTIFY_EMAIL?.split(",").map((e) => e.trim()).filter(Boolean) ?? [];
 

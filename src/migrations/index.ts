@@ -19,6 +19,7 @@ import * as migration_20260714_130400_branch_media_item_tables from "./20260714_
 import * as migration_20260714_190000_gayemiz_global from "./20260714_190000_gayemiz_global";
 import * as migration_20260714_200000_gayemiz_remove_default_card from "./20260714_200000_gayemiz_remove_default_card";
 import * as migration_20260714_210000_journey_chapter_focal_point from "./20260714_210000_journey_chapter_focal_point";
+import * as migration_20260717_000000_aktarim_rehberi_faz1 from "./20260717_000000_aktarim_rehberi_faz1";
 
 export const migrations = [
   {
@@ -125,5 +126,10 @@ export const migrations = [
     up: migration_20260714_210000_journey_chapter_focal_point.up,
     down: migration_20260714_210000_journey_chapter_focal_point.down,
     name: "20260714_210000_journey_chapter_focal_point",
+  },
+  {
+    up: migration_20260717_000000_aktarim_rehberi_faz1.up,
+    down: migration_20260717_000000_aktarim_rehberi_faz1.down,
+    name: "20260717_000000_aktarim_rehberi_faz1",
   },
 ];

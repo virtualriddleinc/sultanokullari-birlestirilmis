@@ -22,6 +22,7 @@ import { Media } from "./collections/Media";
 import { MediaItems } from "./collections/MediaItems";
 import { NedenSultanItems } from "./collections/NedenSultanItems";
 import { News } from "./collections/News";
+import { Notifications } from "./collections/Notifications";
 import { Pages } from "./collections/Pages";
 import { Staff } from "./collections/Staff";
 import { Users } from "./collections/Users";
@@ -86,6 +87,7 @@ export default buildConfig({
       beforeNavLinks: [
         "@/components/payload/admin/AdminHomeNavLink",
         "@/components/payload/admin/InboxNavLinks",
+        "@/components/payload/admin/NotificationNavLink",
       ],
       afterNavLinks: [],
       graphics: {
@@ -173,6 +175,7 @@ export default buildConfig({
     ContactMessages,
     IkApplications,
     ApplicationFiles,
+    Notifications,
     Media,
     MediaItems,
     AuditLogs,

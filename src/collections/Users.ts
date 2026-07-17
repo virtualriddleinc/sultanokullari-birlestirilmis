@@ -1,4 +1,4 @@
-import type { CollectionConfig } from "payload";
+import { APIError, type CollectionConfig } from "payload";
 
 import { ADMIN_GROUPS } from "@/payload/admin-groups";
 import {
@@ -8,6 +8,10 @@ import {
   type AppUserRole,
 } from "@/payload/access";
 import { hideUnlessAdmin } from "@/payload/admin-visibility";
+import {
+  createAuditAfterChange,
+  createAuditAfterDelete,
+} from "@/payload/hooks/audit-log-hooks";
 
 export const Users: CollectionConfig = {
   slug: "users",
@@ -29,6 +33,18 @@ export const Users: CollectionConfig = {
   },
   access: usersCollectionAccess,
   hooks: {
+    beforeLogin: [
+      ({ user }) => {
+        // Pasifleştirilen kullanıcıların girişini engelle (hearing-crm is_active uyarlaması).
+        if (user && (user as { isActive?: boolean }).isActive === false) {
+          throw new APIError(
+            "Hesabınız pasif durumda. Lütfen bir yönetici ile iletişime geçin.",
+            403,
+          );
+        }
+        return user;
+      },
+    ],
     beforeChange: [
       async ({ data, operation, req, originalDoc }) => {
         const actor = req.user as AppUser | null;
@@ -36,6 +52,8 @@ export const Users: CollectionConfig = {
         // Local/system calls (no user) must retain explicit roles for seeding.
         if (data && actor && !hasRole(actor, "admin")) {
           delete data.roles;
+          // Non-admins may not toggle their own active state.
+          delete data.isActive;
         }
 
         const roles = data?.roles ?? originalDoc?.roles;
@@ -51,6 +69,8 @@ export const Users: CollectionConfig = {
         return { ...data, roles: [fallbackRole] };
       },
     ],
+    afterChange: [createAuditAfterChange("users")],
+    afterDelete: [createAuditAfterDelete("users")],
   },
   fields: [
     {
@@ -72,6 +92,22 @@ export const Users: CollectionConfig = {
       admin: {
         description:
           "Yönetici: tam yetki. Editör: içerik. Gelen kutusu: yalnızca iletişim/İK.",
+      },
+      saveToJWT: true,
+    },
+    {
+      name: "isActive",
+      type: "checkbox",
+      label: "Aktif",
+      defaultValue: true,
+      access: {
+        update: ({ req }) => hasRole(req.user as AppUser | null, "admin"),
+        create: ({ req }) => hasRole(req.user as AppUser | null, "admin"),
+      },
+      admin: {
+        position: "sidebar",
+        description:
+          "Pasifleştirilen kullanıcı panele giriş yapamaz. Yalnızca yönetici değiştirebilir.",
       },
       saveToJWT: true,
     },
