@@ -1117,12 +1117,14 @@
     box-sizing: border-box;
   }
 
-  .hero-slide-card {
+  /* Mobil kart — overflow clip CTA’yı kesmesin; yükseklik içeriğe uysun */
+  .hero-section-grid:not(.journey-stage-grid) .hero-slide-card {
     width: 100%;
     max-width: 100%;
     height: auto;
     flex-shrink: 0;
-    padding-bottom: 1.5rem;
+    overflow: visible;
+    padding-bottom: 1rem;
   }
 
   .hero-slide-content {
@@ -1182,6 +1184,65 @@
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 5;
     text-overflow: ellipsis;
+  }
+
+  /*
+   * Hero slider (mobil-first) — açıklama puntosu büyütülür; etiket/başlık
+   * yukarı. Mobilde kart yüksekliği içeriğe göre büyür (CTA kırpılmaz).
+   * Sabit yükseklik + grid 1fr/auto yalnızca lg+ (aşağıda).
+   */
+  .hero-section-grid:not(.journey-stage-grid) .hero-slide-card > .hero-slide-content:first-child {
+    padding-top: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+    justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    min-height: 0;
+    height: auto;
+    overflow: visible;
+  }
+
+  .hero-section-grid:not(.journey-stage-grid) .hero-slide-body {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    min-height: 0;
+    height: auto;
+    max-height: none;
+    width: 100%;
+    overflow: visible;
+    gap: 0.5rem;
+  }
+
+  .hero-section-grid:not(.journey-stage-grid) .hero-slide-head {
+    flex: 0 1 auto;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .hero-section-grid:not(.journey-stage-grid) .hero-slide-title-flow {
+    min-height: 0;
+    max-height: 3.36em;
+  }
+
+  .hero-section-grid:not(.journey-stage-grid) .hero-slide-description--hero {
+    font-size: clamp(0.9rem, 0.72rem + 1.15vw, 1.05rem) !important;
+    line-height: 1.45 !important;
+    flex-shrink: 1;
+    max-height: calc(4 * 1.45em);
+    min-height: 0;
+    height: auto;
+    margin-bottom: 0;
+    text-wrap: normal;
+    -webkit-line-clamp: 4;
+  }
+
+  .hero-section-grid:not(.journey-stage-grid) .hero-slide-cta {
+    flex-shrink: 0;
+    align-self: stretch;
+    margin-top: 0;
+    margin-bottom: 0.15rem;
   }
 
   .hero-slide-tagline,
@@ -1554,6 +1615,7 @@
       max-height: 100%;
       flex-shrink: 0;
       padding-bottom: 0;
+      overflow: hidden;
     }
 
     .hero-slide-card > .hero-slide-content:first-child {
@@ -1611,6 +1673,41 @@
      */
     .hero-section-grid:not(.journey-stage-grid) .hero-slide-card > .hero-slide-content:first-child {
       justify-content: flex-start;
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 0%;
+      min-height: 0;
+      height: auto;
+      max-height: 100%;
+      overflow: hidden;
+      /* Etiket/başlık biraz yukarı — Tailwind pt-8 / xl:pt-8 üzerine yaz */
+      padding-top: 1rem !important;
+      padding-bottom: 0.75rem !important;
+      box-sizing: border-box;
+    }
+
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-body {
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      flex: 1 1 0%;
+      align-self: stretch;
+      min-height: 0;
+      /* height:% yerine flex — padding’li content içinde taşmayı önler */
+      height: auto;
+      max-height: 100%;
+      width: 100%;
+      overflow: hidden;
+      gap: 0;
+    }
+
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-head {
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-title-flow {
+      min-height: 3.36em;
+      max-height: 3.36em;
     }
 
     /* Başlık/açıklama: sağda en az sol girinti kadar boşluk — kart içinde simetrik bant */
@@ -1630,17 +1727,24 @@
     .hero-section-grid:not(.journey-stage-grid) .hero-slide-cta {
       width: auto;
       max-width: var(--hero-slide-tagline-width);
+      flex-shrink: 0;
+      align-self: start;
+      margin-top: 0.625rem;
+      margin-bottom: 0.25rem;
+      /* Uzun etiket tek satırda kalsın — 2 satırlık CTA content’i taşırır */
+      min-height: 0;
     }
 
     .hero-section-grid:not(.journey-stage-grid) .hero-slide-cta-label {
       min-width: 0;
-      overflow: visible;
-      white-space: normal;
-      text-wrap: balance;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-wrap: unset;
       line-height: 1.25;
     }
 
-    /* Başlık: 3 satırlık sabit yükseklik ayrılır — 1/2 satırlık başlıklarda da yer sabit kalır */
+    /* Başlık: 3 satırlık sabit tavan — kısa başlıklarda min yer koru */
     .hero-section-grid:not(.journey-stage-grid) .hero-slide-title-flow {
       display: -webkit-box;
       -webkit-box-orient: vertical;
@@ -1651,22 +1755,36 @@
       text-wrap: normal;
       width: 100%;
       min-height: 3.36em;
+      max-height: 3.36em;
+      height: auto;
     }
 
     /*
-     * Açıklama: 5 satıra kadar (uzun motto açıklamaları için).
-     * text-wrap:pretty (text-pretty) + line-clamp birlikte kullanıldığında
-     * Chromium satırı erken kırpabiliyor; clamp'li metinde normal sarımaya dön.
+     * Açıklama: 5 satır tavanı; sabit height kaldırıldı — CTA kırpılmasın.
+     * mt-auto CTA’yı alta sabitler; kısa/uzun metinde buton görünür kalır.
      */
-    .hero-section-grid:not(.journey-stage-grid) .hero-slide-copy p {
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-copy p,
+    .hero-section-grid:not(.journey-stage-grid) .hero-slide-description--hero {
       margin-top: 0;
+      margin-bottom: 0;
       overflow: hidden;
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 5;
       text-overflow: ellipsis;
       text-wrap: normal;
-      min-height: 6.875em;
+      flex-shrink: 1;
+      font-size: clamp(1.0625rem, 0.55rem + 2.15vw, 1.5rem) !important;
+      line-height: 1.45 !important;
+      max-height: calc(5 * 1.45em);
+      min-height: 0;
+      height: auto;
+    }
+
+    @media (width >= 1280px) {
+      .hero-section-grid:not(.journey-stage-grid) .hero-slide-card > .hero-slide-content:first-child {
+        padding-top: 1.25rem !important;
+      }
     }
 
     .hero-slide-media-col {
@@ -1970,7 +2088,7 @@
      */
     @container hero-info-card (max-width: 34.5rem) {
       .hero-slide-card > .hero-slide-content:first-child {
-        padding-top: clamp(1rem, 0.5rem + 2cqi, 1.75rem);
+        padding-top: clamp(0.75rem, 0.35rem + 1.6cqi, 1.25rem);
       }
 
       .hero-slide-copy h1,
@@ -1980,23 +2098,28 @@
           calc(0.95rem + 3.6cqi),
           1.85rem
         ) !important;
-        margin-bottom: clamp(0.5rem, 0.25rem + 1cqi, 0.875rem) !important;
+        margin-bottom: clamp(0.35rem, 0.15rem + 0.7cqi, 0.625rem) !important;
         line-height: 1.14 !important;
       }
 
       .hero-slide-title-flow {
         min-height: 3.42em;
+        max-height: 3.42em;
+        height: auto;
       }
 
-      .hero-slide-copy p {
+      .hero-slide-copy p,
+      .hero-slide-description--hero {
         font-size: clamp(
-          0.8125rem,
-          calc(0.68rem + 1.9cqi),
-          1rem
+          0.9375rem,
+          calc(0.78rem + 2.1cqi),
+          1.125rem
         ) !important;
-        margin-bottom: clamp(0.5rem, 0.25rem + 0.9cqi, 0.875rem) !important;
-        line-height: 1.5 !important;
-        min-height: 4.5em;
+        margin-bottom: 0 !important;
+        line-height: 1.45 !important;
+        max-height: calc(5 * 1.45em) !important;
+        min-height: 0 !important;
+        height: auto !important;
       }
 
       .hero-slide-tagline {
@@ -2004,7 +2127,7 @@
         letter-spacing: 0.07em !important;
         padding: clamp(0.25rem, 0.12rem + 0.4cqi, 0.4375rem)
           clamp(0.5rem, 0.28rem + 0.85cqi, 0.875rem) !important;
-        margin-bottom: clamp(0.5rem, 0.25rem + 0.9cqi, 0.875rem) !important;
+        margin-bottom: clamp(0.35rem, 0.15rem + 0.7cqi, 0.625rem) !important;
         max-width: 100%;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -2017,7 +2140,7 @@
           clamp(0.25rem, 0.12rem + 0.3cqi, 0.4375rem)
           clamp(0.3125rem, 0.15rem + 0.35cqi, 0.4375rem)
           clamp(0.75rem, 0.45rem + 1.2cqi, 1.25rem) !important;
-        margin-top: clamp(0.25rem, 0.1rem + 0.5cqi, 0.625rem);
+        margin-top: clamp(0.4rem, 0.2rem + 0.6cqi, 0.75rem);
       }
 
       .hero-slide-cta-label {

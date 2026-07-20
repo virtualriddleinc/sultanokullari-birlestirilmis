@@ -1,14 +1,14 @@
 import Image from "next/image";
 import { GraduationCap } from "lucide-react";
 import { cn } from "@/lib/cn";
-import profilCerceveFrame from "@/images/profil-cercevesi.webp";
+import profilCerceveFrame from "@/images/profil-cercevesi.png";
 import {
   type StaffMember,
   departmentLabels,
 } from "@/content/idari-kadro";
 
 /**
- * profil-cercevesi.webp iç deliği — alpha sınırı ~%20.2.
+ * profil-cercevesi.png iç deliği — alpha sınırı ~%20.2.
  * Beyaz daire çerçeve altına hafifçe taşsın diye biraz daha küçük inset;
  * yeşil arka plan sızmasın.
  */

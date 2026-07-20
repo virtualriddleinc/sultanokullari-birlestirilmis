@@ -245,7 +245,7 @@ export function HomeJourney({
                   <h3 className="section-title text-[length:var(--text-4xl)] text-black">
                     {chapter.title}
                   </h3>
-                  <p className="section-body max-w-md text-black/75">
+                  <p className="section-body max-w-md text-[calc(var(--text-sm)*2)] font-bold text-black/75">
                     {chapter.body}
                   </p>
                   <Link
@@ -343,7 +343,7 @@ export function HomeJourney({
                     <h3 className="section-title mt-fluid-2 text-[length:var(--text-xl)] text-black">
                       {chapter.title}
                     </h3>
-                    <p className="section-body mt-fluid-2 text-black/75">
+                    <p className="section-body mt-fluid-2 text-[calc(var(--text-sm)*2)] font-bold text-black/75">
                       {chapter.body}
                     </p>
                     <Link
