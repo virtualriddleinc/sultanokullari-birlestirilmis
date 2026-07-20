@@ -2433,3 +2433,10 @@ summary:focus-visible {
     animation: none;
   }
 }
+
+/* Neden Sultan petek — CSS hover flip yalnızca fine pointer'da (iOS tap≠hover) */
+@media (hover: hover) and (pointer: fine) {
+  .neden-hex--hoverable:hover .neden-flip:not(.is-flipped) {
+    transform: rotateY(180deg);
+  }
+}

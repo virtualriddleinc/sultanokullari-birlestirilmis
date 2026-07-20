@@ -8,6 +8,7 @@ import { HashAnchorScroll } from "@/components/layout/hash-anchor-scroll";
 import { PreventTopOverscroll } from "@/components/layout/prevent-top-overscroll";
 import { RouteReadySignal } from "@/components/layout/route-ready-signal";
 import { SiteHeader } from "@/components/layout/site-header";
+import { WhatsAppFab } from "@/components/whatsapp-fab";
 import { MotionProviders } from "@/components/ui/motion-providers";
 import { getPublishedBranches } from "@/lib/branches-data";
 import { getInfoModalData } from "@/lib/home-data";
@@ -17,8 +18,11 @@ import { buildOrganizationGraph } from "@/lib/schema/organization";
 import { JsonLd } from "@/lib/schema/JsonLd";
 import { getNavSectionsWithCms } from "@/lib/navigation-data";
 import { getSiteSettings } from "@/lib/site-settings-data";
+import { iletisimMetinleri } from "@/content/sultanda-yasam";
 import beyazDesen from "@/images/beyaz-desen.svg";
 import "./globals.css";
+
+const FALLBACK_BRANCH_PHONE = "0506 057 60 72";
 
 export const dynamic = "force-dynamic";
 
@@ -71,6 +75,11 @@ export default async function RootLayout({
     sameAs: buildSameAs(settings),
     branches,
   });
+  const whatsappPhone =
+    settings.footerPhone?.trim() ||
+    iletisimMetinleri.telefon ||
+    branches[0]?.phone?.trim() ||
+    FALLBACK_BRANCH_PHONE;
 
   return (
     <html
@@ -113,6 +122,7 @@ export default async function RootLayout({
             settings={settings}
             sections={navSections}
           />
+          <WhatsAppFab phone={whatsappPhone} />
         </MotionProviders>
       </body>
     </html>

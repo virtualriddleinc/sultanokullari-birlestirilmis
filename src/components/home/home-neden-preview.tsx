@@ -302,7 +302,7 @@ function fitHexBackBodyText(
   container.style.overflowY = "hidden";
 
   let lo = HEX_BACK_MIN_FONT_PX;
-  let hi = Math.min(cw * 0.2, ch * 0.32, 15);
+  let hi = Math.min(cw * 0.22, ch * 0.36, 18);
   let best = lo;
 
   while (hi - lo > 0.2) {
@@ -383,9 +383,26 @@ function HexCellBackFace({ body, isPrimary }: HexCellBackFaceProps) {
   );
 }
 
+const FINE_HOVER_MQ = "(hover: hover) and (pointer: fine)";
+
+function useFinePointerHover(): boolean {
+  const [canHoverFlip, setCanHoverFlip] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(FINE_HOVER_MQ);
+    const update = () => setCanHoverFlip(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  return canHoverFlip;
+}
+
 function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
   const [tapped, setTapped] = useState(false);
   const [hovered, setHovered] = useState(false);
+  const canHoverFlip = useFinePointerHover();
   const isFlipped = tapped;
   const isPrimary = index % 4 === 0 || index === 10;
   const baseShadow = isPrimary
@@ -430,8 +447,9 @@ function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
       openModalFromCell();
       return;
     }
-    // Masaüstü hover önizlemesinde arka yüz görünürken tek tıkla aç
-    if (hovered && !reduce) {
+    // Masaüstü (fine pointer): hover ile arka yüz görünürken tek tıkla aç.
+    // iOS/touch: hover sentezi tek tıkta modal açmasın — önce flip, sonra modal.
+    if (canHoverFlip && hovered && !reduce) {
       openModalFromCell();
       return;
     }
@@ -449,19 +467,23 @@ function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
       variants={honeycombCellVariants}
       whileHover={reduce ? undefined : { y: -4, filter: hoverShadow }}
       transition={springSnappy}
-      className="group/hex absolute cursor-pointer touch-manipulation"
+      className={cn(
+        "group/hex absolute cursor-pointer touch-manipulation",
+        canHoverFlip && !reduce && "neden-hex--hoverable",
+      )}
       style={{ ...containerStyle, ...frameStyle }}
       onClick={handleCellClick}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      onMouseLeave={() => {
+        setHovered(false);
+        if (canHoverFlip) setTapped(false);
+      }}
     >
       <div className="relative size-full" style={perspectiveStyle}>
         <div
           className={cn(
             "neden-flip relative size-full",
-            !reduce &&
-              !isFlipped &&
-              "group-hover/hex:[transform:rotateY(180deg)]",
+            isFlipped && "is-flipped",
           )}
           style={innerStyle}
         >
@@ -481,7 +503,7 @@ function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
               <h3
                 className={cn(
                   /* Hücre geometrisine özel rem skalası — fluid token petekte bozar */
-                  "line-clamp-3 text-[1.32rem] leading-snug font-semibold tracking-tight text-balance sm:text-[1.14rem] md:text-[1.05rem] lg:text-[1.2rem] xl:text-[1.35rem]",
+                  "line-clamp-3 text-[1.4rem] leading-snug font-semibold tracking-tight text-balance sm:text-[1.22rem] md:text-[1.12rem] lg:text-[1.28rem] xl:text-[1.42rem]",
                   isPrimary ? "text-charcoal" : "text-charcoal",
                 )}
               >
