@@ -12,180 +12,196 @@ export const metadata = buildPageMetadata({
 const sections = [
   {
     id: "I",
-    title: "Kişisel Verilerinizi Toplamamızın Yöntemi ve Hukuki Sebebi Nedir?",
+    title: "Veri Sorumlusu",
     content: (
       <p>
-        Kişisel verileriniz; kayıt/ön kayıt başvurunuz sırasında ve/veya
-        sonrasında yazılı ve sözlü olarak ve/veya elektronik ortamda tarafımıza
-        iletmiş olduğunuz, sağlık bilgileri de dahil olmak üzere özel nitelikli
-        kişisel verilerinizi de içeren her türlü bilgi ve belgeyi ifade etmekte
-        olup bu bilgiler fiziki ve dijital ortamda saklanmaktadır. Kişisel
-        verileriniz, KVKK tarafından öngörülen temel ilkelere uygun olarak,
-        KVKK&#39;nın 5. ve 6. maddelerinde belirtilen kişisel veri işleme
-        şartları ve amaçları kapsamında işbu Aydınlatma Metninde belirtilen
-        gerçek ve tüzel kişiler ile aşağıda yer alan amaçlarla yurt içinde ve
-        yurt dışında işlenebilmekte ve aktarılabilmektedir.
+        6698 sayılı Kişisel Verilerin Korunması Kanunu (&quot;KVKK&quot;)
+        uyarınca kişisel verilerinizin işlenmesinden sorumlu veri sorumlusu{" "}
+        <strong>Sultan Okulları</strong>&#39;dır. Başvuru ve iletişim
+        kanallarımız bu metnin ilgili bölümünde ve{" "}
+        <Link
+          href="/iletisim"
+          className="font-medium text-[var(--color-primary)] hover:underline"
+        >
+          iletişim sayfamızda
+        </Link>{" "}
+        yer almaktadır. Web sitesi gizlilik uygulamaları için ayrıca{" "}
+        <Link
+          href="/gizlilik-politikasi"
+          className="font-medium text-[var(--color-primary)] hover:underline"
+        >
+          Gizlilik Politikası
+        </Link>
+        nı inceleyebilirsiniz.
       </p>
     ),
   },
   {
     id: "II",
-    title: "Kişisel Verilerinizi Hangi Amaçla İşliyoruz?",
+    title: "İşlenen Kişisel Veri Kategorileri",
     content: (
       <>
-        <p>Kişisel verileriniz;</p>
+        <p>
+          Faaliyetlerimizin niteliğine ve sizinle kurulan ilişkiye göre
+          aşağıdaki kategorilerdeki kişisel veriler işlenebilir:
+        </p>
         <ul className="mt-fluid-3 list-inside list-disc space-y-fluid-1 pl-fluid-2">
           <li>
-            İlgili her türlü mevzuata uygun olarak kayıt ve ön kayıt işlemlerini
-            gerçekleştirmek,
+            <strong>Kimlik:</strong> ad, soyad, T.C. kimlik numarası ve benzeri
+            kimlik bilgileri
           </li>
           <li>
-            Sultan Okulları tarafından tanımlanan amaçlar doğrultusunda
-            eğitim-öğretim faaliyetlerimizi yürütmek,
+            <strong>İletişim:</strong> telefon, e-posta, adres
           </li>
           <li>
-            Kayıt, veli toplantısı, etkinlik gibi süreçleri yönetmek ve
-            tarafınızın kullanımına sunmak için gerekli her türlü işlemi yerine
-            getirmek,
+            <strong>Öğrenci / veli bilgileri:</strong> kayıt ve ön kayıt
+            bilgileri, sınıf/kademe, eğitim-öğretim süreçlerine ilişkin kayıtlar
           </li>
           <li>
-            Hizmetlerimiz ve etkinliklerimiz ile ilgili tarafınıza bilgilendirme
-            yapmak,
+            <strong>Özel nitelikli kişisel veriler:</strong> sağlık bilgileri
+            gibi veriler yalnızca ilgili mevzuatın öngördüğü hâllerde ve KVKK
+            md. 6 şartlarına uygun olarak (örneğin açık rıza veya kanunî
+            istisnalar çerçevesinde) işlenir
           </li>
           <li>
-            Kampanya, duyuru ve okul gelişmelerinden tarafınızın haberdar
-            edilmesini sağlamak,
-          </li>
-          <li>
-            Sultan Okulları menfaat ve politikaları doğrultusunda faaliyetleri
-            yürütmek,
-          </li>
-          <li>
-            Hizmetlerin iyileştirilmesi için kimliği ifşa edilmeden
-            istatistiksel çalışmalarda kişisel veri ve bilgileri değerlendirerek
-            analiz yapmak,
-          </li>
-          <li>
-            Tarafınızın talep edeceği bilgi, etkinlik ve hizmetlerle ilgili
-            bilgilendirme yapmak,
-          </li>
-          <li>
-            Sultan Okulları tarafından muhafaza edilen kişisel verilerinizin
-            güvenliğini sağlamak ve bu amaçla verilerinizi muhafaza etmek üzere
-            aktarmak,
-          </li>
-          <li>
-            Veri kayıplarının önlenebilmesi için kopyalama/yedekleme yapmak,
-          </li>
-          <li>
-            Yasal mevzuata uygun şekilde ayrıca onay alınmak suretiyle ticari
-            elektronik ileti gönderebilmek,
-          </li>
-          <li>
-            Yasal düzenlemelerin gerektirdiği veya zorunlu kıldığı şekilde yasal
-            yükümlülükleri yerine getirmek,
-          </li>
-          <li>
-            KVKK&#39;da belirtilen diğer amaçlarla, Sultan Okulları ve ilgili
-            kişiler tarafından işlenebilmektedir.
+            <strong>İşlem güvenliği / kullanım verileri:</strong> web sitesi
+            üzerinden iletilen form içerikleri; teknik güvenlik ve hizmet
+            sunumu için gerekli IP adresi, tarayıcı ve oturum bilgileri
           </li>
         </ul>
+        <p className="mt-3">
+          Web sitemizde yer alan öğrenci, öğretmen, veli veya sınıf/ders
+          atmosferini yansıtan görseller yapay zekâ ile üretilmiş sentetik
+          görsellerdir; gerçek üçüncü kişi fotoğrafları kullanılmamaktadır.
+          Ayrıntı için aşağıdaki &quot;Yapay Zekâ ile Üretilmiş Görseller&quot;
+          bölümüne bakınız.
+        </p>
       </>
     ),
   },
   {
     id: "III",
-    title: "Kişisel Verilerinizi Kimlere ve Hangi Amaçla Aktarıyoruz?",
+    title: "Toplama Yöntemi ve Hukuki Sebepler",
     content: (
       <p>
-        Toplanan kişisel verileriniz, KVKK tarafından öngörülen temel ilkelere
-        uygun olarak ve KVKK&#39;nın 8. ve 9. maddelerinde belirtilen kişisel
-        veri işleme şartları ve amaçları dahilinde; Sultan Okulları iş
-        ortaklarına, tedarikçilerine, servis sağlayıcılarına ve kanunen yetkili
-        kamu kurumlarına aktarılabilmektedir.
+        Kişisel verileriniz; ön kayıt / bilgi talep formları, iletişim formu,
+        insan kaynakları başvuruları, yüz yüze veya telefon görüşmeleri, yazılı
+        belgeler ve elektronik yazışmalar yoluyla; kısmen veya tamamen otomatik
+        ya da otomatik olmayan yollarla toplanabilir. Veriler fiziki ve/veya
+        dijital ortamlarda muhafaza edilir. İşleme faaliyetleri, KVKK&#39;nın
+        temel ilkelerine ve md. 5 ile (özel nitelikli veriler bakımından) md. 6
+        hükümlerinde sayılan şartlara dayanır. Açık rıza gerektiren işlemlerde
+        rızanız ayrıca alınır; sözleşmenin kurulması/ifası, kanunî
+        yükümlülüklerin yerine getirilmesi, bir hakkın tesisi, kullanılması veya
+        korunması ve meşru menfaat gibi şartlar da ilgili hâllerde hukuki sebep
+        oluşturabilir.
       </p>
     ),
   },
   {
     id: "IV",
-    title:
-      "KVKK Uyarınca Sultan Okulları'nın Kişisel Verilerinizi Açık Rıza Olmaksızın İşleyebileceği Haller",
+    title: "Kişisel Verilerin İşlenme Amaçları",
     content: (
       <>
-        <p>
-          KVKK&#39;nın 5. maddesi uyarınca aşağıdaki hallerde Sultan Okulları,
-          açık rızanız aranmaksızın kişisel verilerinizi işleyebilir:
-        </p>
+        <p>Kişisel verileriniz aşağıdaki amaçlarla işlenebilir:</p>
         <ul className="mt-fluid-3 list-inside list-disc space-y-fluid-1 pl-fluid-2">
-          <li>Kanunlarda açıkça öngörüldüğü hallerde,</li>
           <li>
-            Fiili imkânsızlık nedeniyle rızanızı açıklayamayacak durumda olmanız
-            veya rızanıza hukuki geçerlilik tanınmayan hallerde kendinizin ya da
-            bir başkasının hayatı veya beden bütünlüğünün korunması için kişisel
-            verinizin işlenmesinin zorunlu olması,
+            Kayıt, ön kayıt ve eğitim-öğretim süreçlerini yürütmek ve ilgili
+            mevzuata (Millî Eğitim Bakanlığı düzenlemeleri dâhil) uygunluğu
+            sağlamak
           </li>
           <li>
-            Sultan Okulları ile akdettiğiniz bir sözleşmenin kurulması veya
-            ifasıyla doğrudan ilgili olması kaydıyla sözleşme taraflarına ait
-            kişisel verilerin işlenmesinin gerekli olması,
+            Veli iletişimi, toplantı, etkinlik ve okul içi bilgilendirme
+            süreçlerini yönetmek
           </li>
           <li>
-            Sultan Okulları&#39;nın bir hukuki yükümlülüğünü yerine
-            getirebilmesi için zorunlu olması,
-          </li>
-          <li>Kişisel verinizin tarafınızca alenileştirilmiş olması,</li>
-          <li>
-            Bir hakkın tesisi, kullanılması veya korunması için veri işlemenin
-            zorunlu olması,
+            Taleplerinize yanıt vermek; bilgi, etkinlik ve hizmetlerle ilgili
+            bilgilendirme yapmak
           </li>
           <li>
-            Sahip olduğunuz temel hak ve özgürlüklerinize zarar vermemek
-            kaydıyla Sultan Okulları&#39;nın meşru menfaatleri için veri
-            işlenmesinin zorunlu olması.
+            Okul güvenliği ile öğrenci sağlığına ilişkin zorunlu süreçleri
+            planlamak ve uygulamak
           </li>
+          <li>
+            Hizmet kalitesini artırmak amacıyla kimliği ifşa edilmeden
+            istatistiksel değerlendirme yapmak
+          </li>
+          <li>
+            Veri güvenliğini sağlamak; yedekleme ve teknik işletim
+            faaliyetlerini yürütmek
+          </li>
+          <li>
+            Ticari elektronik ileti göndermek (yalnızca ilgili mevzuata uygun
+            şekilde ve gerekli onaylar alınmak kaydıyla)
+          </li>
+          <li>Yasal yükümlülükleri yerine getirmek ve yetkili mercilere bilgi vermek</li>
         </ul>
       </>
     ),
   },
   {
     id: "V",
-    title:
-      "Veri Sahibi Olarak KVKK'nın 11. Maddesinde Sayılan Haklarınız Nelerdir?",
+    title: "Kişisel Verilerin Aktarılması",
+    content: (
+      <p>
+        Toplanan kişisel verileriniz; KVKK&#39;nın 8. maddesi (ve yurt dışı
+        aktarım söz konusu olduğunda 9. maddesi) çerçevesinde, yalnızca işleme
+        amaçlarıyla sınırlı ve gerekli olduğu ölçüde; hizmet aldığımız
+        tedarikçi ve servis sağlayıcılara (örneğin barındırma, e-posta,
+        güvenlik/doğrulama hizmetleri), kanunen yetkili kamu kurum ve
+        kuruluşlarına ve eğitim faaliyetinin gerektirdiği diğer muhataplara
+        aktarılabilir. Yurt dışına aktarım, ancak kanunun aradığı şartların
+        sağlanması hâlinde gerçekleştirilir.
+      </p>
+    ),
+  },
+  {
+    id: "VI",
+    title: "Saklama Süresi",
+    content: (
+      <p>
+        Kişisel verileriniz, işlendikleri amaç için gerekli olan süre boyunca ve
+        ilgili mevzuatta öngörülen zamanaşımı / saklama süreleri saklı kalmak
+        kaydıyla muhafaza edilir. İşlenmesini gerektiren sebep ortadan
+        kalktığında KVKK md. 7 uyarınca silinir, yok edilir veya
+        anonimleştirilir.
+      </p>
+    ),
+  },
+  {
+    id: "VII",
+    title: "KVKK Madde 11 Kapsamındaki Haklarınız",
     content: (
       <>
-        <p>Kişisel veri sahibi olarak;</p>
+        <p>Kişisel veri sahibi olarak KVKK md. 11 uyarınca:</p>
         <ul className="mt-fluid-3 list-inside list-disc space-y-fluid-1 pl-fluid-2">
           <li>Kişisel verilerinizin işlenip işlenmediğini öğrenme,</li>
-          <li>Kişisel verileriniz işlenmişse buna ilişkin bilgi talep etme,</li>
+          <li>İşlenmişse buna ilişkin bilgi talep etme,</li>
           <li>
-            Kişisel verilerinizin işlenme amacını ve bunların amacına uygun
-            kullanılıp kullanılmadığını öğrenme,
+            İşlenme amacını ve bunların amacına uygun kullanılıp
+            kullanılmadığını öğrenme,
           </li>
           <li>
-            Yurt içinde veya yurt dışında kişisel verilerinizin aktarıldığı
-            üçüncü kişileri bilme,
+            Yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme,
           </li>
           <li>
-            Kişisel verilerinizin eksik veya yanlış işlenmiş olması hâlinde
-            bunların düzeltilmesini isteme ve bu kapsamda yapılan işlemin
-            kişisel verilerinizin aktarıldığı üçüncü kişilere bildirilmesini
-            isteme,
+            Eksik veya yanlış işlenmiş olması hâlinde düzeltilmesini isteme ve
+            bu kapsamda yapılan işlemin aktarıldığı üçüncü kişilere
+            bildirilmesini isteme,
           </li>
           <li>
-            KVKK ve ilgili diğer kanun hükümlerine uygun olarak işlenmiş
-            olmasına rağmen işlenmesini gerektiren sebeplerin ortadan kalkması
-            hâlinde kişisel verilerinizin silinmesini veya yok edilmesini isteme
-            ve bu kapsamda yapılan işlemin üçüncü kişilere bildirilmesini
-            isteme,
+            KVKK ve ilgili mevzuata uygun işlenmiş olmasına rağmen işlenmesini
+            gerektiren sebeplerin ortadan kalkması hâlinde silinmesini veya yok
+            edilmesini isteme ve bu kapsamda yapılan işlemin üçüncü kişilere
+            bildirilmesini isteme,
           </li>
           <li>
-            İşlenen verilerinizin münhasıran otomatik sistemler vasıtasıyla
-            analiz edilmesi suretiyle aleyhinize bir sonucun ortaya çıkmasına
-            itiraz etme,
+            Münhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle
+            aleyhinize bir sonucun ortaya çıkmasına itiraz etme,
           </li>
           <li>
-            Kişisel verilerinizin kanuna aykırı olarak işlenmesi sebebiyle
-            zarara uğraması hâlinde zararınızın giderilmesini talep etme
+            Kanuna aykırı işlenmesi sebebiyle zarara uğramanız hâlinde zararın
+            giderilmesini talep etme
           </li>
         </ul>
         <p className="mt-3">haklarına sahipsiniz.</p>
@@ -193,60 +209,66 @@ const sections = [
     ),
   },
   {
-    id: "VI",
-    title: "Veri Sahibi Olarak Haklarınızı Ne Şekilde Kullanacaksınız?",
+    id: "VIII",
+    title: "Haklarınızı Nasıl Kullanabilirsiniz?",
     content: (
       <p>
-        KVKK madde 11 uyarınca sahip olduğunuz haklarınızı kullanmak için{" "}
+        Yukarıdaki haklarınızı kullanmak için{" "}
         <Link
           href="/iletisim"
           className="font-medium text-[var(--color-primary)] hover:underline"
         >
           iletişim formumuzu
         </Link>{" "}
-        doldurarak veya{" "}
+        doldurabilir,{" "}
         <a
           href="mailto:info@sultanokullari.com"
           className="font-medium text-[var(--color-primary)] hover:underline"
         >
           info@sultanokullari.com
         </a>{" "}
-        adresine e-posta göndererek ya da Sultan Okulları&#39;na şahsen başvuru
-        ile ya da iadeli taahhütlü posta yoluyla tarafımıza iletebilirsiniz.
-        Sultan Okulları, talebin niteliğine göre talebi en kısa sürede ve en geç
-        otuz (30) gün içerisinde ücretsiz olarak sonuçlandıracaktır. Ancak
-        işlemin ayrıca bir maliyeti gerektirmesi hâlinde Kişisel Verileri Koruma
-        Kurulu tarafından belirlenen tarifedeki ücreti alma hakkımız saklıdır.
-        Kişisel verilerinizle ilgili değişiklik ve/veya güncellemeleri her zaman
-        yukarıda belirtilen iletişim yollarıyla bize bildirebilirsiniz.
+        adresine e-posta gönderebilir veya yazılı olarak (şahsen ya da iadeli
+        taahhütlü posta ile) başvurabilirsiniz. Başvurular, talebin niteliğine
+        göre en kısa sürede ve en geç otuz (30) gün içinde sonuçlandırılır;
+        kural olarak ücretsizdir. İşlemin ayrıca bir maliyet gerektirmesi
+        hâlinde Kişisel Verileri Koruma Kurulu tarafından belirlenen tarife
+        uygulanabilir. Kimlik doğrulaması için ek bilgi istenebilir.
       </p>
     ),
   },
   {
-    id: "VII",
-    title: "Kişisel Verileriniz Ne Süreyle İşlenecektir?",
+    id: "IX",
+    title: "Çerezler ve Elektronik Ortam",
     content: (
       <p>
-        KVKK&#39;ya uygun olarak, işbu Aydınlatma Metninde belirtilen amaçlarla
-        işlenmiş olan kişisel verileriniz, KVKK 7. maddesinin 1. fıkrasına göre
-        işlenmesini gerektiren amaç ortadan kalktığında ve/veya mevzuat uyarınca
-        verilerinizi işlememiz için zorunlu kılındığımız zamanaşımı süreleri
-        dolduğunda tarafımızca silinecek, yok edilecek veya anonimleştirilerek
-        kullanılmaya devam edilecektir.
+        Web sitemizde zorunlu çerezler ve teknik güvenlik araçları (örneğin form
+        spam koruması) kullanılabilir; analitik veya benzeri isteğe bağlı
+        araçlar kullanılması hâlinde bunlar ilgili mevzuata uygun şekilde
+        yönetilir. Çerez türleri, üçüncü taraf hizmetler ve tercihlerinizi
+        yönetme yolları{" "}
+        <Link
+          href="/gizlilik-politikasi#cerezler"
+          className="font-medium text-[var(--color-primary)] hover:underline"
+        >
+          Gizlilik Politikası — Çerezler
+        </Link>{" "}
+        bölümünde açıklanmıştır.
       </p>
     ),
   },
   {
-    id: "VIII",
-    title: "KVKK'nın Yürürlük Tarihinden Önce Alınan Kişisel Verileriniz",
+    id: "X",
+    title: "Yapay Zekâ ile Üretilmiş Görseller",
     content: (
       <p>
-        KVKK&#39;nın yürürlük tarihi olan 7 Nisan 2016 tarihinden önce hukuka
-        uygun olarak elde edilmiş olan kişisel verileriniz, işbu Aydınlatma
-        Metninde ve KVKK&#39;da düzenlenen şart ve koşullara uygun olarak
-        işlenebilecek ve muhafaza edilebilecek olup Türkiye&#39;de işlenerek
-        veya Türkiye dışında işlenip muhafaza edilmek üzere yurt dışına da
-        aktarılabilecektir.
+        Bu web sitesinde yer alan; öğrenci, öğretmen, veli/aile ve sınıf, ders
+        veya okul yaşamı atmosferini gösteren görsellerin tamamı yapay zekâ
+        (AI) teknolojileri ile üretilmiş sentetik görsellerdir. Gerçek üçüncü
+        kişilere ait öğrenci, öğretmen veya veli fotoğrafları kullanılmamaktadır.
+        Bu görseller tanıtım ve illüstrasyon amacı taşır; herhangi bir gerçek
+        kişinin kimliğini temsil etmez ve bu kapsamda kişisel veri teşkil
+        etmez. Kurumsal logo, grafik ve benzeri marka unsurları bu bildirimin
+        kapsamı dışındadır.
       </p>
     ),
   },
@@ -275,11 +297,11 @@ export default function Page() {
 
         <div className="rounded-2xl border border-[var(--color-primary)]/20 bg-[var(--color-primary-light)]/40 p-fluid-4 md:p-fluid-6">
           <p className="text-[length:var(--text-xs)] font-semibold tracking-widest text-[var(--color-primary)] uppercase">
-            Veri Sorumlusu
+            Veri Sorumlusu / Başvuru
           </p>
           <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-6 text-zinc-800">
-            <strong>Sultan Okulları</strong> — Sorularınız veya başvurularınız
-            için{" "}
+            <strong>Sultan Okulları</strong> — Sorularınız veya KVKK
+            başvurularınız için{" "}
             <Link
               href="/iletisim"
               className="font-medium text-[var(--color-primary)] hover:underline"
@@ -296,6 +318,18 @@ export default function Page() {
             adresine e-posta gönderebilirsiniz.
           </p>
         </div>
+
+        <p className="text-[length:var(--text-xs)] text-zinc-400">
+          Son güncelleme: Temmuz 2026 · Bu aydınlatma metni gerektiğinde
+          güncellenebilir; güncel metin web sitesinde yayımlandığı andan
+          itibaren geçerlidir.{" "}
+          <Link
+            href="/gizlilik-politikasi"
+            className="font-medium text-[var(--color-primary)]/80 hover:underline"
+          >
+            Gizlilik Politikası
+          </Link>
+        </p>
       </div>
     </PageShell>
   );

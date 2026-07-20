@@ -6,7 +6,7 @@ export const metadata = buildPageMetadata({
   path: "/gizlilik-politikasi",
   title: "Gizlilik Politikası",
   description:
-    "Sultan Okulları Gizlilik Politikası — kişisel verilerinizin nasıl toplandığını, kullanıldığını ve korunduğunu açıklar.",
+    "Sultan Okulları Gizlilik Politikası — kişisel verilerinizin nasıl toplandığını, kullanıldığını ve korunduğunu açıklar; yapay zekâ görsel bildirimi dahildir.",
 });
 
 function SectionHeading({
@@ -43,19 +43,21 @@ function InfoBox({ children }: { children: React.ReactNode }) {
 }
 
 const tocItems = [
+  { href: "#veri-sorumlusu", label: "Veri Sorumlusu" },
   { href: "#kisisel-veriler", label: "Kişisel Veriler" },
+  { href: "#yapay-zeka-gorseller", label: "AI Görseller" },
   { href: "#veri-guvenligi", label: "Veri Güvenliği" },
   { href: "#cerezler", label: "Çerezler" },
-  { href: "#gizlilik-haklari", label: "Gizlilik Hakları" },
-  { href: "#veri-ihlali", label: "Veri İhlali Bildirimi" },
-  { href: "#ucuncu-taraf", label: "Üçüncü Taraf Hizmetler" },
+  { href: "#gizlilik-haklari", label: "Haklarınız" },
+  { href: "#veri-ihlali", label: "Veri İhlali" },
+  { href: "#ucuncu-taraf", label: "Üçüncü Taraflar" },
 ];
 
 export default function Page() {
   return (
     <PageShell
       title="Gizlilik Politikası"
-      intro="Kişisel verilerinizin korunması ve güvenliği önceliğimizdir. Bu politika, verilerinizin nasıl toplandığını, kullanıldığını ve korunduğunu açıklar."
+      intro="Bu politika, Sultan Okulları web sitesi ve ilgili çevrim içi kanallar üzerinden toplanan kişisel verilerin nasıl işlendiğini özetler. Ayrıntılı aydınlatma için KVKK Aydınlatma Metnimizi de inceleyiniz."
     >
       {/* İçindekiler */}
       <nav aria-label="Sayfa içeriği" className="not-prose">
@@ -79,14 +81,42 @@ export default function Page() {
         </ol>
       </nav>
 
+      {/* ── Veri Sorumlusu ── */}
+      <SectionHeading id="veri-sorumlusu">Veri Sorumlusu</SectionHeading>
+      <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
+        6698 sayılı Kişisel Verilerin Korunması Kanunu (&quot;KVKK&quot;)
+        kapsamında veri sorumlusu <strong>Sultan Okulları</strong>&#39;dır.
+        Başvurularınız için{" "}
+        <a
+          href="mailto:info@sultanokullari.com"
+          className="font-medium text-[var(--color-primary)] hover:underline"
+        >
+          info@sultanokullari.com
+        </a>{" "}
+        veya{" "}
+        <Link
+          href="/iletisim"
+          className="font-medium text-[var(--color-primary)] hover:underline"
+        >
+          iletişim sayfamız
+        </Link>{" "}
+        kullanılabilir. Kanunî aydınlatma metni için{" "}
+        <Link
+          href="/kvkk"
+          className="font-medium text-[var(--color-primary)] hover:underline"
+        >
+          KVKK Aydınlatma Metni
+        </Link>
+        ne bakınız.
+      </p>
+
       {/* ── 1. Kişisel Veriler ── */}
       <SectionHeading id="kisisel-veriler">Kişisel Veriler</SectionHeading>
       <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Sultan Okulları olarak, size daha iyi eğitim ve destek hizmeti
-        sunabilmek için bazı kişisel bilgilerinizi toplamaktayız. Bu bilgilerin
-        kullanımına ilişkin her türlü işlem, 6698 sayılı Kişisel Verilerin
-        Korunması Kanunu (KVKK) ve ilgili mevzuata uygun olarak titizlikle
-        gerçekleştirilmektedir.
+        Sultan Okulları, eğitim ve destek süreçlerini yürütebilmek ve web
+        sitesi üzerinden ilettiğiniz talepleri yanıtlayabilmek için gerekli
+        kişisel verileri KVKK ve ilgili mevzuata uygun olarak işler. Yalnızca
+        ilgili amaç için gerekli veriler toplanır.
       </p>
 
       <SubHeading>Topladığımız Kişisel Veriler</SubHeading>
@@ -94,27 +124,27 @@ export default function Page() {
         {[
           {
             title: "Kimlik Bilgileri",
-            desc: "Öğrenci ve veli/vasi adı, soyadı, T.C. kimlik numarası gibi temel kimlik bilgileri",
+            desc: "Öğrenci ve veli/vasi adı, soyadı; gerektiğinde T.C. kimlik numarası gibi kimlik bilgileri",
           },
           {
             title: "İletişim Bilgileri",
-            desc: "E-posta adresi, telefon numarası, ev ve iş adresi",
+            desc: "E-posta adresi, telefon numarası, adres",
           },
           {
-            title: "Eğitim Bilgileri",
-            desc: "Öğrenci kayıt durumu, sınıf, devam/devamsızlık kayıtları, notlar ve başarı raporları",
+            title: "Eğitim / Başvuru Bilgileri",
+            desc: "Ön kayıt ve kayıt talepleri, sınıf/kademe tercihleri ve eğitim süreçlerine ilişkin ilettiğiniz bilgiler",
           },
           {
             title: "Sağlık Bilgileri",
-            desc: "Allerji, kronik hastalık, ilaç kullanımı gibi özel nitelikli sağlık verileri (yalnızca güvenlik ve sağlık hizmetleri için)",
+            desc: "Allerji, kronik hastalık gibi özel nitelikli sağlık verileri — yalnızca gerekli olduğu ölçüde ve KVKK md. 6 şartlarına uygun olarak",
           },
           {
-            title: "Kullanım Verileri",
-            desc: "Web sitesi IP adresi, tarayıcı bilgileri, oturum verileri ve tıklama analitiği",
+            title: "Kullanım / Teknik Veriler",
+            desc: "Form gönderimleri; site güvenliği ve işleyişi için IP adresi, tarayıcı ve oturum bilgileri",
           },
           {
-            title: "Fotoğraf / Görüntü",
-            desc: "Etkinlik, tören ve okul faaliyetlerinde çekilen fotoğraf ve video kayıtları",
+            title: "İnsan Kaynakları Başvuruları",
+            desc: "İş başvurusu formları üzerinden ilettiğiniz özgeçmiş ve iletişim bilgileri",
           },
         ].map((item) => (
           <div
@@ -133,8 +163,7 @@ export default function Page() {
 
       <SubHeading>Veri Toplama Amacı</SubHeading>
       <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Sultan Okulları, kişisel verilerinizi aşağıdaki amaçlar doğrultusunda
-        toplar, saklar ve işler:
+        Kişisel verileriniz aşağıdaki amaçlarla işlenebilir:
       </p>
       <ul className="mt-fluid-2 list-inside list-disc space-y-fluid-1 pl-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         <li>Kayıt, ön kayıt ve eğitim-öğretim süreçlerini yürütmek</li>
@@ -144,63 +173,79 @@ export default function Page() {
         </li>
         <li>Okul güvenliği ile sağlık hizmetlerini planlamak ve uygulamak</li>
         <li>
-          Hizmet kalitesini artırmak amacıyla istatistiksel analizler yapmak
+          Hizmet kalitesini artırmak amacıyla kimliği ifşa edilmeden
+          istatistiksel değerlendirme yapmak
         </li>
         <li>
           Yasal yükümlülükleri ve Millî Eğitim Bakanlığı gerekliliklerini yerine
           getirmek
         </li>
-        <li>Web sitesi güvenliği ve teknik işleyişi sağlamak</li>
+        <li>Web sitesi güvenliği, teknik işleyiş ve form spam korumasını sağlamak</li>
       </ul>
       <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Kişisel verileriniz, kullanım amacı gerektirdiği sürece ve yasal saklama
-        süreleri boyunca sistemlerimizde muhafaza edilmektedir. Bu süreler
-        dolduğunda verileriniz uygun yöntemlerle imha edilmektedir. Ayrıntılı
-        bilgi için{" "}
+        Veriler, ilgili amaç ve yasal saklama süreleri boyunca muhafaza edilir;
+        süreler dolduğunda veya amaç ortadan kalktığında silinir, yok edilir
+        veya anonimleştirilir. Ayrıntılar için{" "}
         <Link
           href="/kvkk"
           className="font-medium text-[var(--color-primary)] hover:underline"
         >
           KVKK Aydınlatma Metni
         </Link>
-        ni inceleyebilirsiniz.
+        ni inceleyiniz.
+      </p>
+
+      {/* ── AI Görseller ── */}
+      <SectionHeading id="yapay-zeka-gorseller">
+        Yapay Zekâ ile Üretilmiş Görseller
+      </SectionHeading>
+      <InfoBox>
+        Bu web sitesinde yer alan öğrenci, öğretmen, veli/aile ve sınıf, ders
+        veya okul yaşamı atmosferini gösteren görseller <strong>yapay zekâ
+        (AI) ile üretilmiş sentetik görsellerdir</strong>. Gerçek üçüncü kişilere
+        ait öğrenci, öğretmen veya veli fotoğrafları kullanılmamaktadır. Bu
+        görseller tanıtım ve illüstrasyon amacı taşır; herhangi bir gerçek
+        kişinin kimliğini temsil etmez.
+      </InfoBox>
+      <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
+        Kurumsal logo, grafik ve benzeri marka unsurları bu bildirimin kapsamı
+        dışındadır. Aynı açıklama{" "}
+        <Link
+          href="/kvkk#bolum-x"
+          className="font-medium text-[var(--color-primary)] hover:underline"
+        >
+          KVKK Aydınlatma Metni
+        </Link>
+        nde de yer alır.
       </p>
 
       {/* ── 2. Veri Güvenliği ── */}
       <SectionHeading id="veri-guvenligi">Veri Güvenliği</SectionHeading>
       <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Sultan Okulları olarak kişisel verilerinizin güvenliği en büyük
-        önceliklerimizden biridir. Verilerinizi korumak için endüstri standardı
-        güvenlik önlemlerini uyguluyoruz.
+        KVKK md. 12 uyarınca kişisel verilerin hukuka aykırı işlenmesini ve
+        erişilmesini önlemek ile verilerin muhafazasını sağlamak amacıyla
+        uygun teknik ve idari tedbirler alınır. Hiçbir sistem mutlak güvenlik
+        garanti etmez; riskler sürekli gözden geçirilir.
       </p>
-
-      <InfoBox>
-        Hiçbir dijital sistem %100 güvenli değildir; ancak verilerinizi korumak
-        için sürekli olarak en yüksek güvenlik standartlarını uygulamaktayız.
-      </InfoBox>
 
       <SubHeading>Uygulanan Güvenlik Önlemleri</SubHeading>
       <div className="mt-fluid-3 space-y-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         {[
           {
-            title: "SSL/TLS Şifreleme",
-            desc: "Tüm veri transferlerinde SSL/TLS şifreleme protokolleri kullanılmakta; internet üzerindeki iletişim güvenli biçimde şifrelenmektedir.",
+            title: "İletişim şifrelemesi",
+            desc: "Web sitesi üzerinden yapılan veri aktarımlarında SSL/TLS gibi şifreleme protokolleri kullanılır.",
           },
           {
-            title: "Düzenli Yedekleme",
-            desc: "Veri kaybını önlemek için düzenli ve otomatik yedekleme sistemleri kullanılmakta; yedekler şifreli olarak saklanmaktadır.",
+            title: "Erişim kontrolü",
+            desc: "Yetkisiz erişimi sınırlamak için erişim yetkileri ve idari kontroller uygulanır.",
           },
           {
-            title: "Güvenlik Duvarları",
-            desc: "Gelişmiş güvenlik duvarları ve saldırı tespit sistemleri ile yetkisiz erişimler ve siber saldırılar engellenmektedir.",
+            title: "Yedekleme",
+            desc: "Veri kaybı riskini azaltmak amacıyla uygun yedekleme uygulamaları kullanılır.",
           },
           {
-            title: "Erişim Kontrolleri",
-            desc: "Rol tabanlı erişim kontrolleri ile verilerinize yalnızca yetkili personel ulaşabilmektedir.",
-          },
-          {
-            title: "Veri Minimizasyonu",
-            desc: "Yalnızca gerekli verileri toplayarak olası riskleri azaltıyoruz. Amaçla sınırlı veri işleme prensibi uygulanmaktadır.",
+            title: "Veri minimizasyonu",
+            desc: "Yalnızca ilgili amaç için gerekli veriler işlenir; amaçla sınırlılık ilkesi gözetilir.",
           },
         ].map((item) => (
           <div key={item.title}>
@@ -210,77 +255,74 @@ export default function Page() {
         ))}
       </div>
 
-      <SubHeading>Veri Saklama ve İmha Politikası</SubHeading>
+      <SubHeading>Veri Saklama ve İmha</SubHeading>
       <ul className="mt-fluid-2 list-inside list-disc space-y-fluid-1 pl-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         <li>
-          Verileriniz, ilgili yasal düzenlemelerde belirtilen süreler boyunca
-          saklanır.
+          Veriler, ilgili mevzuatta öngörülen veya işleme amacı için gerekli
+          süreler boyunca saklanır.
         </li>
         <li>
-          Hizmete ilişkin yükümlülüklerimiz sona erdiğinde veya veri işleme
-          amacı ortadan kalktığında verileriniz silinir, yok edilir veya anonim
-          hale getirilir.
+          Amaç ortadan kalktığında veya yasal saklama süresi dolduğunda
+          veriler silinir, yok edilir veya anonim hâle getirilir.
         </li>
         <li>
-          İmha işlemleri güvenli silme yöntemleri kullanılarak gerçekleştirilir
-          ve kayıt altına alınır.
-        </li>
-        <li>
-          Talebiniz üzerine, KVKK kapsamındaki haklarınız çerçevesinde
-          verilerinizin silinmesini isteyebilirsiniz.
+          KVKK kapsamındaki haklarınız çerçevesinde, şartları oluştuğunda
+          silme veya yok etme talebinde bulunabilirsiniz.
         </li>
       </ul>
 
       {/* ── 3. Çerezler ── */}
       <SectionHeading id="cerezler">Çerezler ve İzleme</SectionHeading>
       <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Web sitemizde deneyiminizi en iyi hale getirmek, site performansını
-        analiz etmek ve daha kişiselleştirilmiş bir hizmet sunmak için çerez ve
-        benzer teknolojileri kullanmaktayız.
+        Web sitemizin temel işlevlerini sunmak ve güvenliğini sağlamak için
+        çerez ve benzeri teknolojiler kullanılabilir. İsteğe bağlı analitik veya
+        pazarlama araçları kullanılması hâlinde bunlar ilgili mevzuata uygun
+        şekilde yönetilir.
       </p>
 
       <SubHeading>Çerez Nedir?</SubHeading>
       <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Çerezler, web sitemizi ziyaret ettiğinizde tarayıcınız tarafından
-        cihazınıza kaydedilen küçük metin dosyalarıdır. Siteyi nasıl
-        kullandığınız, hangi sayfaları ziyaret ettiğiniz hakkında bilgi toplar
-        ve sonraki ziyaretlerinizde sitemizi daha kullanışlı hale getirmemize
-        yardımcı olur.
+        Çerezler, sitemizi ziyaret ettiğinizde tarayıcınız tarafından
+        cihazınıza kaydedilebilen küçük metin dosyalarıdır. Oturum yönetimi,
+        güvenlik ve (kullanılıyorsa) kullanım istatistikleri gibi amaçlara
+        hizmet eder.
       </p>
 
-      <SubHeading>Kullandığımız Çerez Türleri</SubHeading>
+      <SubHeading>Çerez Türleri</SubHeading>
       <div className="mt-fluid-3 space-y-fluid-3">
         {[
           {
             name: "Zorunlu Çerezler",
-            desc: "Web sitemizin düzgün çalışması için gereklidir. Giriş oturumu, güvenlik doğrulaması gibi temel işlevleri sağlar; bu çerezler devre dışı bırakılamaz.",
-          },
-          {
-            name: "Performans Çerezleri",
-            desc: "Ziyaretçi sayısı ve trafik kaynakları gibi anonim istatistikler toplar. Web sitemizin performansını ölçmemize ve iyileştirmemize yardımcı olur.",
+            desc: "Sitenin temel işlevleri ve güvenliği için gerekli olabilir. Bunlar olmadan bazı özellikler çalışmayabilir.",
           },
           {
             name: "İşlevsellik Çerezleri",
-            desc: "Dil tercihi, kullanıcı ayarları gibi kişiselleştirme bilgilerini hatırlar. Bunlara izin vermezseniz bazı özellikler düzgün çalışmayabilir.",
+            desc: "Tercihlerinizi hatırlamak gibi kullanıcı deneyimini destekleyen çerezler (kullanılması hâlinde).",
           },
           {
             name: "Analitik Çerezler",
-            desc: "Site kullanımını anlamamıza yardımcı olan Google Analytics gibi araçlar aracılığıyla anonim ziyaretçi verisi toplanır; yalnızca rızanız dahilinde etkinleştirilir.",
+            desc: "Site kullanımını ölçmek için analitik araçlar kullanılması hâlinde; mümkün olduğunca anonim/toplanmış verilerle ve ilgili rıza veya hukuki sebebe dayanılarak işlenir.",
           },
         ].map((c) => (
           <div
             key={c.name}
             className="rounded-xl border border-zinc-100 bg-zinc-50 px-fluid-4 py-fluid-3"
           >
-            <p className="text-[length:var(--text-xs)] font-semibold text-zinc-900">{c.name}</p>
-            <p className="mt-fluid-1 text-[length:var(--text-xs)] leading-5 text-zinc-600">{c.desc}</p>
+            <p className="text-[length:var(--text-xs)] font-semibold text-zinc-900">
+              {c.name}
+            </p>
+            <p className="mt-fluid-1 text-[length:var(--text-xs)] leading-5 text-zinc-600">
+              {c.desc}
+            </p>
           </div>
         ))}
       </div>
 
       <SubHeading>Çerez Tercihlerinizi Yönetme</SubHeading>
       <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Tarayıcı ayarlarınızdan çerez tercihlerinizi yönetebilirsiniz:
+        Tarayıcı ayarlarınızdan çerezleri silebilir veya engelleyebilirsiniz.
+        Zorunlu çerezlerin engellenmesi sitenin bazı işlevlerini
+        etkileyebilir.
       </p>
       <div className="mt-fluid-3 grid gap-fluid-2 text-[length:var(--text-xs)] md:grid-cols-2">
         {[
@@ -290,11 +332,11 @@ export default function Page() {
           },
           {
             name: "Mozilla Firefox",
-            path: "Seçenekler › Gizlilik ve Güvenlik › Çerezler",
+            path: "Ayarlar › Gizlilik ve Güvenlik › Çerezler",
           },
           {
             name: "Safari",
-            path: "Tercihler › Gizlilik › Çerezler ve Web Sitesi Verileri",
+            path: "Ayarlar › Gizlilik › Çerezler ve Web Sitesi Verileri",
           },
           {
             name: "Microsoft Edge",
@@ -310,47 +352,42 @@ export default function Page() {
           </div>
         ))}
       </div>
-      <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Zorunlu çerezlerin devre dışı bırakılması sitemizin temel işlevlerini
-        olumsuz etkileyebilir.
-      </p>
 
       {/* ── 4. Gizlilik Hakları ── */}
       <SectionHeading id="gizlilik-haklari">Gizlilik Hakları</SectionHeading>
       <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        6698 sayılı Kişisel Verilerin Korunması Kanunu (KVKK) kapsamında
-        aşağıdaki haklara sahipsiniz:
+        KVKK md. 11 kapsamında aşağıdaki haklara sahipsiniz (özet):
       </p>
 
       <div className="mt-fluid-4 space-y-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         {[
           {
-            title: "Bilgi Edinme Hakkı",
-            desc: "Kişisel verilerinizin işlenip işlenmediğini öğrenme, işlenen veriler hakkında bilgi talep etme ve verilerin kimlere aktarıldığını bilme.",
+            title: "Bilgi edinme",
+            desc: "Verilerinizin işlenip işlenmediğini öğrenme ve işlenmişse bilgi talep etme.",
           },
           {
-            title: "Erişim Hakkı",
-            desc: "Kişisel verilerinize erişim talep etme ve verilerinizin bir kopyasını alma.",
+            title: "Amaç ve aktarım",
+            desc: "İşlenme amacını, amaca uygun kullanımı ve aktarıldığı üçüncü kişileri öğrenme.",
           },
           {
-            title: "Düzeltme Hakkı",
-            desc: "Hatalı veya eksik kişisel verilerinizin düzeltilmesini talep etme.",
+            title: "Düzeltme",
+            desc: "Eksik veya yanlış işlenmiş verilerin düzeltilmesini isteme.",
           },
           {
-            title: "Silme Hakkı",
-            desc: 'Belirli koşullar altında kişisel verilerinizin silinmesini talep etme ("unutulma hakkı").',
+            title: "Silme / yok etme",
+            desc: "İşlenmesini gerektiren sebeplerin ortadan kalkması hâlinde silinmesini veya yok edilmesini isteme.",
           },
           {
-            title: "İşleme Sınırlandırma Hakkı",
-            desc: "Belirli koşullar altında kişisel verilerinizin işlenmesini sınırlandırma.",
+            title: "Otomatik analiz itirazı",
+            desc: "Münhasıran otomatik sistemler vasıtasıyla analiz edilmesi suretiyle aleyhinize sonuç doğmasına itiraz etme.",
           },
           {
-            title: "İtiraz Hakkı",
-            desc: "Özellikle doğrudan pazarlama amacıyla işlenen veriler için kişisel verilerinizin işlenmesine itiraz etme.",
+            title: "Zararın giderilmesi",
+            desc: "Kanuna aykırı işleme nedeniyle uğradığınız zararın giderilmesini talep etme.",
           },
           {
-            title: "Onayı Geri Çekme Hakkı",
-            desc: "Daha önce verdiğiniz herhangi bir onayı istediğiniz zaman geri çekme. Bu, geri çekme öncesi işlemlerin hukuki geçerliliğini etkilemez.",
+            title: "Açık rızanın geri alınması",
+            desc: "İşlemenin açık rızaya dayandığı hâllerde rızanızı ileriye etkili olarak geri alabilirsiniz; geri alma öncesi işlemlerin hukuka uygunluğunu etkilemez.",
           },
         ].map((r) => (
           <div key={r.title}>
@@ -362,8 +399,7 @@ export default function Page() {
 
       <SubHeading>Haklarınızı Nasıl Kullanabilirsiniz?</SubHeading>
       <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Yukarıdaki haklarınızı kullanmak için aşağıdaki kanallardan bize
-        başvurabilirsiniz:
+        Başvurularınızı aşağıdaki kanallardan iletebilirsiniz:
       </p>
       <div className="mt-fluid-3 flex flex-col gap-fluid-2 text-[length:var(--text-sm)]">
         <div className="flex flex-wrap items-baseline gap-2">
@@ -401,54 +437,45 @@ export default function Page() {
         </div>
       </div>
       <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Başvurunuzu aldıktan sonra talebinizi{" "}
-        <strong className="font-semibold text-zinc-900">
-          en geç 30 gün içinde
-        </strong>{" "}
-        ücretsiz olarak sonuçlandıracağız. İşlemin ayrıca bir maliyet
-        gerektirmesi hâlinde Kişisel Verileri Koruma Kurulu tarafından
-        belirlenen tarifedeki ücret talep edilebilir.
+        Başvurular talebin niteliğine göre en kısa sürede ve en geç{" "}
+        <strong className="font-semibold text-zinc-900">30 gün</strong> içinde
+        sonuçlandırılır; kural olarak ücretsizdir. İşlemin ayrıca maliyet
+        gerektirmesi hâlinde Kurul tarifesi uygulanabilir. Kimlik doğrulaması
+        için ek bilgi istenebilir.
       </p>
 
       {/* ── 5. Veri İhlali ── */}
       <SectionHeading id="veri-ihlali">Veri İhlali Bildirimi</SectionHeading>
       <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Olası bir veri ihlali durumunda şeffaflık ilkemiz doğrultusunda sizleri
-        bilgilendirmek ve gerekli önlemleri almak için aşağıdaki süreci tâkib
-        etmekteyiz.
+        KVKK md. 12 kapsamında, işlenen kişisel verilerin kanuni olmayan
+        yollarla başkaları tarafından elde edilmesi hâlinde durum, en kısa
+        sürede Kişisel Verileri Koruma Kurulu&#39;na bildirilir; Kurul&#39;un
+        gerek görmesi veya mevzuatın gerektirmesi hâlinde ilgili kişilere de
+        bilgi verilir.
       </p>
 
-      <SubHeading>Veri İhlali Nedir?</SubHeading>
-      <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Veri ihlali; kişisel verilerin kazara veya yasadışı yollarla imha
-        edilmesi, kaybolması, değiştirilmesi, yetkisiz şekilde ifşa edilmesi
-        veya bunlara erişim sağlanması durumudur. Siber saldırılar, fiziksel
-        güvenlik ihlalleri, insan hatası veya sistem arızaları gibi çeşitli
-        nedenlerden kaynaklanabilir.
-      </p>
-
-      <SubHeading>Yönetim Süreci</SubHeading>
+      <SubHeading>Yönetim Yaklaşımı</SubHeading>
       <ol className="mt-fluid-3 space-y-fluid-4 text-[length:var(--text-sm)] leading-7 text-zinc-700">
         {[
           {
             n: "1",
-            title: "Tespit ve İlk Değerlendirme",
-            desc: "Olası bir ihlal tespit edildiğinde kapsamını, etkilenen veri türlerini ve etkilenen kişi sayısını belirlemek için hızlı bir değerlendirme yapılır.",
+            title: "Tespit ve değerlendirme",
+            desc: "Olası bir ihlalde kapsam, etkilenen veri türleri ve riskler değerlendirilir.",
           },
           {
             n: "2",
-            title: "Yetkili Kurumlara Bildirim",
-            desc: "Kişisel Verileri Koruma Kurumu'na (KVKK) ihlal tespit edildikten sonra en geç 72 saat içinde bildirimde bulunulur.",
+            title: "Kurula bildirim",
+            desc: "Mevzuat gereği Kurul'a en kısa sürede bildirim yapılır.",
           },
           {
             n: "3",
-            title: "Etkilenenlere Bildirim",
-            desc: "Veri ihlalinden etkilenen kişilere ihlalin niteliği, muhtemel sonuçları ve alınan önlemler hakkında açık ve anlaşılır bir dille bilgi verilir.",
+            title: "İlgili kişilerin bilgilendirilmesi",
+            desc: "Kurul'un değerlendirmesi veya mevzuatın öngördüğü hâllerde etkilenen kişiler bilgilendirilir.",
           },
           {
             n: "4",
-            title: "İyileştirme ve Önleme",
-            desc: "İhlalin nedeni belirlenerek benzer ihlallerin tekrarlanmaması için gerekli teknik ve idari önlemler alınır; güvenlik politikaları gözden geçirilir.",
+            title: "İyileştirme",
+            desc: "Benzer risklerin azaltılması için teknik ve idari tedbirler gözden geçirilir.",
           },
         ].map((step) => (
           <li key={step.n} className="flex gap-4">
@@ -464,94 +491,76 @@ export default function Page() {
       </ol>
 
       <p className="mt-fluid-4 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Kişisel verilerinizle ilgili olası bir ihlalden şüpheleniyorsanız lütfen{" "}
+        Verilerinizle ilgili olası bir güvenlik endişeniz varsa{" "}
         <a
           href="mailto:info@sultanokullari.com"
           className="font-medium text-[var(--color-primary)] hover:underline"
         >
           info@sultanokullari.com
         </a>{" "}
-        adresine e-posta gönderin veya{" "}
+        veya{" "}
         <Link
           href="/iletisim"
           className="font-medium text-[var(--color-primary)] hover:underline"
         >
-          iletişim formunu
+          iletişim formu
         </Link>{" "}
-        kullanın.
+        üzerinden bize ulaşabilirsiniz.
       </p>
 
       {/* ── 6. Üçüncü Taraf ── */}
       <SectionHeading id="ucuncu-taraf">Üçüncü Taraf Hizmetler</SectionHeading>
       <p className="mt-fluid-3 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Web sitemizde kullandığımız bazı analitik teknolojiler dış hizmet
-        sağlayıcıları tarafından sunulmaktadır. Bu teknolojiler yalnızca çerez
-        tercihleri üzerinden verdiğiniz rıza doğrultusunda devreye alınır.
-      </p>
-
-      <SubHeading>Google Analytics</SubHeading>
-      <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Ziyaretçi davranışlarını anonim biçimde analiz etmek için{" "}
-        <a
-          href="https://analytics.google.com/"
-          target="_blank"
-          rel="noreferrer noopener"
-          className="font-medium text-[var(--color-primary)] hover:underline"
-        >
-          Google Analytics
-        </a>{" "}
-        kullanıyoruz. Yalnızca rızanız dahilinde etkinleştirilir; topladığı
-        veriler Google&#39;ın{" "}
-        <a
-          href="https://policies.google.com/privacy"
-          target="_blank"
-          rel="noreferrer noopener"
-          className="font-medium text-[var(--color-primary)] hover:underline"
-        >
-          Gizlilik Politikası
-        </a>
-        &#39;na tabidir.
-      </p>
-
-      <SubHeading>Google Tag Manager</SubHeading>
-      <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Ölçümleme etiketlerini yönetmek için{" "}
-        <a
-          href="https://tagmanager.google.com/"
-          target="_blank"
-          rel="noreferrer noopener"
-          className="font-medium text-[var(--color-primary)] hover:underline"
-        >
-          Google Tag Manager
-        </a>{" "}
-        kullanıyoruz. Tag Manager yalnızca izin verdiğiniz etiketlerin
-        çalıştırılmasını sağlar ve doğrudan kullanıcı verisi saklamaz.
+        Web sitesinin işletilmesi için üçüncü taraf hizmet sağlayıcılar
+        kullanılabilir. Bu sağlayıcılar, verdikleri hizmet kapsamında gerekli
+        teknik verileri kendi gizlilik politikalarına göre işleyebilir.
       </p>
 
       <SubHeading>reCAPTCHA</SubHeading>
       <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        İletişim ve ön kayıt formlarında spam ve bot koruması amacıyla Google
-        reCAPTCHA kullanılmaktadır. Bu hizmet kapsamında toplanan veriler
+        İletişim, ön kayıt ve benzeri formlarda spam ve bot koruması amacıyla
+        Google reCAPTCHA kullanılabilir. Bu kapsamda toplanan teknik veriler
         Google&#39;ın gizlilik şartlarına tabidir.
       </p>
 
+      <SubHeading>Barındırma ve iletişim altyapısı</SubHeading>
+      <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
+        Site barındırma, e-posta iletimi ve içerik yönetimi için hizmet
+        sağlayıcılar kullanılabilir. Bu aktarımlar, hizmetin sunulması için
+        gerekli olduğu ölçüde ve KVKK&#39;nın aktarım hükümlerine uygun olarak
+        gerçekleştirilir.
+      </p>
+
+      <SubHeading>Sosyal medya gömülü içerikler</SubHeading>
+      <p className="mt-fluid-2 text-[length:var(--text-sm)] leading-7 text-zinc-700">
+        Sitede Instagram veya benzeri gömülü içerikler bulunması hâlinde ilgili
+        platform, kendi çerez ve izleme teknolojilerini uygulayabilir. Bu
+        işlemler ilgili platformun politikalarına tabidir.
+      </p>
+
       <p className="mt-fluid-4 text-[length:var(--text-sm)] leading-7 text-zinc-700">
-        Üçüncü taraf hizmet sağlayıcıları, veri işleme faaliyetlerinde kendi
-        gizlilik politikalarına tabidir. Sorularınız için{" "}
+        Sorularınız için{" "}
         <Link
           href="/iletisim"
           className="font-medium text-[var(--color-primary)] hover:underline"
         >
           bizimle iletişime
         </Link>{" "}
-        geçebilirsiniz.
+        geçebilir veya{" "}
+        <Link
+          href="/kvkk"
+          className="font-medium text-[var(--color-primary)] hover:underline"
+        >
+          KVKK Aydınlatma Metni
+        </Link>
+        ni inceleyebilirsiniz.
       </p>
 
       {/* Son güncelleme notu */}
       <p className="mt-fluid-8 text-[length:var(--text-xs)] text-zinc-400">
-        Son güncelleme: Mayıs 2026 · Sultan Okulları, bu politikayı önceden
-        haber vermeksizin güncelleyebilir. Değişiklikler web sitesinde
-        yayımlandığı andan itibaren geçerlidir.
+        Son güncelleme: Temmuz 2026 · Sultan Okulları bu politikayı
+        güncelleyebilir. Değişiklikler web sitesinde yayımlandığı andan
+        itibaren geçerlidir.
       </p>
     </PageShell>
   );
