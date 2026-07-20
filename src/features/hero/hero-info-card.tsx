@@ -66,11 +66,12 @@ export function HeroSlideTagline({
   );
 }
 
+/** Boyut/line-height: globals.css --hero-title-* / --hero-desc-* (çakışmasız tek kaynak) */
 const HERO_SLIDE_TITLE_CLASS =
-  "font-cinzel w-full min-w-0 max-w-full shrink-0 text-[clamp(1.35rem,2.6vw,2.75rem)] leading-[1.12] font-bold tracking-tight text-[#1a1c18] max-lg:text-center max-lg:text-pretty lg:text-left lg:text-balance";
+  "font-cinzel hero-slide-title w-full min-w-0 max-w-full shrink-0 font-bold tracking-tight text-[#1a1c18] max-lg:text-center max-lg:text-pretty lg:text-left lg:text-balance";
 
 export const HERO_SLIDE_DESCRIPTION_CLASS =
-  "w-full min-w-0 max-w-full shrink-0 text-[length:var(--text-sm)] leading-relaxed font-medium text-pretty text-[#1a1c18]/80 max-lg:text-center lg:text-[length:var(--text-base)] lg:leading-snug lg:text-left";
+  "hero-slide-description w-full min-w-0 max-w-full shrink-0 font-medium text-pretty text-[#1a1c18]/80 max-lg:text-center lg:text-left";
 
 export function HeroSlideTitle({
   lines,
