@@ -21,11 +21,11 @@ const FLAT_TOP_HEX_VERTICES: readonly (readonly [number, number])[] = [
 const HEX_CLIP_CENTER: readonly [number, number] = [50, 50];
 
 /**
- * Negatif bleed: clip’i hafifçe içeri çeker.
- * Komşu hücreler arasında ince bir derz bırakır; aynı renk/özellikteki
- * altıgenlerin birbirinin görünür alanını yemesini (optik “çakışma”) önler.
+ * Pozitif bleed: clip’i hafifçe dışa genişletir.
+ * Hücreler arasındaki derzi kapatır; altıgenler boşluksuz birleşir
+ * (layout / en-boy oranı değişmez — yalnızca clip genişler).
  */
-const HEX_CLIP_BLEED = -0.022;
+const HEX_CLIP_BLEED = 0.015;
 
 function expandHexClipVertex([x, y]: readonly [number, number]) {
   const [cx, cy] = HEX_CLIP_CENTER;

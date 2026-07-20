@@ -14,7 +14,7 @@ export function highlightText(text: string, phrases: string[]): ReactNode {
     phrases.includes(part) ? (
       <mark
         key={i}
-        className="bg-brand-green/20 text-charcoal rounded px-1 font-semibold"
+        className="font-bold italic text-charcoal"
       >
         {part}
       </mark>

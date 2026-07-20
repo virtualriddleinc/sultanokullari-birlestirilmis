@@ -271,7 +271,8 @@ export function EbruLink({
 
     gl.uniform1f(locDpr, dpr);
     gl.uniform2f(locRes, width, height);
-    gl.uniform4f(locBgColor, 0.90, 0.91, 0.92, 1.0);
+    // Soft honey-tint background (brand #fff085 eased toward white)
+    gl.uniform4f(locBgColor, 1.0, 0.98, 0.92, 1.0);
 
     const actions: Action[] = [];
 
@@ -312,9 +313,10 @@ export function EbruLink({
     };
 
     let t = 0;
-    const baseColors = ['#0f172a', '#1C2841', '#0F52BA', '#023020', '#2E8B57'];
-    const accentColors = ['#D4AF37', '#2A52BE', '#008080'];
-    const whiteColors = ['#Fdfbf7', '#FFFFFF'];
+    // Brand palette ink drops: green #4cff00, honey #fff085, soft blue #A4D7E4, white
+    const baseColors = ['#4cff00', '#A4D7E4', '#4cff00'];
+    const accentColors = ['#fff085', '#A4D7E4', '#4cff00'];
+    const whiteColors = ['#FFFFFF', '#fff085'];
     const maxDrop = Math.max(width, height) / 4;
 
     for (let i = 0; i < 30; i++) {

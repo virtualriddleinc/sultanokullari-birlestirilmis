@@ -44,7 +44,7 @@ export const branches: Branch[] = branchSchema.array().parse([
     name: "Özel Sultan Okulları Anaokulu, İlkokul ve Ortaokulu",
     city: "Kocaeli",
     district: "Başiskele",
-    address: "Yaylacık, Yaylacık Cd. No:45/1, 41140 Başiskele / Kocaeli",
+    address: "Sultanbaba Sokağı, Yaylacık Cd. No:45/1, 41140 Başiskele/Kocaeli",
     phone: "0532 327 88 34",
     levels: ["Anaokulu", "İlkokul", "Ortaokul"],
     gallery: branchGalleryMedia.basiskele,

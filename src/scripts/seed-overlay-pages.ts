@@ -159,7 +159,7 @@ const pages: OverlaySeed[] = [
     pathPrefix: "egitim",
     template: "egitim-segment",
     intro:
-      "Mescid-rahle usulüyle Otağ-ı Hümâyun’umuzda Hamele-i Kur’an’lar yetiştiriyoruz; Vahyin gölgesinde hâfız bir nesil.",
+      "Mescid-rahle usulüyle Hamele-i Kur’an’lar yetiştiriyoruz; Vahyin gölgesinde hâfız bir nesil.",
     story: {
       eyebrow: "Hâfızlık",
       motto: "Vahyin gölgesinde hâfız bir nesil",

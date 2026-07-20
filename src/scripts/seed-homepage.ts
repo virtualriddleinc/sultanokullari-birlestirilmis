@@ -87,7 +87,7 @@ const JOURNEY_CHAPTERS = [
   {
     order: 2,
     eyebrow: "02 / Kalp",
-    title: "Hâfızlık ve Otağ-ı Hümâyun",
+    title: "Hâfızlık",
     body: "Mescid-rahle usulüyle Kur'an ile bütünleşen; kalbe erişen ilmi irfâna çeviren bir hâfızlık programı.",
     ctaLabel: "Hâfızlık programı",
     ctaHref: "/egitim/hafizlik",

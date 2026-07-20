@@ -23,7 +23,7 @@ const pages = [
   ["egitim/ilkokul", "İlkokul", "İlkokul programı."],
   ["egitim/ortaokul", "Ortaokul", "Ortaokul programı."],
   ["egitim/nebevi-egitim", "Nebevî eğitim", "Nebevî eğitim yaklaşımımız."],
-  ["egitim/hafizlik", "Hafızlık eğitimi", "Hafızlık ve Otağ-ı Hümâyun."],
+  ["egitim/hafizlik", "Hafızlık eğitimi", "Hafızlık eğitimi."],
   [
     "egitim/degerler-egitimi",
     "Değerler eğitimi",

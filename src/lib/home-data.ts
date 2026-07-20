@@ -472,7 +472,7 @@ const DEFAULT_JOURNEY_CHAPTERS: JourneyChapter[] = [
   },
   {
     eyebrow: "02 / Kalp",
-    title: "Hâfızlık ve Otağ-ı Hümâyun",
+    title: "Hâfızlık",
     body: "Mescid-rahle usulüyle Kur'an ile bütünleşen; kalbe erişen ilmi irfâna çeviren bir hâfızlık programı.",
     cta: { href: "/egitim/hafizlik", label: "Hâfızlık programı" },
     iconKey: "compass",

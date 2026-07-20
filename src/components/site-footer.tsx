@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "@/components/navigation/site-link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, MapPin, Mail, Phone } from "lucide-react";
@@ -20,6 +21,7 @@ import {
   transitionShort,
   viewportInView,
 } from "@/lib/animations";
+import logo from "@/images/logo.svg";
 
 export type SiteFooterSettings = {
   footerEmail?: string;
@@ -237,15 +239,16 @@ function FooterGrid({
           aria-label="Sultan Okulları ana sayfası"
           className="inline-flex"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/logo.svg"
+          <Image
+            src={logo}
             alt="Sultan Okulları"
+            width={160}
+            height={48}
             className="h-12 w-auto object-contain"
           />
         </Link>
         <p className="section-body mx-auto mt-4 max-w-xs lg:mx-0">
-          Milli ve Mânevî değerlerle bütünleşik eğitim vizyonu — anaokulundan
+          Milli ve Mânevî değerlerle bütünleşik eğitim — anaokulundan
           ortaokula, nebevî eğitim yolculuğu.
         </p>
         <div className="mt-5 flex items-center justify-center gap-2 lg:justify-start">
