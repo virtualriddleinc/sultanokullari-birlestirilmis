@@ -1753,14 +1753,19 @@
      */
     .hero-section-grid:not(.journey-stage-grid) {
       --hero-title-lh: 1.12;
-      --hero-title-lines: 3;
+      /* min: kısa başlık yer koru; max: dar kartta doğal sarım kesilmesin */
+      --hero-title-lines-min: 3;
+      --hero-title-lines: 4;
+      --hero-title-box-min: calc(
+        var(--hero-title-lines-min) * var(--hero-title-lh) * 1em
+      );
       --hero-title-box: calc(
         var(--hero-title-lines) * var(--hero-title-lh) * 1em
       );
       --hero-desc-lh: 1.45;
       --hero-desc-lines: 5;
       --hero-desc-box: calc(var(--hero-desc-lines) * var(--hero-desc-lh) * 1em);
-      --hero-title-size: clamp(1.35rem, 1.05rem + 1.35vw, 2.25rem);
+      --hero-title-size: clamp(1.25rem, 0.95rem + 1.2vw, 2rem);
       --hero-desc-size: clamp(1rem, 0.82rem + 0.7vw, 1.25rem);
     }
 
@@ -1852,7 +1857,7 @@
       text-align: left;
     }
 
-    /* Başlık: 3 satırlık sabit kutu — lh ile birebir eşleşir */
+    /* Başlık: min 3 / max 4 satır — lh ile birebir eşleşir */
     .hero-section-grid:not(.journey-stage-grid) .hero-slide-title-flow {
       display: -webkit-box;
       -webkit-box-orient: vertical;
@@ -1862,7 +1867,7 @@
       text-align: left;
       text-wrap: normal;
       width: 100%;
-      min-height: var(--hero-title-box);
+      min-height: var(--hero-title-box-min);
       max-height: var(--hero-title-box);
       height: auto;
       line-height: var(--hero-title-lh);
@@ -2198,7 +2203,11 @@
       /* Değişkenler kartta — container çocuğu miras alır */
       .hero-slide-card {
         --hero-title-lh: 1.12;
-        --hero-title-lines: 3;
+        --hero-title-lines-min: 3;
+        --hero-title-lines: 4;
+        --hero-title-box-min: calc(
+          var(--hero-title-lines-min) * var(--hero-title-lh) * 1em
+        );
         --hero-title-box: calc(
           var(--hero-title-lines) * var(--hero-title-lh) * 1em
         );
@@ -2207,7 +2216,7 @@
         --hero-desc-box: calc(
           var(--hero-desc-lines) * var(--hero-desc-lh) * 1em
         );
-        --hero-title-size: clamp(1.2rem, calc(0.95rem + 3.6cqi), 1.85rem);
+        --hero-title-size: clamp(1.15rem, calc(0.9rem + 3.2cqi), 1.7rem);
         --hero-desc-size: clamp(0.9375rem, calc(0.78rem + 2.1cqi), 1.125rem);
       }
 
@@ -2224,7 +2233,7 @@
       }
 
       .hero-slide-title-flow {
-        min-height: var(--hero-title-box);
+        min-height: var(--hero-title-box-min);
         max-height: var(--hero-title-box);
         height: auto;
         line-height: var(--hero-title-lh);
