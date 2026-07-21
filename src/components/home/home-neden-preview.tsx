@@ -251,7 +251,8 @@ type HoneycombProps = {
   onOpenModal: (item: HoneycombItem, index: number) => void;
 };
 
-const FINE_HOVER_MQ = "(hover: hover) and (pointer: fine)";
+/** iOS/touch: hover:none → iki dokunuş; mouse’lu masaüstü: hover:hover → hover flip */
+const FINE_HOVER_MQ = "(hover: hover)";
 
 function useFinePointerHover(): boolean {
   const [canHoverFlip, setCanHoverFlip] = useState(false);
