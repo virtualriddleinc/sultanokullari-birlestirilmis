@@ -1,5 +1,3 @@
-"use client";
-
 import { WhatsAppGlyph } from "@/components/icons/whatsapp-glyph";
 import { toWhatsAppHref } from "@/lib/phone";
 
@@ -16,7 +14,7 @@ export function WhatsAppFab({ phone }: WhatsAppFabProps) {
     <a
       href={toWhatsAppHref(trimmed)}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
       aria-label="WhatsApp ile yazın"
       className="fixed right-5 bottom-5 z-[60] flex size-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-105 hover:shadow-xl active:scale-95 lg:hidden"
     >

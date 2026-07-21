@@ -251,7 +251,25 @@ type HoneycombProps = {
   onOpenModal: (item: HoneycombItem, index: number) => void;
 };
 
+const FINE_HOVER_MQ = "(hover: hover) and (pointer: fine)";
+
+function useFinePointerHover(): boolean {
+  const [canHoverFlip, setCanHoverFlip] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia(FINE_HOVER_MQ);
+    const update = () => setCanHoverFlip(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  return canHoverFlip;
+}
+
 function Honeycomb({ shape, items, reduce, onOpenModal }: HoneycombProps) {
+  const canHoverFlip = useFinePointerHover();
+
   return (
     <div
       className="relative w-full"
@@ -272,6 +290,7 @@ function Honeycomb({ shape, items, reduce, onOpenModal }: HoneycombProps) {
             index={i}
             position={pos}
             reduce={reduce}
+            canHoverFlip={canHoverFlip}
             onOpenModal={onOpenModal}
           />
         );
@@ -285,6 +304,7 @@ type HexCellProps = {
   index: number;
   position: CellPosition;
   reduce: boolean | null;
+  canHoverFlip: boolean;
   onOpenModal: (item: HoneycombItem, index: number) => void;
 };
 
@@ -383,27 +403,18 @@ function HexCellBackFace({ body, isPrimary }: HexCellBackFaceProps) {
   );
 }
 
-const FINE_HOVER_MQ = "(hover: hover) and (pointer: fine)";
-
-function useFinePointerHover(): boolean {
-  const [canHoverFlip, setCanHoverFlip] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia(FINE_HOVER_MQ);
-    const update = () => setCanHoverFlip(mq.matches);
-    update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
-  }, []);
-
-  return canHoverFlip;
-}
-
-function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
+function HexCell({
+  item,
+  index,
+  position,
+  reduce,
+  canHoverFlip,
+  onOpenModal,
+}: HexCellProps) {
   const [tapped, setTapped] = useState(false);
   const [hovered, setHovered] = useState(false);
-  const canHoverFlip = useFinePointerHover();
-  const isFlipped = tapped;
+  // Masaüstü: hover veya tap flip; dokunmatik: yalnızca tap state
+  const isFlipped = tapped || (canHoverFlip && hovered && !reduce);
   const isPrimary = index % 4 === 0 || index === 10;
   const baseShadow = isPrimary
     ? "drop-shadow(0 0 18px rgba(217, 204, 92, 0.38))"
@@ -440,6 +451,7 @@ function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
   const openModalFromCell = () => {
     onOpenModal(item, index);
     setTapped(false);
+    setHovered(false);
   };
 
   const handleCellClick = () => {
@@ -447,12 +459,7 @@ function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
       openModalFromCell();
       return;
     }
-    // Masaüstü (fine pointer): hover ile arka yüz görünürken tek tıkla aç.
-    // iOS/touch: hover sentezi tek tıkta modal açmasın — önce flip, sonra modal.
-    if (canHoverFlip && hovered && !reduce) {
-      openModalFromCell();
-      return;
-    }
+    // Dokunmatik / coarse: önce flip; masaüstü hover zaten isFlipped yapar.
     setTapped(true);
   };
 
@@ -467,13 +474,12 @@ function HexCell({ item, index, position, reduce, onOpenModal }: HexCellProps) {
       variants={honeycombCellVariants}
       whileHover={reduce ? undefined : { y: -4, filter: hoverShadow }}
       transition={springSnappy}
-      className={cn(
-        "group/hex absolute cursor-pointer touch-manipulation",
-        canHoverFlip && !reduce && "neden-hex--hoverable",
-      )}
+      className="neden-hex-cell group/hex absolute cursor-pointer touch-manipulation"
       style={{ ...containerStyle, ...frameStyle }}
       onClick={handleCellClick}
-      onMouseEnter={() => setHovered(true)}
+      onMouseEnter={() => {
+        if (canHoverFlip) setHovered(true);
+      }}
       onMouseLeave={() => {
         setHovered(false);
         if (canHoverFlip) setTapped(false);
