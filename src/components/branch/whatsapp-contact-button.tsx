@@ -13,7 +13,8 @@ export function WhatsAppContactButton({
   label = "WhatsApp",
   className,
 }: WhatsAppContactButtonProps) {
-  if (!phone.trim()) return null;
+  const href = toWhatsAppHref(phone);
+  if (!href) return null;
 
   return (
     <a
@@ -21,7 +22,7 @@ export function WhatsAppContactButton({
         "border-charcoal/15 text-charcoal hover:border-[#25D366]/50 hover:bg-[#25D366]/5 inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition",
         className,
       )}
-      href={toWhatsAppHref(phone)}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
     >

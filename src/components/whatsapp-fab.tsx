@@ -7,12 +7,12 @@ type WhatsAppFabProps = {
 
 /** Mobil-only sabit WhatsApp butonu (lg altı). */
 export function WhatsAppFab({ phone }: WhatsAppFabProps) {
-  const trimmed = phone.trim();
-  if (!trimmed) return null;
+  const href = toWhatsAppHref(phone);
+  if (!href) return null;
 
   return (
     <a
-      href={toWhatsAppHref(trimmed)}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="WhatsApp ile yazın"

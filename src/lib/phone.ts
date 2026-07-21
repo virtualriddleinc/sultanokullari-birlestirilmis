@@ -6,6 +6,13 @@ export function toWhatsAppDigits(phone: string): string {
   return `90${digits}`;
 }
 
-export function toWhatsAppHref(phone: string): string {
-  return `https://wa.me/${toWhatsAppDigits(phone)}`;
+/** Geçerli TR/uluslararası E.164 benzeri uzunluk (ülke kodu dahil). */
+export function isValidWhatsAppDigits(digits: string): boolean {
+  return /^\d{11,15}$/.test(digits);
+}
+
+export function toWhatsAppHref(phone: string): string | null {
+  const digits = toWhatsAppDigits(phone);
+  if (!isValidWhatsAppDigits(digits)) return null;
+  return `https://wa.me/${digits}`;
 }

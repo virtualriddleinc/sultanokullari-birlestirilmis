@@ -257,7 +257,7 @@ function FooterGrid({
               key={href}
               href={href}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               aria-label={label}
               className="border-charcoal/15 text-charcoal hover:border-brand-green/50 grid size-10 place-items-center rounded-full border bg-white shadow-sm transition"
             >
