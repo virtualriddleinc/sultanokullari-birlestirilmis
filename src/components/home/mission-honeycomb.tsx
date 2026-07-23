@@ -28,38 +28,54 @@ function LazyHoneyVideo({
   src,
   poster,
   objectPosition,
+  active = false,
 }: {
   src: string;
   poster?: string;
   objectPosition: string;
+  /** Yalnızca vurgulanan/aktif hücrede video yükle */
+  active?: boolean;
 }) {
-  const ref = useRef<HTMLVideoElement>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        if (entry?.isIntersecting) {
-          setShouldLoad(true);
-          io.disconnect();
-        }
-      },
-      { rootMargin: "200px" },
+    if (!active) {
+      setShouldLoad(false);
+      return;
+    }
+    // Aktif olduktan kısa gecikme — LCP yolunu bozmasın
+    const id = window.setTimeout(() => setShouldLoad(true), 400);
+    return () => window.clearTimeout(id);
+  }, [active]);
+
+  if (!shouldLoad) {
+    if (!poster) {
+      return (
+        <span
+          aria-hidden
+          className="absolute inset-0 bg-[url('/desen.svg')] bg-cover bg-center bg-no-repeat opacity-[0.10] mix-blend-multiply"
+        />
+      );
+    }
+    return (
+      <Image
+        src={poster}
+        alt=""
+        fill
+        sizes="(min-width: 1024px) 12vw, 85vw"
+        className="absolute inset-0 object-cover"
+        style={{ objectPosition }}
+      />
     );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+  }
 
   return (
     <video
-      ref={ref}
-      src={shouldLoad ? src : undefined}
+      src={src}
       poster={poster}
       muted
       playsInline
-      autoPlay={shouldLoad}
+      autoPlay
       loop
       preload="none"
       className="absolute inset-0 size-full object-cover"
@@ -228,6 +244,7 @@ export function MissionHoneycomb({
                   <LazyHoneyVideo
                     src={cell.media.src}
                     poster={cell.media.poster}
+                    active={isActive}
                     objectPosition={
                       cell.focalPoint
                         ? `${cell.focalPoint.x}% ${cell.focalPoint.y}%`
