@@ -75,7 +75,7 @@ export function HomeVideo({
                 src={video.src}
                 poster={video.poster}
                 title={video.alt}
-                autoPlay={!reduce}
+                autoPlay={false}
                 loop
               />
             ) : (

@@ -145,8 +145,8 @@ function FramedHexMediaInner({
           aria-hidden="true"
           fill
           sizes={sizes}
-          priority={priority}
-          fetchPriority={priority ? "high" : "auto"}
+          // Çerçeve dekoratif — LCP olmamalı; priority yalnızca iç medyada
+          loading="lazy"
           className="object-contain"
         />
       </div>

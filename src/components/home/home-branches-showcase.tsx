@@ -43,6 +43,7 @@ function BranchPreviewMedia({
         poster={media.poster}
         title={media.alt}
         autoPlay={autoPlay}
+        preload={autoPlay ? "metadata" : "none"}
       />
     );
   }

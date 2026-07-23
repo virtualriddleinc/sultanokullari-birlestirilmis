@@ -2,7 +2,13 @@
 
 import Image from "next/image";
 import Link from "@/components/navigation/site-link";
-import { useCallback, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { HexLandingModal } from "@/components/ui/hex-landing-modal";
 import type { SiteMedia } from "@/content/site-media";
@@ -17,6 +23,50 @@ import {
 import { springSnappy, t, viewportInView } from "@/lib/animations";
 
 const MotionLink = motion.create(Link);
+
+function LazyHoneyVideo({
+  src,
+  poster,
+  objectPosition,
+}: {
+  src: string;
+  poster?: string;
+  objectPosition: string;
+}) {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setShouldLoad(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "200px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      src={shouldLoad ? src : undefined}
+      poster={poster}
+      muted
+      playsInline
+      autoPlay={shouldLoad}
+      loop
+      preload="none"
+      className="absolute inset-0 size-full object-cover"
+      style={{ objectPosition }}
+    />
+  );
+}
 
 export type HoneycombCell = {
   id: string;
@@ -175,20 +225,14 @@ export function MissionHoneycomb({
                     }}
                   />
                 ) : cell.media?.kind === "video" ? (
-                  <video
+                  <LazyHoneyVideo
                     src={cell.media.src}
                     poster={cell.media.poster}
-                    muted
-                    playsInline
-                    autoPlay
-                    loop
-                    preload="none"
-                    className="absolute inset-0 size-full object-cover"
-                    style={{
-                      objectPosition: cell.focalPoint
+                    objectPosition={
+                      cell.focalPoint
                         ? `${cell.focalPoint.x}% ${cell.focalPoint.y}%`
-                        : "50% 50%",
-                    }}
+                        : "50% 50%"
+                    }
                   />
                 ) : (
                   <span
