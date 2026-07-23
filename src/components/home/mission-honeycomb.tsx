@@ -2,7 +2,13 @@
 
 import Image from "next/image";
 import Link from "@/components/navigation/site-link";
-import { useCallback, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { HexLandingModal } from "@/components/ui/hex-landing-modal";
 import type { SiteMedia } from "@/content/site-media";
@@ -17,6 +23,66 @@ import {
 import { springSnappy, t, viewportInView } from "@/lib/animations";
 
 const MotionLink = motion.create(Link);
+
+function LazyHoneyVideo({
+  src,
+  poster,
+  objectPosition,
+  active = false,
+}: {
+  src: string;
+  poster?: string;
+  objectPosition: string;
+  /** Yalnızca vurgulanan/aktif hücrede video yükle */
+  active?: boolean;
+}) {
+  const [shouldLoad, setShouldLoad] = useState(false);
+
+  useEffect(() => {
+    if (!active) {
+      setShouldLoad(false);
+      return;
+    }
+    // Aktif olduktan kısa gecikme — LCP yolunu bozmasın
+    const id = window.setTimeout(() => setShouldLoad(true), 400);
+    return () => window.clearTimeout(id);
+  }, [active]);
+
+  if (!shouldLoad) {
+    if (!poster) {
+      return (
+        <span
+          aria-hidden
+          className="absolute inset-0 bg-[url('/desen.svg')] bg-cover bg-center bg-no-repeat opacity-[0.10] mix-blend-multiply"
+        />
+      );
+    }
+    return (
+      <Image
+        src={poster}
+        alt=""
+        fill
+        sizes="(min-width: 1024px) 12vw, 85vw"
+        className="absolute inset-0 object-cover"
+        style={{ objectPosition }}
+      />
+    );
+  }
+
+  return (
+    <video
+      src={src}
+      poster={poster}
+      muted
+      playsInline
+      autoPlay
+      loop
+      preload="none"
+      className="absolute inset-0 size-full object-cover"
+      style={{ objectPosition }}
+    />
+  );
+}
 
 export type HoneycombCell = {
   id: string;
@@ -175,19 +241,15 @@ export function MissionHoneycomb({
                     }}
                   />
                 ) : cell.media?.kind === "video" ? (
-                  <video
+                  <LazyHoneyVideo
                     src={cell.media.src}
                     poster={cell.media.poster}
-                    muted
-                    playsInline
-                    autoPlay
-                    loop
-                    className="absolute inset-0 size-full object-cover"
-                    style={{
-                      objectPosition: cell.focalPoint
+                    active={isActive}
+                    objectPosition={
+                      cell.focalPoint
                         ? `${cell.focalPoint.x}% ${cell.focalPoint.y}%`
-                        : "50% 50%",
-                    }}
+                        : "50% 50%"
+                    }
                   />
                 ) : (
                   <span

@@ -28,7 +28,7 @@ export function KurumsalTimelineSection({
             className="border-brand-green relative border-l-2 pl-fluid-6"
           >
             <span className="bg-brand-green absolute top-1 -left-[7px] h-3 w-3 rounded-full" />
-            <p className="text-brand-green text-[length:var(--text-sm)] font-bold tracking-wide uppercase">
+            <p className="text-brand-green-ink text-[length:var(--text-sm)] font-bold tracking-wide uppercase">
               {item.year}
             </p>
             <p className="font-cinzel text-charcoal mt-fluid-1 text-[length:var(--text-lg)] font-bold">
@@ -53,7 +53,7 @@ export function KurumsalTimelineSection({
             >
               <div className="from-brand-green/15 via-brand-green to-brand-green/15 absolute top-3 right-0 left-0 h-0.5 bg-gradient-to-r" />
               <span className="bg-brand-green border-brand-honey absolute top-1.5 left-0 h-3 w-3 rounded-full border-2 shadow-[0_0_0_4px_rgba(0,0,0,0.03)]" />
-              <p className="text-brand-green text-[length:var(--text-sm)] font-bold tracking-wide uppercase">
+              <p className="text-brand-green-ink text-[length:var(--text-sm)] font-bold tracking-wide uppercase">
                 {item.year}
               </p>
               <p className="font-cinzel text-charcoal mt-fluid-2 text-[length:var(--text-lg)] leading-snug font-bold text-balance">

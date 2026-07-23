@@ -22,7 +22,7 @@ import {
 } from "@/lib/hex-landing-modal";
 import { springSnappy } from "@/lib/animations";
 import { cn } from "@/lib/cn";
-import beyazDesen from "@/images/beyaz-desen.svg";
+import { SitePatternOverlay } from "@/components/layout/site-pattern-overlay";
 
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
 const HEX_RATIO = "2 / 1.7320508075688772";
@@ -173,14 +173,7 @@ export function HomeNedenPreview({
       data-section="neden"
       className="border-charcoal/10 bg-brand-green relative overflow-hidden border-y"
     >
-      {/* Beyaz desen — hero yeşil zeminiyle aynı katman */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={beyazDesen.src}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 z-0 w-[220vw] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.1] select-none"
-      />
+      <SitePatternOverlay className="z-0" opacity={0.1} />
 
       <div className="border-charcoal/10 relative z-[1] border-y bg-white">
         <Marquee speed={48} className="py-fluid-2">

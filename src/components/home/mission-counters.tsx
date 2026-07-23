@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import beyazDesen from "@/images/beyaz-desen.svg";
+import { SitePatternOverlay } from "@/components/layout/site-pattern-overlay";
 import {
   MissionHoneycomb,
   type HoneycombCell,
@@ -287,13 +287,7 @@ export function MissionCounters({
       onMouseEnter={() => setIsSectionHovered(true)}
       onMouseLeave={() => setIsSectionHovered(false)}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={beyazDesen.src}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 z-0 w-[220vw] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.1] select-none"
-      />
+      <SitePatternOverlay className="z-0" opacity={0.1} />
 
       <div className={`${MISSION_MEDIA_CELL} relative z-[1]`}>
         <div className="hero-slide-media-band">

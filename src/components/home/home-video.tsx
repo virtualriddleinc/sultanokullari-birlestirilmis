@@ -16,7 +16,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { featuredVideo } from "@/content/site-media";
 import type { SiteMedia } from "@/content/site-media";
 import { t } from "@/lib/animations";
-import beyazDesen from "@/images/beyaz-desen.svg";
+import { SitePatternOverlay } from "@/components/layout/site-pattern-overlay";
 
 const HEX_CLIP = "polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%)";
 
@@ -52,14 +52,7 @@ export function HomeVideo({
       innerClassName="flex flex-col gap-fluid-8"
       aria-label="Tanıtım"
     >
-      {/* Beyaz desen — hero ile aynı; daha az zoom (150vw) */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={beyazDesen.src}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 z-0 w-[150vw] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.1] select-none"
-      />
+      <SitePatternOverlay className="z-0 w-[150vw]" opacity={0.1} />
 
       <motion.div
         aria-hidden
@@ -82,7 +75,7 @@ export function HomeVideo({
                 src={video.src}
                 poster={video.poster}
                 title={video.alt}
-                autoPlay={!reduce}
+                autoPlay={false}
                 loop
               />
             ) : (

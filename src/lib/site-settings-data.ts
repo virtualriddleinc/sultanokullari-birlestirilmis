@@ -1,5 +1,6 @@
 import "server-only";
 
+import { unstable_cache } from "next/cache";
 import { getPayloadClient } from "@/lib/payload";
 
 export type SiteSettings = {
@@ -19,7 +20,7 @@ const DEFAULTS: SiteSettings = {
   socialLinks: [],
 };
 
-export async function getSiteSettings(): Promise<SiteSettings> {
+async function fetchSiteSettings(): Promise<SiteSettings> {
   try {
     const payload = await getPayloadClient();
     const data = await payload.findGlobal({ slug: "site-ayarlari", depth: 1 });
@@ -33,7 +34,8 @@ export async function getSiteSettings(): Promise<SiteSettings> {
         : undefined;
 
     return {
-      instagramHandle: (data.instagramHandle as string) || DEFAULTS.instagramHandle,
+      instagramHandle:
+        (data.instagramHandle as string) || DEFAULTS.instagramHandle,
       instagramUrl: (data.instagramUrl as string) || DEFAULTS.instagramUrl,
       footerEmail: (data.footerEmail as string) || DEFAULTS.footerEmail,
       footerPhone: (data.footerPhone as string) || DEFAULTS.footerPhone,
@@ -43,4 +45,11 @@ export async function getSiteSettings(): Promise<SiteSettings> {
   } catch {
     return DEFAULTS;
   }
+}
+
+export async function getSiteSettings(): Promise<SiteSettings> {
+  return unstable_cache(fetchSiteSettings, ["site-settings"], {
+    revalidate: 120,
+    tags: ["site-settings"],
+  })();
 }

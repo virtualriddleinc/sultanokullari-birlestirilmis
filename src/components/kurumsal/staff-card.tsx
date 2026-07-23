@@ -112,7 +112,6 @@ export function StaffCard({ member, featured = false }: StaffCardProps) {
             ? "(max-width: 640px) 18rem, (max-width: 1024px) 20rem, 24rem"
             : "(max-width: 640px) 16rem, (max-width: 1024px) 18rem, 20rem"
         }
-        unoptimized
         className="pointer-events-none object-cover drop-shadow-[0_18px_45px_rgba(0,0,0,0.14)] transition-[filter] duration-300 group-hover:drop-shadow-[0_26px_60px_rgba(0,0,0,0.2)]"
       />
     </div>

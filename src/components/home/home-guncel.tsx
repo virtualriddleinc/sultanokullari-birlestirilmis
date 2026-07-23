@@ -102,7 +102,7 @@ export function HomeGuncel({
                 }}
               />
               {formatDate(item.date)}
-              <span className="text-brand-green">▸</span>
+              <span className="text-brand-green-ink">▸</span>
               <span className="font-medium tracking-normal normal-case">
                 {item.title}
               </span>
@@ -269,7 +269,7 @@ export function HomeGuncel({
                 Henüz yayınlanmış haber yok. Duyurular için{" "}
                 <Link
                   href="/guncel/haberler"
-                  className="text-brand-green font-semibold hover:underline"
+                  className="text-brand-green-ink font-semibold hover:underline"
                 >
                   güncel bölümünü
                 </Link>{" "}

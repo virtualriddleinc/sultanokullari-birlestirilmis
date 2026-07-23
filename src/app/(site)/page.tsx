@@ -1,19 +1,41 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import { draftMode } from "next/headers";
 import { HeroSection } from "@/features/hero/hero-section";
-import { HomeBranchesShowcase } from "@/components/home/home-branches-showcase";
-import { HomeGuncel } from "@/components/home/home-guncel";
-import { HomeInstagramHorizontal } from "@/components/home/home-instagram-horizontal";
-import { HomeJourney } from "@/components/home/home-journey";
-import { HomeNedenPreview } from "@/components/home/home-neden-preview";
-import { HomeQuickLinks } from "@/components/home/home-quick-links";
-import { HomeVideo } from "@/components/home/home-video";
-import { HomeYemekhane } from "@/components/home/home-yemekhane";
 import { MissionCounters } from "@/components/home/mission-counters";
 import { getHomePageData } from "@/lib/home-data";
 import { buildPageMetadata } from "@/lib/seo/metadata";
 
-export const dynamic = "force-dynamic";
+const HomeJourney = dynamic(() =>
+  import("@/components/home/home-journey").then((m) => m.HomeJourney),
+);
+const HomeNedenPreview = dynamic(() =>
+  import("@/components/home/home-neden-preview").then((m) => m.HomeNedenPreview),
+);
+const HomeVideo = dynamic(() =>
+  import("@/components/home/home-video").then((m) => m.HomeVideo),
+);
+const HomeYemekhane = dynamic(() =>
+  import("@/components/home/home-yemekhane").then((m) => m.HomeYemekhane),
+);
+const HomeBranchesShowcase = dynamic(() =>
+  import("@/components/home/home-branches-showcase").then(
+    (m) => m.HomeBranchesShowcase,
+  ),
+);
+const HomeGuncel = dynamic(() =>
+  import("@/components/home/home-guncel").then((m) => m.HomeGuncel),
+);
+const HomeInstagramHorizontal = dynamic(() =>
+  import("@/components/home/home-instagram-horizontal").then(
+    (m) => m.HomeInstagramHorizontal,
+  ),
+);
+const HomeQuickLinks = dynamic(() =>
+  import("@/components/home/home-quick-links").then((m) => m.HomeQuickLinks),
+);
+
+export const revalidate = 120;
 
 export const metadata: Metadata = buildPageMetadata({
   title: "Ana sayfa",

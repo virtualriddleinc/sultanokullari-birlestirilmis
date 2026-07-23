@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
-import cerceveFrame from "@/images/cini-cerceve.png";
+import cerceveFrame from "@/images/cini-cerceve.webp";
 import { AmbientSiteVideo } from "@/components/media/ambient-site-video";
 import type { SiteMedia } from "@/content/site-media";
 import { cn } from "@/lib/cn";
@@ -37,10 +37,20 @@ function FramedHexMediaInner({
   activateLabel,
 }: HeroFramedHexMediaProps) {
   const [measuredAspect, setMeasuredAspect] = useState<number | undefined>();
+  // LCP için önce poster; ambient video gecikmeli başlar
+  const [ambientReady, setAmbientReady] = useState(false);
 
   useEffect(() => {
     setMeasuredAspect(undefined);
+    setAmbientReady(false);
   }, [media.src]);
+
+  useEffect(() => {
+    if (media.kind !== "video") return;
+    const delay = priority ? 2200 : 0;
+    const id = window.setTimeout(() => setAmbientReady(true), delay);
+    return () => window.clearTimeout(id);
+  }, [media.kind, media.src, priority]);
 
   const resolvedAspect =
     typeof mediaAspect === "number" && mediaAspect > 0
@@ -105,20 +115,24 @@ function FramedHexMediaInner({
                     fill
                     sizes={sizes}
                     priority={priority}
+                    fetchPriority={priority ? "high" : "auto"}
                     className="object-cover"
                     onLoadingComplete={(img) => {
                       captureAspect(img.naturalWidth, img.naturalHeight);
                     }}
                   />
                 ) : null}
-                <AmbientSiteVideo
-                  src={media.src}
-                  poster={media.poster}
-                  title={media.alt}
-                  preload={priority ? "auto" : "metadata"}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  onMediaAspect={media.poster ? undefined : captureAspect}
-                />
+                {ambientReady ? (
+                  <AmbientSiteVideo
+                    src={media.src}
+                    poster={media.poster}
+                    title={media.alt}
+                    preload={priority ? "metadata" : "none"}
+                    autoPlay
+                    className="absolute inset-0 h-full w-full object-cover"
+                    onMediaAspect={media.poster ? undefined : captureAspect}
+                  />
+                ) : null}
               </>
             ) : (
               <Image
@@ -127,6 +141,7 @@ function FramedHexMediaInner({
                 fill
                 sizes={sizes}
                 priority={priority}
+                fetchPriority={priority ? "high" : "auto"}
                 className="object-cover"
                 onLoadingComplete={(img) => {
                   captureAspect(img.naturalWidth, img.naturalHeight);
@@ -144,7 +159,8 @@ function FramedHexMediaInner({
           aria-hidden="true"
           fill
           sizes={sizes}
-          unoptimized
+          // Çerçeve dekoratif — LCP olmamalı; priority yalnızca iç medyada
+          loading="lazy"
           className="object-contain"
         />
       </div>

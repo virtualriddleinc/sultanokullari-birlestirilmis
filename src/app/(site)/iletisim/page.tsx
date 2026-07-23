@@ -8,9 +8,9 @@ import { InstagramGlyph } from "@/components/icons/instagram-glyph";
 import { iletisimMetinleri } from "@/content/sultanda-yasam";
 import { getPublishedBranches } from "@/lib/branches-data";
 import { getSiteSettings } from "@/lib/site-settings-data";
-import beyazDesen from "@/images/beyaz-desen.svg";
+import { SitePatternOverlay } from "@/components/layout/site-pattern-overlay";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 120;
 
 export const metadata = buildPageMetadata({
   path: "/iletisim",
@@ -39,13 +39,7 @@ export default async function Page() {
         id="iletisim-formu"
         className="relative isolate overflow-hidden bg-brand-green py-fluid-8 sm:py-fluid-16"
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={beyazDesen.src}
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 left-1/2 z-0 w-[220vw] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.1] select-none"
-        />
+        <SitePatternOverlay className="z-0" opacity={0.1} />
 
         <div className="section-page-grid relative z-[1]">
           <div className="section-page-grid__content">
