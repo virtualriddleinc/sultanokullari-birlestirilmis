@@ -485,7 +485,7 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
               {/* Üst zone: etiket + başlık + açıklama — taşarsa burası kırpılır, CTA değil */}
               <div className="hero-slide-head min-h-0 overflow-hidden">
                 <span
-                  className={`${HERO_SLIDE_TAGLINE_CLASS} hero-slide-tagline--hero mb-2 hidden lg:inline-flex xl:mb-2.5`}
+                  className={`${HERO_SLIDE_TAGLINE_CLASS} hero-slide-tagline--hero hidden lg:inline-flex`}
                 >
                   {slide.tagline}
                 </span>
@@ -494,14 +494,13 @@ export function HeroSlider({ slides }: { slides: HeroSlide[] }) {
                   <HeroSlideTitle
                     as="h1"
                     lines={slide.titleLines}
-                    className="mb-1.5 lg:mb-2"
                     flow
                   />
 
                   <p
                     className={cn(
                       HERO_SLIDE_DESCRIPTION_CLASS,
-                      "hero-slide-description--hero mb-0",
+                      "hero-slide-description--hero",
                     )}
                   >
                     {slide.description}
