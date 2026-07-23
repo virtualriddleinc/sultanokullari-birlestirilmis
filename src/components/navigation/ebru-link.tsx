@@ -313,9 +313,9 @@ export function EbruLink({
     };
 
     let t = 0;
-    // Brand palette ink drops: green #4cff00, honey #fff085, soft blue #A4D7E4, white
-    const baseColors = ['#4cff00', '#A4D7E4', '#4cff00'];
-    const accentColors = ['#fff085', '#A4D7E4', '#4cff00'];
+    // Brand palette ink drops: green #4cff00, honey #fff085, blue #1E90FF, white
+    const baseColors = ['#4cff00', '#1E90FF', '#4cff00'];
+    const accentColors = ['#fff085', '#1E90FF', '#4cff00'];
     const whiteColors = ['#FFFFFF', '#fff085'];
     const maxDrop = Math.max(width, height) / 4;
 
