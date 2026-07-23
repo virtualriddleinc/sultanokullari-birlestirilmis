@@ -50,7 +50,7 @@ export function IletisimBranchCards({
   return (
     <SectionGrid id="sube-kartlari" aria-label="Şubelerimiz" variant="white">
       <div className="mb-fluid-8 max-w-2xl">
-        <p className="text-brand-green text-[length:var(--text-xs)] font-semibold tracking-[0.32em] uppercase">
+        <p className="text-brand-green-ink text-[length:var(--text-xs)] font-semibold tracking-[0.32em] uppercase">
           Yol Tarifi
         </p>
         <h2 className="mt-fluid-3 text-[length:var(--text-3xl)] leading-tight font-semibold tracking-tight text-balance text-zinc-950">

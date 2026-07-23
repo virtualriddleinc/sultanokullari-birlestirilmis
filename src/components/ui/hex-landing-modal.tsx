@@ -51,7 +51,6 @@ function ModalMedia({ content }: { content: HexLandingModalContent }) {
       fill
       sizes="(max-width: 768px) 100vw, 50vw"
       className="object-cover"
-      unoptimized={media.src.startsWith("/")}
     />
   );
 }

@@ -322,7 +322,7 @@ export function HomeAtolyelerPreview({
                   ? undefined
                   : { duration: 4.5, repeat: Infinity, ease: "easeInOut" }
               }
-              className="text-brand-green"
+              className="text-brand-green-ink"
             >
               +
             </motion.span>

@@ -13,6 +13,7 @@ import {
   type MediaPlayerInstance,
 } from "@vidstack/react";
 import { cn } from "@/lib/cn";
+import { VidstackStyles } from "@/components/media/vidstack-styles";
 
 export type InteractiveSiteVideoProps = {
   src: string;
@@ -134,8 +135,14 @@ export function InteractiveSiteVideo({
   const safeSrc = src?.trim() || "";
   if (!safeSrc) return null;
 
+  // idle: viewport'ta olsa bile indirme; play/shouldPlay olunca yükle
+  const load =
+    shouldPlay === true || autoPlay ? ("visible" as const) : ("idle" as const);
+
   return (
-    <MediaPlayer
+    <>
+      <VidstackStyles />
+      <MediaPlayer
       ref={playerRef}
       className={cn("site-vidstack-interactive", className)}
       src={safeSrc}
@@ -147,7 +154,7 @@ export function InteractiveSiteVideo({
       playsInline
       // Next DevTools, Vidstack GroupedLog içindeki Proxy state'i stringify edemez
       logLevel="silent"
-      load="visible"
+      load={load}
     >
       <MediaProvider mediaProps={{ "aria-label": title }} />
       <InteractiveVideoControls />
@@ -158,5 +165,6 @@ export function InteractiveSiteVideo({
         onEnded={onEnded}
       />
     </MediaPlayer>
+    </>
   );
 }

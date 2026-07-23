@@ -13,9 +13,9 @@ import {
   mapJourneyChapterToModal,
   type HexLandingModalContent,
 } from "@/lib/hex-landing-modal";
-import beyazDesen from "@/images/beyaz-desen.svg";
-import levhaDesktop from "@/images/levha.png";
-import levhaMobil from "@/images/levha-mobil.png";
+import { SitePatternOverlay } from "@/components/layout/site-pattern-overlay";
+import levhaDesktop from "@/images/levha.webp";
+import levhaMobil from "@/images/levha-mobil.webp";
 import { cn } from "@/lib/cn";
 import type { JourneyChapter } from "@/lib/home-shared";
 
@@ -54,15 +54,13 @@ function JourneyLevha({ headline }: { headline: string }) {
         className="mx-auto block h-auto w-full md:hidden"
         sizes="100vw"
         loading="lazy"
-        unoptimized
       />
       <Image
         src={levhaDesktop}
         alt={headline}
         className="mx-auto hidden h-auto w-full md:block"
-        sizes="100vw"
+        sizes="(min-width: 768px) 100vw, 100vw"
         loading="lazy"
-        unoptimized
       />
     </div>
   );
@@ -171,9 +169,10 @@ export function HomeJourney({
           const trigger = ScrollTrigger.create({
             trigger: stage,
             start: "top top",
-            end: () => `+=${stage.offsetHeight * (panels.length - 1)}`,
+            end: `+=${(panels.length - 1) * 100}%`,
             pin: true,
             invalidateOnRefresh: true,
+            anticipatePin: 1,
             snap: {
               snapTo: 1 / (panels.length - 1),
               directional: true,
@@ -209,13 +208,7 @@ export function HomeJourney({
         className="relative z-[2] -mt-px w-full bg-[#4cff00]"
       >
         <div className="levha-band-shell relative flex w-full items-center justify-center overflow-hidden py-fluid-8 sm:py-fluid-16">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={beyazDesen.src}
-            alt=""
-            aria-hidden="true"
-            className="pointer-events-none absolute top-1/2 left-1/2 w-[220vw] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.1] select-none"
-          />
+          <SitePatternOverlay opacity={0.1} />
           <div className="relative z-[1] flex w-full items-center justify-center">
             <JourneyLevha headline={headline} />
           </div>

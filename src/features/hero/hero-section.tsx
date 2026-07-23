@@ -1,6 +1,6 @@
 "use client";
 
-import beyazDesen from "@/images/beyaz-desen.svg";
+import { SitePatternOverlay } from "@/components/layout/site-pattern-overlay";
 import { SectionWaveDivider } from "@/components/ui/section-wave-divider";
 import { HeroSlider } from "./hero-slider";
 import { HERO_SLIDES, type HeroSlide } from "./slides";
@@ -25,13 +25,7 @@ export function HeroSection({ slides = HERO_SLIDES }: { slides?: HeroSlide[] }) 
         Bu iç instance beyaz deseni doğrudan section arka planı üzerine koyar.
         Gerçek slider içeriği eklendiğinde ilgili grid hücrelerine z-[1] ekle.
       */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={beyazDesen.src}
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 w-[220vw] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.1] select-none"
-      />
+      <SitePatternOverlay opacity={0.1} />
 
       {/* ── Satır 1: Logo sarkma boşluğu ──────────────────────────────── */}
       {/*

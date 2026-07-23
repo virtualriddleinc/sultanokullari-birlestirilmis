@@ -9,6 +9,7 @@ import {
 } from "@vidstack/react";
 import { useEffect } from "react";
 import { cn } from "@/lib/cn";
+import { VidstackStyles } from "@/components/media/vidstack-styles";
 
 export type AmbientSiteVideoProps = {
   src: string;
@@ -65,7 +66,9 @@ export function AmbientSiteVideo({
     preload === "none" ? "idle" : preload === "auto" ? "eager" : "visible";
 
   return (
-    <MediaPlayer
+    <>
+      <VidstackStyles />
+      <MediaPlayer
       key={playerKey ?? safeSrc}
       className={cn("site-vidstack-ambient", className)}
       src={safeSrc}
@@ -93,5 +96,6 @@ export function AmbientSiteVideo({
         <AmbientVideoAspectProbe onMediaAspect={onMediaAspect} />
       ) : null}
     </MediaPlayer>
+    </>
   );
 }

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
-import cerceveFrame from "@/images/cini-cerceve.png";
+import cerceveFrame from "@/images/cini-cerceve.webp";
 import { AmbientSiteVideo } from "@/components/media/ambient-site-video";
 import type { SiteMedia } from "@/content/site-media";
 import { cn } from "@/lib/cn";
@@ -115,7 +115,8 @@ function FramedHexMediaInner({
                   src={media.src}
                   poster={media.poster}
                   title={media.alt}
-                  preload={priority ? "auto" : "metadata"}
+                  preload={priority ? "metadata" : "none"}
+                  autoPlay={Boolean(priority)}
                   className="absolute inset-0 h-full w-full object-cover"
                   onMediaAspect={media.poster ? undefined : captureAspect}
                 />
@@ -144,7 +145,8 @@ function FramedHexMediaInner({
           aria-hidden="true"
           fill
           sizes={sizes}
-          unoptimized
+          priority={priority}
+          fetchPriority={priority ? "high" : "auto"}
           className="object-contain"
         />
       </div>

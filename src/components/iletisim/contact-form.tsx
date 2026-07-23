@@ -136,12 +136,12 @@ export function ContactForm({
             type="checkbox"
             value="on"
             required
-            className="text-brand-green mt-0.5 h-4 w-4 rounded border-zinc-300"
+            className="text-brand-green-ink mt-0.5 h-4 w-4 rounded border-zinc-300"
           />
           <span className="leading-6">
             <a
               href="/kvkk"
-              className="text-brand-green font-semibold hover:underline"
+              className="text-brand-green-ink font-semibold hover:underline"
             >
               KVKK aydınlatma metnini
             </a>{" "}

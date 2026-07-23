@@ -182,6 +182,7 @@ export function MissionHoneycomb({
                     playsInline
                     autoPlay
                     loop
+                    preload="none"
                     className="absolute inset-0 size-full object-cover"
                     style={{
                       objectPosition: cell.focalPoint

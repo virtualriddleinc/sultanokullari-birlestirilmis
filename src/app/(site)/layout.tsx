@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Cinzel, Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
-import { draftMode } from "next/headers";
+import { Suspense } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import { InfoRequestModal } from "@/components/home/info-request-modal";
 import { HashAnchorScroll } from "@/components/layout/hash-anchor-scroll";
@@ -12,19 +12,20 @@ import { WhatsAppFab } from "@/components/whatsapp-fab";
 import { MotionProviders } from "@/components/ui/motion-providers";
 import { getPublishedBranches } from "@/lib/branches-data";
 import { getInfoModalData } from "@/lib/home-data";
-import { PayloadRefreshOnSave } from "@/components/payload/RefreshOnSave";
+import { LivePreviewBridge } from "@/components/payload/live-preview-bridge";
 import { getRootMetadata } from "@/lib/seo/metadata";
 import { buildOrganizationGraph } from "@/lib/schema/organization";
 import { JsonLd } from "@/lib/schema/JsonLd";
 import { getNavSectionsWithCms } from "@/lib/navigation-data";
 import { getSiteSettings } from "@/lib/site-settings-data";
 import { iletisimMetinleri } from "@/content/sultanda-yasam";
-import beyazDesen from "@/images/beyaz-desen.svg";
+import { SitePatternOverlay } from "@/components/layout/site-pattern-overlay";
 import "./globals.css";
 
 const FALLBACK_BRANCH_PHONE = "0506 057 60 72";
 
-export const dynamic = "force-dynamic";
+/** Yayınlanmış içerik ISR — draftMode layout'ta çağrılmaz (dinamik kilidi kırar). */
+export const revalidate = 120;
 
 const recaptchaSiteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
@@ -64,11 +65,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { isEnabled: isDraft } = await draftMode();
   const [branches, settings, infoModal, navSections] = await Promise.all([
     getPublishedBranches(),
     getSiteSettings(),
-    getInfoModalData({ draft: isDraft }),
+    getInfoModalData({ draft: false }),
     getNavSectionsWithCms(),
   ]);
   const organizationSchema = buildOrganizationGraph({
@@ -99,19 +99,16 @@ export default async function RootLayout({
           aria-hidden="true"
           className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={beyazDesen.src}
-            alt=""
-            className="absolute top-1/2 left-1/2 w-[220vw] max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.06] select-none"
-          />
+          <SitePatternOverlay opacity={0.06} />
         </div>
 
         <MotionProviders>
           <PreventTopOverscroll />
           <HashAnchorScroll />
           <RouteReadySignal />
-          <PayloadRefreshOnSave enabled={isDraft} />
+          <Suspense fallback={null}>
+            <LivePreviewBridge />
+          </Suspense>
           <InfoRequestModal {...infoModal} />
           <SiteHeader sections={navSections} />
           <main className="relative z-[1] flex w-full min-w-0 flex-1 flex-col overflow-x-clip">

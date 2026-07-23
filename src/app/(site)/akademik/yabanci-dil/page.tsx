@@ -85,7 +85,7 @@ export default async function Page() {
       <p className="section-body mt-fluid-6">
         <Link
           href="/atolyeler-ve-kulupler"
-          className="text-brand-green font-semibold hover:underline"
+          className="text-brand-green-ink font-semibold hover:underline"
         >
           Atölyeler ve kulüpler →
         </Link>

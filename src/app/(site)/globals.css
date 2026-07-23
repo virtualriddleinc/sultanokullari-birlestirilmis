@@ -1,8 +1,6 @@
 @import "tailwindcss";
 /* docs/ altındaki örnek utility yazımları üretim CSS'ine sızmasın */
 @source not "../../../docs";
-@import "@vidstack/react/player/styles/base.css";
-@import "../../styles/vidstack-player.css";
 
 /* =========================================================================
    Statik tasarım token'ları (marka-agnostik altyapı)
@@ -26,6 +24,8 @@
 
   /* --- Marka renkleri (projekurallari.md §1) --- */
   --color-brand-green: #4cff00;
+  /* Açık zeminde AA kontrast için metin mürekkebi (PSI Accessibility) */
+  --color-brand-green-ink: #157a00;
   --color-brand-honey: #fff085;
   --color-charcoal: #1a1c18;
 

@@ -25,9 +25,17 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
   const canonical = input.path ? absoluteUrl(input.path) : undefined;
   const imageUrl = resolveMediaUrl(input.image ?? DEFAULT_OG_IMAGE) ?? absoluteUrl(DEFAULT_OG_IMAGE);
   const openGraphType = input.type ?? "website";
+  const fullTitle =
+    input.path === "/"
+      ? SITE_NAME
+      : input.title.includes(SITE_NAME)
+        ? input.title
+        : `${input.title} | ${SITE_NAME}`;
 
   return {
-    title: input.title,
+    title: {
+      absolute: fullTitle,
+    },
     description,
     alternates: canonical ? { canonical } : undefined,
     robots: input.noIndex ? { index: false, follow: false } : undefined,
@@ -35,10 +43,10 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
       type: openGraphType,
       locale: "tr_TR",
       siteName: SITE_NAME,
-      title: input.title,
+      title: fullTitle,
       description,
       url: canonical,
-      images: [{ url: imageUrl, alt: input.title }],
+      images: [{ url: imageUrl, alt: fullTitle }],
       ...(openGraphType === "article" && input.publishedTime
         ? { publishedTime: input.publishedTime }
         : {}),
@@ -48,7 +56,7 @@ export function buildPageMetadata(input: PageMetadataInput): Metadata {
     },
     twitter: {
       card: "summary_large_image",
-      title: input.title,
+      title: fullTitle,
       description,
       images: [imageUrl],
     },

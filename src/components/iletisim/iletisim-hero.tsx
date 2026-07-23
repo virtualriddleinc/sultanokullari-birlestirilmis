@@ -37,7 +37,7 @@ export function IletisimHero() {
       <div className="section-page-grid relative z-10">
         <div className="section-page-grid__content flex flex-col gap-fluid-6">
           <motion.span
-            className="text-brand-green text-[length:var(--text-xs)] font-semibold tracking-[0.32em] uppercase"
+            className="text-brand-green-ink text-[length:var(--text-xs)] font-semibold tracking-[0.32em] uppercase"
             initial={reduce ? false : { opacity: 0, y: 8 }}
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -45,7 +45,7 @@ export function IletisimHero() {
             İletişim
           </motion.span>
           <motion.h1
-            className="text-brand-green max-w-3xl text-[length:var(--text-4xl)] leading-[1.05] font-semibold tracking-tight text-balance"
+            className="text-brand-green-ink max-w-3xl text-[length:var(--text-4xl)] leading-[1.05] font-semibold tracking-tight text-balance"
             initial={reduce ? false : { opacity: 0, y: 14 }}
             animate={reduce ? undefined : { opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.05 }}
@@ -69,7 +69,7 @@ export function IletisimHero() {
           >
             <a
               href="#sube-kartlari"
-              className="border-brand-green/40 text-brand-green hover:border-brand-green inline-flex min-h-[44px] items-center gap-2 rounded-full border bg-white/80 px-4 py-2 text-[length:var(--text-sm)] font-semibold backdrop-blur transition hover:bg-white"
+              className="border-brand-green/40 text-brand-green-ink hover:border-brand-green inline-flex min-h-[44px] items-center gap-2 rounded-full border bg-white/80 px-4 py-2 text-[length:var(--text-sm)] font-semibold backdrop-blur transition hover:bg-white"
             >
               <MapPin className="size-4" aria-hidden />
               Yol Tarifi

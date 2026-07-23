@@ -204,7 +204,7 @@ export function HomeBranchesShowcase({
                     aria-hidden
                     className={cn(
                       "mt-1 size-5 justify-self-end shrink-0 text-charcoal/35 transition-transform duration-300",
-                      isActive && "rotate-180 text-brand-green",
+                      isActive && "rotate-180 text-brand-green-ink",
                     )}
                   />
                   <p className="text-charcoal/55 col-span-2 text-xs font-medium tracking-[0.22em] uppercase">

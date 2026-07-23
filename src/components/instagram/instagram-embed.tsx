@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Script from "next/script";
 import { InteractiveSiteVideo } from "@/components/media/interactive-site-video";
 import type { InstagramPost } from "@/content/instagram";
@@ -27,6 +27,12 @@ export function InstagramEmbed({
   onEnded,
 }: InstagramEmbedProps) {
   const isVideoPost = Boolean(post.videoSrc);
+  // MP4 yalnızca oynatma istendiğinde mount — Lighthouse payload'unu düşürür
+  const [mediaUnlocked, setMediaUnlocked] = useState(shouldPlay);
+
+  useEffect(() => {
+    if (shouldPlay) setMediaUnlocked(true);
+  }, [shouldPlay]);
 
   useEffect(() => {
     if (isVideoPost) return;
@@ -39,7 +45,7 @@ export function InstagramEmbed({
         <Script
           id="instagram-embed-script"
           src="https://www.instagram.com/embed.js"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           onLoad={() => window.instgrm?.Embeds?.process()}
         />
       ) : null}
@@ -51,13 +57,22 @@ export function InstagramEmbed({
         }
       >
         {isVideoPost && post.videoSrc ? (
-          <InteractiveSiteVideo
-            className="block h-full w-full object-cover"
-            src={post.videoSrc}
-            title={post.title}
-            shouldPlay={shouldPlay}
-            onEnded={onEnded}
-          />
+          mediaUnlocked ? (
+            <InteractiveSiteVideo
+              className="block h-full w-full object-cover"
+              src={post.videoSrc}
+              title={post.title}
+              shouldPlay={shouldPlay}
+              onEnded={onEnded}
+            />
+          ) : (
+            <div
+              className="flex h-full w-full items-center justify-center bg-[#0a0d12] text-white/70"
+              aria-hidden
+            >
+              <span className="text-sm font-medium tracking-wide">Reel</span>
+            </div>
+          )
         ) : (
           <blockquote
             className="instagram-media mx-auto !max-w-full !min-w-0"
